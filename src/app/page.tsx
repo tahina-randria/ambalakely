@@ -1,5 +1,6 @@
 import { Nav } from '@/components/sections/Nav';
 import { Hero } from '@/components/sections/Hero';
+import { QuickBook } from '@/components/sections/QuickBook';
 import { IndexList } from '@/components/sections/IndexList';
 import { Stay } from '@/components/sections/Stay';
 import { Dining } from '@/components/sections/Dining';
@@ -18,6 +19,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <QuickBook />
         <IndexList />
         <Stay />
         <Dining />

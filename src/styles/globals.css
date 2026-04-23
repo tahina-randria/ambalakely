@@ -64,9 +64,11 @@
   --duration-hero:   880ms;
 }
 
-/* ---- dark mode: sand dark scale ---- */
+/* ---- dark mode: sand dark scale ----
+   @theme doesn't nest inside @media in Tailwind v4.
+   We override the CSS variables directly on :root instead. */
 @media (prefers-color-scheme: dark) {
-  @theme {
+  :root {
     --color-sand-1:  #0F0E0C;
     --color-sand-2:  #16140F;
     --color-sand-3:  #1D1B15;
@@ -79,6 +81,21 @@
     --color-sand-10: #A09985;
     --color-sand-11: #C4BDA8;
     --color-sand-12: #F5F0E4;
+
+    /* aliases must be re-declared because tokens now point to dark values */
+    --color-bg:             var(--color-sand-1);
+    --color-bg-subtle:      var(--color-sand-2);
+    --color-bg-muted:       var(--color-sand-3);
+    --color-border-subtle:  var(--color-sand-6);
+    --color-border:         var(--color-sand-7);
+    --color-border-strong:  var(--color-sand-8);
+    --color-text:           var(--color-sand-12);
+    --color-text-muted:     var(--color-sand-11);
+    --color-text-subdued:   var(--color-sand-10);
+  }
+
+  html {
+    color-scheme: dark;
   }
 }
 
@@ -319,10 +336,11 @@ input[type="date"].input-base {
   cursor: pointer;
   min-width: 0;
   font-variant-numeric: tabular-nums;
+  color-scheme: light;
 }
 
 input[type="date"].input-base::-webkit-calendar-picker-indicator {
-  opacity: 0.6;
+  opacity: 0.65;
   cursor: pointer;
   filter: invert(0);
   transition: opacity var(--duration-fast) var(--ease-standard);
@@ -333,8 +351,12 @@ input[type="date"].input-base::-webkit-calendar-picker-indicator:hover {
 }
 
 @media (prefers-color-scheme: dark) {
+  input[type="date"].input-base {
+    color-scheme: dark;
+  }
   input[type="date"].input-base::-webkit-calendar-picker-indicator {
-    filter: invert(1);
+    filter: invert(1) brightness(1.2);
+    opacity: 0.8;
   }
 }
 
