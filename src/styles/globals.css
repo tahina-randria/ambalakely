@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/*  Design tokens — CSS variables                                     */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  /* ---- colors: sand (light) ---- */
+  --color-sand-1:  #FDFCFA;
+  --color-sand-2:  #F9F7F3;
+  --color-sand-3:  #F0EDE6;
+  --color-sand-4:  #E9E4DA;
+  --color-sand-5:  #DFD8CA;
+  --color-sand-6:  #CCC4B3;
+  --color-sand-7:  #B6AD98;
+  --color-sand-8:  #978E7A;
+  --color-sand-9:  #7D7463;
+  --color-sand-10: #635B4B;
+  --color-sand-11: #4A4338;
+  --color-sand-12: #1D1B16;
+
+  /* ---- colors: ore accent ---- */
+  --color-ore-1:  #FEFCF7;
+  --color-ore-3:  #F5EBCE;
+  --color-ore-8:  #AA8E44;
+  --color-ore-9:  #967A2E;
+  --color-ore-10: #826722;
+  --color-ore-11: #6C5418;
+
+  /* ---- semantic aliases ---- */
+  --color-bg:             var(--color-sand-1);
+  --color-bg-subtle:      var(--color-sand-2);
+  --color-bg-muted:       var(--color-sand-3);
+  --color-border-subtle:  var(--color-sand-6);
+  --color-border:         var(--color-sand-7);
+  --color-border-strong:  var(--color-sand-8);
+  --color-text:           var(--color-sand-12);
+  --color-text-muted:     var(--color-sand-11);
+  --color-text-subdued:   var(--color-sand-10);
+  --color-accent:         var(--color-ore-9);
+  --color-accent-hover:   var(--color-ore-10);
+  --color-focus:          var(--color-ore-8);
+
+  /* ---- fonts ---- */
+  --font-display: var(--font-geist), system-ui, sans-serif;
+  --font-body:    var(--font-geist), system-ui, sans-serif;
+  --font-mono:    var(--font-geist-mono), ui-monospace, monospace;
+
+  /* ---- radii: max 4px except avatars/pills ---- */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-full: 9999px;
+
+  /* ---- motion ---- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+  --ease-entrance: cubic-bezier(0, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.3, 0, 1, 1);
+
+  --duration-fast:   120ms;
+  --duration-base:   200ms;
+  --duration-slow:   320ms;
+  --duration-slower: 560ms;
+  --duration-hero:   880ms;
+}
+
+/* ---- dark mode: sand dark scale ---- */
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --color-sand-1:  #0F0E0C;
+    --color-sand-2:  #16140F;
+    --color-sand-3:  #1D1B15;
+    --color-sand-4:  #26231B;
+    --color-sand-5:  #2E2B22;
+    --color-sand-6:  #3A362B;
+    --color-sand-7:  #4A4638;
+    --color-sand-8:  #65604E;
+    --color-sand-9:  #8C8673;
+    --color-sand-10: #A09985;
+    --color-sand-11: #C4BDA8;
+    --color-sand-12: #F5F0E4;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Base reset — minimal                                              */
+/* ------------------------------------------------------------------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border: 0 solid var(--color-border-subtle);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "ss02", "cv01", "cv11";
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 26px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* images: 0 radius, full block display */
+img,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0;
+}
+
+/* NEVER opacity on text — enforced via utility absence */
+
+/* Focus visible — ore accent ring */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Selection — accent subtle */
+::selection {
+  background: var(--color-ore-3);
+  color: var(--color-sand-12);
+}
+
+/* Scrollbar styling — minimal, sand */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-subtle);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-strong);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Utility classes (used in markup)                                  */
+/* ------------------------------------------------------------------ */
+
+.hair-rule {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.hair-rule-strong {
+  border-top: 1px solid var(--color-sand-12);
+}
+
+/* Mask wrapper for SplitText — char-level reveal */
+.split-mask > span {
+  display: inline-block;
+  overflow: hidden;
+}
+
+/* Anti-orphan */
+.balance {
+  text-wrap: balance;
+}
+.pretty {
+  text-wrap: pretty;
+}
