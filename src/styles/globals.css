@@ -140,6 +140,64 @@ video {
 }
 
 /* Selection — accent subtle */
+/* ------------------------------------------------------------------ */
+/*  Hero CSS animations — run immediately on load, no JS dependency   */
+/* ------------------------------------------------------------------ */
+
+@keyframes hero-line-rise {
+  from {
+    transform: translate3d(0, 101%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-bg-zoom {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-line-reveal {
+  animation: hero-line-rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--line-delay, 0.15s);
+  will-change: transform;
+}
+
+.hero-bg-settle {
+  animation: hero-bg-zoom 2.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform;
+}
+
+.hero-fade-up {
+  animation: hero-fade-up 0.9s cubic-bezier(0.2, 0, 0, 1) both;
+  animation-delay: var(--fade-delay, 0.6s);
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-line-reveal,
+  .hero-bg-settle,
+  .hero-fade-up {
+    animation: none !important;
+  }
+}
+
 /* Selection — subtle accent-tinted background, text color preserved.
    Works on both light (dark text visible) and dark (light text visible) content. */
 ::selection {

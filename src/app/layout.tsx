@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { SmoothScrollProvider } from '@/lib/motion/SmoothScrollProvider';
-import { Loader } from '@/components/atoms/Loader';
 import '@/styles/globals.css';
 
 const geist = Geist({
@@ -46,7 +45,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <body>
-        <Loader />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>
