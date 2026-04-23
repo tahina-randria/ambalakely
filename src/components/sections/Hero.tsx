@@ -37,7 +37,7 @@ export function Hero() {
         </h1>
 
         <div
-          className="hero-fade-up mt-10 md:mt-14 flex items-center gap-5"
+          className="hero-fade-up mt-10 md:mt-14"
           style={{ ['--fade-delay' as string]: '0.95s' }}
         >
           <Link
@@ -49,12 +49,6 @@ export function Hero() {
               size={16}
               className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-y-0.5"
             />
-          </Link>
-          <Link
-            href="#stay"
-            className="inline-flex items-center font-body text-[15px] font-medium text-white/85 hover:text-white transition-colors duration-[var(--duration-base)]"
-          >
-            Explore the place
           </Link>
         </div>
       </div>
