@@ -122,10 +122,10 @@ export function Dining() {
           />
         </div>
 
-        {/* Text panel — right side, vertically centered, center-aligned, reveals in sync */}
+        {/* Text panel — right side, vertically centered, left-aligned, reveals in sync */}
         <div
           ref={textRef}
-          className="absolute flex flex-col items-center text-center justify-center will-change-[opacity,transform]"
+          className="absolute flex flex-col justify-center will-change-[opacity,transform]"
           style={{
             right: '6vw',
             left: '74vw',
