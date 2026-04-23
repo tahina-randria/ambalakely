@@ -93,7 +93,11 @@ export function SplitReveal({
   }, [splitBy, staggerAmount, delay, duration, onScroll]);
 
   return (
-    <Tag ref={ref as never} className={className}>
+    <Tag
+      ref={ref as never}
+      className={className}
+      style={{ willChange: 'transform' }}
+    >
       {children}
     </Tag>
   );

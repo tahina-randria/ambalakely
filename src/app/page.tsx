@@ -4,6 +4,9 @@ import { IndexList } from '@/components/sections/IndexList';
 import { Stay } from '@/components/sections/Stay';
 import { Dining } from '@/components/sections/Dining';
 import { Experiences } from '@/components/sections/Experiences';
+import { Reviews } from '@/components/sections/Reviews';
+import { Trust } from '@/components/sections/Trust';
+import { Location } from '@/components/sections/Location';
 import { Journal } from '@/components/sections/Journal';
 import { Book } from '@/components/sections/Book';
 import { Footer } from '@/components/sections/Footer';
@@ -18,6 +21,9 @@ export default function Home() {
         <Stay />
         <Dining />
         <Experiences />
+        <Reviews />
+        <Trust />
+        <Location />
         <Journal />
         <Book />
       </main>

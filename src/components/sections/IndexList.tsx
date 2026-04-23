@@ -9,8 +9,9 @@ const items = [
   { number: '01', label: 'Stay', href: '/#stay' },
   { number: '02', label: 'Dining', href: '/#dining' },
   { number: '03', label: 'Experiences', href: '/#experiences' },
-  { number: '04', label: 'Journal', href: '/#journal' },
-  { number: '05', label: 'About', href: '/about' },
+  { number: '04', label: 'Guests', href: '/#reviews' },
+  { number: '05', label: 'Location', href: '/#location' },
+  { number: '06', label: 'Journal', href: '/#journal' },
 ];
 
 export function IndexList() {
@@ -40,7 +41,7 @@ export function IndexList() {
                   <ArrowUpRight
                     size={24}
                     weight="regular"
-                    className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1 group-hover:-translate-y-1"
+                    className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-[color,transform] duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1 group-hover:-translate-y-1"
                   />
                 </Link>
               </ScrollReveal>

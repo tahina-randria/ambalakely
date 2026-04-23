@@ -1,27 +1,62 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Container } from '@/components/atoms/Container';
-import { Section } from '@/components/atoms/Section';
-import { Heading } from '@/components/atoms/Heading';
+import { FullBleedToSide } from '@/lib/motion/FullBleedToSide';
 import { Kicker } from '@/components/atoms/Kicker';
-import { Text } from '@/components/atoms/Text';
-import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 
 export function Dining() {
   return (
-    <Section id="dining" divider>
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-          <ScrollReveal className="lg:col-span-4">
+    <section id="dining" aria-label="Dining">
+      <FullBleedToSide
+        infoSide="right"
+        imageWidth={46}
+        imageHeight={78}
+        edgePadding={4}
+        endRadius={32}
+        scrollDistance={150}
+        image={
+          <Image
+            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=2400&q=90"
+            alt="Toko Telo dining room"
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+        }
+        info={
+          <div className="max-w-[440px]">
             <Kicker number={2}>Dining</Kicker>
-            <Heading variant="h2" className="mt-6">
-              Toko Telo. A single menu, written every morning.
-            </Heading>
-            <Text variant="bodyLg" color="muted" className="mt-8 max-w-[460px]">
+
+            <h2 className="mt-6 font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[36px] leading-[1.05] md:text-[48px] md:leading-[1.05]">
+              Toko Telo.<br />
+              A single menu,<br />
+              written every morning.
+            </h2>
+
+            <p className="mt-8 text-[17px] leading-[1.55] text-[var(--color-text-muted)]">
               Forty seats, a wine list from Fianarantsoa, and a kitchen that cooks what is in
               season that day. Nothing more.
-            </Text>
+            </p>
+
+            <dl className="mt-10 grid grid-cols-2 gap-x-8 gap-y-5 font-mono text-[13px] uppercase tracking-[0.08em]">
+              <div className="flex flex-col gap-1.5">
+                <dt className="text-[var(--color-text-muted)]">Seats</dt>
+                <dd className="text-[var(--color-text)]">40</dd>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <dt className="text-[var(--color-text-muted)]">Hours</dt>
+                <dd className="text-[var(--color-text)]">19:00 — 22:00</dd>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <dt className="text-[var(--color-text-muted)]">Format</dt>
+                <dd className="text-[var(--color-text)]">Menu du jour</dd>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <dt className="text-[var(--color-text-muted)]">Wine</dt>
+                <dd className="text-[var(--color-text)]">Fianarantsoa</dd>
+              </div>
+            </dl>
+
             <Link
               href="/dining"
               className="mt-10 inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)] group"
@@ -29,24 +64,12 @@ export function Dining() {
               Read more
               <ArrowRight
                 size={18}
-                className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
+                className="transition-[color,transform] duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
               />
             </Link>
-          </ScrollReveal>
-
-          <ScrollReveal className="lg:col-span-8" delay={0.1}>
-            <div className="relative aspect-[4/3] lg:aspect-[16/10] overflow-hidden bg-[var(--color-bg-muted)]">
-              <Image
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1800&q=90"
-                alt="Toko Telo dining room"
-                fill
-                sizes="(min-width: 1024px) 66vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-          </ScrollReveal>
-        </div>
-      </Container>
-    </Section>
+          </div>
+        }
+      />
+    </section>
   );
 }

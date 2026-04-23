@@ -140,9 +140,17 @@ video {
 }
 
 /* Selection — accent subtle */
+/* Selection — subtle accent-tinted background, text color preserved.
+   Works on both light (dark text visible) and dark (light text visible) content. */
 ::selection {
-  background: var(--color-ore-3);
-  color: var(--color-sand-12);
+  background: rgba(150, 122, 46, 0.28);
+  color: inherit;
+  text-shadow: none;
+}
+::-moz-selection {
+  background: rgba(150, 122, 46, 0.28);
+  color: inherit;
+  text-shadow: none;
 }
 
 /* Scrollbar styling — minimal, sand */
@@ -185,4 +193,168 @@ video {
 }
 .pretty {
   text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Form elements — unified premium style                             */
+/* ------------------------------------------------------------------ */
+
+.input-base {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: transparent;
+  background-image: none;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1;
+  border: 1px solid var(--color-border);
+  border-radius: 0;
+  padding: 0 16px;
+  height: 48px;
+  transition: border-color var(--duration-base) var(--ease-standard),
+              color var(--duration-base) var(--ease-standard);
+}
+
+.input-base:hover {
+  border-color: var(--color-border-strong);
+}
+
+.input-base:focus {
+  border-color: var(--color-sand-12);
+  outline: none;
+}
+
+.input-base::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+/* select — custom chevron */
+select.input-base {
+  padding-right: 44px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%234A4338' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 12px 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  select.input-base {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23C4BDA8' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+}
+
+/* date input — hide native styles, cleaner look */
+input[type="date"].input-base {
+  cursor: pointer;
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+input[type="date"].input-base::-webkit-calendar-picker-indicator {
+  opacity: 0.6;
+  cursor: pointer;
+  filter: invert(0);
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+input[type="date"].input-base::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  input[type="date"].input-base::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+}
+
+input[type="date"].input-base::-webkit-datetime-edit-year-field:focus,
+input[type="date"].input-base::-webkit-datetime-edit-month-field:focus,
+input[type="date"].input-base::-webkit-datetime-edit-day-field:focus {
+  background-color: var(--color-bg-muted);
+  color: var(--color-text);
+  outline: none;
+}
+
+/* ---- Remove Safari inner shadow on form controls ---- */
+button,
+input,
+select,
+textarea {
+  -webkit-appearance: none;
+  background-image: none;
+  box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Dark variant — for sections on sand-12 background                 */
+/* ------------------------------------------------------------------ */
+
+.input-dark {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: transparent;
+  color: var(--color-sand-1);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1;
+  border: 1px solid var(--color-sand-10);
+  border-radius: 0;
+  padding: 0 16px;
+  height: 48px;
+  transition: border-color var(--duration-base) var(--ease-standard);
+}
+
+.input-dark:hover {
+  border-color: var(--color-sand-8);
+}
+
+.input-dark:focus {
+  border-color: var(--color-sand-1);
+  outline: none;
+}
+
+.input-dark::placeholder {
+  color: var(--color-sand-7);
+  opacity: 1;
+}
+
+/* Dark select — white chevron */
+select.input-dark {
+  padding-right: 44px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23FDFCFA' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 12px 8px;
+}
+
+/* Dark date input — white calendar icon */
+input[type="date"].input-dark {
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  color-scheme: dark;
+}
+
+input[type="date"].input-dark::-webkit-calendar-picker-indicator {
+  opacity: 0.9;
+  cursor: pointer;
+  filter: invert(1) brightness(1.4);
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+input[type="date"].input-dark::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+input[type="date"].input-dark::-webkit-datetime-edit-year-field:focus,
+input[type="date"].input-dark::-webkit-datetime-edit-month-field:focus,
+input[type="date"].input-dark::-webkit-datetime-edit-day-field:focus {
+  background-color: var(--color-sand-10);
+  color: var(--color-sand-1);
+  outline: none;
 }

@@ -8,8 +8,8 @@ const links = [
   { href: '/#stay', label: 'Stay' },
   { href: '/#dining', label: 'Dining' },
   { href: '/#experiences', label: 'Experiences' },
+  { href: '/#location', label: 'Location' },
   { href: '/#journal', label: 'Journal' },
-  { href: '/about', label: 'About' },
 ];
 
 export function Nav() {
@@ -25,16 +25,23 @@ export function Nav() {
   return (
     <nav
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
+        'fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
         scrolled
           ? 'bg-[color-mix(in_srgb,var(--color-bg)_92%,transparent)] backdrop-blur-[12px] border-b border-[var(--color-border-subtle)]'
-          : 'bg-transparent border-b border-transparent',
+          : 'bg-transparent',
       )}
     >
-      <div className="mx-auto w-full max-w-[1440px] px-5 md:px-8 lg:px-12 h-[72px] flex items-center justify-between">
+      {/* Inner row — mix-blend-mode difference makes text always legible over any background */}
+      <div
+        className="mx-auto w-full max-w-[1440px] px-5 md:px-8 lg:px-12 h-[72px] flex items-center justify-between"
+        style={{ mixBlendMode: scrolled ? 'normal' : 'difference' }}
+      >
         <Link
           href="/"
-          className="font-display font-normal text-[18px] tracking-[-0.01em] text-[var(--color-text)]"
+          className={cn(
+            'font-display font-normal text-[18px] tracking-[-0.01em]',
+            scrolled ? 'text-[var(--color-text)]' : 'text-white',
+          )}
         >
           Ambalakely
         </Link>
@@ -44,7 +51,10 @@ export function Nav() {
             <li key={l.href}>
               <Link
                 href={l.href}
-                className="text-[14px] text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]"
+                className={cn(
+                  'text-[14px] transition-opacity duration-[var(--duration-fast)] ease-[var(--ease-standard)] opacity-70 hover:opacity-100',
+                  scrolled ? 'text-[var(--color-text)]' : 'text-white',
+                )}
               >
                 {l.label}
               </Link>
@@ -52,16 +62,24 @@ export function Nav() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
           <button
             type="button"
-            className="hidden md:inline-flex text-[13px] font-mono uppercase tracking-[0.08em] text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors duration-[var(--duration-fast)]"
+            className={cn(
+              'hidden md:inline-flex text-[12px] font-mono uppercase tracking-[0.08em] opacity-70 hover:opacity-100 transition-opacity duration-[var(--duration-fast)]',
+              scrolled ? 'text-[var(--color-text)]' : 'text-white',
+            )}
           >
             EN
           </button>
           <Link
             href="/#book"
-            className="inline-flex items-center justify-center h-10 px-5 text-[14px] font-medium text-[var(--color-sand-1)] bg-[var(--color-sand-12)] hover:bg-[var(--color-sand-11)] transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]"
+            className={cn(
+              'inline-flex items-center justify-center h-10 px-5 text-[14px] font-medium transition-[color,background-color] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
+              scrolled
+                ? 'text-[var(--color-sand-1)] bg-[var(--color-sand-12)] hover:bg-[var(--color-sand-11)]'
+                : 'text-black bg-white hover:bg-white/90',
+            )}
           >
             Book
           </Link>

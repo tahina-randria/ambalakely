@@ -1,51 +1,45 @@
 import { Container } from '@/components/atoms/Container';
-import { Section } from '@/components/atoms/Section';
-import { Heading } from '@/components/atoms/Heading';
 import { Kicker } from '@/components/atoms/Kicker';
-import { Text } from '@/components/atoms/Text';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
-import { LinkButton } from '@/components/atoms/Button';
-import { WhatsappLogo, Envelope } from '@phosphor-icons/react/dist/ssr';
+import { WhatsappLogo, Envelope, ArrowRight } from '@phosphor-icons/react/dist/ssr';
 
 export function Book() {
   return (
-    <Section id="book" divider>
+    <section
+      id="book"
+      className="relative bg-[var(--color-sand-12)] text-[var(--color-sand-1)] py-24 md:py-32 lg:py-48"
+    >
       <Container size="lg">
-        <ScrollReveal className="mb-16">
-          <Kicker number={5}>Book</Kicker>
-          <Heading variant="h1" className="mt-6">
+        <ScrollReveal>
+          <div className="font-mono uppercase text-[13px] tracking-[0.08em] text-[var(--color-sand-6)] mb-6">
+            <span className="text-[var(--color-sand-8)]">07</span>
+            <span className="mx-3">·</span>
+            Book
+          </div>
+          <h2 className="font-display font-light tracking-[-0.03em] text-[44px] leading-[1.05] md:text-[60px] md:leading-[1.05] max-w-[900px] balance">
             We keep a room for you, through September 2026.
-          </Heading>
+          </h2>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.1}>
-          <form className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-[720px]">
+        <ScrollReveal delay={0.05} className="mt-14">
+          <form className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[820px]">
             <label className="flex flex-col gap-2">
-              <span className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+              <span className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-sand-6)]">
                 Arrival
               </span>
-              <input
-                type="date"
-                className="h-12 px-4 bg-transparent border border-[var(--color-border)] focus:border-[var(--color-sand-12)] focus:outline-none text-[17px] text-[var(--color-text)] font-body rounded-none transition-colors duration-[var(--duration-base)]"
-              />
+              <input type="date" className="input-dark" />
             </label>
             <label className="flex flex-col gap-2">
-              <span className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+              <span className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-sand-6)]">
                 Departure
               </span>
-              <input
-                type="date"
-                className="h-12 px-4 bg-transparent border border-[var(--color-border)] focus:border-[var(--color-sand-12)] focus:outline-none text-[17px] text-[var(--color-text)] font-body rounded-none transition-colors duration-[var(--duration-base)]"
-              />
+              <input type="date" className="input-dark" />
             </label>
             <label className="flex flex-col gap-2">
-              <span className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+              <span className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-sand-6)]">
                 Guests
               </span>
-              <select
-                defaultValue="2"
-                className="h-12 px-4 bg-transparent border border-[var(--color-border)] focus:border-[var(--color-sand-12)] focus:outline-none text-[17px] text-[var(--color-text)] font-body rounded-none transition-colors duration-[var(--duration-base)]"
-              >
+              <select defaultValue="2" className="input-dark">
                 {[1, 2, 3, 4].map((n) => (
                   <option key={n} value={n}>
                     {n} {n === 1 ? 'guest' : 'guests'}
@@ -55,33 +49,40 @@ export function Book() {
             </label>
           </form>
 
-          <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <LinkButton href="/book" variant="primary" size="lg">
+          <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+            <button
+              type="button"
+              className="group inline-flex items-center gap-3 h-12 px-7 bg-[var(--color-sand-1)] text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
+            >
               Check availability
-            </LinkButton>
-            <Text variant="body" color="muted" className="sm:ml-2">
+              <ArrowRight
+                size={18}
+                className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
+              />
+            </button>
+            <span className="text-[15px] text-[var(--color-sand-7)]">
               Free cancellation up to 30 days before arrival.
-            </Text>
+            </span>
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.2} className="mt-20 pt-12 border-t border-[var(--color-border-subtle)]">
-          <Text variant="label" color="muted" className="uppercase" as="span">
+        <ScrollReveal delay={0.1} className="mt-20 pt-12 border-t border-[var(--color-sand-10)]">
+          <div className="font-mono uppercase text-[12px] tracking-[0.08em] text-[var(--color-sand-7)] mb-6">
             Or write directly
-          </Text>
-          <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-8">
+          </div>
+          <div className="flex flex-col sm:flex-row gap-5 sm:gap-10">
             <a
               href="https://wa.me/261000000000"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors duration-[var(--duration-base)]"
+              className="inline-flex items-center gap-3 text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)]"
             >
               <WhatsappLogo size={20} />
               <span className="font-body text-[17px]">WhatsApp +261 · · ·</span>
             </a>
             <a
               href="mailto:hello@hotelambalakely.com"
-              className="inline-flex items-center gap-3 text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors duration-[var(--duration-base)]"
+              className="inline-flex items-center gap-3 text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)]"
             >
               <Envelope size={20} />
               <span className="font-body text-[17px]">hello@hotelambalakely.com</span>
@@ -89,6 +90,6 @@ export function Book() {
           </div>
         </ScrollReveal>
       </Container>
-    </Section>
+    </section>
   );
 }

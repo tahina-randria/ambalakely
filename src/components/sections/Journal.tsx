@@ -11,7 +11,7 @@ export function Journal() {
     <Section id="journal" divider>
       <Container>
         <ScrollReveal className="mb-16 md:mb-24">
-          <Kicker number={4}>Journal</Kicker>
+          <Kicker number={6}>Journal</Kicker>
         </ScrollReveal>
 
         <ul className="border-t border-[var(--color-border-subtle)]">
@@ -32,7 +32,7 @@ export function Journal() {
                   </div>
                   <ArrowUpRight
                     size={24}
-                    className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1 group-hover:-translate-y-1 shrink-0"
+                    className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-[color,transform] duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1 group-hover:-translate-y-1 shrink-0"
                   />
                 </Link>
               </ScrollReveal>
