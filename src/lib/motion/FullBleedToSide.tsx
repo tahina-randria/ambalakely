@@ -14,82 +14,123 @@ type FullBleedToSideProps = {
   info: ReactNode;
   className?: string;
   infoSide?: 'left' | 'right';
-  /** How far the sticky content stays pinned (in vh). Higher = more dwell time. */
+  /** Height multiplier in vh (image stays sticky across this range). */
   dwellVh?: number;
+  /** Final border-radius on image (px). */
+  endRadius?: number;
+  /** Final image scale (1 = no shrink). Slight shrink adds depth. */
+  endScale?: number;
 };
 
 /**
- * Sticky viewport-sized image with info panel on one side.
- * Uses native CSS `position: sticky` — no JS pin, no scrub.
- * Next section scrolls naturally over the top, Framer-tutorial style.
+ * Sticky + scroll-linked transforms (Framer pattern).
  *
- * The image stays at 100vw × 100vh (viewport-filling) the whole time.
- * Info panel fades in on viewport enter.
+ * Outer section is taller than viewport. Inner sticky (100vh) stays pinned
+ * naturally via CSS sticky. Inside, the image transforms (scale + radius)
+ * as scroll progresses through the outer section. No GSAP pin — pure CSS
+ * sticky is the smoothest possible pinning.
+ *
+ * `scrub: 1.2` adds a light lerp so the animation catches up gracefully
+ * even with jittery input.
  */
 export function FullBleedToSide({
   image,
   info,
   className,
   infoSide = 'right',
-  dwellVh = 120,
+  dwellVh = 160,
+  endRadius = 48,
+  endScale = 0.9,
 }: FullBleedToSideProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    const el = infoRef.current;
-    if (!el) return;
+    const section = sectionRef.current;
+    const frame = frameRef.current;
+    const infoEl = infoRef.current;
+    if (!section || !frame || !infoEl) return;
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
+    if (prefersReduced) {
+      gsap.set(frame, { scale: endScale, borderRadius: endRadius });
+      gsap.set(infoEl, { opacity: 1, x: 0 });
+      return;
+    }
 
     const ctx = gsap.context(() => {
-      gsap.to(el, {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        ease: 'power3.out',
+      const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: el,
-          start: 'top 70%',
-          once: true,
+          trigger: section,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1.5,
+          invalidateOnRefresh: true,
+          fastScrollEnd: true,
         },
       });
-    }, el);
+
+      // Image: full viewport → slightly shrunk + rounded
+      tl.fromTo(
+        frame,
+        { scale: 1, borderRadius: 0 },
+        { scale: endScale, borderRadius: endRadius, ease: 'power4.out' },
+        0,
+      );
+
+      // Info panel: fade in + subtle slide, lags the image slightly
+      tl.fromTo(
+        infoEl,
+        { opacity: 0, x: infoSide === 'right' ? 30 : -30 },
+        { opacity: 1, x: 0, ease: 'power4.out' },
+        0.2,
+      );
+    }, section);
 
     return () => ctx.revert();
-  }, []);
+  }, [endRadius, endScale, infoSide]);
 
   return (
     <section
+      ref={sectionRef}
       className={cn('relative w-full', className)}
-      style={{ height: `${100 + dwellVh}vh` }}
+      style={{ height: `${dwellVh}vh` }}
     >
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
-        {/* Full-bleed image — viewport-sized, no scale, no shrink */}
-        <div className="absolute inset-0">{image}</div>
-
-        {/* Gradient overlay — readable side */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-[var(--color-bg)]">
+        {/* Image frame — transforms via GSAP scrub */}
         <div
-          aria-hidden="true"
-          className={cn(
-            'absolute inset-0 pointer-events-none',
-            infoSide === 'right'
-              ? 'bg-gradient-to-r from-transparent via-transparent to-black/65'
-              : 'bg-gradient-to-l from-transparent via-transparent to-black/65',
-          )}
-        />
+          ref={frameRef}
+          className="absolute inset-0 overflow-hidden bg-[var(--color-bg-muted)]"
+          style={{
+            transformOrigin: 'center center',
+            willChange: 'transform, border-radius',
+          }}
+        >
+          {image}
+          {/* Gradient overlay for readability */}
+          <div
+            aria-hidden="true"
+            className={cn(
+              'absolute inset-0 pointer-events-none',
+              infoSide === 'right'
+                ? 'bg-gradient-to-r from-transparent via-transparent to-black/55'
+                : 'bg-gradient-to-l from-transparent via-transparent to-black/55',
+            )}
+          />
+        </div>
 
-        {/* Info panel */}
+        {/* Info panel — positioned relative to the sticky container, not the frame */}
         <div
           className={cn(
             'absolute inset-y-0 flex items-center',
-            infoSide === 'right' ? 'right-5 md:right-8 lg:right-12' : 'left-5 md:left-8 lg:left-12',
+            infoSide === 'right' ? 'right-5 md:right-10 lg:right-16' : 'left-5 md:left-10 lg:left-16',
           )}
         >
           <div
             ref={infoRef}
             className="max-w-[440px] text-white will-change-[opacity,transform]"
-            style={{ opacity: 0, transform: 'translate3d(0, 16px, 0)' }}
+            style={{ opacity: 0, transform: 'translate3d(30px, 0, 0)' }}
           >
             {info}
           </div>
