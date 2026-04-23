@@ -4,16 +4,22 @@ import { FullBleedToSide } from '@/lib/motion/FullBleedToSide';
 import { Kicker } from '@/components/atoms/Kicker';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 
+const tonight = [
+  'Rougets, crème d’ail noir',
+  'Zébu, feuilles de manioc, riz rouge',
+  'Glace citron, du jardin',
+];
+
 export function Dining() {
   return (
     <section id="dining" aria-label="Dining">
       <FullBleedToSide
         infoSide="right"
-        imageWidth={46}
-        imageHeight={78}
-        edgePadding={4}
+        imageWidth={62}
+        imageHeight={86}
+        edgePadding={5}
         endRadius={32}
-        scrollDistance={150}
+        scrollDistance={280}
         image={
           <Image
             src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=2400&q=90"
@@ -24,38 +30,39 @@ export function Dining() {
           />
         }
         info={
-          <div className="max-w-[440px]">
+          <div className="max-w-[420px]">
             <Kicker number={2}>Dining</Kicker>
 
-            <h2 className="mt-6 font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[36px] leading-[1.05] md:text-[48px] md:leading-[1.05]">
+            <h2 className="mt-6 font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[36px] leading-[1.05] md:text-[44px] md:leading-[1.05]">
               Toko Telo.<br />
               A single menu,<br />
               written every morning.
             </h2>
 
             <p className="mt-8 text-[17px] leading-[1.55] text-[var(--color-text-muted)]">
-              Forty seats, a wine list from Fianarantsoa, and a kitchen that cooks what is in
-              season that day. Nothing more.
+              Forty seats. What the garden gives, what the market brought, what the chef
+              felt like cooking. Nothing more.
             </p>
 
-            <dl className="mt-10 grid grid-cols-2 gap-x-8 gap-y-5 font-mono text-[13px] uppercase tracking-[0.08em]">
-              <div className="flex flex-col gap-1.5">
-                <dt className="text-[var(--color-text-muted)]">Seats</dt>
-                <dd className="text-[var(--color-text)]">40</dd>
+            {/* Tonight's menu preview — proves the "written every morning" claim */}
+            <div className="mt-10 pt-6 border-t border-[var(--color-border-subtle)]">
+              <div className="font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                This evening
               </div>
-              <div className="flex flex-col gap-1.5">
-                <dt className="text-[var(--color-text-muted)]">Hours</dt>
-                <dd className="text-[var(--color-text)]">19:00 — 22:00</dd>
+              <ul className="mt-4 flex flex-col gap-2.5">
+                {tonight.map((dish) => (
+                  <li
+                    key={dish}
+                    className="font-display text-[18px] tracking-[-0.01em] text-[var(--color-text)] italic"
+                  >
+                    {dish}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                Full menu shared on arrival
               </div>
-              <div className="flex flex-col gap-1.5">
-                <dt className="text-[var(--color-text-muted)]">Format</dt>
-                <dd className="text-[var(--color-text)]">Menu du jour</dd>
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <dt className="text-[var(--color-text-muted)]">Wine</dt>
-                <dd className="text-[var(--color-text)]">Fianarantsoa</dd>
-              </div>
-            </dl>
+            </div>
 
             <Link
               href="/dining"

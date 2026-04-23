@@ -247,6 +247,15 @@ select.input-base {
   }
 }
 
+/* textarea — let it grow properly */
+textarea.input-base {
+  height: auto;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  line-height: 1.55;
+  font-family: var(--font-body);
+}
+
 /* date input — hide native styles, cleaner look */
 input[type="date"].input-base {
   cursor: pointer;
