@@ -1,10 +1,10 @@
 import { Nav } from '@/components/sections/Nav';
 import { Hero } from '@/components/sections/Hero';
 import { QuickBook } from '@/components/sections/QuickBook';
-import { IndexList } from '@/components/sections/IndexList';
 import { Stay } from '@/components/sections/Stay';
 import { Dining } from '@/components/sections/Dining';
 import { Experiences } from '@/components/sections/Experiences';
+import { Story } from '@/components/sections/Story';
 import { Reviews } from '@/components/sections/Reviews';
 import { Trust } from '@/components/sections/Trust';
 import { Location } from '@/components/sections/Location';
@@ -20,10 +20,10 @@ export default function Home() {
       <main>
         <Hero />
         <QuickBook />
-        <IndexList />
         <Stay />
         <Dining />
         <Experiences />
+        <Story />
         <Reviews />
         <Trust />
         <Location />
