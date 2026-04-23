@@ -16,7 +16,7 @@ const reviews = [
   },
   {
     quote:
-      'The garden, the rooms, the food — Hasina and her team treat every detail like it matters. Because it does.',
+      'The garden, the rooms, the food. Hasina and her team treat every detail like it matters. Because it does.',
     author: 'Bernt R.',
     city: 'Stavanger',
     date: 'October 2024',

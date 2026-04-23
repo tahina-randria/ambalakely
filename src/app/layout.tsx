@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://hotelambalakely.com'),
   title: {
-    default: 'Ambalakely — Ten rooms in the highlands of Madagascar',
+    default: 'Ambalakely. Ten rooms in the highlands of Madagascar',
     template: '%s · Ambalakely',
   },
   description:

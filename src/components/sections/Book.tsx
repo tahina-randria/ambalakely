@@ -76,7 +76,7 @@ export function Book() {
                     Group of {guests === '8' ? '8+' : guests}
                   </div>
                   <p className="text-[18px] leading-[1.5] text-[var(--color-sand-1)] max-w-[620px]">
-                    For groups, we pair rooms and tailor the stay — meals, experiences,
+                    For groups, we pair rooms and tailor the stay. Meals, experiences,
                     transfers. Write to us directly and we&rsquo;ll reply within two hours.
                   </p>
 

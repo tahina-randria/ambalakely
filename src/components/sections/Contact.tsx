@@ -22,7 +22,7 @@ export function Contact() {
               Write to us.
             </h2>
             <p className="mt-8 text-[17px] leading-[1.6] text-[var(--color-text-muted)] max-w-[420px]">
-              A question about the road, the weather, a particular stay — Hasina and the
+              A question about the road, the weather, a particular stay. Hasina and the
               team reply within two hours during the day.
             </p>
 
@@ -121,7 +121,7 @@ export function Contact() {
                   disabled={sent}
                   className="group inline-flex items-center gap-3 h-12 px-7 bg-[var(--color-sand-12)] text-[var(--color-sand-1)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-11)] disabled:opacity-60 disabled:cursor-default"
                 >
-                  {sent ? 'Received — we’ll reply soon' : 'Send message'}
+                  {sent ? 'Received. We’ll reply soon' : 'Send message'}
                   {!sent ? (
                     <ArrowRight
                       size={18}
@@ -130,7 +130,7 @@ export function Contact() {
                   ) : null}
                 </button>
                 <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
-                  Replies within 2 hours · 7am — 7pm
+                  Replies within 2 hours · 7am to 7pm
                 </span>
               </div>
             </form>

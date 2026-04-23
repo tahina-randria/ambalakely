@@ -84,7 +84,7 @@ export function Trust() {
         <ScrollReveal delay={0.2} className="mt-20 pt-10 border-t border-[var(--color-border-subtle)]">
           <p className="font-body text-[15px] leading-[1.6] text-[var(--color-text-muted)] max-w-[720px]">
             Payments are processed by our certified banking partner. Card numbers are never
-            stored on our systems — handled directly by a PCI&#160;DSS Level&#160;1 gateway.
+            stored on our systems. Handled directly by a PCI&#160;DSS Level&#160;1 gateway.
             All communication is encrypted in transit (TLS&#160;1.3) and at rest (AES&#160;256).
           </p>
         </ScrollReveal>
