@@ -33,21 +33,14 @@ export function Hero() {
           ))}
         </h1>
 
-        <div
-          className="hero-fade-up mt-8 md:mt-12 flex items-center gap-3 font-mono uppercase text-[13px] leading-[16px] tracking-[0.08em] font-medium text-white/85"
-          style={{ ['--fade-delay' as string]: '0.9s' }}
-        >
-          <span className="text-white/60">00</span>
-          <span className="h-px w-6 bg-white/40" />
-          Fianarantsoa · Est. 2018
-        </div>
       </div>
 
       <div
-        className="hero-fade-up absolute bottom-6 right-5 md:right-8 lg:right-12 font-mono text-[11px] uppercase tracking-[0.1em] text-white/70"
+        className="hero-fade-up absolute bottom-8 right-5 md:right-8 lg:right-12 text-white/70 text-[20px] leading-none"
         style={{ ['--fade-delay' as string]: '1.2s' }}
+        aria-hidden="true"
       >
-        Scroll ↓
+        ↓
       </div>
     </section>
   );
