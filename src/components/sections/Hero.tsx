@@ -1,3 +1,6 @@
+import Link from 'next/link';
+import { ArrowDown } from '@phosphor-icons/react/dist/ssr';
+
 export function Hero() {
   const lines = ['Ambalakely.', 'Ten rooms in the highlands', 'of Madagascar.'];
 
@@ -33,6 +36,27 @@ export function Hero() {
           ))}
         </h1>
 
+        <div
+          className="hero-fade-up mt-10 md:mt-14 flex items-center gap-5"
+          style={{ ['--fade-delay' as string]: '0.95s' }}
+        >
+          <Link
+            href="#book"
+            className="group inline-flex items-center gap-2 h-12 px-7 bg-white text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
+          >
+            Check availability
+            <ArrowDown
+              size={16}
+              className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-y-0.5"
+            />
+          </Link>
+          <Link
+            href="#stay"
+            className="inline-flex items-center font-body text-[15px] font-medium text-white/85 hover:text-white transition-colors duration-[var(--duration-base)]"
+          >
+            Explore the place
+          </Link>
+        </div>
       </div>
 
       <div

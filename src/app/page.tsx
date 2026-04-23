@@ -1,6 +1,6 @@
 import { Nav } from '@/components/sections/Nav';
 import { Hero } from '@/components/sections/Hero';
-import { QuickBook } from '@/components/sections/QuickBook';
+import { Overview } from '@/components/sections/Overview';
 import { Stay } from '@/components/sections/Stay';
 import { Dining } from '@/components/sections/Dining';
 import { Experiences } from '@/components/sections/Experiences';
@@ -19,7 +19,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <QuickBook />
+        <Overview />
         <Stay />
         <Dining />
         <Experiences />
