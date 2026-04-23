@@ -13,158 +13,86 @@ type FullBleedToSideProps = {
   image: ReactNode;
   info: ReactNode;
   className?: string;
-  endRadius?: number;
-  scrollDistance?: number;
   infoSide?: 'left' | 'right';
-  imageWidth?: number;
-  imageHeight?: number;
-  edgePadding?: number;
+  /** How far the sticky content stays pinned (in vh). Higher = more dwell time. */
+  dwellVh?: number;
 };
 
+/**
+ * Sticky viewport-sized image with info panel on one side.
+ * Uses native CSS `position: sticky` — no JS pin, no scrub.
+ * Next section scrolls naturally over the top, Framer-tutorial style.
+ *
+ * The image stays at 100vw × 100vh (viewport-filling) the whole time.
+ * Info panel fades in on viewport enter.
+ */
 export function FullBleedToSide({
   image,
   info,
   className,
-  endRadius = 32,
-  scrollDistance = 280,
   infoSide = 'right',
-  imageWidth = 62,
-  imageHeight = 86,
-  edgePadding = 5,
+  dwellVh = 120,
 }: FullBleedToSideProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const frameRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
 
-  const imageSide: 'left' | 'right' = infoSide === 'right' ? 'left' : 'right';
-
   useLayoutEffect(() => {
-    const section = sectionRef.current;
-    const frame = frameRef.current;
-    const infoEl = infoRef.current;
-    if (!section || !frame || !infoEl) return;
+    const el = infoRef.current;
+    if (!el) return;
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isMobile = window.matchMedia('(max-width: 1023px)').matches;
-
-    if (prefersReduced || isMobile) {
-      gsap.set(frame, { scale: 1, x: 0, borderRadius: endRadius });
-      gsap.set(infoEl, { opacity: 1, x: 0 });
-      return;
-    }
-
-    const scaleX = 100 / imageWidth;
-    const scaleY = 100 / imageHeight;
-    const initialScale = Math.max(scaleX, scaleY) * 1.02;
-
-    const finalLeftVw =
-      imageSide === 'left' ? edgePadding : 100 - edgePadding - imageWidth;
-    const finalCenterVw = finalLeftVw + imageWidth / 2;
-    const initialXOffsetVw = 50 - finalCenterVw;
-    const infoStartX = infoSide === 'right' ? 30 : -30;
+    if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        defaults: { ease: 'power2.inOut' }, // premium ease — slow start/end, confident middle
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
         scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: `+=${scrollDistance}vh`,
-          scrub: 1.8,                        // strong smoothing buffer — premium feel
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          fastScrollEnd: true,
+          trigger: el,
+          start: 'top 70%',
+          once: true,
         },
       });
-
-      // Hold full-bleed briefly at start, animate through middle, settle at end
-      tl.fromTo(
-        frame,
-        {
-          scale: initialScale,
-          x: `${initialXOffsetVw}vw`,
-          borderRadius: 0,
-        },
-        {
-          scale: 1,
-          x: '0vw',
-          borderRadius: endRadius,
-        },
-        0,
-      );
-
-      tl.fromTo(
-        infoEl,
-        { opacity: 0, x: infoStartX },
-        { opacity: 1, x: 0, ease: 'power2.out' },
-        0.45, // starts after image is already moving
-      );
-    }, section);
+    }, el);
 
     return () => ctx.revert();
-  }, [endRadius, scrollDistance, infoSide, imageWidth, imageHeight, edgePadding, imageSide]);
-
-  const scaleX = 100 / imageWidth;
-  const scaleY = 100 / imageHeight;
-  const initialScale = Math.max(scaleX, scaleY) * 1.02;
-  const finalLeftVw =
-    imageSide === 'left' ? edgePadding : 100 - edgePadding - imageWidth;
-  const finalCenterVw = finalLeftVw + imageWidth / 2;
-  const initialXOffsetVw = 50 - finalCenterVw;
-
-  const frameStyle: React.CSSProperties = {
-    position: 'absolute',
-    top: `${(100 - imageHeight) / 2}vh`,
-    [imageSide]: `${edgePadding}vw`,
-    width: `${imageWidth}vw`,
-    height: `${imageHeight}vh`,
-    transformOrigin: 'center center',
-    transform: `translate3d(${initialXOffsetVw}vw, 0, 0) scale(${initialScale})`,
-    borderRadius: 0,
-    willChange: 'transform, border-radius',
-  };
-
-  const infoPos = infoSide === 'right'
-    ? { right: `${edgePadding + 1}vw` }
-    : { left: `${edgePadding + 1}vw` };
+  }, []);
 
   return (
     <section
-      ref={sectionRef}
-      className={cn('relative w-full overflow-hidden bg-[var(--color-bg)]', className)}
-      style={{ height: '100vh' }}
+      className={cn('relative w-full', className)}
+      style={{ height: `${100 + dwellVh}vh` }}
     >
-      {/* Mobile stacked */}
-      <div className="lg:hidden flex flex-col h-full">
-        <div className="relative flex-1 overflow-hidden min-h-[55vh]">{image}</div>
-        <div className="px-5 py-12 flex flex-col justify-center">{info}</div>
-      </div>
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        {/* Full-bleed image — viewport-sized, no scale, no shrink */}
+        <div className="absolute inset-0">{image}</div>
 
-      {/* Desktop pinned + animated */}
-      <div className="hidden lg:block absolute inset-0">
+        {/* Gradient overlay — readable side */}
         <div
-          ref={frameRef}
-          className="overflow-hidden bg-[var(--color-bg-muted)]"
-          style={frameStyle}
-        >
-          {image}
-        </div>
-
-        <div
-          ref={infoRef}
+          aria-hidden="true"
           className={cn(
-            'absolute top-[10vh] bottom-[10vh] w-[34vw] flex flex-col justify-center',
+            'absolute inset-0 pointer-events-none',
+            infoSide === 'right'
+              ? 'bg-gradient-to-r from-transparent via-transparent to-black/65'
+              : 'bg-gradient-to-l from-transparent via-transparent to-black/65',
           )}
-          style={{
-            ...infoPos,
-            opacity: 0,
-            transform: `translate3d(${infoSide === 'right' ? 30 : -30}px, 0, 0)`,
-            willChange: 'opacity, transform',
-          }}
+        />
+
+        {/* Info panel */}
+        <div
+          className={cn(
+            'absolute inset-y-0 flex items-center',
+            infoSide === 'right' ? 'right-5 md:right-8 lg:right-12' : 'left-5 md:left-8 lg:left-12',
+          )}
         >
-          {info}
+          <div
+            ref={infoRef}
+            className="max-w-[440px] text-white will-change-[opacity,transform]"
+            style={{ opacity: 0, transform: 'translate3d(0, 16px, 0)' }}
+          >
+            {info}
+          </div>
         </div>
       </div>
     </section>

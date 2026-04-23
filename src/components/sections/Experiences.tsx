@@ -12,8 +12,8 @@ import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 export function Experiences() {
   return (
     <>
-      {/* Full-bleed hero image — rice terraces */}
-      <FullBleedShrink endRadius={48} endWidth={86} endHeight={82} scrollDistance={100}>
+      {/* Full-bleed sticky image — rice terraces */}
+      <FullBleedShrink dwellVh={80}>
         <Image
           src="https://images.unsplash.com/photo-1564507004663-b6dfb3c824d5?w=2400&q=90"
           alt="Rice terraces in the highlands"
