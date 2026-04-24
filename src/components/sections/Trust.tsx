@@ -4,28 +4,32 @@ import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 
 const signals = [
   {
-    label: 'Featured in',
-    items: ['Condé Nast Traveler', 'Le Monde', 'NRK', 'Cereal Magazine'],
+    label: 'Community',
+    items: [
+      'Hope for the Future',
+      '130+ local children supported',
+      'Education and arts since 2014',
+    ],
   },
   {
-    label: 'Recognition',
+    label: 'Kitchen',
     items: [
-      'Travelers\u2019 Choice 2024',
-      'Sustainable Hospitality',
-      'Design Hotels Nominee',
+      'Tantsaha local growers',
+      'Garden-to-table produce',
+      'Zero-waste approach',
     ],
   },
   {
     label: 'Payments',
-    items: ['Visa', 'Mastercard', 'MVola', 'Orange Money', 'PCI DSS Level 1'],
+    items: ['Visa', 'Mastercard', 'MVola', 'Orange Money'],
   },
 ];
 
 const stats = [
-  { value: '18', label: 'permanent staff' },
-  { value: '97%', label: 'locally employed' },
-  { value: '12', label: 'families supported' },
-  { value: '0', label: 'single-use plastics' },
+  { value: '10', label: 'rooms' },
+  { value: '50', label: 'seats at Toko Telo' },
+  { value: '2018', label: 'opened' },
+  { value: '4 000', label: 'residents around' },
 ];
 
 export function Trust() {
@@ -34,10 +38,10 @@ export function Trust() {
       <Container>
         <ScrollReveal className="max-w-[680px] mb-20">
           <div className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-text-muted)] mb-6">
-            Trusted
+            Engagements
           </div>
           <h2 className="font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[36px] leading-[1.1] md:text-[48px] md:leading-[1.05] balance">
-            Staying here should feel as safe as it feels quiet.
+            Responsible hospitality. Rooted in Ambalakely.
           </h2>
         </ScrollReveal>
 
@@ -80,12 +84,13 @@ export function Trust() {
           </div>
         </ScrollReveal>
 
-        {/* Security strip */}
+        {/* Hope for the Future strip */}
         <ScrollReveal delay={0.2} className="mt-20 pt-10 border-t border-[var(--color-border-subtle)]">
           <p className="font-body text-[15px] leading-[1.6] text-[var(--color-text-muted)] max-w-[720px]">
-            Payments are processed by our certified banking partner. Card numbers are never
-            stored on our systems. Handled directly by a PCI&#160;DSS Level&#160;1 gateway.
-            All communication is encrypted in transit (TLS&#160;1.3) and at rest (AES&#160;256).
+            <strong className="text-[var(--color-text)] font-medium">Hope for the Future</strong>{' '}
+            is the hotel&rsquo;s charity, active since 2014. It supports children from the
+            Tanambao neighbourhood with tutoring, arts, music and language clubs. Guests
+            can visit during their stay.
           </p>
         </ScrollReveal>
       </Container>

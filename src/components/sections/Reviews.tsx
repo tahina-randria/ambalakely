@@ -5,40 +5,7 @@ import { Kicker } from '@/components/atoms/Kicker';
 import { ScrollReveal, Stagger, StaggerItem } from '@/lib/motion/ScrollReveal';
 import { Star } from '@phosphor-icons/react/dist/ssr';
 
-const reviews = [
-  {
-    quote:
-      'We had planned two nights and ended up staying five. It is the only honest way to describe Ambalakely.',
-    author: 'Kjell & Birgit',
-    city: 'Oslo',
-    date: 'April 2025',
-    source: 'Google',
-  },
-  {
-    quote:
-      'The garden, the rooms, the food. Hasina and her team treat every detail like it matters. Because it does.',
-    author: 'Bernt R.',
-    city: 'Stavanger',
-    date: 'October 2024',
-    source: 'TripAdvisor',
-  },
-  {
-    quote:
-      'A quiet, deliberate place on the Route Nationale 7. We will come back. And we will stay longer.',
-    author: 'Marion F.',
-    city: 'Lyon',
-    date: 'September 2024',
-    source: 'Booking',
-  },
-  {
-    quote:
-      'One of the few hotels in Madagascar where the Wi-Fi is fast, the linen is right, and nothing feels staged.',
-    author: 'Thomas K.',
-    city: 'Munich',
-    date: 'August 2024',
-    source: 'Google',
-  },
-];
+import { reviews } from '@/lib/data/rooms';
 
 export function Reviews() {
   return (

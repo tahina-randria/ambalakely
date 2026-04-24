@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "urtam-deck",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "/Users/tahina/Desktop/urtam-deck"],
+      "port": 3000
+    },
+    {
+      "name": "cv-tahina",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "/Users/tahina/Documents/projects/cv-tahina"],
+      "port": 3000
+    }
+  ]
+}

@@ -29,9 +29,9 @@ const columns = [
   {
     title: 'Contact',
     links: [
-      { label: 'WhatsApp', href: 'https://wa.me/261000000000' },
-      { label: 'Email', href: 'mailto:hello@hotelambalakely.com' },
-      { label: 'Newsletter', href: '/newsletter' },
+      { label: '+261 34 11 254 34', href: 'tel:+261341125434' },
+      { label: 'hello@hotelambalakely.com', href: 'mailto:hello@hotelambalakely.com' },
+      { label: 'Instagram', href: 'https://instagram.com/hotelambalakely' },
     ],
   },
 ];
@@ -69,10 +69,10 @@ export function Footer() {
 
           <div className="mt-20 pt-8 border-t border-[var(--color-border-subtle)] grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="font-mono text-[13px] text-[var(--color-text-muted)]">
-              Fianarantsoa · Madagascar · Est. 2018
+              Ambalakely · Fianarantsoa 301 · Madagascar
             </div>
             <div className="font-mono text-[13px] text-[var(--color-text-muted)] md:text-right">
-              NIF 1000XXXX · STAT 55XXX · RCCM 2018 B XXXX
+              Since 2018 · Koselig in the highlands
             </div>
           </div>
 

@@ -13,9 +13,9 @@ if (typeof window !== 'undefined') {
 }
 
 const tonight = [
-  'Rougets, crème d’ail noir',
-  'Zébu, feuilles de manioc, riz rouge',
-  'Glace citron, du jardin',
+  'Zébu Marengo, local herbs and Fianar wine',
+  'Kjøttkaker, rice field beans',
+  'Krumkake, house sorbet',
 ];
 
 export function Dining() {
@@ -55,7 +55,6 @@ export function Dining() {
         },
       });
 
-      // Image frame: full viewport → contained left column with top radius
       tl.fromTo(
         frame,
         {
@@ -78,7 +77,6 @@ export function Dining() {
         0,
       );
 
-      // Text: fade + slide in as image settles
       tl.fromTo(
         text,
         { opacity: 0, x: 32 },
@@ -98,7 +96,6 @@ export function Dining() {
       style={{ height: '220vh' }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-[var(--color-bg)]">
-        {/* Image frame — starts full viewport, shifts + rounds as scroll progresses */}
         <div
           ref={frameRef}
           className="absolute overflow-hidden bg-[var(--color-bg-muted)]"
@@ -113,8 +110,8 @@ export function Dining() {
           }}
         >
           <Image
-            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=2400&q=90"
-            alt="Toko Telo dining room"
+            src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2500w"
+            alt="Toko Telo kitchen"
             fill
             sizes="100vw"
             className="object-cover"
@@ -122,7 +119,6 @@ export function Dining() {
           />
         </div>
 
-        {/* Text panel — right side, vertically centered, left-aligned, reveals in sync */}
         <div
           ref={textRef}
           className="absolute flex flex-col justify-center will-change-[opacity,transform]"
@@ -142,8 +138,8 @@ export function Dining() {
           </h2>
 
           <p className="mt-6 text-[16px] leading-[1.55] text-[var(--color-text-muted)]">
-            A single menu, written every morning. Forty seats. What the garden gives,
-            what the market brought, what the chef felt like cooking.
+            Fifty seats. Produce from the Tantsaha, the local growers. Malagasy,
+            French and Norwegian plates share the menu.
           </p>
 
           <div className="mt-8 pt-6 border-t border-[var(--color-border-subtle)]">

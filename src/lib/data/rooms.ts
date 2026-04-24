@@ -1,6 +1,6 @@
 /**
- * Placeholder room data — Betsileo toponyms.
- * To be replaced once Hasina's team provides real names, photos, prices.
+ * Real room data — extracted from hotelambalakely.com.
+ * 3 categories, 10 rooms total.
  */
 
 export type Room = {
@@ -12,122 +12,177 @@ export type Room = {
   priceMga: number;
   priceEur: number;
   image: string;
+  description?: string;
 };
 
+const SQ = 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d';
+
 export const rooms: Room[] = [
+  // 2 Supérieure
   {
-    id: 'sahambavy',
+    id: 'superieure-1',
     number: '01',
-    name: 'Sahambavy',
-    size: '28 m²',
-    capacity: 'For two',
-    priceMga: 350000,
-    priceEur: 67,
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80',
+    name: 'Supérieure',
+    size: '43 m²',
+    capacity: '1–4 guests',
+    priceMga: 255000,
+    priceEur: 49,
+    image: `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg`,
+    description: 'King size voamboana. Rice field view.',
   },
   {
-    id: 'ranomafana',
+    id: 'superieure-2',
     number: '02',
-    name: 'Ranomafana',
-    size: '32 m²',
-    capacity: 'For two',
-    priceMga: 380000,
-    priceEur: 72,
-    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=80',
+    name: 'Supérieure',
+    size: '43 m²',
+    capacity: '1–4 guests',
+    priceMga: 255000,
+    priceEur: 49,
+    image: `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg`,
+    description: 'King size voamboana. Rice field view.',
   },
+  // 4 Confort
   {
-    id: 'isalo',
+    id: 'confort-1',
     number: '03',
-    name: 'Isalo',
-    size: '28 m²',
-    capacity: 'For two or three',
-    priceMga: 420000,
-    priceEur: 80,
-    image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1200&q=80',
+    name: 'Confort',
+    size: '29 m²',
+    capacity: '1–3 guests',
+    priceMga: 226000,
+    priceEur: 44,
+    image: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg`,
+    description: 'King voamboana + single katrafay. Garden view.',
   },
   {
-    id: 'andringitra',
+    id: 'confort-2',
     number: '04',
-    name: 'Andringitra',
-    size: '36 m²',
-    capacity: 'For two',
-    priceMga: 450000,
-    priceEur: 86,
-    image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1200&q=80',
+    name: 'Confort',
+    size: '29 m²',
+    capacity: '1–3 guests',
+    priceMga: 226000,
+    priceEur: 44,
+    image: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg`,
+    description: 'King voamboana + single katrafay. Garden view.',
   },
   {
-    id: 'tsaranoro',
+    id: 'confort-3',
     number: '05',
-    name: 'Tsaranoro',
-    size: '42 m²',
-    capacity: 'For four',
-    priceMga: 620000,
-    priceEur: 118,
-    image: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=1200&q=80',
+    name: 'Confort',
+    size: '29 m²',
+    capacity: '1–3 guests',
+    priceMga: 226000,
+    priceEur: 44,
+    image: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg`,
+    description: 'Upstairs. Landscape view.',
   },
   {
-    id: 'antanifotsy',
+    id: 'confort-4',
     number: '06',
-    name: 'Antanifotsy',
-    size: '30 m²',
-    capacity: 'For two',
-    priceMga: 400000,
-    priceEur: 76,
-    image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=1200&q=80',
+    name: 'Confort',
+    size: '29 m²',
+    capacity: '1–3 guests',
+    priceMga: 226000,
+    priceEur: 44,
+    image: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg`,
+    description: 'Upstairs. Landscape view.',
   },
+  // 4 Standard
   {
-    id: 'ambositra',
+    id: 'standard-1',
     number: '07',
-    name: 'Ambositra',
-    size: '28 m²',
-    capacity: 'For two',
-    priceMga: 360000,
-    priceEur: 69,
-    image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&q=80',
+    name: 'Standard',
+    size: '21 m²',
+    capacity: '1–2 guests',
+    priceMga: 182000,
+    priceEur: 35,
+    image: `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg`,
+    description: 'Double katrafay and twin voamboana. Garden view.',
   },
   {
-    id: 'ihosy',
+    id: 'standard-2',
     number: '08',
-    name: 'Ihosy',
-    size: '30 m²',
-    capacity: 'For two',
-    priceMga: 380000,
-    priceEur: 72,
-    image: 'https://images.unsplash.com/photo-1616047006789-b7af5afb8c20?w=1200&q=80',
+    name: 'Standard',
+    size: '21 m²',
+    capacity: '1–2 guests',
+    priceMga: 182000,
+    priceEur: 35,
+    image: `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg`,
+    description: 'Double katrafay and twin voamboana. Garden view.',
   },
   {
-    id: 'ranohira',
+    id: 'standard-3',
     number: '09',
-    name: 'Ranohira',
-    size: '26 m²',
-    capacity: 'For two',
-    priceMga: 340000,
-    priceEur: 65,
-    image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80',
+    name: 'Standard',
+    size: '21 m²',
+    capacity: '1–2 guests',
+    priceMga: 182000,
+    priceEur: 35,
+    image: `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg`,
+    description: 'Double katrafay and twin voamboana. Garden view.',
   },
   {
-    id: 'fianarantsoa',
+    id: 'standard-4',
     number: '10',
-    name: 'Fianarantsoa',
-    size: '48 m²',
-    capacity: 'Family · for four',
-    priceMga: 720000,
-    priceEur: 137,
-    image: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1200&q=80',
+    name: 'Standard',
+    size: '21 m²',
+    capacity: '1–2 guests',
+    priceMga: 182000,
+    priceEur: 35,
+    image: `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg`,
+    description: 'Double katrafay and twin voamboana. Garden view.',
   },
 ];
 
 export const experiences = [
-  { id: 'ranomafana', number: '01', title: 'Ranomafana National Park', subtitle: 'Full-day guided walk', duration: '8 h' },
-  { id: 'silk', number: '02', title: 'Silk workshop', subtitle: 'Betsileo traditional weaving', duration: '3 h' },
-  { id: 'cooking', number: '03', title: 'Cooking session', subtitle: 'With the kitchen', duration: '4 h' },
-  { id: 'vineyard', number: '04', title: 'Vineyard visit', subtitle: 'Sahambavy estate', duration: '½ day' },
-  { id: 'andringitra-trek', number: '05', title: 'Andringitra trek', subtitle: 'Three days, two nights', duration: '3 d' },
-  { id: 'market', number: '06', title: 'Market & basketry', subtitle: 'Betsileo craftsmanship', duration: '½ day' },
+  { id: 'ranomafana', number: '01', title: 'Ranomafana National Park', subtitle: 'Guided walk, lemurs and endemic flora', duration: 'Full day' },
+  { id: 'rice-fields', number: '02', title: 'Rice field walk', subtitle: 'Around Ambalakely village', duration: '2 h' },
+  { id: 'cooking', number: '03', title: 'Cooking with the team', subtitle: 'Seasonal produce from the garden', duration: '4 h' },
+  { id: 'sahambavy', number: '04', title: 'Sahambavy tea estate', subtitle: 'Tea factory and tastings', duration: 'Half day' },
+  { id: 'andringitra', number: '05', title: 'Andringitra trek', subtitle: 'Tsaranoro massif, three days', duration: '3 days' },
+  { id: 'hope', number: '06', title: 'Hope for the Future', subtitle: 'Visit the community programme', duration: '2 h' },
 ] as const;
 
 export const journalPosts = [
-  { id: 'silence', date: 'MARCH 2026', title: 'On silence, and why we don\u2019t have televisions.' },
-  { id: 'harvest', date: 'FEBRUARY 2026', title: 'Notes from the 2025 harvest.' },
-  { id: 'closure', date: 'JANUARY 2026', title: 'Why we close in December.' },
+  { id: 'koselig', date: 'APRIL 2026', title: 'Koselig in the highlands. What it means here.' },
+  { id: 'garden', date: 'MARCH 2026', title: 'What the garden gives in April.' },
+  { id: 'hope', date: 'FEBRUARY 2026', title: 'Ten years of Hope for the Future.' },
+] as const;
+
+/**
+ * Reviews from real guests — from hotelambalakely.com.
+ * Shortened/translated for english homepage.
+ */
+export const reviews = [
+  {
+    quote:
+      'Truly a jewel. Built in the Betsileo style, unbelievably friendly staff, superb food mostly from the garden. The room was impeccable and there were hot water bottles in our bed that were still warm in the morning. Real Malagasy hospitality.',
+    author: 'Polly P.',
+    city: 'UK',
+    date: 'TripAdvisor',
+    source: 'TripAdvisor',
+  },
+  {
+    quote:
+      'Unique countryside location. Ten minutes by car from central Fianarantsoa. Stunning views over the rice fields. Food and lodging were exceptional. Try Hasina\u2019s homemade ice cream.',
+    author: 'KingfisherOslo',
+    city: 'Oslo',
+    date: 'TripAdvisor',
+    source: 'TripAdvisor',
+  },
+  {
+    quote:
+      'A rare treasure in the middle of Madagascar. Excellent stay. Always welcomed with smiles and joy. Beautiful garden. Clean and comfortable room. Delicious food. They even surprised us by washing our car.',
+    author: 'Ada',
+    city: '—',
+    date: 'Booking',
+    source: 'Booking',
+  },
+  {
+    quote:
+      'Perfect place to stay whether you\u2019re spending time in Fianarantsoa or passing through on the way to Isalo or Antsirabe. Very clean, delicious food, and Hasina showed us her garden where she grows fruits and herbs for the kitchen.',
+    author: 'Bernt R.',
+    city: 'Norway',
+    date: 'TripAdvisor',
+    source: 'TripAdvisor',
+  },
 ] as const;

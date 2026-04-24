@@ -6,20 +6,20 @@ export function Hero() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden text-white isolate">
-      {/* Background image — subtle zoom-out via CSS keyframes */}
+      {/* Background image — real hotel exterior */}
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-20 hero-bg-settle"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=2400&q=90')",
+            "url('https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/e322c91a-f718-4508-8658-bcfe02d2e0f3/exterieur.jpg?format=2500w')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-gradient-to-b from-black/25 via-black/10 to-black/55"
+        className="absolute inset-0 -z-10 bg-gradient-to-b from-black/25 via-black/10 to-black/60"
       />
 
       <div className="relative h-full w-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col justify-end pb-14 md:pb-20">

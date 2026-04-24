@@ -29,13 +29,13 @@ export function Contact() {
             <ul className="mt-12 flex flex-col gap-5">
               <li>
                 <a
-                  href="https://wa.me/261000000000"
+                  href="https://wa.me/261341125434"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-3 text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors duration-[var(--duration-base)]"
                 >
                   <WhatsappLogo size={20} weight="regular" />
-                  <span className="font-body text-[17px]">WhatsApp +261 · · ·</span>
+                  <span className="font-body text-[17px]">WhatsApp +261 34 11 254 34</span>
                 </a>
               </li>
               <li>
