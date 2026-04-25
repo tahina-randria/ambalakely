@@ -157,32 +157,28 @@ export const reviews = [
     quote:
       'Truly a jewel. Built in the Betsileo style, unbelievably friendly staff, superb food mostly from the garden. The room was impeccable and there were hot water bottles in our bed that were still warm in the morning. Real Malagasy hospitality.',
     author: 'Polly P.',
-    city: 'UK',
-    date: 'TripAdvisor',
+    city: 'United Kingdom',
     source: 'TripAdvisor',
   },
   {
     quote:
-      'Unique countryside location. Ten minutes by car from central Fianarantsoa. Stunning views over the rice fields. Food and lodging were exceptional. Try Hasina\u2019s homemade ice cream.',
+      'Unique countryside location, ten minutes from central Fianarantsoa. Stunning views over the rice fields. Food and lodging were exceptional. Try Hasina\u2019s homemade ice cream.',
     author: 'KingfisherOslo',
     city: 'Oslo',
-    date: 'TripAdvisor',
     source: 'TripAdvisor',
   },
   {
     quote:
-      'A rare treasure in the middle of Madagascar. Excellent stay. Always welcomed with smiles and joy. Beautiful garden. Clean and comfortable room. Delicious food. They even surprised us by washing our car.',
+      'A rare treasure in the middle of Madagascar. Always welcomed with smiles and joy. Beautiful garden, clean and comfortable room, delicious food. They even surprised us by washing our car.',
     author: 'Ada',
-    city: '—',
-    date: 'Booking',
+    city: 'Italy',
     source: 'Booking',
   },
   {
     quote:
-      'Perfect place to stay whether you\u2019re spending time in Fianarantsoa or passing through on the way to Isalo or Antsirabe. Very clean, delicious food, and Hasina showed us her garden where she grows fruits and herbs for the kitchen.',
+      'Perfect place to stay, whether you are spending time in Fianarantsoa or passing through on the way to Isalo or Antsirabe. Very clean, delicious food, and Hasina showed us her garden where she grows fruits and herbs for the kitchen.',
     author: 'Bernt R.',
     city: 'Norway',
-    date: 'TripAdvisor',
     source: 'TripAdvisor',
   },
 ] as const;

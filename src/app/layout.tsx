@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { SmoothScrollProvider } from '@/lib/motion/SmoothScrollProvider';
+import { ScrollProgress } from '@/components/atoms/ScrollProgress';
+import { SectionRail } from '@/components/atoms/SectionRail';
 import '@/styles/globals.css';
 
 const geist = Geist({
@@ -24,7 +26,7 @@ export const metadata: Metadata = {
     template: '%s · Ambalakely',
   },
   description:
-    'A small hotel in Fianarantsoa, Madagascar. Ten rooms, a kitchen, a garden, and a way of staying that takes more than one night.',
+    'A small hotel in Fianarantsoa, Madagascar. Ten rooms, a restaurant, a garden. Mamy and Hasina, since 2018.',
   openGraph: {
     title: 'Ambalakely',
     description: 'Ten rooms in the highlands of Madagascar.',
@@ -45,7 +47,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <body>
+        <ScrollProgress />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <SectionRail />
       </body>
     </html>
   );

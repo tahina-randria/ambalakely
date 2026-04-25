@@ -48,11 +48,11 @@ export function Reviews() {
                     <div className="font-body text-[15px] font-medium text-[var(--color-text)]">
                       {r.author}
                     </div>
-                    <div className="mt-1 font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
-                      {r.city} · {r.date}
+                    <div className="mt-1 font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                      {r.city}
                     </div>
                   </div>
-                  <div className="font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-text-muted)] shrink-0">
+                  <div className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-text-muted)] shrink-0">
                     {r.source}
                   </div>
                 </figcaption>
