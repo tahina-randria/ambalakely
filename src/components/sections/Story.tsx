@@ -52,8 +52,8 @@ export function Story() {
                 </p>
                 <p>
                   Hasina studied in Norway. She brought back the idea of{' '}
-                  <em className="text-[var(--color-text)]">koselig</em> — a feeling
-                  for warmth and wellbeing in small daily things — and married it
+                  <em className="text-[var(--color-text)]">koselig</em>, a feeling
+                  for warmth and wellbeing in small daily things, and married it
                   with Betsileo craft and hospitality.
                 </p>
               </div>

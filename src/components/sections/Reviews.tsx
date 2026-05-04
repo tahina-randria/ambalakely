@@ -12,7 +12,7 @@ export function Reviews() {
     <Section id="reviews" divider>
       <Container>
         <ScrollReveal className="mb-16 md:mb-24">
-          <Kicker number={4}>Guests</Kicker>
+          <Kicker>Guests</Kicker>
           <div className="mt-6 flex flex-col md:flex-row md:items-end justify-between gap-8">
             <Heading variant="h2" className="max-w-[800px]">
               The people who stay here, and stay longer.

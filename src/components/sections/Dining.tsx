@@ -131,7 +131,7 @@ export function Dining() {
             transform: 'translate3d(32px, 0, 0)',
           }}
         >
-          <Kicker number={2}>Dining</Kicker>
+          <Kicker>Dining</Kicker>
 
           <h2 className="mt-8 font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[36px] leading-[1.02] md:text-[44px] md:leading-[1.02]">
             Toko Telo.

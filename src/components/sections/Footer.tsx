@@ -22,7 +22,7 @@ const columns = [
     title: 'About',
     links: [
       { label: 'The house', href: '/about' },
-      { label: 'Press', href: '/press' },
+      { label: 'Hope for the Future', href: '/hope' },
       { label: 'Directions', href: '/directions' },
     ],
   },
@@ -36,19 +36,27 @@ const columns = [
   },
 ];
 
+const legalLinks = [
+  { label: 'Legal', href: '/legal' },
+  { label: 'Privacy', href: '/privacy' },
+  { label: 'Terms', href: '/terms' },
+];
+
 export function Footer() {
   return (
     <footer className="border-t border-[var(--color-border-subtle)] bg-[var(--color-bg-subtle)]">
       <Container>
         <div className="py-24 md:py-32">
-          <div className="font-display font-normal text-[44px] md:text-[72px] lg:text-[96px] tracking-[-0.04em] text-[var(--color-text)]">
+          {/* Masthead */}
+          <div className="font-display font-light tracking-[-0.04em] text-[var(--color-text)] text-[64px] leading-[1] md:text-[120px] lg:text-[168px]">
             Ambalakely
           </div>
 
-          <div className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4 gap-10">
+          {/* Columns */}
+          <div className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
             {columns.map((col) => (
               <div key={col.title}>
-                <div className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-text-muted)] mb-5">
+                <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-5">
                   {col.title}
                 </div>
                 <ul className="space-y-3">
@@ -67,38 +75,19 @@ export function Footer() {
             ))}
           </div>
 
-          <div className="mt-20 pt-8 border-t border-[var(--color-border-subtle)] grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="font-mono text-[13px] text-[var(--color-text-muted)]">
-              Ambalakely · Fianarantsoa 301 · Madagascar
-            </div>
-            <div className="font-mono text-[13px] text-[var(--color-text-muted)] md:text-right">
-              Since 2018 · Koselig in the highlands
-            </div>
-          </div>
-
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="font-mono text-[13px] text-[var(--color-text-muted)]">
-              © 2026 Ambalakely
-            </div>
-            <div className="flex gap-6 md:justify-end">
-              <Link
-                href="/legal"
-                className="font-mono text-[13px] text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
-              >
-                Legal
-              </Link>
-              <Link
-                href="/privacy"
-                className="font-mono text-[13px] text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
-              >
-                Privacy
-              </Link>
-              <Link
-                href="/terms"
-                className="font-mono text-[13px] text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
-              >
-                Terms
-              </Link>
+          {/* Bottom legal — single row, single style */}
+          <div className="mt-20 pt-8 border-t border-[var(--color-border-subtle)] flex flex-col md:flex-row md:items-center md:justify-between gap-4 font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
+            <div>© 2026 Ambalakely · Fianarantsoa, Madagascar</div>
+            <div className="flex gap-6">
+              {legalLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="hover:text-[var(--color-text)] transition-colors duration-[var(--duration-base)]"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

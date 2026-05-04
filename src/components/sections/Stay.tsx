@@ -58,7 +58,7 @@ export function Stay() {
     <Section id="stay" divider>
       <Container>
         <ScrollReveal className="mb-16 md:mb-24">
-          <Kicker number={1}>Stay</Kicker>
+          <Kicker>Stay</Kicker>
           <Heading variant="h2" className="mt-6 max-w-[820px]">
             Ten rooms across three categories, each with its own view.
           </Heading>

@@ -11,7 +11,7 @@ export function Journal() {
     <Section id="journal" divider>
       <Container>
         <ScrollReveal className="mb-16 md:mb-24">
-          <Kicker number={6}>Journal</Kicker>
+          <Kicker>Journal</Kicker>
         </ScrollReveal>
 
         <ul className="border-t border-[var(--color-border-subtle)]">

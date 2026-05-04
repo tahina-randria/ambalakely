@@ -19,8 +19,6 @@ export function Book() {
       <Container size="lg">
         <ScrollReveal>
           <div className="font-mono uppercase text-[13px] tracking-[0.08em] text-[var(--color-sand-6)] mb-6">
-            <span className="text-[var(--color-sand-8)]">07</span>
-            <span className="mx-3">·</span>
             Book
           </div>
           <h2 className="font-display font-light tracking-[-0.03em] text-[44px] leading-[1.05] md:text-[60px] md:leading-[1.05] max-w-[900px] balance">

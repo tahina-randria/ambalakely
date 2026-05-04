@@ -31,7 +31,7 @@ export function Location() {
     <Section id="location" divider>
       <Container>
         <ScrollReveal className="mb-16 md:mb-24">
-          <Kicker number={5}>Location</Kicker>
+          <Kicker>Location</Kicker>
           <div className="mt-6 flex flex-col md:flex-row md:items-end justify-between gap-8">
             <h2 className="font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[36px] leading-[1.05] md:text-[56px] md:leading-[1.05] max-w-[700px] balance">
               On the Route Nationale 7, halfway between the capital and the south.

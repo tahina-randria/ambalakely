@@ -27,7 +27,7 @@ export function Experiences() {
       <Section id="experiences" divider>
         <Container>
           <ScrollReveal className="mb-16 md:mb-24">
-            <Kicker number={3}>Experiences</Kicker>
+            <Kicker>Experiences</Kicker>
             <Heading variant="h2" className="mt-6 max-w-[800px]">
               Walk, weave, cook. What this land gives, in its own season.
             </Heading>
