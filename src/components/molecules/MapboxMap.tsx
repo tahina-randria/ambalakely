@@ -7,6 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 const HOTEL_LNG_LAT: [number, number] = [47.0862, -21.4541];
 
 // Set NEXT_PUBLIC_MAPBOX_TOKEN in .env (free tier at mapbox.com)
+// Build cache buster: 2026-05-04
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 /**
