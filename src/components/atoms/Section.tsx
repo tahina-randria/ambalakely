@@ -18,7 +18,7 @@ export function Section({
   return (
     <section
       className={cn(
-        !bleed && 'py-24 md:py-32 lg:py-48',
+        !bleed && 'py-24 md:py-32 lg:py-56',
         divider && 'hair-rule',
         className,
       )}

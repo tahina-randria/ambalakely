@@ -39,7 +39,7 @@ export function Story() {
             <ScrollReveal>
               <Kicker>About</Kicker>
 
-              <h2 className="mt-8 font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[36px] leading-[1.1] md:text-[48px] md:leading-[1.05] max-w-[720px] balance">
+              <h2 className="mt-8 font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[44px] leading-[1.05] md:text-[56px] md:leading-[1.02] max-w-[760px] balance">
                 Mamy and Hasina opened Ambalakely in 2018.
               </h2>
             </ScrollReveal>

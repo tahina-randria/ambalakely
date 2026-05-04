@@ -1,98 +1,69 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 
-const signals = [
-  {
-    label: 'Community',
-    items: [
-      'Hope for the Future',
-      '130+ local children supported',
-      'Education and arts since 2014',
-    ],
-  },
-  {
-    label: 'Kitchen',
-    items: [
-      'Tantsaha local growers',
-      'Garden-to-table produce',
-      'Zero-waste approach',
-    ],
-  },
-  {
-    label: 'Payments',
-    items: ['Visa', 'Mastercard', 'MVola', 'Orange Money'],
-  },
-];
-
-const stats = [
-  { value: '10', label: 'rooms' },
-  { value: '50', label: 'seats at Toko Telo' },
-  { value: '2018', label: 'opened' },
-  { value: '4 000', label: 'residents around' },
-];
-
+/**
+ * Single editorial spread on Hope for the Future.
+ * Image left, prose right. No stats, no columns. Quiet anticipation.
+ */
 export function Trust() {
   return (
     <Section id="trust" divider>
       <Container>
-        <ScrollReveal className="max-w-[680px] mb-20">
-          <div className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-text-muted)] mb-6">
-            Engagements
-          </div>
-          <h2 className="font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[36px] leading-[1.1] md:text-[48px] md:leading-[1.05] balance">
-            Responsible hospitality. Rooted in Ambalakely.
-          </h2>
-        </ScrollReveal>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+          <ScrollReveal className="lg:col-span-6">
+            <div
+              className="relative aspect-[4/5] overflow-hidden bg-[var(--color-bg-muted)]"
+              style={{
+                borderTopLeftRadius: 40,
+                borderTopRightRadius: 40,
+              }}
+            >
+              <Image
+                src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=1500w"
+                alt="Hope for the Future"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </ScrollReveal>
 
-        {/* Stats row */}
-        <ScrollReveal delay={0.1}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-6 py-12 border-y border-[var(--color-border-subtle)]">
-            {stats.map((s) => (
-              <div key={s.label} className="flex flex-col">
-                <div className="font-display font-light text-[56px] leading-[1] tracking-[-0.03em] text-[var(--color-text)] md:text-[72px]">
-                  {s.value}
-                </div>
-                <div className="mt-3 font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
-                  {s.label}
-                </div>
+          <div className="lg:col-span-6 flex flex-col justify-center">
+            <ScrollReveal>
+              <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-6">
+                Hope for the Future
               </div>
-            ))}
-          </div>
-        </ScrollReveal>
 
-        {/* Trust signals columns */}
-        <ScrollReveal delay={0.15} className="mt-20">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-            {signals.map((col) => (
-              <div key={col.label} className="flex flex-col">
-                <div className="font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-text-muted)] mb-5">
-                  {col.label}
-                </div>
-                <ul className="flex flex-col gap-3">
-                  {col.items.map((item) => (
-                    <li
-                      key={item}
-                      className="font-body text-[16px] text-[var(--color-text)]"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </ScrollReveal>
+              <h2 className="font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[44px] leading-[1.05] md:text-[56px] md:leading-[1.02] max-w-[640px] balance">
+                Since 2014, the hotel runs a school for the village.
+              </h2>
+            </ScrollReveal>
 
-        {/* Hope for the Future strip */}
-        <ScrollReveal delay={0.2} className="mt-20 pt-10 border-t border-[var(--color-border-subtle)]">
-          <p className="font-body text-[15px] leading-[1.6] text-[var(--color-text-muted)] max-w-[720px]">
-            <strong className="text-[var(--color-text)] font-medium">Hope for the Future</strong>{' '}
-            is the hotel&rsquo;s charity, active since 2014. It supports children from the
-            Tanambao neighbourhood with tutoring, arts, music and language clubs. Guests
-            can visit during their stay.
-          </p>
-        </ScrollReveal>
+            <ScrollReveal delay={0.05}>
+              <p className="mt-10 text-[18px] leading-[1.6] text-[var(--color-text-muted)] max-w-[520px]">
+                A hundred and thirty children from Tanambao come every week. Tutoring,
+                arts, music, language clubs. Guests can visit during their stay.
+              </p>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.1}>
+              <Link
+                href="/hope"
+                className="mt-12 inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)] group"
+              >
+                Read more
+                <ArrowRight
+                  size={18}
+                  className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
+                />
+              </Link>
+            </ScrollReveal>
+          </div>
+        </div>
       </Container>
     </Section>
   );

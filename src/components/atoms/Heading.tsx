@@ -9,7 +9,7 @@ const variantClass: Record<Variant, string> = {
   display:
     'font-display font-light tracking-[-0.04em] text-[56px] leading-[58px] md:text-[80px] md:leading-[80px] lg:text-[96px] lg:leading-[96px]',
   h1: 'font-display font-normal tracking-[-0.03em] text-[40px] leading-[44px] md:text-[52px] md:leading-[56px] lg:text-[60px] lg:leading-[62px]',
-  h2: 'font-display font-normal tracking-[-0.03em] text-[32px] leading-[36px] md:text-[38px] md:leading-[42px] lg:text-[44px] lg:leading-[48px]',
+  h2: 'font-display font-light tracking-[-0.03em] text-[40px] leading-[1.05] md:text-[48px] md:leading-[1.02] lg:text-[56px] lg:leading-[1.02]',
   h3: 'font-display font-medium tracking-[-0.02em] text-[24px] leading-[30px] md:text-[28px] md:leading-[34px] lg:text-[32px] lg:leading-[38px]',
   h4: 'font-display font-medium tracking-[-0.02em] text-[20px] leading-[26px] md:text-[22px] md:leading-[28px] lg:text-[24px] lg:leading-[30px]',
   h5: 'font-display font-medium tracking-[-0.01em] text-[18px] leading-[24px] md:text-[20px] md:leading-[26px]',

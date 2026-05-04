@@ -133,7 +133,7 @@ export function Dining() {
         >
           <Kicker>Dining</Kicker>
 
-          <h2 className="mt-8 font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[36px] leading-[1.02] md:text-[44px] md:leading-[1.02]">
+          <h2 className="mt-8 font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[40px] leading-[1.02] md:text-[52px] md:leading-[1.02]">
             Toko Telo.
           </h2>
 
