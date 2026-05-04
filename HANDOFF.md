@@ -1,10 +1,10 @@
-# HANDOFF - 2026-05-04 14:31
+# HANDOFF - 2026-05-04 14:35
 
 ## Etat
 (A remplir : ce qui a ete fait cette session)
 
 ## Fichiers modifies
-HANDOFF.md
+
 
 ## En attente
 (A remplir : taches restantes)
