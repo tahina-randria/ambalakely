@@ -19,14 +19,24 @@ const MADAGASCAR_PATH =
 // RN7 path: from Tana to the South via Fianarantsoa
 const RN7_PATH = 'M 245 105 L 240 165 L 230 220 L 215 280 L 195 360 L 175 440';
 
+type Point = {
+  id: string;
+  label: string;
+  sub: string;
+  x: number;
+  y: number;
+  meta: string;
+  primary?: boolean;
+};
+
 // Key points along the spine (x, y in viewBox coordinates)
-const POINTS = [
+const POINTS: Point[] = [
   { id: 'tana', label: 'Antananarivo', sub: 'Capital · Ivato airport', x: 245, y: 105, meta: '8 h to Ambalakely' },
   { id: 'antsirabe', label: 'Antsirabe', sub: 'Thermal town', x: 240, y: 165, meta: '4 h' },
   { id: 'ambalakely', label: 'Ambalakely', sub: 'Fianarantsoa', x: 215, y: 280, meta: '', primary: true },
   { id: 'ranomafana', label: 'Ranomafana', sub: 'National park', x: 248, y: 295, meta: '1 h 20' },
   { id: 'isalo', label: 'Isalo', sub: 'Massif', x: 175, y: 440, meta: '5 h' },
-] as const;
+];
 
 export function Location() {
   return (
