@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { SmoothScrollProvider } from '@/lib/motion/SmoothScrollProvider';
 import { ScrollProgress } from '@/components/atoms/ScrollProgress';
-import { SectionRail } from '@/components/atoms/SectionRail';
 import '@/styles/globals.css';
 
 const geist = Geist({
@@ -49,7 +48,6 @@ export default function RootLayout({
       <body>
         <ScrollProgress />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
-        <SectionRail />
       </body>
     </html>
   );
