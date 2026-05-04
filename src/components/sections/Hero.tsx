@@ -1,12 +1,16 @@
-import Link from 'next/link';
+'use client';
+
 import { ArrowDown } from '@phosphor-icons/react/dist/ssr';
 
 export function Hero() {
   const lines = ['Ambalakely.', 'Ten rooms in the highlands', 'of Madagascar.'];
 
+  const openBooking = () => {
+    window.dispatchEvent(new Event('open-booking'));
+  };
+
   return (
     <section className="relative h-screen w-full overflow-hidden text-white isolate">
-      {/* Background image — real hotel exterior */}
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-20 hero-bg-settle"
@@ -40,8 +44,9 @@ export function Hero() {
           className="hero-fade-up mt-10 md:mt-14"
           style={{ ['--fade-delay' as string]: '0.95s' }}
         >
-          <Link
-            href="#book"
+          <button
+            type="button"
+            onClick={openBooking}
             className="group inline-flex items-center gap-2 h-12 px-7 bg-white text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
           >
             Check availability
@@ -49,7 +54,7 @@ export function Hero() {
               size={16}
               className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-y-0.5"
             />
-          </Link>
+          </button>
         </div>
       </div>
 
