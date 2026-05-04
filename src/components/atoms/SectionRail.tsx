@@ -9,38 +9,37 @@ type Item = {
   label: string;
 };
 
+/**
+ * Numbered destinations only. Aligned with Kicker numbers in each section.
+ * Context sections (Hero, Overview, About/Story, Engagements/Trust) are
+ * not in the rail — they appear as you scroll but aren't navigation targets.
+ */
 const items: Item[] = [
-  { id: 'overview', number: '01', label: 'Overview' },
-  { id: 'stay', number: '02', label: 'Stay' },
-  { id: 'dining', number: '03', label: 'Dining' },
-  { id: 'experiences', number: '04', label: 'Experiences' },
-  { id: 'about', number: '05', label: 'About' },
-  { id: 'reviews', number: '06', label: 'Guests' },
-  { id: 'trust', number: '07', label: 'Engagements' },
-  { id: 'location', number: '08', label: 'Location' },
-  { id: 'journal', number: '09', label: 'Journal' },
-  { id: 'book', number: '10', label: 'Book' },
+  { id: 'stay', number: '01', label: 'Stay' },
+  { id: 'dining', number: '02', label: 'Dining' },
+  { id: 'experiences', number: '03', label: 'Experiences' },
+  { id: 'reviews', number: '04', label: 'Guests' },
+  { id: 'location', number: '05', label: 'Location' },
+  { id: 'journal', number: '06', label: 'Journal' },
+  { id: 'book', number: '07', label: 'Book' },
 ];
 
 /**
- * Vertical breadcrumb rail — fixed on the right side, hidden on mobile.
- * Highlights the current section based on viewport position.
- * Provides click-to-scroll navigation.
+ * Vertical breadcrumb rail — fixed on the right, hidden on mobile.
+ * Highlights the current destination based on viewport position.
  */
 export function SectionRail() {
-  const [activeId, setActiveId] = useState<string>('overview');
+  const [activeId, setActiveId] = useState<string>('stay');
   const [hovered, setHovered] = useState(false);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Show after hero (when scrolled past 80vh)
     const onScroll = () => {
       setVisible(window.scrollY > window.innerHeight * 0.8);
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    // Track which section is in view
     const observers: IntersectionObserver[] = [];
     items.forEach((item) => {
       const el = document.getElementById(item.id);
@@ -90,7 +89,6 @@ export function SectionRail() {
                     : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]',
                 )}
               >
-                {/* Label — slides in on hover */}
                 <span
                   className={cn(
                     'font-mono text-[12px] uppercase tracking-[0.1em] whitespace-nowrap',
@@ -103,12 +101,10 @@ export function SectionRail() {
                   {item.label}
                 </span>
 
-                {/* Number — always visible */}
                 <span className="font-mono text-[11px] tabular-nums tracking-tight w-7 text-right">
                   {item.number}
                 </span>
 
-                {/* Indicator line */}
                 <span
                   className={cn(
                     'block h-px transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)]',

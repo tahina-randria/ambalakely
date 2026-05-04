@@ -9,7 +9,6 @@ import { Reviews } from '@/components/sections/Reviews';
 import { Trust } from '@/components/sections/Trust';
 import { Location } from '@/components/sections/Location';
 import { Journal } from '@/components/sections/Journal';
-import { Contact } from '@/components/sections/Contact';
 import { Book } from '@/components/sections/Book';
 import { Footer } from '@/components/sections/Footer';
 
@@ -28,7 +27,6 @@ export default function Home() {
         <Trust />
         <Location />
         <Journal />
-        <Contact />
         <Book />
       </main>
       <Footer />
