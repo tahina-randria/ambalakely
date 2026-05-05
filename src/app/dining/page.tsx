@@ -6,6 +6,17 @@ import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
+import {
+  Users,
+  ForkKnife,
+  Door,
+  Clock,
+  Leaf,
+  Wine,
+  Coffee,
+  Cookie,
+} from '@phosphor-icons/react/dist/ssr';
+import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 
 export const metadata: Metadata = {
   title: 'Dining',
@@ -82,11 +93,42 @@ const courses = [
   },
 ];
 
-const drinks = [
-  { label: 'Garden infusions', body: 'Lemongrass, ginger, Madagascan cinnamon.' },
-  { label: 'Local wines', body: 'A small selection from Soavita and Lazan’i Betsileo.' },
-  { label: 'Madagascan rum', body: 'Dzama Vieux, served straight or in a digestif.' },
-  { label: 'Coffee', body: 'From Sahambavy, roasted in Fianarantsoa, ground each morning.' },
+const drinks: { label: string; body: string; Icon: PhosphorIcon }[] = [
+  {
+    label: 'Garden infusions',
+    body: 'Lemongrass, ginger, Madagascan cinnamon.',
+    Icon: Leaf,
+  },
+  {
+    label: 'Local wines',
+    body: 'A small selection from Soavita and Lazan’i Betsileo.',
+    Icon: Wine,
+  },
+  {
+    label: 'Madagascan rum',
+    body: 'Dzama Vieux, served straight or in a digestif.',
+    Icon: Cookie,
+  },
+  {
+    label: 'Coffee',
+    body: 'From Sahambavy, roasted in Fianarantsoa, ground each morning.',
+    Icon: Coffee,
+  },
+];
+
+const facts: { label: string; value: string; Icon: PhosphorIcon }[] = [
+  { label: 'Seats', value: 'Fifty', Icon: Users },
+  {
+    label: 'Service',
+    value: 'One set menu, three courses',
+    Icon: ForkKnife,
+  },
+  {
+    label: 'Open to',
+    value: 'Hotel guests and day visitors',
+    Icon: Door,
+  },
+  { label: 'Reservation', value: '24 hours in advance', Icon: Clock },
 ];
 
 export default function DiningPage() {
@@ -160,18 +202,18 @@ export default function DiningPage() {
                 </ScrollReveal>
 
                 <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-2 max-w-[640px]">
-                  {[
-                    { label: 'Seats', value: 'Fifty' },
-                    { label: 'Service', value: 'One set menu, three courses' },
-                    {
-                      label: 'Open to',
-                      value: 'Hotel guests and day visitors',
-                    },
-                    { label: 'Reservation', value: '24 hours in advance' },
-                  ].map((row) => (
+                  {facts.map((row) => (
                     <ScrollReveal key={row.label}>
                       <div className="spec-row">
-                        <div className="spec-row__label">{row.label}</div>
+                        <div className="spec-row__label flex items-center gap-2.5">
+                          <row.Icon
+                            size={14}
+                            weight="light"
+                            className="text-[var(--color-text-muted)]"
+                            aria-hidden
+                          />
+                          {row.label}
+                        </div>
                         <div className="spec-row__value">{row.value}</div>
                       </div>
                     </ScrollReveal>
@@ -299,7 +341,15 @@ export default function DiningPage() {
                 {drinks.map((d) => (
                   <ScrollReveal key={d.label}>
                     <div className="spec-row">
-                      <div className="spec-row__label">{d.label}</div>
+                      <div className="spec-row__label flex items-center gap-2.5">
+                        <d.Icon
+                          size={14}
+                          weight="light"
+                          className="text-[var(--color-text-muted)]"
+                          aria-hidden
+                        />
+                        {d.label}
+                      </div>
                       <div className="spec-row__value">{d.body}</div>
                     </div>
                   </ScrollReveal>

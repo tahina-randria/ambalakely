@@ -8,7 +8,9 @@ import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
-import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import { FeatureIcon } from '@/components/atoms/FeatureIcon';
+import { PriceDisplay } from '@/components/atoms/PriceDisplay';
+import { ArrowRight, Bed, ArrowsOut, Mountains, Users, Sparkle } from '@phosphor-icons/react/dist/ssr';
 import { categories, getCategory } from '@/lib/data/categories';
 import { HOTEL } from '@/lib/data/hotel';
 
@@ -176,56 +178,91 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                   </div>
                 </ScrollReveal>
 
-                {/* Two stacked spec lists, side by side on desktop */}
-                <div className="mt-20 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-14">
-                  {/* Particulars */}
-                  <ScrollReveal>
-                    <div className="caption mb-2">Particulars</div>
+                {/* Particulars + price block */}
+                <div className="mt-20 md:mt-24 grid grid-cols-1 md:grid-cols-12 gap-x-16 gap-y-14">
+                  {/* Spec rows with icons */}
+                  <ScrollReveal className="md:col-span-7">
+                    <div className="caption mb-4">Particulars</div>
                     <div>
                       {[
-                        { label: 'Bed', value: cat.bedSetup },
-                        { label: 'Setting', value: cat.view },
-                        { label: 'Best for', value: cat.bestFor },
+                        { icon: Bed, label: 'Bed', value: cat.bedSetup },
                         {
-                          label: 'Size',
-                          value: `${cat.size} · ${cat.capacity.toLowerCase()}`,
+                          icon: Mountains,
+                          label: 'Setting',
+                          value: cat.view,
                         },
                         {
-                          label: 'Rate',
-                          value: `From ${formatMga(cat.priceMga)} Ar · ≈ ${cat.priceEur} € per night`,
+                          icon: Sparkle,
+                          label: 'Best for',
+                          value: cat.bestFor,
+                        },
+                        {
+                          icon: ArrowsOut,
+                          label: 'Size',
+                          value: `${cat.size}`,
+                        },
+                        {
+                          icon: Users,
+                          label: 'Capacity',
+                          value: cat.capacity,
                         },
                       ].map((row) => (
                         <div key={row.label} className="spec-row">
-                          <div className="spec-row__label">{row.label}</div>
+                          <div className="spec-row__label flex items-center gap-2.5">
+                            <row.icon
+                              size={14}
+                              weight="light"
+                              className="text-[var(--color-text-muted)]"
+                              aria-hidden
+                            />
+                            {row.label}
+                          </div>
                           <div className="spec-row__value">{row.value}</div>
                         </div>
                       ))}
                     </div>
                   </ScrollReveal>
 
-                  {/* Included */}
-                  <ScrollReveal delay={0.05}>
-                    <div className="caption mb-2">In every room</div>
-                    <ul>
-                      {cat.features.map((f) => (
-                        <li
-                          key={f}
-                          className="py-4 border-t border-[var(--color-border-subtle)] last:border-b font-display font-light text-[17px] md:text-[18px] tracking-[-0.005em] text-[var(--color-text)] leading-[1.5]"
-                        >
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
+                  {/* Price block — typographic, prominent */}
+                  <ScrollReveal delay={0.05} className="md:col-span-5">
+                    <div className="md:sticky md:top-32 border-t border-[var(--color-border-subtle)] pt-8 md:border-0 md:pt-0">
+                      <PriceDisplay
+                        mga={cat.priceMga}
+                        eur={cat.priceEur}
+                        size="lg"
+                      />
+                      <div className="mt-10">
+                        <BookingButton>Check availability</BookingButton>
+                      </div>
+                      <p className="mt-6 text-[14px] leading-[1.55] text-[var(--color-text-muted)] max-w-[300px]">
+                        Free cancellation up to thirty days before arrival.
+                        We answer within two hours during the day.
+                      </p>
+                    </div>
                   </ScrollReveal>
                 </div>
 
-                {/* Inline reserve CTA */}
+                {/* In every room — features with icons */}
                 <ScrollReveal>
-                  <div className="mt-16 flex items-center gap-8">
-                    <BookingButton>Check availability</BookingButton>
-                    <span className="caption text-[var(--color-text-muted)]">
-                      Reply within 2 hours
-                    </span>
+                  <div className="mt-24 md:mt-32 pt-16 hair-rule">
+                    <div className="caption mb-8">In every room</div>
+                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-1">
+                      {cat.features.map((f) => (
+                        <li
+                          key={f.label}
+                          className="flex items-start gap-4 py-5 border-b border-[var(--color-border-subtle)]"
+                        >
+                          <FeatureIcon
+                            name={f.icon}
+                            size={20}
+                            className="shrink-0 mt-0.5 text-[var(--color-text-muted)]"
+                          />
+                          <span className="font-display font-light text-[16px] md:text-[17px] tracking-[-0.005em] text-[var(--color-text)] leading-[1.5]">
+                            {f.label}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </ScrollReveal>
               </div>
@@ -325,35 +362,44 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         </section>
 
         {/* ────────────────────────────────────────────────────────────
-            06 · BOOKING CTA — dark sand-12 panel
+            06 · BOOKING CTA — dark sand-12 panel with hero price
         ──────────────────────────────────────────────────────────── */}
         <section className="py-32 md:py-48 lg:py-56 bg-[var(--color-sand-12)] text-[var(--color-sand-1)]">
           <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-              <div className="lg:col-span-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+              <div className="lg:col-span-7">
                 <ScrollReveal>
                   <div className="caption text-[var(--color-sand-6)]">Reserve</div>
-                  <h2 className="mt-6 font-display font-light tracking-[-0.035em] text-[44px] leading-[1.02] md:text-[64px] md:leading-[1] lg:text-[80px] lg:leading-[0.98] max-w-[860px]">
-                    {cat.name}, from{' '}
-                    <span className="tabular-nums whitespace-nowrap">
-                      {formatMga(cat.priceMga)} Ar
-                    </span>
-                    .
+                  <h2 className="mt-6 font-display font-light tracking-[-0.035em] text-[44px] leading-[1.02] md:text-[64px] md:leading-[1] lg:text-[80px] lg:leading-[0.98] max-w-[640px]">
+                    The {cat.name.toLowerCase()} room.
                   </h2>
                 </ScrollReveal>
+                <ScrollReveal delay={0.05}>
+                  <p className="mt-8 max-w-[440px] text-[15px] leading-[1.6] text-[var(--color-sand-5)]">
+                    {cat.shortDescription} {cat.count} of ten in the house, from{' '}
+                    <span className="tabular-nums">{formatMga(cat.priceMga)} Ariary</span>{' '}
+                    per night.
+                  </p>
+                </ScrollReveal>
               </div>
-              <div className="lg:col-span-4 lg:flex lg:justify-end">
-                <ScrollReveal>
-                  <BookingButton variant="solid-light">Check availability</BookingButton>
+              <div className="lg:col-span-5 lg:pl-8 lg:border-l lg:border-[var(--color-sand-10)]">
+                <ScrollReveal delay={0.08}>
+                  <PriceDisplay
+                    mga={cat.priceMga}
+                    eur={cat.priceEur}
+                    size="hero"
+                    variant="dark"
+                  />
+                  <div className="mt-10">
+                    <BookingButton variant="solid-light">Check availability</BookingButton>
+                  </div>
+                  <p className="mt-6 text-[13px] leading-[1.6] text-[var(--color-sand-6)] max-w-[280px]">
+                    Free cancellation up to thirty days before arrival. Reply within
+                    two hours during the day.
+                  </p>
                 </ScrollReveal>
               </div>
             </div>
-            <ScrollReveal>
-              <p className="mt-10 max-w-[440px] text-[14px] leading-[1.6] text-[var(--color-sand-5)]">
-                Free cancellation up to thirty days before arrival. We answer every
-                booking request within two hours during the day.
-              </p>
-            </ScrollReveal>
           </Container>
         </section>
 
@@ -381,8 +427,8 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                         className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-[1.04]"
                       />
                     </div>
-                    <div className="mt-6 flex items-baseline justify-between gap-6">
-                      <div>
+                    <div className="mt-6 flex items-start justify-between gap-6">
+                      <div className="flex-1">
                         <div className="caption text-[var(--color-text-muted)]">
                           {o.number} · {o.count}
                         </div>
@@ -392,10 +438,13 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                         <p className="mt-3 text-[15px] leading-[1.55] text-[var(--color-text-muted)] max-w-[420px]">
                           {o.shortDescription}
                         </p>
+                        <div className="mt-5">
+                          <PriceDisplay mga={o.priceMga} eur={o.priceEur} size="sm" />
+                        </div>
                       </div>
                       <ArrowRight
                         size={22}
-                        className="shrink-0 text-[var(--color-text-muted)] transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5 group-hover:text-[var(--color-text)]"
+                        className="shrink-0 mt-2 text-[var(--color-text-muted)] transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5 group-hover:text-[var(--color-text)]"
                       />
                     </div>
                   </Link>

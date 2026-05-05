@@ -7,7 +7,8 @@ import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
-import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import { PriceDisplay } from '@/components/atoms/PriceDisplay';
+import { ArrowRight, Bed, Mountains } from '@phosphor-icons/react/dist/ssr';
 import { categories } from '@/lib/data/categories';
 
 export const metadata: Metadata = {
@@ -21,10 +22,6 @@ export const metadata: Metadata = {
     url: '/rooms',
   },
 };
-
-function formatMga(n: number) {
-  return n.toLocaleString('fr-FR').replace(/\s/g, ' ');
-}
 
 export default function RoomsPage() {
   return (
@@ -171,36 +168,44 @@ export default function RoomsPage() {
                     <p className="lede max-w-[28ch]">{cat.shortDescription}</p>
                   </ScrollReveal>
 
-                  {/* 3 key specs only — not full sheet */}
+                  {/* 2 key specs with icons */}
                   <ScrollReveal delay={0.1}>
                     <div className="mt-12">
                       {[
-                        { label: 'Bed', value: cat.bedSetup },
-                        { label: 'View', value: cat.view },
-                        {
-                          label: 'Rate',
-                          value: `From ${formatMga(cat.priceMga)} Ar · ≈ ${cat.priceEur} €`,
-                        },
+                        { Icon: Bed, label: 'Bed', value: cat.bedSetup },
+                        { Icon: Mountains, label: 'View', value: cat.view },
                       ].map((row) => (
                         <div key={row.label} className="spec-row">
-                          <div className="spec-row__label">{row.label}</div>
+                          <div className="spec-row__label flex items-center gap-2.5">
+                            <row.Icon
+                              size={14}
+                              weight="light"
+                              className="text-[var(--color-text-muted)]"
+                              aria-hidden
+                            />
+                            {row.label}
+                          </div>
                           <div className="spec-row__value">{row.value}</div>
                         </div>
                       ))}
                     </div>
                   </ScrollReveal>
 
+                  {/* Price + CTA */}
                   <ScrollReveal delay={0.14}>
-                    <Link
-                      href={`/rooms/${cat.slug}`}
-                      className="mt-12 group inline-flex items-center gap-3 font-body text-[15px] font-medium text-[var(--color-text)] self-start"
-                    >
-                      Read the room
-                      <ArrowRight
-                        size={18}
-                        className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
-                      />
-                    </Link>
+                    <div className="mt-12 flex flex-wrap items-end gap-x-12 gap-y-8">
+                      <PriceDisplay mga={cat.priceMga} eur={cat.priceEur} size="md" />
+                      <Link
+                        href={`/rooms/${cat.slug}`}
+                        className="group inline-flex items-center gap-3 font-body text-[15px] font-medium text-[var(--color-text)] self-end pb-2"
+                      >
+                        Read the room
+                        <ArrowRight
+                          size={18}
+                          className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
+                        />
+                      </Link>
+                    </div>
                   </ScrollReveal>
                 </div>
               </div>

@@ -1,8 +1,14 @@
 /**
  * Room categories — single source of truth for /rooms and /rooms/[category].
  */
+import type { FeatureIconName } from '@/components/atoms/FeatureIcon';
 
 const SQ = 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d';
+
+export type Feature = {
+  icon: FeatureIconName;
+  label: string;
+};
 
 export type Category = {
   slug: 'superieure' | 'confort' | 'standard';
@@ -19,7 +25,7 @@ export type Category = {
   bedSetup: string;
   view: string;
   bestFor: string;
-  features: string[];
+  features: Feature[];
   heroImage: string;
   gallery: string[];
   /** Concierge note, signed by Mamy or Hasina */
@@ -47,12 +53,14 @@ export const categories: Category[] = [
     view: 'Rice terraces and the village of Ambalakely.',
     bestFor: 'A family of four, or two travellers with room to read.',
     features: [
-      'En-suite bathroom, hot water all day',
-      'Hand-carved voamboana furniture',
-      'Mosquito nets and hot water bottles at night',
-      'Two single beds on request',
-      'Two windows, two views',
-      'Direct access to the upper terrace',
+      { icon: 'bath', label: 'En-suite bathroom, hot water all day' },
+      { icon: 'tree', label: 'Hand-carved voamboana furniture' },
+      { icon: 'moon', label: 'Hot water bottles and mosquito nets at night' },
+      { icon: 'bed', label: 'Two single beds on request' },
+      { icon: 'view', label: 'Two windows, two views' },
+      { icon: 'house', label: 'Direct access to the upper terrace' },
+      { icon: 'wifi', label: 'Free WiFi throughout the house' },
+      { icon: 'bell', label: 'Room service from seven in the morning' },
     ],
     heroImage: `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w`,
     gallery: [
@@ -84,12 +92,14 @@ export const categories: Category[] = [
     view: 'Garden on the ground floor. Highlands and rice fields upstairs.',
     bestFor: 'Two adults and a child, or a writer who wants a desk by the window.',
     features: [
-      'En-suite bathroom, hot water all day',
-      'Writing desk by the window',
-      'Mosquito nets and hot water bottles at night',
-      'Two ground-floor with direct garden access',
-      'Two upstairs with the wider view',
-      'Single katrafay bed for a third guest',
+      { icon: 'bath', label: 'En-suite bathroom, hot water all day' },
+      { icon: 'desk', label: 'Writing desk by the window' },
+      { icon: 'moon', label: 'Hot water bottles and mosquito nets at night' },
+      { icon: 'leaf', label: 'Two ground-floor with direct garden access' },
+      { icon: 'stairs', label: 'Two upstairs with the wider view' },
+      { icon: 'bed', label: 'Single katrafay bed for a third guest' },
+      { icon: 'wifi', label: 'Free WiFi throughout the house' },
+      { icon: 'bell', label: 'Room service from seven in the morning' },
     ],
     heroImage: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2500w`,
     gallery: [
@@ -121,12 +131,14 @@ export const categories: Category[] = [
     view: 'Garden, with the pomelo tree to one side.',
     bestFor: 'A single traveller, two friends, or a one-night stop on the RN7.',
     features: [
-      'En-suite bathroom, hot water all day',
-      'Quiet — set back from the dining room',
-      'Mosquito nets and hot water bottles at night',
-      'Two double, two twin',
-      'Single-occupancy rate available',
-      'Garden view from the window',
+      { icon: 'bath', label: 'En-suite bathroom, hot water all day' },
+      { icon: 'path', label: 'Quiet, set back from the dining room' },
+      { icon: 'moon', label: 'Hot water bottles and mosquito nets at night' },
+      { icon: 'bed', label: 'Two double katrafay, two twin voamboana' },
+      { icon: 'users', label: 'Single-occupancy rate available' },
+      { icon: 'plant', label: 'Garden view, pomelo tree to one side' },
+      { icon: 'wifi', label: 'Free WiFi throughout the house' },
+      { icon: 'calendar', label: 'Last-minute availability often possible' },
     ],
     heroImage: `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg?format=2500w`,
     gallery: [
