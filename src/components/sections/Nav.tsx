@@ -6,11 +6,10 @@ import { cn } from '@/lib/utils/cn';
 import { BookingDrawer } from '@/components/molecules/BookingDrawer';
 
 const links = [
-  { href: '/#stay', label: 'Stay' },
-  { href: '/#dining', label: 'Dining' },
-  { href: '/#experiences', label: 'Experiences' },
+  { href: '/rooms', label: 'Rooms' },
+  { href: '/dining', label: 'Dining' },
+  { href: '/about', label: 'About' },
   { href: '/#location', label: 'Location' },
-  { href: '/#journal', label: 'Journal' },
 ];
 
 export function Nav() {

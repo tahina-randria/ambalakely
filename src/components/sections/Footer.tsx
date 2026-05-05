@@ -5,41 +5,36 @@ const columns = [
   {
     title: 'Stay',
     links: [
-      { label: 'Rooms', href: '/rooms' },
-      { label: 'Rates', href: '/rates' },
-      { label: 'Packages', href: '/packages' },
+      { label: 'All rooms', href: '/rooms' },
+      { label: 'Supérieure', href: '/rooms/superieure' },
+      { label: 'Confort', href: '/rooms/confort' },
+      { label: 'Standard', href: '/rooms/standard' },
     ],
   },
   {
     title: 'Discover',
     links: [
       { label: 'Dining', href: '/dining' },
-      { label: 'Experiences', href: '/experiences' },
-      { label: 'Journal', href: '/journal' },
+      { label: 'Location', href: '/#location' },
+      { label: 'Experiences', href: '/#experiences' },
     ],
   },
   {
     title: 'About',
     links: [
       { label: 'The house', href: '/about' },
-      { label: 'Hope for the Future', href: '/hope' },
-      { label: 'Directions', href: '/directions' },
+      { label: 'Mamy and Hasina', href: '/about' },
+      { label: 'Hope for the Future', href: '/about#hope' },
     ],
   },
   {
     title: 'Contact',
     links: [
-      { label: '+261 34 11 254 34', href: 'tel:+261341125434' },
-      { label: 'hello@hotelambalakely.com', href: 'mailto:hello@hotelambalakely.com' },
+      { label: '+261 34 02 654 70', href: 'tel:+261340265470' },
+      { label: 'reservation@hotelambalakely.com', href: 'mailto:reservation@hotelambalakely.com' },
       { label: 'Instagram', href: 'https://instagram.com/hotelambalakely' },
     ],
   },
-];
-
-const legalLinks = [
-  { label: 'Legal', href: '/legal' },
-  { label: 'Privacy', href: '/privacy' },
-  { label: 'Terms', href: '/terms' },
 ];
 
 export function Footer() {
@@ -77,18 +72,8 @@ export function Footer() {
 
           {/* Bottom legal — single row, single style */}
           <div className="mt-20 pt-8 border-t border-[var(--color-border-subtle)] flex flex-col md:flex-row md:items-center md:justify-between gap-4 font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
-            <div>© 2026 Ambalakely · Fianarantsoa, Madagascar</div>
-            <div className="flex gap-6">
-              {legalLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="hover:text-[var(--color-text)] transition-colors duration-[var(--duration-base)]"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+            <div>© 2026 Hotel Ambalakely · Fianarantsoa, Madagascar</div>
+            <div>RN7 · 21°27′15″S 47°05′10″E</div>
           </div>
         </div>
       </Container>
