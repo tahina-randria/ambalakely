@@ -2,12 +2,9 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/atoms/Container';
-import { Section } from '@/components/atoms/Section';
-import { Heading } from '@/components/atoms/Heading';
-import { Kicker } from '@/components/atoms/Kicker';
 import { Nav } from '@/components/sections/Nav';
 import { Footer } from '@/components/sections/Footer';
-import { ScrollReveal, Stagger, StaggerItem } from '@/lib/motion/ScrollReveal';
+import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
@@ -26,7 +23,7 @@ export const metadata: Metadata = {
 };
 
 function formatMga(n: number) {
-  return n.toLocaleString('fr-FR').replace(/\s/g, ' ');
+  return n.toLocaleString('fr-FR').replace(/\s/g, ' ');
 }
 
 export default function RoomsPage() {
@@ -39,138 +36,208 @@ export default function RoomsPage() {
         ]}
       />
       <Nav />
-      <main>
-        {/* Page hero */}
-        <Section bleed className="pt-[160px] md:pt-[200px] pb-24 md:pb-32 lg:pb-40">
+      <main id="main">
+        {/* ────────────────────────────────────────────────────────────
+            01 · HERO — full viewport, single image, title overlay
+        ──────────────────────────────────────────────────────────── */}
+        <section className="relative h-[90vh] md:h-[100vh] w-full overflow-hidden bg-[var(--color-sand-12)]">
+          <Image
+            src={categories[0].heroImage}
+            alt="Rooms at Ambalakely"
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/55"
+          />
+
+          <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
+            <div className="pt-[100px] md:pt-[128px]">
+              <div className="caption text-white/75">The rooms</div>
+            </div>
+            <div className="mt-auto pb-14 md:pb-20 max-w-[1100px]">
+              <h1 className="font-display font-light tracking-[-0.04em] text-white text-[56px] leading-[0.98] md:text-[96px] md:leading-[0.95] lg:text-[136px] lg:leading-[0.92]">
+                Ten rooms.
+                <br />
+                Three ways.
+              </h1>
+            </div>
+          </div>
+        </section>
+
+        {/* ────────────────────────────────────────────────────────────
+            02 · INTRO
+        ──────────────────────────────────────────────────────────── */}
+        <section className="py-32 md:py-48 lg:py-56">
           <Container>
-            <ScrollReveal>
-              <Kicker>The rooms</Kicker>
-              <Heading
-                variant="display"
-                className="mt-6 max-w-[1100px] text-[var(--color-text)]"
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
+                <ScrollReveal>
+                  <div className="caption">Overview</div>
+                </ScrollReveal>
+              </div>
+
+              <div className="lg:col-span-9 max-w-[760px]">
+                <ScrollReveal>
+                  <p className="lede max-w-[34ch]">
+                    Same sand walls, same dark wood floors, same hot water bottles
+                    at night. The difference is space, view and bed.
+                  </p>
+                </ScrollReveal>
+                <ScrollReveal delay={0.05}>
+                  <div className="mt-12 prose-editorial">
+                    <p>
+                      Ten rooms in two buildings. Two of them, the Supérieure, sit
+                      on the front of the main house and look down over the rice
+                      fields. Four are in the middle range, the Confort, with a
+                      desk by the window and a king bed. Four more, the Standard,
+                      were the original rooms we opened with in 2018. Choose by
+                      what you want from the window.
+                    </p>
+                  </div>
+                </ScrollReveal>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* ────────────────────────────────────────────────────────────
+            03 · CATEGORY EDITORIAL LIST
+            Magazine-style. Each category gets a numbered chapter,
+            full-bleed image, prose with breath, link to detail.
+        ──────────────────────────────────────────────────────────── */}
+        {categories.map((cat, i) => (
+          <section
+            key={cat.slug}
+            className={`hair-rule py-24 md:py-32 lg:py-40 ${
+              i === 1 ? 'bg-[var(--color-bg-subtle)]' : ''
+            }`}
+          >
+            <Container>
+              {/* Chapter header */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 md:mb-20">
+                <div className="lg:col-span-3">
+                  <ScrollReveal>
+                    <div className="caption">
+                      Chapter {cat.number}
+                    </div>
+                    <div className="mt-4 caption text-[var(--color-text-muted)]">
+                      {cat.count} · {cat.size}
+                    </div>
+                  </ScrollReveal>
+                </div>
+                <div className="lg:col-span-9">
+                  <ScrollReveal delay={0.05}>
+                    <h2 className="font-display font-light text-[var(--color-text)] text-[56px] leading-[0.95] md:text-[96px] md:leading-[0.92] lg:text-[120px] lg:leading-[0.92] tracking-[-0.04em]">
+                      {cat.name}
+                    </h2>
+                  </ScrollReveal>
+                </div>
+              </div>
+
+              {/* Body — image + prose, alternating side */}
+              <div
+                className={`grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 ${
+                  i % 2 === 1 ? '' : ''
+                }`}
               >
-                Ten rooms. Three categories. One house.
-              </Heading>
-              <p className="mt-10 max-w-[640px] text-[18px] leading-[1.55] text-[var(--color-text-muted)]">
-                Each room shares the same sand walls, dark wood floors and hot water bottles
-                at night. The difference is space, view and bed setup. Choose by what you
-                want from the window.
+                <ScrollReveal
+                  className={`lg:col-span-7 ${i % 2 === 1 ? 'lg:order-2' : ''}`}
+                >
+                  <Link
+                    href={`/rooms/${cat.slug}`}
+                    className="group block relative aspect-[4/5] md:aspect-[5/4] overflow-hidden bg-[var(--color-bg-muted)]"
+                  >
+                    <Image
+                      src={cat.heroImage}
+                      alt={cat.name}
+                      fill
+                      sizes="(min-width: 1024px) 58vw, 100vw"
+                      priority={i === 0}
+                      className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-[1.03]"
+                    />
+                  </Link>
+                </ScrollReveal>
+
+                <div
+                  className={`lg:col-span-5 lg:flex lg:flex-col lg:justify-center ${
+                    i % 2 === 1 ? 'lg:order-1' : ''
+                  }`}
+                >
+                  <ScrollReveal delay={0.06}>
+                    <p className="lede max-w-[28ch]">{cat.shortDescription}</p>
+                  </ScrollReveal>
+
+                  {/* 3 key specs only — not full sheet */}
+                  <ScrollReveal delay={0.1}>
+                    <div className="mt-12">
+                      {[
+                        { label: 'Bed', value: cat.bedSetup },
+                        { label: 'View', value: cat.view },
+                        {
+                          label: 'Rate',
+                          value: `From ${formatMga(cat.priceMga)} Ar · ≈ ${cat.priceEur} €`,
+                        },
+                      ].map((row) => (
+                        <div key={row.label} className="spec-row">
+                          <div className="spec-row__label">{row.label}</div>
+                          <div className="spec-row__value">{row.value}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </ScrollReveal>
+
+                  <ScrollReveal delay={0.14}>
+                    <Link
+                      href={`/rooms/${cat.slug}`}
+                      className="mt-12 group inline-flex items-center gap-3 font-body text-[15px] font-medium text-[var(--color-text)] self-start"
+                    >
+                      Read the room
+                      <ArrowRight
+                        size={18}
+                        className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
+                      />
+                    </Link>
+                  </ScrollReveal>
+                </div>
+              </div>
+            </Container>
+          </section>
+        ))}
+
+        {/* ────────────────────────────────────────────────────────────
+            04 · BOOKING CTA
+        ──────────────────────────────────────────────────────────── */}
+        <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-sand-12)] text-[var(--color-sand-1)]">
+          <Container>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+              <div className="lg:col-span-8">
+                <ScrollReveal>
+                  <div className="caption text-[var(--color-sand-6)]">Reserve</div>
+                  <h2 className="mt-6 font-display font-light tracking-[-0.035em] text-[44px] leading-[1.02] md:text-[64px] md:leading-[1] lg:text-[80px] lg:leading-[0.98] max-w-[860px]">
+                    Direct booking.
+                    <br />
+                    Reply within two hours.
+                  </h2>
+                </ScrollReveal>
+              </div>
+              <div className="lg:col-span-4 lg:flex lg:justify-end">
+                <ScrollReveal>
+                  <BookingButton variant="solid-light">Check availability</BookingButton>
+                </ScrollReveal>
+              </div>
+            </div>
+            <ScrollReveal>
+              <p className="mt-10 max-w-[440px] text-[14px] leading-[1.6] text-[var(--color-sand-5)]">
+                Free cancellation up to thirty days before arrival. No deposit
+                required for stays of two nights or fewer.
               </p>
             </ScrollReveal>
           </Container>
-        </Section>
-
-        {/* Categories list */}
-        <Section divider>
-          <Container>
-            <Stagger className="space-y-32 md:space-y-48">
-              {categories.map((cat, i) => (
-                <StaggerItem key={cat.slug}>
-                  <div
-                    className={`grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center ${
-                      i % 2 === 1 ? 'lg:[&>*:first-child]:order-2' : ''
-                    }`}
-                  >
-                    {/* Image */}
-                    <Link
-                      href={`/rooms/${cat.slug}`}
-                      className="lg:col-span-7 group block relative aspect-[5/4] overflow-hidden bg-[var(--color-bg-muted)]"
-                    >
-                      <Image
-                        src={cat.heroImage}
-                        alt={cat.name}
-                        fill
-                        sizes="(min-width: 1024px) 58vw, 100vw"
-                        className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-[1.03]"
-                        priority={i === 0}
-                      />
-                    </Link>
-
-                    {/* Content */}
-                    <div className="lg:col-span-5 flex flex-col">
-                      <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
-                        {cat.number} · {cat.count}
-                      </div>
-                      <h2 className="mt-5 font-display font-light text-[var(--color-text)] text-[40px] md:text-[52px] leading-[1.02] tracking-[-0.03em]">
-                        {cat.name}
-                      </h2>
-
-                      <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 max-w-[420px]">
-                        <div>
-                          <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
-                            Size
-                          </div>
-                          <div className="mt-1.5 text-[15px] text-[var(--color-text)]">
-                            {cat.size}
-                          </div>
-                        </div>
-                        <div>
-                          <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
-                            Capacity
-                          </div>
-                          <div className="mt-1.5 text-[15px] text-[var(--color-text)]">
-                            {cat.capacity}
-                          </div>
-                        </div>
-                        <div>
-                          <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
-                            View
-                          </div>
-                          <div className="mt-1.5 text-[15px] text-[var(--color-text)]">
-                            {cat.view}
-                          </div>
-                        </div>
-                        <div>
-                          <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
-                            From
-                          </div>
-                          <div className="mt-1.5 text-[15px] text-[var(--color-text)]">
-                            {formatMga(cat.priceMga)} Ar
-                            <span className="text-[var(--color-text-muted)]"> · ≈ {cat.priceEur} €</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <p className="mt-8 text-[16px] leading-[1.6] text-[var(--color-text-muted)] max-w-[480px]">
-                        {cat.shortDescription}
-                      </p>
-
-                      <Link
-                        href={`/rooms/${cat.slug}`}
-                        className="mt-10 group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)] self-start"
-                      >
-                        See the {cat.name} rooms
-                        <ArrowRight
-                          size={18}
-                          className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
-                        />
-                      </Link>
-                    </div>
-                  </div>
-                </StaggerItem>
-              ))}
-            </Stagger>
-          </Container>
-        </Section>
-
-        {/* Booking CTA */}
-        <Section divider className="bg-[var(--color-bg-subtle)]">
-          <Container>
-            <ScrollReveal>
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-end">
-                <div className="md:col-span-7">
-                  <Kicker>Reserve</Kicker>
-                  <Heading variant="h2" className="mt-6 max-w-[760px]">
-                    Direct booking. Instant answer within 24 hours.
-                  </Heading>
-                </div>
-                <div className="md:col-span-5">
-                  <BookingButton>Check availability</BookingButton>
-                </div>
-              </div>
-            </ScrollReveal>
-          </Container>
-        </Section>
+        </section>
       </main>
       <Footer />
     </>

@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { Container } from '@/components/atoms/Container';
-import { Section } from '@/components/atoms/Section';
-import { Heading } from '@/components/atoms/Heading';
-import { Kicker } from '@/components/atoms/Kicker';
 import { Nav } from '@/components/sections/Nav';
 import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
@@ -13,11 +10,11 @@ import { BookingButton } from '@/components/atoms/BookingButton';
 export const metadata: Metadata = {
   title: 'Dining',
   description:
-    'Hasina cooks Madagascan and Norwegian dishes in equal measure. Fifty seats, one set menu each evening, mostly from the garden.',
+    'Hasina cooks one set menu each evening. Most of what arrives on the plate comes from the garden, the rice fields below, and the village market.',
   alternates: { canonical: '/dining' },
   openGraph: {
     title: 'Dining · Ambalakely',
-    description: 'A small restaurant. Mostly from the garden.',
+    description: 'A small kitchen between Madagascar and Norway.',
     url: '/dining',
   },
 };
@@ -45,19 +42,23 @@ const courses = [
     items: [
       {
         name: 'Zébu Marengo',
-        body: 'Slow-braised local beef in tomato and white wine, served with red rice.',
+        body:
+          'Slow-braised local beef in tomato and white wine, served with red rice.',
       },
       {
         name: 'Kjøttkaker',
-        body: 'Norwegian meatballs in brown sauce, with potato purée and lingonberry from a friend in Oslo.',
+        body:
+          'Norwegian meatballs in brown sauce, with potato purée and lingonberry from a friend in Oslo.',
       },
       {
         name: 'Ravitoto with coconut',
-        body: 'Pounded cassava leaves, slow-cooked with pork and coconut milk. The way Hasina’s grandmother made it.',
+        body:
+          'Pounded cassava leaves, slow-cooked with pork and coconut milk. The way Hasina’s grandmother made it.',
       },
       {
         name: 'Garden vegetable plate',
-        body: 'A vegetarian option each evening, drawn from whatever the garden gives that day.',
+        body:
+          'A vegetarian option each evening, drawn from whatever the garden gives that day.',
       },
     ],
   },
@@ -70,7 +71,8 @@ const courses = [
       },
       {
         name: 'Homemade ice cream',
-        body: 'Hasina’s most asked-for dessert. Often vanilla, sometimes mango or tamarind.',
+        body:
+          'Hasina’s most asked-for dessert. Often vanilla, sometimes mango or tamarind.',
       },
       {
         name: 'Caramelised banana',
@@ -80,18 +82,11 @@ const courses = [
   },
 ];
 
-const facts = [
-  { label: 'Seats', value: '50' },
-  { label: 'Service', value: 'One set menu each evening' },
-  { label: 'From', value: 'Garden + within 15 km' },
-  { label: 'Open to', value: 'Hotel guests + day visitors' },
-];
-
 const drinks = [
-  { name: 'Garden infusions', body: 'Lemongrass, ginger, Madagascan cinnamon.' },
-  { name: 'Local wines', body: 'A small selection from Soavita and Lazan’i Betsileo.' },
-  { name: 'Madagascan rum', body: 'Dzama Vieux. The good one.' },
-  { name: 'Coffee from Sahambavy', body: 'Roasted in Fianarantsoa, ground each morning.' },
+  { label: 'Garden infusions', body: 'Lemongrass, ginger, Madagascan cinnamon.' },
+  { label: 'Local wines', body: 'A small selection from Soavita and Lazan’i Betsileo.' },
+  { label: 'Madagascan rum', body: 'Dzama Vieux, served straight or in a digestif.' },
+  { label: 'Coffee', body: 'From Sahambavy, roasted in Fianarantsoa, ground each morning.' },
 ];
 
 export default function DiningPage() {
@@ -104,175 +99,240 @@ export default function DiningPage() {
         ]}
       />
       <Nav />
-      <main>
-        {/* Page hero */}
-        <Section bleed className="pt-[160px] md:pt-[200px] pb-24 md:pb-32 lg:pb-40">
-          <Container>
-            <ScrollReveal>
-              <Kicker>The restaurant</Kicker>
-              <Heading variant="display" className="mt-6 max-w-[1100px]">
-                A small kitchen between Madagascar and Norway.
-              </Heading>
-              <p className="mt-12 max-w-[680px] text-[19px] leading-[1.55] text-[var(--color-text-muted)]">
-                Hasina cooks one set menu each evening. Most of what arrives on the plate
-                comes from the garden behind the kitchen, the rice fields below, and the
-                village market on Tuesdays. The rest comes from a few suppliers within
-                fifteen kilometres.
-              </p>
-            </ScrollReveal>
-          </Container>
-        </Section>
-
-        {/* Hero image */}
-        <section className="relative aspect-[16/9] md:aspect-[21/9] w-full bg-[var(--color-bg-muted)] overflow-hidden">
+      <main id="main">
+        {/* ────────────────────────────────────────────────────────────
+            01 · HERO — kitchen image
+        ──────────────────────────────────────────────────────────── */}
+        <section className="relative h-[90vh] md:h-[100vh] w-full overflow-hidden bg-[var(--color-sand-12)]">
           <Image
-            src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2500w"
-            alt="The dining room"
+            src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2500w"
+            alt="The kitchen at Ambalakely"
             fill
             sizes="100vw"
             priority
             className="object-cover"
           />
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/55"
+          />
+
+          <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
+            <div className="pt-[100px] md:pt-[128px]">
+              <div className="caption text-white/75">The restaurant</div>
+            </div>
+            <div className="mt-auto pb-14 md:pb-20 max-w-[1100px]">
+              <h1 className="font-display font-light tracking-[-0.04em] text-white text-[56px] leading-[0.98] md:text-[96px] md:leading-[0.95] lg:text-[136px] lg:leading-[0.92]">
+                Toko Telo.
+              </h1>
+            </div>
+          </div>
         </section>
 
-        {/* Facts strip */}
-        <Section divider className="py-16 md:py-20 lg:py-24">
+        {/* ────────────────────────────────────────────────────────────
+            02 · INTRO + KEY FACTS
+        ──────────────────────────────────────────────────────────── */}
+        <section className="py-32 md:py-48 lg:py-56">
           <Container>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-8">
-              {facts.map((f) => (
-                <div key={f.label}>
-                  <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-muted)]">
-                    {f.label}
-                  </div>
-                  <div className="mt-3 font-display text-[20px] md:text-[24px] tracking-[-0.01em] text-[var(--color-text)]">
-                    {f.value}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Container>
-        </Section>
-
-        {/* Menu */}
-        <Section divider>
-          <Container>
-            <ScrollReveal>
-              <Kicker>This week</Kicker>
-              <Heading variant="h2" className="mt-6 max-w-[760px]">
-                The menu changes with the garden.
-              </Heading>
-              <p className="mt-8 max-w-[560px] text-[15px] leading-[1.65] text-[var(--color-text-muted)]">
-                One set menu each evening. Three courses. Vegetarian on request.
-                Allergies, with a day’s notice.
-              </p>
-            </ScrollReveal>
-
-            <div className="mt-20 space-y-20">
-              {courses.map((c) => (
-                <ScrollReveal key={c.section}>
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-                    <div className="lg:col-span-3">
-                      <div className="font-mono text-[12px] uppercase tracking-[0.12em] text-[var(--color-text-muted)] sticky top-24">
-                        {c.section}
-                      </div>
-                    </div>
-                    <ul className="lg:col-span-9 border-t border-[var(--color-border-subtle)]">
-                      {c.items.map((item) => (
-                        <li
-                          key={item.name}
-                          className="py-8 border-b border-[var(--color-border-subtle)] grid grid-cols-1 md:grid-cols-12 gap-4"
-                        >
-                          <div className="md:col-span-5 font-display text-[22px] md:text-[26px] tracking-[-0.02em] text-[var(--color-text)]">
-                            {item.name}
-                          </div>
-                          <div className="md:col-span-7 text-[15px] leading-[1.6] text-[var(--color-text-muted)]">
-                            {item.body}
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
+                <ScrollReveal>
+                  <div className="caption">Hasina’s kitchen</div>
                 </ScrollReveal>
-              ))}
-            </div>
-          </Container>
-        </Section>
-
-        {/* Drinks */}
-        <Section divider className="bg-[var(--color-bg-subtle)]">
-          <Container>
-            <ScrollReveal>
-              <Kicker>To drink</Kicker>
-              <Heading variant="h2" className="mt-6 max-w-[760px]">
-                A short list, well chosen.
-              </Heading>
-            </ScrollReveal>
-            <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 max-w-[860px]">
-              {drinks.map((d, i) => (
-                <ScrollReveal key={d.name} delay={0.04 * i}>
-                  <div className="border-t border-[var(--color-border-subtle)] pt-6">
-                    <div className="font-display text-[22px] tracking-[-0.02em] text-[var(--color-text)]">
-                      {d.name}
-                    </div>
-                    <p className="mt-2 text-[15px] leading-[1.6] text-[var(--color-text-muted)]">
-                      {d.body}
+              </div>
+              <div className="lg:col-span-9">
+                <ScrollReveal>
+                  <p className="lede max-w-[34ch]">
+                    A small kitchen between Madagascar and Norway. One set
+                    menu each evening, mostly from the garden.
+                  </p>
+                </ScrollReveal>
+                <ScrollReveal delay={0.05}>
+                  <div className="mt-12 prose-editorial">
+                    <p>
+                      Most of what arrives on the plate comes from the garden
+                      behind the kitchen, the rice fields below, and the
+                      village market on Tuesdays. The rest comes from a few
+                      suppliers within fifteen kilometres. Three courses, table
+                      open from seven, last orders at nine.
                     </p>
                   </div>
                 </ScrollReveal>
-              ))}
+
+                <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-2 max-w-[640px]">
+                  {[
+                    { label: 'Seats', value: 'Fifty' },
+                    { label: 'Service', value: 'One set menu, three courses' },
+                    {
+                      label: 'Open to',
+                      value: 'Hotel guests and day visitors',
+                    },
+                    { label: 'Reservation', value: '24 hours in advance' },
+                  ].map((row) => (
+                    <ScrollReveal key={row.label}>
+                      <div className="spec-row">
+                        <div className="spec-row__label">{row.label}</div>
+                        <div className="spec-row__value">{row.value}</div>
+                      </div>
+                    </ScrollReveal>
+                  ))}
+                </div>
+              </div>
             </div>
           </Container>
-        </Section>
+        </section>
 
-        {/* Garden note */}
-        <Section divider>
+        {/* ────────────────────────────────────────────────────────────
+            03 · FULL-BLEED IMAGE
+        ──────────────────────────────────────────────────────────── */}
+        <section className="relative aspect-[16/9] md:aspect-[21/9] w-full bg-[var(--color-bg-muted)]">
+          <Image
+            src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2500w"
+            alt="The dining room at Toko Telo"
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div
+            aria-hidden
+            className="absolute bottom-5 right-5 md:bottom-7 md:right-7 caption text-white/85 mix-blend-difference"
+          >
+            Plate 01 · The dining room
+          </div>
+        </section>
+
+        {/* ────────────────────────────────────────────────────────────
+            04 · MENU
+        ──────────────────────────────────────────────────────────── */}
+        <section className="py-32 md:py-48 lg:py-56 hair-rule">
           <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-              <div className="lg:col-span-5">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
                 <ScrollReveal>
-                  <Kicker>The garden</Kicker>
-                  <Heading variant="h2" className="mt-6 max-w-[420px]">
-                    Where most of dinner comes from.
-                  </Heading>
+                  <div className="caption">This week</div>
+                  <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em] max-w-[260px]">
+                    The menu changes with the garden.
+                  </h2>
+                  <p className="mt-6 prose-editorial text-[15px]">
+                    Vegetarian on request. Allergies, with a day’s notice.
+                  </p>
                 </ScrollReveal>
               </div>
-              <div className="lg:col-span-7">
+
+              <div className="lg:col-span-9 space-y-20 md:space-y-28">
+                {courses.map((c) => (
+                  <ScrollReveal key={c.section}>
+                    <div>
+                      <div className="caption mb-6 md:mb-8">{c.section}</div>
+                      <ul className="border-t border-[var(--color-border-subtle)]">
+                        {c.items.map((item) => (
+                          <li
+                            key={item.name}
+                            className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 py-7 md:py-8 border-b border-[var(--color-border-subtle)]"
+                          >
+                            <div className="md:col-span-5 font-display font-light text-[22px] md:text-[28px] tracking-[-0.02em] leading-[1.15] text-[var(--color-text)]">
+                              {item.name}
+                            </div>
+                            <p className="md:col-span-7 text-[15px] md:text-[16px] leading-[1.6] text-[var(--color-text-muted)] max-w-[520px]">
+                              {item.body}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </ScrollReveal>
+                ))}
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* ────────────────────────────────────────────────────────────
+            05 · CONCIERGE NOTE — Hasina
+        ──────────────────────────────────────────────────────────── */}
+        <section className="py-32 md:py-48 lg:py-64 hair-rule bg-[var(--color-bg-subtle)]">
+          <Container>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+              <div className="lg:col-span-3">
+                <ScrollReveal>
+                  <div className="caption">A note from Hasina</div>
+                </ScrollReveal>
+              </div>
+              <div className="lg:col-span-8 lg:col-start-4">
                 <ScrollReveal delay={0.05}>
-                  <p className="text-[18px] leading-[1.6] text-[var(--color-text)] max-w-[620px]">
-                    A working garden, not a decorative one. Tomatoes, herbs, leafy
-                    greens, root vegetables, fruit trees. A small orchard further down
-                    the slope. Eggs from the chickens. Honey from a neighbour.
+                  <p className="concierge-note max-w-[58ch]">
+                    &ldquo;I do not write the menu the night before. I write it the
+                    morning of, after I have walked the garden. The pomelo tree
+                    drops something in March. The watercress comes in May. The
+                    menu follows.&rdquo;
                   </p>
-                  <p className="mt-6 text-[16px] leading-[1.65] text-[var(--color-text-muted)] max-w-[620px]">
-                    Guests can walk through with one of the team in the morning. Pick
-                    something for the kitchen if you want to.
-                  </p>
+                </ScrollReveal>
+                <ScrollReveal delay={0.1}>
+                  <div className="mt-10 flex items-center gap-4">
+                    <div className="w-10 border-t border-[var(--color-sand-12)]" />
+                    <div className="font-display text-[16px] tracking-[-0.005em] text-[var(--color-text)]">
+                      Hasina
+                    </div>
+                    <div className="caption text-[var(--color-text-muted)]">Kitchen</div>
+                  </div>
                 </ScrollReveal>
               </div>
             </div>
           </Container>
-        </Section>
+        </section>
 
-        {/* Booking CTA */}
-        <Section className="bg-[var(--color-sand-12)] text-[var(--color-sand-1)]">
+        {/* ────────────────────────────────────────────────────────────
+            06 · DRINKS — typographic spec rows
+        ──────────────────────────────────────────────────────────── */}
+        <section className="py-32 md:py-48 lg:py-56 hair-rule">
           <Container>
-            <ScrollReveal>
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-end">
-                <div className="md:col-span-8">
-                  <div className="font-mono text-[12px] uppercase tracking-[0.12em] opacity-70">
-                    Reserve a table
-                  </div>
-                  <h2 className="mt-6 font-display font-light tracking-[-0.03em] text-[40px] leading-[1.05] md:text-[56px] md:leading-[1.02] max-w-[760px]">
-                    Day visitors welcome. Reserve at least 24 hours in advance.
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
+                <ScrollReveal>
+                  <div className="caption">To drink</div>
+                  <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em] max-w-[260px]">
+                    Short list, well chosen.
                   </h2>
-                </div>
-                <div className="md:col-span-4">
-                  <BookingButton variant="solid-light">Reserve</BookingButton>
-                </div>
+                </ScrollReveal>
               </div>
-            </ScrollReveal>
+              <div className="lg:col-span-9 max-w-[760px]">
+                {drinks.map((d) => (
+                  <ScrollReveal key={d.label}>
+                    <div className="spec-row">
+                      <div className="spec-row__label">{d.label}</div>
+                      <div className="spec-row__value">{d.body}</div>
+                    </div>
+                  </ScrollReveal>
+                ))}
+              </div>
+            </div>
           </Container>
-        </Section>
+        </section>
+
+        {/* ────────────────────────────────────────────────────────────
+            07 · CTA — reserve a table
+        ──────────────────────────────────────────────────────────── */}
+        <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-sand-12)] text-[var(--color-sand-1)]">
+          <Container>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+              <div className="lg:col-span-8">
+                <ScrollReveal>
+                  <div className="caption text-[var(--color-sand-6)]">Reserve a table</div>
+                  <h2 className="mt-6 font-display font-light tracking-[-0.035em] text-[44px] leading-[1.02] md:text-[64px] md:leading-[1] lg:text-[80px] lg:leading-[0.98] max-w-[860px]">
+                    Day visitors welcome.
+                    <br />
+                    Reserve at least 24 hours ahead.
+                  </h2>
+                </ScrollReveal>
+              </div>
+              <div className="lg:col-span-4 lg:flex lg:justify-end">
+                <ScrollReveal>
+                  <BookingButton variant="solid-light">Reserve</BookingButton>
+                </ScrollReveal>
+              </div>
+            </div>
+          </Container>
+        </section>
       </main>
       <Footer />
     </>
