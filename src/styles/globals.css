@@ -226,6 +226,151 @@ video {
   border-top: 1px solid var(--color-sand-12);
 }
 
+/* ------------------------------------------------------------------ */
+/*  Editorial typography utilities                                    */
+/* ------------------------------------------------------------------ */
+
+/* Lede — opening paragraph after a heading, larger and lighter */
+.lede {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  color: var(--color-text);
+  max-width: 30ch;
+}
+@media (min-width: 768px) {
+  .lede {
+    font-size: 28px;
+    line-height: 1.4;
+    max-width: 32ch;
+  }
+}
+
+/* Editorial prose — generous line height, no max width crampage */
+.prose-editorial {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--color-text);
+  max-width: 62ch;
+}
+@media (min-width: 768px) {
+  .prose-editorial {
+    font-size: 18px;
+    line-height: 1.7;
+  }
+}
+.prose-editorial p + p {
+  margin-top: 1.2em;
+}
+
+/* Pull quote — large, italic-flavoured display, framed by hairlines */
+.pull-quote {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: normal;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  text-wrap: balance;
+}
+@media (min-width: 768px) {
+  .pull-quote {
+    font-size: 44px;
+    line-height: 1.15;
+  }
+}
+@media (min-width: 1024px) {
+  .pull-quote {
+    font-size: 56px;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Concierge note — italicised personal voice */
+.concierge-note {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--color-text);
+  letter-spacing: -0.005em;
+}
+@media (min-width: 768px) {
+  .concierge-note {
+    font-size: 22px;
+    line-height: 1.5;
+  }
+}
+
+/* Caption — small mono uppercase, used for image captions and overlays */
+.caption {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+}
+
+/* Spec row — typographic fact listing, NOT a checklist or 4-col grid */
+.spec-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px;
+  padding: 22px 0;
+  border-top: 1px solid var(--color-border-subtle);
+  align-items: baseline;
+}
+.spec-row:last-child {
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.spec-row__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+}
+.spec-row__value {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 19px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+@media (min-width: 768px) {
+  .spec-row__value {
+    font-size: 22px;
+  }
+}
+
+/* Skip to content — a11y, hidden until focused */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  padding: 12px 20px;
+  background: var(--color-sand-12);
+  color: var(--color-sand-1);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transform: translateY(-100%);
+  transition: transform var(--duration-base) var(--ease-standard);
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: none;
+}
+
 /* Mask wrapper for SplitText — char-level reveal */
 .split-mask > span {
   display: inline-block;

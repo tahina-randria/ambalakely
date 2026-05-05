@@ -18,9 +18,14 @@ export type Category = {
   longDescription: string;
   bedSetup: string;
   view: string;
+  bestFor: string;
   features: string[];
   heroImage: string;
   gallery: string[];
+  /** Concierge note, signed by Mamy or Hasina */
+  concierge: { body: string; signed: 'Mamy' | 'Hasina' };
+  /** Pull quote from the longDescription */
+  pullQuote: string;
 };
 
 export const categories: Category[] = [
@@ -35,25 +40,31 @@ export const categories: Category[] = [
     priceMga: 255000,
     priceEur: 49,
     shortDescription:
-      'King size voamboana. Rice fields and village view. Option for up to two extra beds.',
+      'The two largest rooms in the house. King-size voamboana, windows on the rice fields.',
     longDescription:
-      'The two largest rooms in the house. A king-size voamboana bed sits centred under the high ceiling, with windows on two sides looking onto the rice fields and the village below. Hot water bottles in the bed at night. Mosquito nets. The bathroom is private with a hot shower and the same sand-coloured tiles throughout the hotel.',
-    bedSetup: 'King-size voamboana, plus two single beds on request.',
-    view: 'Rice fields and village',
+      'There are two of these rooms. They sit at the front of the main building, with windows on two sides — one looks down over the terraced rice fields, the other across the village below. The bed is voamboana, hand-carved by a workshop in Fianarantsoa. Forty-three square metres is enough for an extra bed or two, if a family needs them.',
+    bedSetup: 'King-size voamboana, with the option of two single katrafay beds.',
+    view: 'Rice terraces and the village of Ambalakely.',
+    bestFor: 'A family of four, or two travellers with room to read.',
     features: [
-      'En-suite bathroom with hot shower',
-      'Mosquito nets',
-      'Hot water bottles at night',
-      'Free WiFi',
-      'Twin extra beds (on request, +20%)',
-      'Private terrace access',
+      'En-suite bathroom, hot water all day',
+      'Hand-carved voamboana furniture',
+      'Mosquito nets and hot water bottles at night',
+      'Two single beds on request',
+      'Two windows, two views',
+      'Direct access to the upper terrace',
     ],
     heroImage: `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w`,
     gallery: [
-      `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=1500w`,
-      `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=1500w`,
-      `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg?format=1500w`,
+      `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2000w`,
+      `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2000w`,
+      `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg?format=2000w`,
     ],
+    concierge: {
+      body: 'These are the rooms I would book for my parents. The morning light comes in slowly from the east, and at five in the afternoon the rice fields turn gold. Sleep with the window open if it is not too cold.',
+      signed: 'Mamy',
+    },
+    pullQuote: 'At five in the afternoon the rice fields turn gold.',
   },
   {
     slug: 'confort',
@@ -66,25 +77,31 @@ export const categories: Category[] = [
     priceMga: 226000,
     priceEur: 44,
     shortDescription:
-      'King voamboana and a single katrafay. Two on the ground floor with garden view, two upstairs.',
+      'A king and a single, in twenty-nine square metres. Two open onto the garden, two are upstairs.',
     longDescription:
-      'A king voamboana paired with a single katrafay bed, generous enough for a family of three. Two rooms sit on the ground floor opening onto the garden, two are upstairs with a wider view across the highlands. Same finish across all four: warm sand walls, dark wood floors, a small writing desk near the window.',
-    bedSetup: 'King-size voamboana plus one single katrafay bed.',
-    view: 'Garden (ground floor) or landscape (upstairs)',
+      'Four Confort rooms, paired in twos. The ground-floor pair opens straight into the garden — you can step out without putting shoes on. The upstairs pair has a wider, longer view, the kind that draws you out of bed earlier than you meant to. A king voamboana, a single katrafay, a desk by the window.',
+    bedSetup: 'King-size voamboana and one single katrafay bed.',
+    view: 'Garden on the ground floor. Highlands and rice fields upstairs.',
+    bestFor: 'Two adults and a child, or a writer who wants a desk by the window.',
     features: [
-      'En-suite bathroom with hot shower',
-      'Mosquito nets',
-      'Hot water bottles at night',
-      'Free WiFi',
-      'Writing desk',
-      'Two with garden view, two upstairs',
+      'En-suite bathroom, hot water all day',
+      'Writing desk by the window',
+      'Mosquito nets and hot water bottles at night',
+      'Two ground-floor with direct garden access',
+      'Two upstairs with the wider view',
+      'Single katrafay bed for a third guest',
     ],
     heroImage: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2500w`,
     gallery: [
-      `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=1500w`,
-      `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=1500w`,
-      `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg?format=1500w`,
+      `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2000w`,
+      `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2000w`,
+      `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg?format=2000w`,
     ],
+    concierge: {
+      body: 'I write in the upstairs Confort when the kitchen does not need me. The desk faces east, the door faces the garden. The hot water bottle goes in around six in the evening, before the cold settles in.',
+      signed: 'Hasina',
+    },
+    pullQuote: 'The kind of view that draws you out of bed earlier than you meant to.',
   },
   {
     slug: 'standard',
@@ -97,25 +114,31 @@ export const categories: Category[] = [
     priceMga: 182000,
     priceEur: 35,
     shortDescription:
-      'Two double katrafay and two twin voamboana, with mosquito nets. Garden view.',
+      'The first four rooms we built. Compact, quiet, and the same hot water bottles at night.',
     longDescription:
-      'The original four rooms of the house. Two with a double katrafay bed, two with twin voamboana. The same warm sand walls, the same hot shower, the same view onto the garden. Compact and quiet — favoured by guests passing through on the RN7 between Antsirabe and Isalo.',
-    bedSetup: 'Double katrafay (2 rooms) or twin voamboana (2 rooms).',
-    view: 'Garden',
+      'These were the four rooms we opened with in 2018. Two have a double katrafay bed, two have twin voamboana. They are the smallest in the house and the quietest, set back from the dining room at the end of the path. Most guests on the RN7 between Antsirabe and Isalo stay one night and remember the breakfast.',
+    bedSetup: 'Double katrafay (two rooms) or twin voamboana (two rooms).',
+    view: 'Garden, with the pomelo tree to one side.',
+    bestFor: 'A single traveller, two friends, or a one-night stop on the RN7.',
     features: [
-      'En-suite bathroom with hot shower',
-      'Mosquito nets',
-      'Hot water bottles at night',
-      'Free WiFi',
-      'Compact and quiet',
-      'Single occupancy rate available',
+      'En-suite bathroom, hot water all day',
+      'Quiet — set back from the dining room',
+      'Mosquito nets and hot water bottles at night',
+      'Two double, two twin',
+      'Single-occupancy rate available',
+      'Garden view from the window',
     ],
     heroImage: `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg?format=2500w`,
     gallery: [
-      `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg?format=1500w`,
-      `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=1500w`,
-      `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=1500w`,
+      `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg?format=2000w`,
+      `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2000w`,
+      `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2000w`,
     ],
+    concierge: {
+      body: 'These rooms hold the most repeat guests. Drivers, friends from Tana passing through, families on the RN7. We light the fire in the dining room at six, and the rooms warm up by seven. Quiet by ten.',
+      signed: 'Mamy',
+    },
+    pullQuote: 'Set back from the dining room at the end of the path.',
   },
 ];
 

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SmoothScrollProvider } from '@/lib/motion/SmoothScrollProvider';
 import { ScrollProgress } from '@/components/atoms/ScrollProgress';
 import { HotelJsonLd } from '@/components/atoms/JsonLd';
@@ -81,9 +82,11 @@ export default function RootLayout({
         <HotelJsonLd />
       </head>
       <body>
+        <a href="#main" className="skip-link">Skip to content</a>
         <ScrollProgress />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
