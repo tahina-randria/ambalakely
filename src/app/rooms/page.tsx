@@ -7,6 +7,7 @@ import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
+import { RoomComparison } from '@/components/molecules/RoomComparison';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { categories } from '@/lib/data/categories';
 
@@ -84,6 +85,23 @@ export default function RoomsPage() {
                   2018. Choose by what you want from the window.
                 </p>
               </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* ════════════════════════════════════════════════════════════
+            COMPARISON GRID — same criteria across all 3, quick scan
+        ════════════════════════════════════════════════════════════ */}
+        <section className="py-24 md:py-32 lg:py-40 hair-rule">
+          <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
+            <ScrollReveal className="mb-10 md:mb-14">
+              <div className="caption">At a glance</div>
+              <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[32px] md:text-[44px] leading-[1.05] tracking-[-0.025em] max-w-[760px]">
+                Twelve points to choose by.
+              </h2>
+            </ScrollReveal>
+            <ScrollReveal>
+              <RoomComparison />
             </ScrollReveal>
           </div>
         </section>
