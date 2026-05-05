@@ -36,6 +36,7 @@ export function MapboxMap() {
       bearing: 0,
       attributionControl: false,
       cooperativeGestures: false,
+      scrollZoom: false, // Page scroll passes through, map ne capture pas la roulette
     });
 
     // Compact attribution
