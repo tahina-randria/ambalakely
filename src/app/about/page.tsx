@@ -266,29 +266,28 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ────────────────────────────────────────────────────────────
-            07 · BOOKING CTA
-        ──────────────────────────────────────────────────────────── */}
-        <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-sand-12)] text-[var(--color-sand-1)]">
-          <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-              <div className="lg:col-span-8">
-                <ScrollReveal>
-                  <div className="caption text-[var(--color-sand-6)]">Stay with us</div>
-                  <h2 className="mt-6 font-display font-light tracking-[-0.035em] text-[44px] leading-[1.02] md:text-[64px] md:leading-[1] lg:text-[80px] lg:leading-[0.98] max-w-[860px]">
-                    Two nights or more.
-                    <br />
-                    The garden gives more if you wait.
-                  </h2>
-                </ScrollReveal>
+        {/* ════════════════════════════════════════════════════════════
+            BOOKING CTA — minimal inline, no dark panel
+        ════════════════════════════════════════════════════════════ */}
+        <section className="py-32 md:py-48 lg:py-64 hair-rule">
+          <div className="mx-auto max-w-[920px] px-5 md:px-8">
+            <ScrollReveal>
+              <div className="caption">Stay with us</div>
+            </ScrollReveal>
+            <ScrollReveal delay={0.05}>
+              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[48px] leading-[0.98] md:text-[80px] md:leading-[0.95] lg:text-[112px] lg:leading-[0.92] tracking-[-0.04em] balance">
+                Two nights or more. The garden gives more if you wait.
+              </h2>
+            </ScrollReveal>
+            <ScrollReveal delay={0.1}>
+              <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
+                <BookingButton>Check availability</BookingButton>
+                <p className="text-[14px] leading-[1.55] text-[var(--color-text-muted)] max-w-[400px]">
+                  Free cancellation up to thirty days before arrival.
+                </p>
               </div>
-              <div className="lg:col-span-4 lg:flex lg:justify-end">
-                <ScrollReveal>
-                  <BookingButton variant="solid-light">Check availability</BookingButton>
-                </ScrollReveal>
-              </div>
-            </div>
-          </Container>
+            </ScrollReveal>
+          </div>
         </section>
 
         {/* ────────────────────────────────────────────────────────────

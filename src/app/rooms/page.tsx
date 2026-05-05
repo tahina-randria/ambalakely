@@ -7,8 +7,7 @@ import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
-import { PriceDisplay } from '@/components/atoms/PriceDisplay';
-import { ArrowRight, Bed, Mountains } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { categories } from '@/lib/data/categories';
 
 export const metadata: Metadata = {
@@ -23,6 +22,8 @@ export const metadata: Metadata = {
   },
 };
 
+const fmt = (n: number) => n.toLocaleString('fr-FR').replace(/\s/g, ' ');
+
 export default function RoomsPage() {
   return (
     <>
@@ -34,10 +35,10 @@ export default function RoomsPage() {
       />
       <Nav />
       <main id="main">
-        {/* ────────────────────────────────────────────────────────────
-            01 · HERO — full viewport, single image, title overlay
-        ──────────────────────────────────────────────────────────── */}
-        <section className="relative h-[90vh] md:h-[100vh] w-full overflow-hidden bg-[var(--color-sand-12)]">
+        {/* ════════════════════════════════════════════════════════════
+            HERO — full viewport
+        ════════════════════════════════════════════════════════════ */}
+        <section className="relative h-[100vh] w-full overflow-hidden bg-[var(--color-sand-12)]">
           <Image
             src={categories[0].heroImage}
             alt="Rooms at Ambalakely"
@@ -48,200 +49,135 @@ export default function RoomsPage() {
           />
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/55"
+            className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/55"
           />
-
           <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
             <div className="pt-[100px] md:pt-[128px]">
               <div className="caption text-white/75">The rooms</div>
             </div>
-            <div className="mt-auto pb-14 md:pb-20 max-w-[1100px]">
-              <h1 className="font-display font-light tracking-[-0.04em] text-white text-[56px] leading-[0.98] md:text-[96px] md:leading-[0.95] lg:text-[136px] lg:leading-[0.92]">
-                Ten rooms.
-                <br />
-                Three ways.
+            <div className="mt-auto pb-14 md:pb-20">
+              <h1 className="font-display font-light tracking-[-0.04em] text-white text-[64px] leading-[0.92] md:text-[120px] md:leading-[0.9] lg:text-[180px] lg:leading-[0.9]">
+                Ten.
               </h1>
             </div>
           </div>
         </section>
 
-        {/* ────────────────────────────────────────────────────────────
-            02 · INTRO
-        ──────────────────────────────────────────────────────────── */}
-        <section className="py-32 md:py-48 lg:py-56">
-          <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
-                <ScrollReveal>
-                  <div className="caption">Overview</div>
-                </ScrollReveal>
+        {/* ════════════════════════════════════════════════════════════
+            EDITORIAL OPENING
+        ════════════════════════════════════════════════════════════ */}
+        <section className="py-32 md:py-48 lg:py-64">
+          <div className="mx-auto max-w-[700px] px-5 md:px-8">
+            <ScrollReveal>
+              <p className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[40px] leading-[1.2] tracking-[-0.025em] balance">
+                Same sand walls, same dark wood floors, same hot water bottles
+                at night. The difference is space, view and bed.
+              </p>
+            </ScrollReveal>
+            <ScrollReveal delay={0.05}>
+              <div className="mt-14 prose-editorial">
+                <p>
+                  Ten rooms in two buildings. Two of them sit on the front of
+                  the main house and look down over the rice fields. Four are
+                  in the middle range, with a desk by the window and a king
+                  bed. Four more were the original rooms we opened with in
+                  2018. Choose by what you want from the window.
+                </p>
               </div>
+            </ScrollReveal>
+          </div>
+        </section>
 
-              <div className="lg:col-span-9 max-w-[760px]">
+        {/* ════════════════════════════════════════════════════════════
+            CATEGORY SEQUENCE — photo-essay, no cards
+            For each category: full-bleed image + magazine-style chapter
+        ════════════════════════════════════════════════════════════ */}
+        {categories.map((cat) => (
+          <div key={cat.slug}>
+            {/* Full-bleed image with title overlay */}
+            <section className="relative h-[80vh] md:h-[100vh] w-full overflow-hidden bg-[var(--color-sand-12)]">
+              <Image
+                src={cat.heroImage}
+                alt={cat.name}
+                fill
+                sizes="100vw"
+                className="object-cover"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50"
+              />
+              <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
+                <div className="pt-[100px] md:pt-[128px]">
+                  <div className="caption text-white/75">
+                    Chapter {cat.number} · {cat.count}
+                  </div>
+                </div>
+                <div className="mt-auto pb-14 md:pb-20">
+                  <h2 className="font-display font-light tracking-[-0.04em] text-white text-[56px] leading-[0.95] md:text-[112px] md:leading-[0.9] lg:text-[160px] lg:leading-[0.9]">
+                    {cat.name}
+                  </h2>
+                </div>
+              </div>
+            </section>
+
+            {/* Editorial chapter — single column prose */}
+            <section className="py-32 md:py-48 lg:py-56">
+              <div className="mx-auto max-w-[700px] px-5 md:px-8">
                 <ScrollReveal>
-                  <p className="lede max-w-[34ch]">
-                    Same sand walls, same dark wood floors, same hot water bottles
-                    at night. The difference is space, view and bed.
+                  <p className="font-display font-light text-[var(--color-text)] text-[24px] md:text-[32px] leading-[1.25] tracking-[-0.02em] balance">
+                    {cat.shortDescription}
                   </p>
                 </ScrollReveal>
                 <ScrollReveal delay={0.05}>
-                  <div className="mt-12 prose-editorial">
-                    <p>
-                      Ten rooms in two buildings. Two of them, the Supérieure, sit
-                      on the front of the main house and look down over the rice
-                      fields. Four are in the middle range, the Confort, with a
-                      desk by the window and a king bed. Four more, the Standard,
-                      were the original rooms we opened with in 2018. Choose by
-                      what you want from the window.
-                    </p>
-                  </div>
+                  <p className="mt-12 font-display font-light italic text-[18px] leading-[1.55] text-[var(--color-text-muted)]">
+                    {cat.size}, {cat.capacity.toLowerCase()}. {cat.bedSetup} From{' '}
+                    <span className="not-italic tabular-nums text-[var(--color-text)]">
+                      {fmt(cat.priceMga)} Ariary
+                    </span>{' '}
+                    per night.
+                  </p>
                 </ScrollReveal>
-              </div>
-            </div>
-          </Container>
-        </section>
-
-        {/* ────────────────────────────────────────────────────────────
-            03 · CATEGORY EDITORIAL LIST
-            Magazine-style. Each category gets a numbered chapter,
-            full-bleed image, prose with breath, link to detail.
-        ──────────────────────────────────────────────────────────── */}
-        {categories.map((cat, i) => (
-          <section
-            key={cat.slug}
-            className={`hair-rule py-24 md:py-32 lg:py-40 ${
-              i === 1 ? 'bg-[var(--color-bg-subtle)]' : ''
-            }`}
-          >
-            <Container>
-              {/* Chapter header */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 md:mb-20">
-                <div className="lg:col-span-3">
-                  <ScrollReveal>
-                    <div className="caption">
-                      Chapter {cat.number}
-                    </div>
-                    <div className="mt-4 caption text-[var(--color-text-muted)]">
-                      {cat.count} · {cat.size}
-                    </div>
-                  </ScrollReveal>
-                </div>
-                <div className="lg:col-span-9">
-                  <ScrollReveal delay={0.05}>
-                    <h2 className="font-display font-light text-[var(--color-text)] text-[56px] leading-[0.95] md:text-[96px] md:leading-[0.92] lg:text-[120px] lg:leading-[0.92] tracking-[-0.04em]">
-                      {cat.name}
-                    </h2>
-                  </ScrollReveal>
-                </div>
-              </div>
-
-              {/* Body — image + prose, alternating side */}
-              <div
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 ${
-                  i % 2 === 1 ? '' : ''
-                }`}
-              >
-                <ScrollReveal
-                  className={`lg:col-span-7 ${i % 2 === 1 ? 'lg:order-2' : ''}`}
-                >
+                <ScrollReveal delay={0.1}>
                   <Link
                     href={`/rooms/${cat.slug}`}
-                    className="group block relative aspect-[4/5] md:aspect-[5/4] overflow-hidden bg-[var(--color-bg-muted)]"
+                    className="group mt-12 inline-flex items-center gap-3 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] tracking-[-0.025em] leading-[1.05]"
                   >
-                    <Image
-                      src={cat.heroImage}
-                      alt={cat.name}
-                      fill
-                      sizes="(min-width: 1024px) 58vw, 100vw"
-                      priority={i === 0}
-                      className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-[1.03]"
+                    Read about the {cat.name}
+                    <ArrowRight
+                      size={24}
+                      className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-2"
                     />
                   </Link>
                 </ScrollReveal>
-
-                <div
-                  className={`lg:col-span-5 lg:flex lg:flex-col lg:justify-center ${
-                    i % 2 === 1 ? 'lg:order-1' : ''
-                  }`}
-                >
-                  <ScrollReveal delay={0.06}>
-                    <p className="lede max-w-[28ch]">{cat.shortDescription}</p>
-                  </ScrollReveal>
-
-                  {/* 2 key specs with icons */}
-                  <ScrollReveal delay={0.1}>
-                    <div className="mt-12">
-                      {[
-                        { Icon: Bed, label: 'Bed', value: cat.bedSetup },
-                        { Icon: Mountains, label: 'View', value: cat.view },
-                      ].map((row) => (
-                        <div key={row.label} className="spec-row">
-                          <div className="spec-row__label flex items-center gap-2.5">
-                            <row.Icon
-                              size={14}
-                              weight="light"
-                              className="text-[var(--color-text-muted)]"
-                              aria-hidden
-                            />
-                            {row.label}
-                          </div>
-                          <div className="spec-row__value">{row.value}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </ScrollReveal>
-
-                  {/* Price + CTA */}
-                  <ScrollReveal delay={0.14}>
-                    <div className="mt-12 flex flex-wrap items-end gap-x-12 gap-y-8">
-                      <PriceDisplay mga={cat.priceMga} eur={cat.priceEur} size="md" />
-                      <Link
-                        href={`/rooms/${cat.slug}`}
-                        className="group inline-flex items-center gap-3 font-body text-[15px] font-medium text-[var(--color-text)] self-end pb-2"
-                      >
-                        Read the room
-                        <ArrowRight
-                          size={18}
-                          className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
-                        />
-                      </Link>
-                    </div>
-                  </ScrollReveal>
-                </div>
               </div>
-            </Container>
-          </section>
+            </section>
+          </div>
         ))}
 
-        {/* ────────────────────────────────────────────────────────────
-            04 · BOOKING CTA
-        ──────────────────────────────────────────────────────────── */}
-        <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-sand-12)] text-[var(--color-sand-1)]">
-          <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-              <div className="lg:col-span-8">
-                <ScrollReveal>
-                  <div className="caption text-[var(--color-sand-6)]">Reserve</div>
-                  <h2 className="mt-6 font-display font-light tracking-[-0.035em] text-[44px] leading-[1.02] md:text-[64px] md:leading-[1] lg:text-[80px] lg:leading-[0.98] max-w-[860px]">
-                    Direct booking.
-                    <br />
-                    Reply within two hours.
-                  </h2>
-                </ScrollReveal>
-              </div>
-              <div className="lg:col-span-4 lg:flex lg:justify-end">
-                <ScrollReveal>
-                  <BookingButton variant="solid-light">Check availability</BookingButton>
-                </ScrollReveal>
-              </div>
-            </div>
+        {/* ════════════════════════════════════════════════════════════
+            RESERVE — minimal, no dark panel
+        ════════════════════════════════════════════════════════════ */}
+        <section className="py-32 md:py-48 lg:py-64 hair-rule">
+          <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <p className="mt-10 max-w-[440px] text-[14px] leading-[1.6] text-[var(--color-sand-5)]">
-                Free cancellation up to thirty days before arrival. No deposit
-                required for stays of two nights or fewer.
-              </p>
+              <div className="caption">Reserve</div>
             </ScrollReveal>
-          </Container>
+            <ScrollReveal delay={0.05}>
+              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[48px] leading-[0.98] md:text-[80px] md:leading-[0.95] lg:text-[112px] lg:leading-[0.92] tracking-[-0.04em] balance">
+                Direct booking. Reply within two hours.
+              </h2>
+            </ScrollReveal>
+            <ScrollReveal delay={0.1}>
+              <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
+                <BookingButton>Check availability</BookingButton>
+                <p className="text-[14px] leading-[1.55] text-[var(--color-text-muted)] max-w-[400px]">
+                  Free cancellation up to thirty days before arrival. No deposit
+                  for stays of two nights or fewer.
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
         </section>
       </main>
       <Footer />

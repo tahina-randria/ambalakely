@@ -201,24 +201,14 @@ export default function DiningPage() {
                   </div>
                 </ScrollReveal>
 
-                <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-2 max-w-[640px]">
-                  {facts.map((row) => (
-                    <ScrollReveal key={row.label}>
-                      <div className="spec-row">
-                        <div className="spec-row__label flex items-center gap-2.5">
-                          <row.Icon
-                            size={14}
-                            weight="light"
-                            className="text-[var(--color-text-muted)]"
-                            aria-hidden
-                          />
-                          {row.label}
-                        </div>
-                        <div className="spec-row__value">{row.value}</div>
-                      </div>
-                    </ScrollReveal>
-                  ))}
-                </div>
+                <ScrollReveal delay={0.1}>
+                  {/* Inline facts as italic prose, no grid */}
+                  <p className="mt-12 font-display font-light italic text-[18px] md:text-[20px] leading-[1.55] text-[var(--color-text-muted)] max-w-[60ch]">
+                    Fifty seats. One set menu, three courses, each evening. Open
+                    to hotel guests and day visitors. Reserve at least 24 hours
+                    in advance.
+                  </p>
+                </ScrollReveal>
               </div>
             </div>
           </Container>
@@ -359,29 +349,28 @@ export default function DiningPage() {
           </Container>
         </section>
 
-        {/* ────────────────────────────────────────────────────────────
-            07 · CTA — reserve a table
-        ──────────────────────────────────────────────────────────── */}
-        <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-sand-12)] text-[var(--color-sand-1)]">
-          <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-              <div className="lg:col-span-8">
-                <ScrollReveal>
-                  <div className="caption text-[var(--color-sand-6)]">Reserve a table</div>
-                  <h2 className="mt-6 font-display font-light tracking-[-0.035em] text-[44px] leading-[1.02] md:text-[64px] md:leading-[1] lg:text-[80px] lg:leading-[0.98] max-w-[860px]">
-                    Day visitors welcome.
-                    <br />
-                    Reserve at least 24 hours ahead.
-                  </h2>
-                </ScrollReveal>
+        {/* ════════════════════════════════════════════════════════════
+            RESERVE — minimal inline, no dark panel
+        ════════════════════════════════════════════════════════════ */}
+        <section className="py-32 md:py-48 lg:py-64 hair-rule">
+          <div className="mx-auto max-w-[920px] px-5 md:px-8">
+            <ScrollReveal>
+              <div className="caption">Reserve a table</div>
+            </ScrollReveal>
+            <ScrollReveal delay={0.05}>
+              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[48px] leading-[0.98] md:text-[80px] md:leading-[0.95] lg:text-[112px] lg:leading-[0.92] tracking-[-0.04em] balance">
+                Day visitors welcome.
+              </h2>
+            </ScrollReveal>
+            <ScrollReveal delay={0.1}>
+              <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
+                <BookingButton>Reserve</BookingButton>
+                <p className="text-[14px] leading-[1.55] text-[var(--color-text-muted)] max-w-[400px]">
+                  At least 24 hours in advance. Allergies, with a day&rsquo;s notice.
+                </p>
               </div>
-              <div className="lg:col-span-4 lg:flex lg:justify-end">
-                <ScrollReveal>
-                  <BookingButton variant="solid-light">Reserve</BookingButton>
-                </ScrollReveal>
-              </div>
-            </div>
-          </Container>
+            </ScrollReveal>
+          </div>
         </section>
       </main>
       <Footer />
