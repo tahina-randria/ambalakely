@@ -4,6 +4,9 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowRight, X, WhatsappLogo, Envelope, Users } from '@phosphor-icons/react/dist/ssr';
 import { cn } from '@/lib/utils/cn';
+import { HOTEL } from '@/lib/data/hotel';
+
+const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');
 
 type Props = {
   open: boolean;
@@ -129,7 +132,7 @@ export function BookingDrawer({ open, onClose }: Props) {
 
                   <div className="mt-6 flex flex-col gap-3">
                     <a
-                      href="https://wa.me/261341125434?text=Group%20booking%20request%20for%20Ambalakely"
+                      href={`https://wa.me/${WA_DIGITS}?text=Group%20booking%20request%20for%20Ambalakely`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group inline-flex items-center justify-center gap-3 h-12 px-6 bg-[var(--color-sand-1)] text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
@@ -142,7 +145,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                       />
                     </a>
                     <a
-                      href={`mailto:hello@hotelambalakely.com?subject=Group%20booking%20(${guests}%20guests)`}
+                      href={`mailto:${HOTEL.email}?subject=Group%20booking%20(${guests}%20guests)`}
                       className="group inline-flex items-center justify-center gap-3 h-12 px-6 border border-[var(--color-sand-7)] text-[var(--color-sand-1)] font-body text-[15px] font-medium transition-[color,border-color] duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:border-[var(--color-sand-1)]"
                     >
                       <Envelope size={18} weight="regular" />
@@ -179,20 +182,20 @@ export function BookingDrawer({ open, onClose }: Props) {
             </div>
             <div className="flex flex-col gap-3">
               <a
-                href="https://wa.me/261341125434"
+                href={`https://wa.me/${WA_DIGITS}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 text-[15px] text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)]"
               >
                 <WhatsappLogo size={18} weight="regular" />
-                <span>+261 34 11 254 34</span>
+                <span>{HOTEL.phone}</span>
               </a>
               <a
-                href="mailto:hello@hotelambalakely.com"
+                href={`mailto:${HOTEL.email}`}
                 className="inline-flex items-center gap-3 text-[15px] text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)]"
               >
                 <Envelope size={18} weight="regular" />
-                <span>hello@hotelambalakely.com</span>
+                <span>{HOTEL.email}</span>
               </a>
             </div>
           </div>
