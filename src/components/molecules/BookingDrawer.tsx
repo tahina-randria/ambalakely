@@ -126,7 +126,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                     <Users size={18} weight="light" className="text-[var(--color-sand-1)] shrink-0 mt-1" />
                     <p className="text-[15px] leading-[1.55] text-[var(--color-sand-5)]">
                       For groups, we pair rooms and tailor the stay. Write to us
-                      directly and we&rsquo;ll reply within two hours.
+                      directly.
                     </p>
                   </div>
 

@@ -75,7 +75,7 @@ export function Book() {
                   </div>
                   <p className="text-[18px] leading-[1.5] text-[var(--color-sand-1)] max-w-[620px]">
                     For groups, we pair rooms and tailor the stay. Meals, experiences,
-                    transfers. Write to us directly and we&rsquo;ll reply within two hours.
+                    transfers. Write to us directly.
                   </p>
 
                   <div className="mt-8 flex flex-col sm:flex-row gap-5 sm:gap-8">

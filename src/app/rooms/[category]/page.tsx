@@ -255,8 +255,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
               <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
                 <BookingButton>Check availability</BookingButton>
                 <p className="text-[14px] leading-[1.55] text-[var(--color-text-muted)] max-w-[400px]">
-                  ≈ {cat.priceEur} € per night. Free cancellation up to thirty days
-                  before arrival. We answer within two hours during the day.
+                  Per night. Free cancellation up to thirty days before arrival.
                 </p>
               </div>
             </ScrollReveal>

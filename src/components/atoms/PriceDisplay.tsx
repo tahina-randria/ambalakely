@@ -80,7 +80,7 @@ export function PriceDisplay({
       </div>
       {showSuffix ? (
         <div className={cn('mt-2 font-mono uppercase tracking-[0.1em]', s.eur, muted)}>
-          ≈ {eur} € · per night
+          Per night
         </div>
       ) : null}
     </div>

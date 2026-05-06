@@ -183,7 +183,7 @@ export default function RoomsPage() {
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[48px] leading-[0.98] md:text-[80px] md:leading-[0.95] lg:text-[112px] lg:leading-[0.92] tracking-[-0.04em] balance">
-                Direct booking. Reply within two hours.
+                Direct booking.
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>

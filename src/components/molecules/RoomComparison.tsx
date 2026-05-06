@@ -108,7 +108,7 @@ export function RoomComparison() {
                 {fmt(cat.priceMga)}
               </div>
               <div className="mt-1 caption text-[var(--color-text-muted)]">
-                Ariary · ≈ {cat.priceEur} €
+                Ariary · per night
               </div>
             </div>
           ))}
