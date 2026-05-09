@@ -131,7 +131,7 @@ export const faq: FaqCategory[] = [
       },
       {
         q: 'How much cash should I bring?',
-        a: 'Around five hundred euros in Ariary for a week, including meals out, drivers, tips and souvenirs. There is an ATM in central Fianarantsoa, ten kilometres from the hotel. We can change small amounts of euros at the desk.',
+        a: 'Around five hundred euros in Ariary for a week, including meals out, drivers, tips and souvenirs. There is an ATM in central Fianarantsoa, twelve kilometres from the hotel. We can change small amounts of euros at the desk.',
       },
       {
         q: 'Do you take mobile money?',
@@ -169,7 +169,7 @@ export const faq: FaqCategory[] = [
       },
       {
         q: 'Is there a doctor nearby?',
-        a: 'Yes, a clinic in central Fianarantsoa, ten kilometres away, twenty-four hour. The nearest hospital is the regional hospital of Fianarantsoa. We have a basic first-aid kit and contacts of an English-speaking doctor.',
+        a: 'Yes, a clinic in central Fianarantsoa, twelve kilometres away, twenty-four hour. The nearest hospital is the regional hospital of Fianarantsoa. We have a basic first-aid kit and contacts of an English-speaking doctor.',
       },
       {
         q: 'Is the hotel accessible for someone with limited mobility?',

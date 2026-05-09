@@ -102,8 +102,8 @@ export function Location() {
                 20 minutes
               </div>
               <p className="mt-3 text-[15px] leading-[1.55] text-[var(--color-text-muted)]">
-                Ten kilometres south on a quiet road. The hotel sits on the hill
-                above the village.
+                Twelve kilometres north on a quiet road. The hotel sits on the
+                hill above the village.
               </p>
             </div>
             <div>

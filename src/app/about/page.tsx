@@ -13,7 +13,7 @@ import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Mamy and Hasina Randriamahazo opened Ambalakely in October 2018. Ten rooms, a kitchen, a garden, on a hill ten kilometres south of Fianarantsoa.',
+    'Mamy and Hasina Randriamahazo opened Ambalakely in October 2018. Ten rooms, a kitchen, a garden, on a hill twelve kilometres north of Fianarantsoa.',
   alternates: { canonical: '/about' },
   openGraph: {
     title: 'About · Hotel Ambalakely',
@@ -89,8 +89,8 @@ export default function AboutPage() {
               <div className="lg:col-span-9 max-w-[760px]">
                 <ScrollReveal>
                   <p className="lede max-w-[34ch]">
-                    A hotel that feels like a home, on a hill ten kilometres
-                    south of Fianarantsoa.
+                    A hotel that feels like a home, on a hill twelve kilometres
+                    north of Fianarantsoa.
                   </p>
                 </ScrollReveal>
                 <ScrollReveal delay={0.05}>
@@ -221,28 +221,39 @@ export default function AboutPage() {
               <ScrollReveal>
                 <div className="caption">Hope for the Future</div>
                 <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[36px] md:text-[52px] leading-[1.02] tracking-[-0.03em] max-w-[420px]">
-                  A second life next door.
+                  The work next door.
                 </h2>
               </ScrollReveal>
               <ScrollReveal delay={0.05}>
                 <div className="mt-10 prose-editorial max-w-[460px]">
                   <p>
-                    Hope for the Future is a community programme that has run
-                    for ten years in the villages around Fianarantsoa. Schools,
-                    clinics, water access. A portion of every stay supports its
-                    work.
+                    A school for the children of Tanambao, the quartier of
+                    Ambalakely. Started in 2014, four years before the hotel.
+                    A hundred and thirty children, ten years of the same
+                    Wednesday and Saturday afternoons.
                   </p>
                   <p>
-                    Guests are welcome to visit. We arrange a half-day with one
-                    of the team, on Tuesdays or Thursdays.
+                    Two percent of every room booked goes to the work.
                   </p>
                 </div>
+              </ScrollReveal>
+              <ScrollReveal delay={0.1}>
+                <Link
+                  href="/community"
+                  className="mt-12 group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]"
+                >
+                  Read about Hope for the Future
+                  <ArrowRight
+                    size={18}
+                    className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
+                  />
+                </Link>
               </ScrollReveal>
             </div>
             <div className="lg:col-span-7 lg:order-2 relative aspect-[4/5] lg:aspect-auto lg:min-h-[70vh] bg-[var(--color-bg-muted)] overflow-hidden">
               <Image
-                src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2500w"
-                alt="Confort room interior, Hope for the Future programme support"
+                src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
+                alt="Hope for the Future, the school in Tanambao"
                 fill
                 sizes="(min-width: 1024px) 58vw, 100vw"
                 className="object-cover"

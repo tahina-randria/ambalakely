@@ -62,8 +62,8 @@ export default function PlanYourTripPage() {
                 <p>
                   The RN7 runs the length of central Madagascar, from the capital
                   Antananarivo down to the southern coast at Tulear. Most travellers
-                  do at least part of it. Ambalakely sits roughly halfway, ten
-                  kilometres south of Fianarantsoa. We are a comfortable two nights
+                  do at least part of it. Ambalakely sits roughly halfway, twelve
+                  kilometres north of Fianarantsoa. We are a comfortable two nights
                   on a short trip, three or four on a longer one.
                 </p>
                 <p>
