@@ -33,11 +33,11 @@ export const faq: FaqCategory[] = [
       },
       {
         q: 'Are taxes and service included in the rate?',
-        a: 'Yes. Rates shown include tourism tax and service. The only extra is dinner if you take it (around ninety thousand Ariary per person), bottled water, and any excursions.',
+        a: 'Yes. Rates include tourism tax and service. The only extras are dinner if you take it (around ninety thousand Ariary per person), bottled water, and any excursions.',
       },
       {
         q: 'Do you offer single occupancy rates?',
-        a: 'Yes. The Standard rooms have a fifteen percent single discount. Confort and Supérieure are not discounted for single occupancy.',
+        a: 'Yes. Standard rooms have a fifteen percent single discount. Confort and Supérieure are not discounted for single occupancy.',
       },
       {
         q: 'Do you have group rates?',
@@ -62,8 +62,8 @@ export const faq: FaqCategory[] = [
         a: 'By road on the RN7, around eight hours of driving. We arrange a private transfer with a trusted driver from Ivato airport. Two hundred fifty euros for the car, up to four passengers, including fuel and the driver overnight.',
       },
       {
-        q: 'Is there a domestic flight?',
-        a: 'Yes. Tsaradia flies Antananarivo to Fianarantsoa (TNR to WFI) several times a week, around one hour ten minutes. From Fianarantsoa airport we are twenty-five minutes by car. Pickup included on request.',
+        q: 'Are domestic flights to Fianarantsoa reliable?',
+        a: 'Tsaradia flies Antananarivo to Fianarantsoa (TNR to WFI) several times a week. Schedules can shift or be cancelled at short notice, especially in low season. Plan a buffer day either side. By road on the RN7 is slower but never cancelled.',
       },
       {
         q: 'Can I rent a car and drive myself?',
@@ -85,7 +85,7 @@ export const faq: FaqCategory[] = [
     entries: [
       {
         q: 'Is WiFi included?',
-        a: 'Yes, free in every room and the dining room.',
+        a: 'Yes. Free, high-speed, available twenty-four hours in every room and the dining room. Fine for streaming and video calls.',
       },
       {
         q: 'Is hot water available?',
@@ -108,8 +108,8 @@ export const faq: FaqCategory[] = [
         a: 'No smoking inside the rooms or the dining room. Smoking permitted on the terraces.',
       },
       {
-        q: 'Laundry service?',
-        a: 'Yes, hand washed and air dried, returned the same day in dry weather. Fifteen thousand Ariary for a small bag.',
+        q: 'Do you offer laundry service?',
+        a: 'Yes, our team washes and irons. Hand wash, air dry, returned the same day in dry weather, two days when it rains. Around fifteen thousand Ariary for a small bag.',
       },
     ],
   },
@@ -119,11 +119,11 @@ export const faq: FaqCategory[] = [
     entries: [
       {
         q: 'Is breakfast included?',
-        a: 'Yes, full breakfast with every room. Bread baked fresh, fruit from the garden, eggs from our chickens, coffee from Sahambavy.',
+        a: 'Yes, full breakfast with every room. Bread baked fresh each morning, fruit from the garden, eggs from our chickens, coffee from Sahambavy.',
       },
       {
         q: 'Can I have dinner at the hotel?',
-        a: 'Yes, every evening. One set menu, three courses. Around ninety thousand Ariary per person. Reserve at the desk on arrival or in your booking message.',
+        a: 'Yes, every evening. One set menu, three courses, written by Hasina, cooked by the kitchen team. Around ninety thousand Ariary per person. Reserve at the desk on arrival or in your booking message.',
       },
       {
         q: 'Vegetarian, vegan, allergies?',
@@ -134,8 +134,34 @@ export const faq: FaqCategory[] = [
         a: 'Yes. Reserve at least twenty-four hours in advance. The restaurant has fifty seats.',
       },
       {
+        q: 'Do you serve imported wine?',
+        a: 'No. We keep a short list of local wines from Soavita and Lazan’i Betsileo, and Madagascan rum (Dzama). Travellers who want a specific imported bottle should bring it.',
+      },
+      {
         q: 'Is the tap water safe to drink?',
-        a: 'Tap water is filtered but we recommend bottled or boiled water for drinking. A thermos of hot water in each room. Bottled water is two thousand Ariary at the desk.',
+        a: 'No. Do not drink the tap water. Bottled water is provided in every room, and a thermos of boiled water on request. Two thousand Ariary per bottle at the desk if you want extra.',
+      },
+    ],
+  },
+  {
+    slug: 'nearby',
+    label: 'What is nearby',
+    entries: [
+      {
+        q: 'What is there to do around the hotel?',
+        a: 'Within two hours of the hotel : Ranomafana National Park (lemurs in the rainforest), Sahambavy tea estate, Fianarantsoa upper old town, Ambositra woodcarving workshops, Andringitra and Tsaranoro massif, Antemoro paper workshop. We arrange the driver and the guide for any of them. See the experiences page for the full list.',
+      },
+      {
+        q: 'Can I visit the village of Ambalakely?',
+        a: 'Yes. A guided walk down to the village and through the rice fields takes two hours, no charge. Best in the late afternoon. The Tuesday market in the village is small but worth half an hour.',
+      },
+      {
+        q: 'Where is the closest national park?',
+        a: 'Ranomafana, an hour and twenty minutes east. We leave at six in the morning with a packed breakfast and return for tea. Around two hundred eighty thousand Ariary per person, all in.',
+      },
+      {
+        q: 'Can I visit the Hope for the Future school?',
+        a: 'Yes, Tuesdays and Thursdays half-days. We arrange a driver and one of the team. There is no formal tour and no cost.',
       },
     ],
   },
@@ -157,11 +183,11 @@ export const faq: FaqCategory[] = [
       },
       {
         q: 'Are tips expected?',
-        a: 'Not expected, but appreciated. Around ten percent for the team is common, shared equally between cooks, waiters, gardener and gardiens.',
+        a: 'Not expected. If you want to leave something for the team, the desk has a single tip box that we share equally across the staff.',
       },
       {
         q: 'Will I be charged in advance?',
-        a: 'No, except deposits for long stays or groups. Most guests pay on arrival or departure.',
+        a: 'No, except for deposits on long stays or groups. Most guests pay on arrival or departure.',
       },
     ],
   },
