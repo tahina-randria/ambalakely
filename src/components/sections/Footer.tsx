@@ -15,8 +15,9 @@ const columns = [
     title: 'Discover',
     links: [
       { label: 'Dining', href: '/dining' },
+      { label: 'Plan your trip', href: '/plan-your-trip' },
+      { label: 'Journal', href: '/journal' },
       { label: 'Location', href: '/#location' },
-      { label: 'Experiences', href: '/#experiences' },
     ],
   },
   {
@@ -25,6 +26,7 @@ const columns = [
       { label: 'The house', href: '/about' },
       { label: 'Mamy and Hasina', href: '/about#founders' },
       { label: 'Hope for the Future', href: '/about#hope' },
+      { label: 'FAQ', href: '/faq' },
     ],
   },
   {

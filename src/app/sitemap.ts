@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { HOTEL } from '@/lib/data/hotel';
+import { articles } from '@/lib/data/articles';
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL || HOTEL.url;
 
@@ -17,7 +18,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/`, lastModified: LAST_UPDATE, changeFrequency: 'weekly', priority: 1 },
     { url: `${BASE}/rooms`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.95 },
     { url: `${BASE}/dining`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE}/plan-your-trip`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE}/journal`, lastModified: LAST_UPDATE, changeFrequency: 'weekly', priority: 0.75 },
     { url: `${BASE}/about`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/faq`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.65 },
   ];
 
   const roomPages: MetadataRoute.Sitemap = ROOM_CATEGORIES.map(({ slug, priority }) => ({
@@ -27,5 +31,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority,
   }));
 
-  return [...staticPages, ...roomPages];
+  const articlePages: MetadataRoute.Sitemap = articles.map((a) => ({
+    url: `${BASE}/journal/${a.slug}`,
+    lastModified: new Date(a.datePublished),
+    changeFrequency: 'yearly',
+    priority: 0.6,
+  }));
+
+  return [...staticPages, ...roomPages, ...articlePages];
 }
