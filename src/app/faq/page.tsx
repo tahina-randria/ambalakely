@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { Nav } from '@/components/sections/Nav';
 import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
@@ -60,7 +61,6 @@ export default function FaqPage() {
         <PageHero
           src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2500w"
           alt="Hotel Ambalakely, Fianarantsoa Madagascar"
-          caption="Before you come"
           title="Practical."
         />
 
@@ -101,48 +101,61 @@ export default function FaqPage() {
         {/* ════════════════════════════════════════════════════════════
             FAQ — categories with sticky labels
         ════════════════════════════════════════════════════════════ */}
-        {faq.map((cat) => (
-          <section
-            key={cat.slug}
-            id={cat.slug}
-            className="hair-rule py-24 md:py-32 lg:py-40"
-          >
-            <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-                {/* Sticky category label */}
-                <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
-                  <ScrollReveal>
-                    <div className="caption">{cat.label}</div>
-                    <div className="mt-4 font-display font-light text-[var(--color-text-muted)] text-[15px]">
-                      {cat.entries.length} questions
-                    </div>
-                  </ScrollReveal>
-                </div>
+        {faq.map((cat, catIndex) => (
+          <div key={`wrap-${cat.slug}`}>
+            {/* Atmospheric image break between categories 2 and 3 */}
+            {catIndex === 2 ? (
+              <section className="relative aspect-[16/9] md:aspect-[21/9] w-full bg-[var(--color-bg-muted)]">
+                <Image
+                  src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w"
+                  alt="Hotel Ambalakely guest room interior"
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              </section>
+            ) : null}
+            <section
+              id={cat.slug}
+              className="hair-rule py-24 md:py-32 lg:py-40"
+            >
+              <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+                  {/* Sticky category label */}
+                  <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
+                    <ScrollReveal>
+                      <div className="caption">{cat.label}</div>
+                      <div className="mt-4 font-display font-light text-[var(--color-text-muted)] text-[15px]">
+                        {cat.entries.length} questions
+                      </div>
+                    </ScrollReveal>
+                  </div>
 
-                {/* Q&A list */}
-                <div className="lg:col-span-9">
-                  <ul className="border-t border-[var(--color-border-subtle)]">
-                    {cat.entries.map((entry, i) => (
-                      <ScrollReveal key={entry.q} delay={i * 0.03}>
-                        <li className="grid grid-cols-12 gap-6 py-10 md:py-12 border-b border-[var(--color-border-subtle)]">
-                          <div className="col-span-12 md:col-span-5">
-                            <h3 className="font-display font-light text-[var(--color-text)] text-[22px] md:text-[26px] tracking-[-0.02em] leading-[1.2] balance">
-                              {entry.q}
-                            </h3>
-                          </div>
-                          <div className="col-span-12 md:col-span-7">
-                            <p className="prose-editorial text-[16px] md:text-[17px] leading-[1.65]">
-                              {entry.a}
-                            </p>
-                          </div>
-                        </li>
-                      </ScrollReveal>
-                    ))}
-                  </ul>
+                  {/* Q&A list */}
+                  <div className="lg:col-span-9">
+                    <ul className="border-t border-[var(--color-border-subtle)]">
+                      {cat.entries.map((entry, i) => (
+                        <ScrollReveal key={entry.q} delay={i * 0.03}>
+                          <li className="grid grid-cols-12 gap-6 py-10 md:py-12 border-b border-[var(--color-border-subtle)]">
+                            <div className="col-span-12 md:col-span-5">
+                              <h3 className="font-display font-light text-[var(--color-text)] text-[22px] md:text-[26px] tracking-[-0.02em] leading-[1.2] balance">
+                                {entry.q}
+                              </h3>
+                            </div>
+                            <div className="col-span-12 md:col-span-7">
+                              <p className="prose-editorial text-[16px] md:text-[17px] leading-[1.65]">
+                                {entry.a}
+                              </p>
+                            </div>
+                          </li>
+                        </ScrollReveal>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
         ))}
 
         {/* ════════════════════════════════════════════════════════════

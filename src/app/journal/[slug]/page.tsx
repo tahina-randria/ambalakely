@@ -100,18 +100,6 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
         <PageHero
           src={article.cover}
           alt={article.title}
-          caption={
-            <>
-              <Link
-                href="/journal"
-                className="hover:text-white transition-colors"
-              >
-                Journal
-              </Link>
-              <span className="mx-3 text-white/40">·</span>
-              <span>{article.date}</span>
-            </>
-          }
           title={article.title}
         />
 

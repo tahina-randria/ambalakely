@@ -47,7 +47,6 @@ export default function RoomsPage() {
         <PageHero
           src={categories[0].heroImage}
           alt="View of the Supérieure rooms over the rice fields"
-          caption="The rooms"
           title="Ten."
         />
 

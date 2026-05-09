@@ -22,7 +22,7 @@ import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 export const metadata: Metadata = {
   title: 'Dining',
   description:
-    'Hasina cooks one set menu each evening. Most of what arrives on the plate comes from the garden, the rice fields below, and the village market.',
+    'One set menu each evening, written by Hasina, cooked by the kitchen team. Most of what arrives on the plate comes from the garden, the rice fields below, and the village market.',
   alternates: { canonical: '/dining' },
   openGraph: {
     title: 'Dining at Toko Telo · Hotel Ambalakely',
@@ -155,7 +155,6 @@ export default function DiningPage() {
         <PageHero
           src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2500w"
           alt="Toko Telo kitchen, Hotel Ambalakely"
-          caption="The restaurant"
           title="Toko Telo."
         />
 
@@ -167,7 +166,7 @@ export default function DiningPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
               <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
                 <ScrollReveal>
-                  <div className="caption">Hasina’s kitchen</div>
+                  <div className="caption">The kitchen</div>
                 </ScrollReveal>
               </div>
               <div className="lg:col-span-9">
@@ -293,7 +292,7 @@ export default function DiningPage() {
                     <div className="font-display text-[16px] tracking-[-0.005em] text-[var(--color-text)]">
                       Hasina
                     </div>
-                    <div className="caption text-[var(--color-text-muted)]">Kitchen</div>
+                    <div className="caption text-[var(--color-text-muted)]">Host</div>
                   </div>
                 </ScrollReveal>
               </div>

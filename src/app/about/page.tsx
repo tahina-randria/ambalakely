@@ -41,7 +41,7 @@ const milestones = [
     year: '2018',
     title: 'Opening',
     body:
-      'Four rooms open in October. Hasina takes the kitchen. Friends from Norway and France are the first guests.',
+      'Four rooms open in October. Hasina runs the menu and the welcome. Friends from Norway and France are the first guests.',
   },
   {
     year: '2021',
@@ -71,7 +71,6 @@ export default function AboutPage() {
         <PageHero
           src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w"
           alt="Hotel Ambalakely garden, Fianarantsoa Madagascar"
-          caption="The house"
           title={['Mamy', 'and Hasina.']}
         />
 
@@ -139,9 +138,11 @@ export default function AboutPage() {
                   </p>
                   <p>
                     Hasina is from the Betsileo highlands, with a Norwegian
-                    godmother and a slow education in cooking that took her
-                    from Antananarivo to Oslo and back. The kitchen, the menu,
-                    the bread. This is her work. She also runs <Link href="/dining" className="underline-offset-4 hover:underline">Toko Telo</Link>, the restaurant.
+                    godmother and a slow education in hospitality that took her
+                    from Antananarivo to Oslo and back. The menu, the welcome,
+                    the rooms, the rhythm of the house. This is her work. The
+                    restaurant, <Link href="/dining" className="underline-offset-4 hover:underline">Toko Telo</Link>,
+                    is hers in concept. The kitchen team cooks it.
                   </p>
                 </div>
               </ScrollReveal>

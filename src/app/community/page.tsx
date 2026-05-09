@@ -69,7 +69,6 @@ export default function CommunityPage() {
         <PageHero
           src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
           alt="Hope for the Future school in Tanambao village, Ambalakely"
-          caption="The work next door"
           title={['Hope', 'for the Future.']}
         />
 

@@ -109,15 +109,6 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
           src={cat.heroImage}
           alt={`${cat.name} room at Hotel Ambalakely`}
           title={cat.name}
-          caption={
-            <>
-              <Link href="/rooms" className="hover:text-white transition-colors">
-                Rooms
-              </Link>
-              <span className="mx-3 text-white/40">·</span>
-              <span>{cat.number} of 03</span>
-            </>
-          }
         />
 
         {/* ════════════════════════════════════════════════════════════

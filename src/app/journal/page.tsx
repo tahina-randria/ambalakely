@@ -35,7 +35,6 @@ export default function JournalPage() {
         <PageHero
           src={articles[0].cover}
           alt="From the Hotel Ambalakely journal"
-          caption="Journal"
           title="The notebook."
         />
 

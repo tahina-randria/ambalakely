@@ -39,7 +39,8 @@ export function Story() {
                     koselig
                   </em>
                   , a feeling for warmth in small daily things. The house opened in
-                  October 2018. Hasina took the kitchen. Mamy kept the garden.
+                  October 2018. Hasina runs the menu and the welcome. Mamy keeps
+                  the garden.
                 </p>
               </div>
             </ScrollReveal>

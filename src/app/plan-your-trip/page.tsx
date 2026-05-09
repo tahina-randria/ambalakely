@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Nav } from '@/components/sections/Nav';
 import { Footer } from '@/components/sections/Footer';
@@ -43,7 +44,6 @@ export default function PlanYourTripPage() {
         <PageHero
           src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w"
           alt="Rice fields below Hotel Ambalakely on the RN7"
-          caption="Plan your trip"
           title={['On the RN7.']}
         />
 
@@ -110,13 +110,30 @@ export default function PlanYourTripPage() {
             EACH ITINERARY — magazine chapter, day-by-day list
         ════════════════════════════════════════════════════════════ */}
         {itineraries.map((it) => (
-          <section
-            key={it.slug}
-            id={it.slug}
-            className="hair-rule py-32 md:py-48 lg:py-56"
-          >
-            <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
-              {/* Chapter header */}
+          <div key={it.slug}>
+            {/* Atmospheric image break before each chapter */}
+            <section className="relative aspect-[16/9] md:aspect-[21/9] w-full bg-[var(--color-bg-muted)]">
+              <Image
+                src={it.image}
+                alt={`${it.title} — ${it.duration} on the RN7`}
+                fill
+                sizes="100vw"
+                className="object-cover"
+              />
+              <div
+                aria-hidden
+                className="absolute bottom-5 right-5 md:bottom-8 md:right-8 caption text-white/85 mix-blend-difference"
+              >
+                {it.duration}
+              </div>
+            </section>
+
+            <section
+              id={it.slug}
+              className="hair-rule py-32 md:py-48 lg:py-56"
+            >
+              <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
+                {/* Chapter header */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-20 md:mb-28">
                 <div className="lg:col-span-3">
                   <ScrollReveal>
@@ -162,12 +179,13 @@ export default function PlanYourTripPage() {
                           </p>
                         ) : null}
                       </div>
-                    </li>
-                  </ScrollReveal>
-                ))}
-              </ul>
-            </div>
-          </section>
+                      </li>
+                    </ScrollReveal>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          </div>
         ))}
 
         {/* ════════════════════════════════════════════════════════════

@@ -1,8 +1,6 @@
 /**
- * FAQ — concierge-level. Real, specific answers.
- * Grouped by category. Question = h3, answer = body prose.
- *
- * Ordered by frequency of asking, not alphabetical.
+ * FAQ — pragmatic, direct, factual.
+ * Questions ordered by frequency of asking. No filler, no poetry.
  */
 
 export type FaqEntry = {
@@ -18,128 +16,178 @@ export type FaqCategory = {
 
 export const faq: FaqCategory[] = [
   {
-    slug: 'before-you-come',
-    label: 'Before you come',
+    slug: 'booking',
+    label: 'Booking and rates',
     entries: [
       {
-        q: 'When should I book?',
-        a: 'Two months ahead in high season (May to October), three weeks in low season (November to April). Last-minute is often possible, especially in the Standard rooms. Write to us if you are flexible on dates, we can usually find something.',
+        q: 'How far in advance should I book?',
+        a: 'Two months ahead in high season (May to October). Three weeks in low season (November to April). Last-minute is often possible, especially in the Standard rooms.',
       },
       {
-        q: 'Do you take a deposit?',
-        a: 'No deposit for stays of two nights or fewer. For longer stays or groups, we ask for thirty percent on confirmation. Free cancellation up to thirty days before arrival.',
+        q: 'Is a deposit required?',
+        a: 'No deposit for stays of two nights or fewer. For longer stays or groups, thirty percent is required at booking. Free cancellation up to thirty days before arrival.',
       },
       {
-        q: 'What is the best season to come?',
-        a: 'May, June, September and October are dry, cool at night and warm by day. July and August are dry but cold (we light the fire in the dining room). November to April brings rain, often in the late afternoon, with green rice fields and the garden at its best. Cyclone risk is low this far inland.',
+        q: 'What is your cancellation policy?',
+        a: 'Free cancellation up to thirty days before arrival. After that, fifty percent of the first night is charged. No-shows are charged in full.',
       },
       {
-        q: 'Do I need a visa?',
-        a: 'Most travellers can get a visa on arrival at Antananarivo airport (around fifty euros for thirty days). Bring a printed return ticket and proof of accommodation. We can send a booking confirmation if you need one for the visa.',
+        q: 'Are taxes and service included in the rate?',
+        a: 'Yes. Rates shown include tourism tax and service. The only extra is dinner if you take it (around ninety thousand Ariary per person), bottled water, and any excursions.',
       },
       {
-        q: 'What about vaccinations and malaria?',
-        a: 'Yellow fever vaccination certificate is required if you are coming from a yellow-fever country. Malaria risk in the highlands is low but real. Most travellers take prophylaxis (atovaquone-proguanil or doxycycline). Check with your doctor at least four weeks before. We have mosquito nets in every room.',
+        q: 'Do you offer single occupancy rates?',
+        a: 'Yes. The Standard rooms have a fifteen percent single discount. Confort and Supérieure are not discounted for single occupancy.',
+      },
+      {
+        q: 'Do you have group rates?',
+        a: 'Yes for bookings of five rooms or more. Tell us the size and dates and we send a group quote within twenty-four hours.',
       },
     ],
   },
   {
-    slug: 'getting-here',
-    label: 'Getting here',
+    slug: 'arrival',
+    label: 'Arrival and transfers',
     entries: [
       {
-        q: 'How do I get from Antananarivo to Ambalakely?',
-        a: 'By road on the RN7, around eight hours of driving. We arrange a private transfer with a trusted driver from Ivato airport. Around two hundred fifty euros for the car, up to four passengers, including fuel and the night for the driver. The road is sealed but slow in places.',
+        q: 'What time can I check in?',
+        a: 'From two in the afternoon. Earlier on request if a room is ready, no charge.',
+      },
+      {
+        q: 'What time is check-out?',
+        a: 'Eleven in the morning. Late check-out until two in the afternoon if the room is not booked the same night, no charge.',
+      },
+      {
+        q: 'How do I get from Antananarivo to the hotel?',
+        a: 'By road on the RN7, around eight hours of driving. We arrange a private transfer with a trusted driver from Ivato airport. Two hundred fifty euros for the car, up to four passengers, including fuel and the driver overnight.',
       },
       {
         q: 'Is there a domestic flight?',
-        a: 'Tsaradia flies Antananarivo to Fianarantsoa (TNR to WFI) several times a week, around one hour ten minutes. From Fianarantsoa airport, we are twenty-five minutes by car. We can pick you up.',
+        a: 'Yes. Tsaradia flies Antananarivo to Fianarantsoa (TNR to WFI) several times a week, around one hour ten minutes. From Fianarantsoa airport we are twenty-five minutes by car. Pickup included on request.',
       },
       {
         q: 'Can I rent a car and drive myself?',
-        a: 'Possible but we do not recommend it for first-timers. The RN7 is busy with trucks, the road through villages is shared with carts, livestock and pedestrians. A driver who knows the road costs about the same as a rental and takes the stress away.',
+        a: 'Possible but not recommended for first-time visitors. The RN7 is busy with trucks, the road through villages is shared with carts and livestock. A driver costs about the same as a rental.',
       },
       {
-        q: 'How far is Ranomafana National Park?',
-        a: 'One hour twenty minutes by car east. Most guests do it as a day trip from Ambalakely. We arrange a driver and a park guide.',
-      },
-      {
-        q: 'Can I leave luggage with you while I do a side trip?',
+        q: 'Can I leave luggage during a side trip?',
         a: 'Yes, no charge. Many guests use Ambalakely as a base for two or three days of excursions.',
+      },
+      {
+        q: 'Do you arrange airport pickup at Fianarantsoa airport?',
+        a: 'Yes, fifty thousand Ariary one way for up to four passengers. Tell us your flight number at booking.',
       },
     ],
   },
   {
-    slug: 'in-the-room',
-    label: 'In the room',
+    slug: 'rooms',
+    label: 'The rooms',
     entries: [
       {
-        q: 'Do you have WiFi?',
-        a: 'Yes, free, in every room and the dining room. Speed is fine for email and browsing, less reliable for video calls. The signal is strongest near the main building.',
+        q: 'Is WiFi included?',
+        a: 'Yes, free in every room and the dining room.',
       },
       {
-        q: 'Hot water?',
-        a: 'Yes, all day, in every room. Solar plus a backup gas heater for cloudy days.',
+        q: 'Is hot water available?',
+        a: 'Yes, all day, in every room. Solar with a backup gas heater.',
+      },
+      {
+        q: 'What about heating in the cold months?',
+        a: 'July and August nights drop to ten degrees Celsius indoors. We put hot water bottles in your bed at six in the evening. Extra blankets in every room. The dining room has a fireplace lit at six.',
       },
       {
         q: 'Power and plugs?',
-        a: '220 volts, French two-pin plugs (type E). Bring an adapter if you are coming from the UK or US. Power outages happen, we have a generator that kicks in within a minute.',
+        a: '220 volts, French two-pin plugs (type E). Bring an adapter if coming from the UK or US. The hotel has a generator that switches in within a minute during outages.',
       },
       {
-        q: 'How cold does it get at night?',
-        a: 'In July and August, down to ten degrees Celsius indoors. We put hot water bottles in your bed at six in the evening. Bring a sweater. The dining room has a fireplace.',
+        q: 'Is there air conditioning?',
+        a: 'No. The highlands are cool year-round, often cold at night. AC is not needed and we do not have it. Mosquito nets and ceiling fans in every room.',
       },
       {
-        q: 'Are the rooms quiet?',
-        a: 'Yes. The loudest sound is usually a rooster at first light. The Standard rooms are set back from the dining room and the quietest in the house.',
+        q: 'Smoking policy?',
+        a: 'No smoking inside the rooms or the dining room. Smoking permitted on the terraces.',
+      },
+      {
+        q: 'Laundry service?',
+        a: 'Yes, hand washed and air dried, returned the same day in dry weather. Fifteen thousand Ariary for a small bag.',
       },
     ],
   },
   {
-    slug: 'food-and-drink',
-    label: 'Food and drink',
+    slug: 'food',
+    label: 'Food and restaurant',
     entries: [
       {
         q: 'Is breakfast included?',
-        a: 'Yes, full breakfast included with every room. Hasina makes bread fresh, fruit from the garden, eggs from our chickens, real coffee from Sahambavy.',
+        a: 'Yes, full breakfast with every room. Bread baked fresh, fruit from the garden, eggs from our chickens, coffee from Sahambavy.',
       },
       {
-        q: 'Can I eat dinner here?',
-        a: 'Yes, every evening. One set menu, three courses, around seven in the evening. Around ninety thousand Ariary per person. Reserve at the desk on arrival.',
+        q: 'Can I have dinner at the hotel?',
+        a: 'Yes, every evening. One set menu, three courses. Around ninety thousand Ariary per person. Reserve at the desk on arrival or in your booking message.',
       },
       {
         q: 'Vegetarian, vegan, allergies?',
-        a: 'Vegetarian on request, no problem. Vegan with a day of notice. Specific allergies (gluten, peanut, shellfish), tell us in your booking message and Hasina adjusts the menu.',
+        a: 'Vegetarian on request, no problem. Vegan with a day of notice. Specific allergies (gluten, peanut, shellfish), tell us in your booking message and the kitchen adjusts.',
       },
       {
-        q: 'Can outside guests come for dinner?',
-        a: 'Yes, day visitors are welcome with a reservation at least twenty-four hours in advance. The restaurant has fifty seats.',
+        q: 'Can day visitors come for dinner?',
+        a: 'Yes. Reserve at least twenty-four hours in advance. The restaurant has fifty seats.',
       },
       {
-        q: 'Do you sell wine?',
-        a: 'A short list of local wines from Soavita and Lazan’i Betsileo, plus Madagascan rum (Dzama). No imported wine.',
+        q: 'Is the tap water safe to drink?',
+        a: 'Tap water is filtered but we recommend bottled or boiled water for drinking. A thermos of hot water in each room. Bottled water is two thousand Ariary at the desk.',
       },
     ],
   },
   {
-    slug: 'money-and-payment',
-    label: 'Money and payment',
+    slug: 'money',
+    label: 'Payment and money',
     entries: [
       {
-        q: 'Do you take credit cards?',
-        a: 'We accept Visa and Mastercard at the desk, with a small fee passed on (around three percent). Cash in Ariary is preferred for smaller amounts. American Express is not accepted.',
+        q: 'What payment methods do you accept?',
+        a: 'Visa and Mastercard at the desk (three percent fee), cash in Ariary, mobile money (MVola, Orange Money). American Express not accepted.',
       },
       {
         q: 'How much cash should I bring?',
-        a: 'Around five hundred euros in Ariary for a week, including meals out, drivers, tips and souvenirs. There is an ATM in central Fianarantsoa, twelve kilometres from the hotel. We can change small amounts of euros at the desk.',
+        a: 'Around five hundred euros in Ariary for a week, including meals out, drivers, tips and souvenirs. There is an ATM in central Fianarantsoa, twelve kilometres from the hotel.',
       },
       {
-        q: 'Do you take mobile money?',
-        a: 'Yes, MVola and Orange Money are common in Madagascar. Voaray works for cards too. We can send you a payment link on request.',
+        q: 'Do you accept mobile money?',
+        a: 'Yes, MVola and Orange Money for hotel payments. We can send a payment link.',
       },
       {
         q: 'Are tips expected?',
-        a: 'Not expected, but appreciated. A common gesture is to leave around ten percent for the team, which we share equally between cooks, waiters, gardener and gardiens.',
+        a: 'Not expected, but appreciated. Around ten percent for the team is common, shared equally between cooks, waiters, gardener and gardiens.',
+      },
+      {
+        q: 'Will I be charged in advance?',
+        a: 'No, except deposits for long stays or groups. Most guests pay on arrival or departure.',
+      },
+    ],
+  },
+  {
+    slug: 'health',
+    label: 'Health and safety',
+    entries: [
+      {
+        q: 'What vaccinations do I need?',
+        a: 'Yellow fever certificate is required if you arrive from a yellow fever country. Routine vaccinations should be up to date. Check with your doctor at least four weeks before travel.',
+      },
+      {
+        q: 'Malaria risk?',
+        a: 'Low in the highlands at this altitude (around 1 200 metres) but real. Most travellers take prophylaxis (atovaquone-proguanil or doxycycline). Mosquito nets in every room.',
+      },
+      {
+        q: 'Is there a doctor or pharmacy nearby?',
+        a: 'Yes, a clinic in central Fianarantsoa, twelve kilometres away, twenty-four hour. The regional hospital of Fianarantsoa has emergency care. We have a basic first-aid kit and contacts of an English-speaking doctor.',
+      },
+      {
+        q: 'Is the hotel safe?',
+        a: 'Yes. Two night gardiens on rotation, gated entrance, no incidents in our years of operation. The neighbourhood is quiet.',
+      },
+      {
+        q: 'Do you recommend travel insurance?',
+        a: 'Yes, with medical evacuation cover. Madagascar is rural and the closest international hospitals are in South Africa and France.',
       },
     ],
   },
@@ -149,31 +197,31 @@ export const faq: FaqCategory[] = [
     entries: [
       {
         q: 'What should I pack?',
-        a: 'Layers. A warm sweater for evenings (year-round), light clothes for day, walking shoes (the village has dirt paths), insect repellent, sunblock. A small flashlight is useful when the power goes off. Anything else, ask us.',
+        a: 'Layers for cool evenings year-round, walking shoes for dirt paths, light clothes for day, insect repellent (thirty percent DEET), sunblock, a small flashlight for power outages.',
       },
       {
-        q: 'Are there mosquitoes?',
-        a: 'Some, mostly at dusk in the rainy season. Every bed has a mosquito net. Bring a repellent with thirty percent DEET.',
+        q: 'Do I need a visa?',
+        a: 'Most travellers can get a visa on arrival at Antananarivo airport (around fifty euros for thirty days). Bring a printed return ticket and proof of accommodation. We can send a booking confirmation if needed for the visa.',
       },
       {
-        q: 'Is the water safe to drink?',
-        a: 'Tap water is filtered but we recommend bottled or boiled water for drinking. We provide a thermos of hot water in each room. Bottled water is around two thousand Ariary at the desk.',
+        q: 'Phone signal and SIM cards?',
+        a: 'Telma and Orange both work in the hotel. Local SIM cards available at the airport in Antananarivo for around five euros, useful for data and local calls.',
       },
       {
-        q: 'Can I do laundry?',
-        a: 'Yes, hand washed and air dried, around the same day in dry weather, two days when it rains. Around fifteen thousand Ariary for a small bag.',
+        q: 'Are children welcome?',
+        a: 'Yes. Cribs available on request, no charge. Children under three stay free in the parents&rsquo; room. Rates for children three to twelve are fifty percent of the adult rate.',
       },
       {
         q: 'Can I bring my dog?',
-        a: 'No pets in the rooms. We have two friendly dogs of our own who live in the garden.',
+        a: 'No pets in the rooms. We have two dogs of our own who live in the garden.',
       },
       {
-        q: 'Is there a doctor nearby?',
-        a: 'Yes, a clinic in central Fianarantsoa, twelve kilometres away, twenty-four hour. The nearest hospital is the regional hospital of Fianarantsoa. We have a basic first-aid kit and contacts of an English-speaking doctor.',
+        q: 'Is the hotel accessible for limited mobility?',
+        a: 'The dining room and the four Standard rooms are on the ground floor with no steps from the parking. The Confort and Supérieure rooms involve stairs. Tell us in advance and we assign a ground-floor room.',
       },
       {
-        q: 'Is the hotel accessible for someone with limited mobility?',
-        a: 'Partly. The dining room and the Standard rooms are on the ground floor with no steps from the parking. The Confort and Supérieure rooms involve some stairs. Tell us in advance and we will assign a ground-floor room.',
+        q: 'Best time of year to visit?',
+        a: 'May to October is dry and cool. November to April brings rain (often in the late afternoon) and the rice fields are at their greenest. Cyclones do not reach this far inland.',
       },
     ],
   },

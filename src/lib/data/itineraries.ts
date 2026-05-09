@@ -3,6 +3,8 @@
  * Real, factual. No marketing language.
  */
 
+const SQ = 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d';
+
 export type ItineraryDay = {
   day: number;
   title: string;
@@ -18,6 +20,8 @@ export type Itinerary = {
   pitch: string;
   best: string;
   totalKm: string;
+  /** Hero image for this chapter (placeholder until real photos) */
+  image: string;
   days: ItineraryDay[];
 };
 
@@ -30,6 +34,7 @@ export const itineraries: Itinerary[] = [
       'For travellers already in Madagascar with a short window. The shortest version of the road, with one full day at Ranomafana and a quiet evening in Ambalakely.',
     best: 'May to October.',
     totalKm: 'About 320 km of driving.',
+    image: `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w`,
     days: [
       {
         day: 1,
@@ -62,6 +67,7 @@ export const itineraries: Itinerary[] = [
       'Two nights at Ambalakely, two day-trips to the parks, a tea-tasting at Sahambavy, and one night to spare for the trek to Andringitra if you have the legs.',
     best: 'May to September.',
     totalKm: 'About 600 km of driving.',
+    image: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2500w`,
     days: [
       {
         day: 1,
@@ -107,6 +113,7 @@ export const itineraries: Itinerary[] = [
       'The classic Madagascar overland journey. Three nights at Ambalakely as the base, two parks, two cultural stops, and the dramatic landscapes of Isalo to close.',
     best: 'May to October.',
     totalKm: 'About 1,400 km of driving.',
+    image: `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg?format=2500w`,
     days: [
       {
         day: 1,
