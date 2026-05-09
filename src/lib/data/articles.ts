@@ -25,6 +25,56 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    slug: 'ten-years-of-community',
+    date: 'February 2026',
+    datePublished: '2026-02-08',
+    title: 'Ten years of the school next door.',
+    excerpt:
+      'Hope for the Future opened in 2014, four years before the hotel. The work is older than us. This is what it has become.',
+    author: 'Hasina',
+    authorRole: 'Kitchen, host',
+    cover: `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w`,
+    pullQuote:
+      'A hundred and thirty children every week, three of whom now teach the youngest ones.',
+    body: [
+      'In 2014 there were six children in a borrowed room in Tanambao village. We were not running a hotel yet. We were not running anything yet. Mamy had bought the land four years earlier and he was still planting trees that would eventually become the garden.',
+      'The room was lent to us by a family whose son had moved to Antananarivo. There was no electricity. There was a blackboard a teacher had carried from a closed school in Fianarantsoa. The first lesson was a reading lesson, and four of the six children could not read.',
+      'Ten years later there are a hundred and thirty children, three of whom now teach the youngest ones. They walk down from four villages on Wednesdays and Saturdays after their mornings at the public school. They eat soup at noon, often with rice from our kitchen. They go home at four with their copybooks under their arms.',
+      'The clinic opened in 2019. It is the smallest clinic you can imagine, two rooms, a nurse who comes from Fianarantsoa on Mondays. People bring their children to be weighed, to be vaccinated, to be reassured. The clinic does not cost anything. The medicines come from a pharmacy in town that gives us a discount.',
+      'The water programme started in 2022. There was a spring above Maharivo that nobody had cleaned out in twenty years. We paid for the cleaning, the new pipe, and the small concrete tank. Three hundred and forty people now use that tap.',
+      'When we opened the hotel in 2018, we did not say to ourselves : let us link the two. They were already linked. The school was already there. The hotel was the way to keep paying for it without asking anyone.',
+      'Two percent of every room booked goes to the work next door. It is not a marketing line. It is the actual line in the budget that keeps the school open. When the rooms are full, the school is calm. When the rooms are empty, the school is calm too, because we have built a small reserve. But the rooms have mostly been full.',
+      'Guests visit on Tuesdays and Thursdays. Half a day, a driver, one of the team. There is no formal tour. You meet the teachers, you see the classroom, you have a tea with the children if it is a school day. We ask people who want to give to give to the school directly, not to the children. We have a small box in the office for that.',
+      'The biggest thing the hotel has taught me about Hope for the Future is that it works because it is small and because it is steady. We have not tried to make it bigger every year. We have tried to make it last. The same teachers, mostly. The same villages. The same Wednesday and Saturday afternoons. Ten years of the same rhythm. Ten years of the same children growing up.',
+      'Three of them came back this year as teachers. That is the line that will stay with me when this is twenty years.',
+    ],
+  },
+  {
+    slug: 'what-the-garden-gives-in-april',
+    date: 'March 2026',
+    datePublished: '2026-03-22',
+    title: 'What the garden gives in April.',
+    excerpt:
+      'The pomelo tree drops in March. The tomatoes hold until late April. The watercress is just thinking about coming up. This is what is on the menu next month.',
+    author: 'Hasina',
+    authorRole: 'Kitchen, host',
+    cover: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2500w`,
+    pullQuote:
+      'I do not write the menu the night before. I write it the morning of, after I have walked the garden.',
+    body: [
+      'I do not write the menu the night before. I write it the morning of, after I have walked the garden. There is a chair under the pomelo tree where I sit with a coffee for ten minutes before I look at anything. The walk takes another twenty.',
+      'In April the garden is in a slow transition. The rains are ending, the cold has not yet started. The pomelo tree finished dropping in March, but the late fruit is still good for marmelade. The tomatoes are at the end of their season, sweet and small and starting to crack. The aubergines are at their peak. The watercress is just thinking about coming up at the bottom of the garden where the water sits.',
+      'The chickens lay better in April. The dry season is starting and they have more space to walk. We get five or six eggs a morning from twelve hens. The eggs are small and orange-yolked.',
+      'This is roughly what is on the menu in the coming weeks. It will change with the rain.',
+      'Soups. Tomato soup, while we still have them, often with mint and a swirl of yoghurt. Pumpkin soup once we cut the first pumpkins, by the second half of the month. Watercress soup if it comes up early.',
+      'Mains. Zébu Marengo with red rice, slow-braised in white wine and tomato. Ravitoto, the cassava-leaf and pork dish, the way my grandmother made it, with coconut milk in the last fifteen minutes. A vegetarian gratin of aubergine, tomato and basil from the back of the garden. Trondra, the river fish, fried in zebu fat with lemon, when the local fisherman has them. He has them on Tuesday morning and on Friday morning, almost always.',
+      'Sweet. Krumkake, the rolled Norwegian wafer, with a cream of vanilla and a touch of orange. Caramelised banana with rum from the village. Homemade ice cream, vanilla in April because the garden vanilla is still drying, mango when the early mangoes come at the end of the month.',
+      'I do not put it all on the menu at once. Three courses a night, one set menu. I write what I want to cook, given what I picked that morning. Most evenings five things from the list above, sometimes a sixth.',
+      'If you are coming and you have a strong preference or a strong allergy, tell us. I do not mind adjusting. I mind less than people think.',
+      'May will be different. The first cold nights, the first leeks, the end of the tomatoes. I will write again then.',
+    ],
+  },
+  {
     slug: 'koselig-in-the-highlands',
     date: 'April 2026',
     datePublished: '2026-04-12',

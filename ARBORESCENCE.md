@@ -400,11 +400,23 @@ Toutes les pages doivent etre traduites :
 
 ---
 
-## Decisions a prendre
+## Decisions tranchees
+
+- [x] **/community** comme slug (pas /hope-for-the-future). Universel, SEO-friendly,
+  inspire de Soneva /foundation, growth-oriented.
+- [x] **Voice = Hasina seule**. Tous les articles journal, concierge notes, pull
+  quotes, signed by Hasina. Mamy reste co-founder factuel mais ne parle pas.
+- [x] **Experiences = page liste seule** sans detail per experience. 6 chapitres
+  numerotes sur /experiences avec body 150-200 mots chacun.
+- [x] **Articles journal** = 3 actuellement, tous Hasina :
+  - /journal/ten-years-of-community (Feb 2026)
+  - /journal/what-the-garden-gives-in-april (Mar 2026)
+  - /journal/koselig-in-the-highlands (Apr 2026)
+- [x] **Newsletter signup** ajoute dans Footer (Quarterly letter, Hasina).
+  UI seulement, sera POST /api/newsletter avec Resend en Phase tech.
+
+## Decisions encore ouvertes
 
 - [ ] **Book section homepage** : on garde / fusionne avec BookingDrawer / supprime ?
 - [ ] **Reviews section homepage** : single rotating ou multiple inline ?
-- [ ] **Experiences detail pages** : page liste seule, ou liste + detail per experience ?
-- [ ] **/hope-for-the-future url** : `/hope-for-the-future` ou `/community` ou `/the-school` ?
 - [ ] **Slugs i18n** : `/fr/rooms/superieure` ou `/fr/chambres/superieure` ?
-- [ ] **Articles journal** : Mamy ou Hasina pour Hope for the Future article ?

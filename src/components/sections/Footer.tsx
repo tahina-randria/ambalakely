@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Container } from '@/components/atoms/Container';
+import { NewsletterSignup } from '@/components/molecules/NewsletterSignup';
 
 const columns = [
   {
@@ -15,9 +16,9 @@ const columns = [
     title: 'Discover',
     links: [
       { label: 'Dining', href: '/dining' },
+      { label: 'Experiences', href: '/experiences' },
       { label: 'Plan your trip', href: '/plan-your-trip' },
       { label: 'Journal', href: '/journal' },
-      { label: 'Location', href: '/#location' },
     ],
   },
   {
@@ -25,7 +26,7 @@ const columns = [
     links: [
       { label: 'The house', href: '/about' },
       { label: 'Mamy and Hasina', href: '/about#founders' },
-      { label: 'Hope for the Future', href: '/about#hope' },
+      { label: 'Community', href: '/community' },
       { label: 'FAQ', href: '/faq' },
     ],
   },
@@ -49,8 +50,13 @@ export function Footer() {
             Ambalakely
           </div>
 
+          {/* Newsletter signup — growth lever */}
+          <div className="mt-12 md:mt-16 max-w-[480px]">
+            <NewsletterSignup />
+          </div>
+
           {/* Columns */}
-          <div className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
+          <div className="mt-20 md:mt-28 grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
             {columns.map((col) => (
               <div key={col.title}>
                 <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-5">
@@ -72,7 +78,7 @@ export function Footer() {
             ))}
           </div>
 
-          {/* Bottom legal — single row, single style */}
+          {/* Bottom legal */}
           <div className="mt-20 pt-8 border-t border-[var(--color-border-subtle)] flex flex-col md:flex-row md:items-center md:justify-between gap-4 font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
             <div>© 2026 Hotel Ambalakely · Fianarantsoa, Madagascar</div>
             <div>RN7 · 21°27′15″S 47°05′10″E</div>

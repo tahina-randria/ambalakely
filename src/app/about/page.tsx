@@ -203,7 +203,7 @@ export default function AboutPage() {
                   <div className="mt-10 flex items-center gap-4">
                     <div className="w-10 border-t border-[var(--color-sand-12)]" />
                     <div className="font-display text-[16px] tracking-[-0.005em] text-[var(--color-text)]">
-                      Mamy
+                      Hasina
                     </div>
                   </div>
                 </ScrollReveal>

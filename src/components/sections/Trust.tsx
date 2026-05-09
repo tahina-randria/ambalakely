@@ -52,7 +52,7 @@ export function Trust() {
 
             <ScrollReveal delay={0.1}>
               <Link
-                href="/about#hope"
+                href="/community"
                 className="mt-12 inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)] group"
               >
                 Read about Hope for the Future

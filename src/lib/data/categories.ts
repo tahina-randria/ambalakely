@@ -69,8 +69,8 @@ export const categories: Category[] = [
       `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg?format=2000w`,
     ],
     concierge: {
-      body: 'These are the rooms I would book for my parents. The morning light comes in slowly from the east, and at five in the afternoon the rice fields turn gold. Sleep with the window open if it is not too cold.',
-      signed: 'Mamy',
+      body: 'These are the rooms I keep for my own family when they visit. The morning light comes in slowly from the east, and at five in the afternoon the rice fields turn gold. Sleep with the window open if it is not too cold.',
+      signed: 'Hasina',
     },
     pullQuote: 'At five in the afternoon the rice fields turn gold.',
   },
@@ -147,8 +147,8 @@ export const categories: Category[] = [
       `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2000w`,
     ],
     concierge: {
-      body: 'These rooms hold the most repeat guests. Drivers, friends from Tana passing through, families on the RN7. We light the fire in the dining room at six, and the rooms warm up by seven. Quiet by ten.',
-      signed: 'Mamy',
+      body: 'These rooms hold the most repeat guests. Drivers, friends from Tana passing through, families on the RN7. I light the fire in the dining room at six, and the rooms warm up by seven. Quiet by ten.',
+      signed: 'Hasina',
     },
     pullQuote: 'Set back from the dining room at the end of the path.',
   },

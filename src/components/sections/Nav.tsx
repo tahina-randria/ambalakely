@@ -8,7 +8,8 @@ import { BookingDrawer } from '@/components/molecules/BookingDrawer';
 const links = [
   { href: '/rooms', label: 'Rooms' },
   { href: '/dining', label: 'Dining' },
-  { href: '/plan-your-trip', label: 'Plan' },
+  { href: '/experiences', label: 'Experiences' },
+  { href: '/community', label: 'Community' },
   { href: '/journal', label: 'Journal' },
   { href: '/about', label: 'About' },
 ];
