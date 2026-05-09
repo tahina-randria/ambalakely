@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect, type ReactNode } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowDown } from '@phosphor-icons/react/dist/ssr';
 import { cn } from '@/lib/utils/cn';
 
 if (typeof window !== 'undefined') {
@@ -14,26 +15,34 @@ type Props = {
   /** Image source (full URL, expects landscape) */
   src: string;
   alt: string;
-  /** Top-left caption (e.g. "The room", "Rooms · 01 of 03") */
-  caption?: React.ReactNode;
   /** Title — pass an array of lines for line-by-line mask reveal */
   title: string | string[];
-  /** Optional subtitle below title */
-  subtitle?: React.ReactNode;
+  /**
+   * Optional CTA override. By default a 'Check availability' button opens
+   * the booking drawer.
+   */
+  cta?: ReactNode;
+  /** Hide the default CTA entirely (rare, e.g. journal article hero) */
+  hideCta?: boolean;
   /** 100vh by default, override with className */
   className?: string;
 };
 
 /**
  * Cinematic page hero with parallax background + line-by-line title reveal.
- * Used on /rooms, /rooms/[category], /about, /dining.
+ * Used on /rooms, /rooms/[category], /about, /dining, /community, /experiences,
+ * /plan-your-trip, /journal, /faq.
  *
- * - Image scales down 1.08 → 1 over 1.6s on mount (settle)
- * - Image translates up at 30% of scroll speed (parallax)
- * - Title reveals line-by-line with overflow mask, 90ms stagger
- * - Subtitle fades up after title completes
+ * Hero only contains : H1 title (massive) + CTA. No caption, no subtitle.
  */
-export function PageHero({ src, alt, caption, title, subtitle, className }: Props) {
+export function PageHero({
+  src,
+  alt,
+  title,
+  cta,
+  hideCta = false,
+  className,
+}: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
@@ -48,7 +57,6 @@ export function PageHero({ src, alt, caption, title, subtitle, className }: Prop
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-      // Parallax: image translates up as section scrolls past
       gsap.to(img, {
         yPercent: -18,
         ease: 'none',
@@ -64,6 +72,10 @@ export function PageHero({ src, alt, caption, title, subtitle, className }: Prop
     return () => ctx.revert();
   }, []);
 
+  const openBooking = () => window.dispatchEvent(new Event('open-booking'));
+
+  const ctaDelay = `${0.35 + lines.length * 0.09 + 0.3}s`;
+
   return (
     <section
       ref={sectionRef}
@@ -72,7 +84,7 @@ export function PageHero({ src, alt, caption, title, subtitle, className }: Prop
         className,
       )}
     >
-      {/* Parallax image wrapper — sized 110% to allow vertical translate without gap */}
+      {/* Parallax image wrapper */}
       <div
         ref={imageRef}
         className="absolute inset-0 h-[120%] -top-[10%] hero-bg-settle"
@@ -88,24 +100,14 @@ export function PageHero({ src, alt, caption, title, subtitle, className }: Prop
         />
       </div>
 
-      {/* Cinematic gradient — top fade for nav legibility, bottom for title */}
+      {/* Cinematic gradient */}
       <div
         aria-hidden
         className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/55"
       />
 
       <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
-        {/* Top caption */}
-        {caption ? (
-          <div
-            className="pt-[100px] md:pt-[128px] hero-fade-up"
-            style={{ ['--fade-delay' as string]: '0.2s' }}
-          >
-            <div className="caption text-white/75">{caption}</div>
-          </div>
-        ) : null}
-
-        {/* Title — line by line mask reveal */}
+        {/* Title bottom-left + CTA */}
         <div className="mt-auto pb-14 md:pb-20 max-w-[1100px]">
           <h1 className="font-display font-light tracking-[-0.04em] text-white text-[64px] leading-[0.92] md:text-[120px] md:leading-[0.9] lg:text-[180px] lg:leading-[0.9]">
             {lines.map((line, i) => (
@@ -120,12 +122,24 @@ export function PageHero({ src, alt, caption, title, subtitle, className }: Prop
             ))}
           </h1>
 
-          {subtitle ? (
+          {!hideCta ? (
             <div
-              className="mt-6 md:mt-8 hero-fade-up text-white/80 text-[16px] md:text-[18px] leading-[1.5]"
-              style={{ ['--fade-delay' as string]: `${0.35 + lines.length * 0.09 + 0.4}s` }}
+              className="mt-10 md:mt-14 hero-fade-up"
+              style={{ ['--fade-delay' as string]: ctaDelay }}
             >
-              {subtitle}
+              {cta ?? (
+                <button
+                  type="button"
+                  onClick={openBooking}
+                  className="group inline-flex items-center gap-2 h-12 px-7 bg-white text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
+                >
+                  Check availability
+                  <ArrowDown
+                    size={16}
+                    className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-y-0.5"
+                  />
+                </button>
+              )}
             </div>
           ) : null}
         </div>

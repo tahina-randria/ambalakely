@@ -101,6 +101,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
           src={article.cover}
           alt={article.title}
           title={article.title}
+          hideCta
         />
 
         {/* ════════════════════════════════════════════════════════════

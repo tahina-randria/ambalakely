@@ -36,6 +36,7 @@ export default function JournalPage() {
           src={articles[0].cover}
           alt="From the Hotel Ambalakely journal"
           title="The notebook."
+          hideCta
         />
 
         {/* Intro */}

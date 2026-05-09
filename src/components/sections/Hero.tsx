@@ -38,18 +38,10 @@ export function Hero() {
             </span>
           </h1>
 
-          {/* Subtitle */}
-          <div
-            className="mt-6 md:mt-10 hero-fade-up text-white/85 text-[18px] md:text-[22px] lg:text-[26px] leading-[1.4] tracking-[-0.01em] font-light max-w-[640px]"
-            style={{ ['--fade-delay' as string]: '0.85s' }}
-          >
-            Ten rooms in the highlands of Madagascar.
-          </div>
-
           {/* CTA */}
           <div
-            className="hero-fade-up mt-8 md:mt-10"
-            style={{ ['--fade-delay' as string]: '1.05s' }}
+            className="hero-fade-up mt-10 md:mt-14"
+            style={{ ['--fade-delay' as string]: '0.85s' }}
           >
             <button
               type="button"
