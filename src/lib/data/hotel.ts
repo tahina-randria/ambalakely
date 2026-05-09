@@ -30,7 +30,7 @@ export const HOTEL = {
     lng: 47.0862,
   },
   rooms: 10,
-  priceRange: '35-49 EUR',
+  priceRange: '182000-255000 MGA',
   starRating: 3,
   amenities: [
     'Restaurant',

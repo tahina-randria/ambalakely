@@ -7,6 +7,7 @@ import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
+import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 
 export const metadata: Metadata = {
@@ -15,9 +16,17 @@ export const metadata: Metadata = {
     'Mamy and Hasina Randriamahazo opened Ambalakely in October 2018. Ten rooms, a kitchen, a garden, on a hill ten kilometres south of Fianarantsoa.',
   alternates: { canonical: '/about' },
   openGraph: {
-    title: 'About · Ambalakely',
+    title: 'About · Hotel Ambalakely',
     description: 'Mamy and Hasina, since 2018.',
     url: '/about',
+    images: [
+      {
+        url: 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=1500w',
+        width: 1500,
+        height: 1200,
+        alt: 'Hotel Ambalakely garden, Fianarantsoa Madagascar',
+      },
+    ],
   },
 };
 
@@ -59,36 +68,12 @@ export default function AboutPage() {
       />
       <Nav />
       <main id="main">
-        {/* ────────────────────────────────────────────────────────────
-            01 · HERO — atmospheric, founder-quality image
-        ──────────────────────────────────────────────────────────── */}
-        <section className="relative h-[90vh] md:h-[100vh] w-full overflow-hidden bg-[var(--color-sand-12)]">
-          <Image
-            src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w"
-            alt="The garden at Ambalakely"
-            fill
-            sizes="100vw"
-            priority
-            className="object-cover"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/55"
-          />
-
-          <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
-            <div className="pt-[100px] md:pt-[128px]">
-              <div className="caption text-white/75">The house</div>
-            </div>
-            <div className="mt-auto pb-14 md:pb-20 max-w-[1100px]">
-              <h1 className="font-display font-light tracking-[-0.04em] text-white text-[56px] leading-[0.98] md:text-[96px] md:leading-[0.95] lg:text-[136px] lg:leading-[0.92]">
-                Mamy
-                <br />
-                and Hasina.
-              </h1>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w"
+          alt="Hotel Ambalakely garden, Fianarantsoa Madagascar"
+          caption="The house"
+          title={['Mamy', 'and Hasina.']}
+        />
 
         {/* ────────────────────────────────────────────────────────────
             02 · INTRO — short lede paragraph
@@ -126,12 +111,12 @@ export default function AboutPage() {
         {/* ────────────────────────────────────────────────────────────
             03 · FOUNDERS — image + prose, asymmetric
         ──────────────────────────────────────────────────────────── */}
-        <section className="hair-rule">
+        <section id="founders" className="hair-rule">
           <div className="grid grid-cols-1 lg:grid-cols-12">
             <div className="lg:col-span-7 relative aspect-[4/5] lg:aspect-auto lg:min-h-[80vh] bg-[var(--color-bg-muted)] overflow-hidden">
               <Image
                 src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w"
-                alt="Mamy and Hasina Randriamahazo"
+                alt="Garden room at Hotel Ambalakely, founders Mamy and Hasina Randriamahazo"
                 fill
                 sizes="(min-width: 1024px) 58vw, 100vw"
                 className="object-cover"
@@ -149,14 +134,14 @@ export default function AboutPage() {
                   <p>
                     Mamy grew up in Fianarantsoa, trained in agronomy, and spent
                     fifteen years working in development across Madagascar. The
-                    garden, the orchard, the way the buildings sit on the land
-                    — this is his work.
+                    garden, the orchard, the way the buildings sit on the land.
+                    This is his work.
                   </p>
                   <p>
                     Hasina is from the Betsileo highlands, with a Norwegian
                     godmother and a slow education in cooking that took her
                     from Antananarivo to Oslo and back. The kitchen, the menu,
-                    the bread — this is her work.
+                    the bread. This is her work. She also runs <Link href="/dining" className="underline-offset-4 hover:underline">Toko Telo</Link>, the restaurant.
                   </p>
                 </div>
               </ScrollReveal>
@@ -257,7 +242,7 @@ export default function AboutPage() {
             <div className="lg:col-span-7 lg:order-2 relative aspect-[4/5] lg:aspect-auto lg:min-h-[70vh] bg-[var(--color-bg-muted)] overflow-hidden">
               <Image
                 src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2500w"
-                alt="Around the hotel"
+                alt="Confort room interior, Hope for the Future programme support"
                 fill
                 sizes="(min-width: 1024px) 58vw, 100vw"
                 className="object-cover"

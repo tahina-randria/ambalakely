@@ -2,12 +2,14 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Container } from '@/components/atoms/Container';
 import { Nav } from '@/components/sections/Nav';
 import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
+import { PageHero } from '@/components/molecules/PageHero';
+import { StickyReserveBar } from '@/components/molecules/StickyReserveBar';
+import { StickyScrubImage } from '@/components/molecules/StickyScrubImage';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { categories, getCategory } from '@/lib/data/categories';
 import { HOTEL } from '@/lib/data/hotel';
@@ -63,8 +65,8 @@ function HotelOfferJsonLd({ category }: { category: ReturnType<typeof getCategor
     image: category.heroImage,
     offers: {
       '@type': 'Offer',
-      price: category.priceEur,
-      priceCurrency: 'EUR',
+      price: category.priceMga,
+      priceCurrency: 'MGA',
       availability: 'https://schema.org/InStock',
       url: `${HOTEL.url}/rooms/${category.slug}`,
     },
@@ -101,40 +103,22 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
       />
       <HotelOfferJsonLd category={cat} />
       <Nav />
+      <StickyReserveBar name={cat.name} priceMga={cat.priceMga} />
       <main id="main">
-        {/* ════════════════════════════════════════════════════════════
-            HERO — full viewport, photo-first, minimal type
-        ════════════════════════════════════════════════════════════ */}
-        <section className="relative h-[100vh] w-full overflow-hidden bg-[var(--color-sand-12)]">
-          <Image
-            src={cat.heroImage}
-            alt={cat.name}
-            fill
-            sizes="100vw"
-            priority
-            className="object-cover"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/55"
-          />
-          <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
-            <div className="pt-[100px] md:pt-[128px]">
-              <div className="caption text-white/75">
-                <Link href="/rooms" className="hover:text-white transition-colors">
-                  Rooms
-                </Link>
-                <span className="mx-3 text-white/40">·</span>
-                <span>{cat.number} of 03</span>
-              </div>
-            </div>
-            <div className="mt-auto pb-14 md:pb-20">
-              <h1 className="font-display font-light tracking-[-0.04em] text-white text-[64px] leading-[0.92] md:text-[120px] md:leading-[0.9] lg:text-[180px] lg:leading-[0.9]">
-                {cat.name}
-              </h1>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          src={cat.heroImage}
+          alt={`${cat.name} room at Hotel Ambalakely`}
+          title={cat.name}
+          caption={
+            <>
+              <Link href="/rooms" className="hover:text-white transition-colors">
+                Rooms
+              </Link>
+              <span className="mx-3 text-white/40">·</span>
+              <span>{cat.number} of 03</span>
+            </>
+          }
+        />
 
         {/* ════════════════════════════════════════════════════════════
             EDITORIAL OPENING — single column prose, magazine voice
@@ -166,17 +150,13 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         </section>
 
         {/* ════════════════════════════════════════════════════════════
-            FULL-BLEED PHOTO 01 — cinematic, no caption
+            STICKY SCRUB MOMENT — image full-bleed → contained as you scroll
         ════════════════════════════════════════════════════════════ */}
-        <section className="relative h-[80vh] md:h-[100vh] w-full bg-[var(--color-bg-muted)]">
-          <Image
-            src={cat.gallery[1] ?? cat.heroImage}
-            alt={cat.name}
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
-        </section>
+        <StickyScrubImage
+          src={cat.gallery[1] ?? cat.heroImage}
+          alt={`${cat.name} interior, morning light`}
+          caption={`Plate · ${cat.name}`}
+        />
 
         {/* ════════════════════════════════════════════════════════════
             EDITORIAL CONTINUATION — what's in the room, as prose
@@ -268,7 +248,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         <section className="py-32 md:py-48 lg:py-56 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">Or stay another way</div>
+              <div className="caption">Or another room</div>
             </ScrollReveal>
             <ul className="mt-12">
               {others.map((o, i) => (

@@ -39,7 +39,7 @@ export function Trust() {
               </div>
 
               <h2 className="font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[44px] leading-[1.05] md:text-[56px] md:leading-[1.02] max-w-[640px] balance">
-                Since 2014, the hotel runs a school for the village.
+                Since 2014, Hope for the Future has run a school for the village.
               </h2>
             </ScrollReveal>
 
@@ -52,10 +52,10 @@ export function Trust() {
 
             <ScrollReveal delay={0.1}>
               <Link
-                href="/hope"
+                href="/about#hope"
                 className="mt-12 inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)] group"
               >
-                Read more
+                Read about Hope for the Future
                 <ArrowRight
                   size={18}
                   className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"

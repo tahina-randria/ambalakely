@@ -5,7 +5,7 @@ const columns = [
   {
     title: 'Stay',
     links: [
-      { label: 'All rooms', href: '/rooms' },
+      { label: 'All ten rooms', href: '/rooms' },
       { label: 'Supérieure', href: '/rooms/superieure' },
       { label: 'Confort', href: '/rooms/confort' },
       { label: 'Standard', href: '/rooms/standard' },
@@ -23,7 +23,7 @@ const columns = [
     title: 'About',
     links: [
       { label: 'The house', href: '/about' },
-      { label: 'Mamy and Hasina', href: '/about' },
+      { label: 'Mamy and Hasina', href: '/about#founders' },
       { label: 'Hope for the Future', href: '/about#hope' },
     ],
   },

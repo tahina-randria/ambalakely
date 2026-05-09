@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || HOTEL.url),
   title: {
     default: `${HOTEL.shortName}. ${HOTEL.tagline}`,
-    template: `%s · ${HOTEL.shortName}`,
+    template: `%s · ${HOTEL.shortName}, Fianarantsoa`,
   },
   description: HOTEL.description,
   applicationName: HOTEL.name,
@@ -79,6 +79,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <head>
+        <link rel="preconnect" href="https://images.squarespace-cdn.com" />
+        <link rel="dns-prefetch" href="https://images.squarespace-cdn.com" />
         <HotelJsonLd />
       </head>
       <body>

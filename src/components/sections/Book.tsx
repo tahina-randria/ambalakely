@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { Container } from '@/components/atoms/Container';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { WhatsappLogo, Envelope, ArrowRight, Users } from '@phosphor-icons/react/dist/ssr';
+import { HOTEL } from '@/lib/data/hotel';
 
 const MAX_INDIVIDUAL = 4;
+const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');
 
 export function Book() {
   const [guests, setGuests] = useState('2');
@@ -80,7 +82,7 @@ export function Book() {
 
                   <div className="mt-8 flex flex-col sm:flex-row gap-5 sm:gap-8">
                     <a
-                      href="https://wa.me/261341125434?text=Group%20booking%20request%20for%20Ambalakely"
+                      href={`https://wa.me/${WA_DIGITS}?text=Group%20booking%20request%20for%20Ambalakely`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group inline-flex items-center gap-3 h-12 px-6 bg-[var(--color-sand-1)] text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
@@ -93,7 +95,7 @@ export function Book() {
                       />
                     </a>
                     <a
-                      href={`mailto:hello@hotelambalakely.com?subject=Group%20booking%20(${guests}%20guests)`}
+                      href={`mailto:${HOTEL.email}?subject=Group%20booking%20(${guests}%20guests)`}
                       className="group inline-flex items-center gap-3 h-12 px-6 border border-[var(--color-sand-7)] text-[var(--color-sand-1)] font-body text-[15px] font-medium transition-[color,border-color] duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:border-[var(--color-sand-1)]"
                     >
                       <Envelope size={18} weight="regular" />
@@ -134,20 +136,20 @@ export function Book() {
             </div>
             <div className="flex flex-col sm:flex-row gap-5 sm:gap-10">
               <a
-                href="https://wa.me/261341125434"
+                href={`https://wa.me/${WA_DIGITS}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)]"
               >
                 <WhatsappLogo size={20} />
-                <span className="font-body text-[17px]">WhatsApp +261 34 11 254 34</span>
+                <span className="font-body text-[17px]">WhatsApp {HOTEL.phone}</span>
               </a>
               <a
-                href="mailto:hello@hotelambalakely.com"
+                href={`mailto:${HOTEL.email}`}
                 className="inline-flex items-center gap-3 text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)]"
               >
                 <Envelope size={20} />
-                <span className="font-body text-[17px]">hello@hotelambalakely.com</span>
+                <span className="font-body text-[17px]">{HOTEL.email}</span>
               </a>
             </div>
           </ScrollReveal>

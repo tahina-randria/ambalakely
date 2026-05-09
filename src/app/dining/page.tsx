@@ -4,8 +4,9 @@ import { Container } from '@/components/atoms/Container';
 import { Nav } from '@/components/sections/Nav';
 import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
-import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
+import { BreadcrumbJsonLd, RestaurantJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
+import { PageHero } from '@/components/molecules/PageHero';
 import {
   Users,
   ForkKnife,
@@ -24,9 +25,17 @@ export const metadata: Metadata = {
     'Hasina cooks one set menu each evening. Most of what arrives on the plate comes from the garden, the rice fields below, and the village market.',
   alternates: { canonical: '/dining' },
   openGraph: {
-    title: 'Dining · Ambalakely',
+    title: 'Dining at Toko Telo · Hotel Ambalakely',
     description: 'A small kitchen between Madagascar and Norway.',
     url: '/dining',
+    images: [
+      {
+        url: 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=1500w',
+        width: 1500,
+        height: 1200,
+        alt: 'Toko Telo kitchen at Hotel Ambalakely',
+      },
+    ],
   },
 };
 
@@ -140,36 +149,15 @@ export default function DiningPage() {
           { name: 'Dining', url: '/dining' },
         ]}
       />
+      <RestaurantJsonLd />
       <Nav />
       <main id="main">
-        {/* ────────────────────────────────────────────────────────────
-            01 · HERO — kitchen image
-        ──────────────────────────────────────────────────────────── */}
-        <section className="relative h-[90vh] md:h-[100vh] w-full overflow-hidden bg-[var(--color-sand-12)]">
-          <Image
-            src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2500w"
-            alt="The kitchen at Ambalakely"
-            fill
-            sizes="100vw"
-            priority
-            className="object-cover"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/55"
-          />
-
-          <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
-            <div className="pt-[100px] md:pt-[128px]">
-              <div className="caption text-white/75">The restaurant</div>
-            </div>
-            <div className="mt-auto pb-14 md:pb-20 max-w-[1100px]">
-              <h1 className="font-display font-light tracking-[-0.04em] text-white text-[56px] leading-[0.98] md:text-[96px] md:leading-[0.95] lg:text-[136px] lg:leading-[0.92]">
-                Toko Telo.
-              </h1>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2500w"
+          alt="Toko Telo kitchen, Hotel Ambalakely"
+          caption="The restaurant"
+          title="Toko Telo."
+        />
 
         {/* ────────────────────────────────────────────────────────────
             02 · INTRO + KEY FACTS

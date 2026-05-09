@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Container } from '@/components/atoms/Container';
 import { Nav } from '@/components/sections/Nav';
 import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { RoomComparison } from '@/components/molecules/RoomComparison';
+import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { categories } from '@/lib/data/categories';
 
@@ -17,9 +17,17 @@ export const metadata: Metadata = {
     'Ten rooms across three categories. Supérieure, Confort, Standard. Rates from 182 000 Ariary per night.',
   alternates: { canonical: '/rooms' },
   openGraph: {
-    title: 'Rooms · Ambalakely',
-    description: 'Ten rooms across three categories.',
+    title: 'Rooms · Hotel Ambalakely',
+    description: 'Ten rooms across three categories. Supérieure, Confort, Standard.',
     url: '/rooms',
+    images: [
+      {
+        url: 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=1500w',
+        width: 1500,
+        height: 1200,
+        alt: 'Supérieure room at Hotel Ambalakely',
+      },
+    ],
   },
 };
 
@@ -36,33 +44,12 @@ export default function RoomsPage() {
       />
       <Nav />
       <main id="main">
-        {/* ════════════════════════════════════════════════════════════
-            HERO — full viewport
-        ════════════════════════════════════════════════════════════ */}
-        <section className="relative h-[100vh] w-full overflow-hidden bg-[var(--color-sand-12)]">
-          <Image
-            src={categories[0].heroImage}
-            alt="Rooms at Ambalakely"
-            fill
-            sizes="100vw"
-            priority
-            className="object-cover"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/55"
-          />
-          <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
-            <div className="pt-[100px] md:pt-[128px]">
-              <div className="caption text-white/75">The rooms</div>
-            </div>
-            <div className="mt-auto pb-14 md:pb-20">
-              <h1 className="font-display font-light tracking-[-0.04em] text-white text-[64px] leading-[0.92] md:text-[120px] md:leading-[0.9] lg:text-[180px] lg:leading-[0.9]">
-                Ten.
-              </h1>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          src={categories[0].heroImage}
+          alt="View of the Supérieure rooms over the rice fields"
+          caption="The rooms"
+          title="Ten."
+        />
 
         {/* ════════════════════════════════════════════════════════════
             EDITORIAL OPENING

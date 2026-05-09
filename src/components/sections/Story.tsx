@@ -79,7 +79,7 @@ export function Story() {
                 href="/about"
                 className="mt-12 inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)] group"
               >
-                Read more
+                Read about Mamy and Hasina
                 <ArrowRight
                   size={18}
                   className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"

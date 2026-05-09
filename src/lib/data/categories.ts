@@ -87,7 +87,7 @@ export const categories: Category[] = [
     shortDescription:
       'A king and a single, in twenty-nine square metres. Two open onto the garden, two are upstairs.',
     longDescription:
-      'Four Confort rooms, paired in twos. The ground-floor pair opens straight into the garden — you can step out without putting shoes on. The upstairs pair has a wider, longer view, the kind that draws you out of bed earlier than you meant to. A king voamboana, a single katrafay, a desk by the window.',
+      'Four Confort rooms, paired in twos. The ground-floor pair opens straight into the garden, so you can step out without putting shoes on. The upstairs pair has a wider, longer view, the kind that draws you out of bed earlier than you meant to. A king voamboana, a single katrafay, a desk by the window.',
     bedSetup: 'King-size voamboana and one single katrafay bed.',
     view: 'Garden on the ground floor. Highlands and rice fields upstairs.',
     bestFor: 'Two adults and a child, or a writer who wants a desk by the window.',

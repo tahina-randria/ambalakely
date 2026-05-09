@@ -72,6 +72,47 @@ export function HotelJsonLd() {
 }
 
 /**
+ * Restaurant schema for /dining page.
+ */
+export function RestaurantJsonLd() {
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'Restaurant',
+    '@id': `${HOTEL.url}/dining/#restaurant`,
+    name: 'Toko Telo',
+    description:
+      'A small kitchen between Madagascar and Norway. One set menu each evening, mostly from the garden.',
+    url: `${HOTEL.url}/dining`,
+    telephone: HOTEL.phone,
+    image: HOTEL.images.hero,
+    servesCuisine: ['Malagasy', 'Norwegian', 'French'],
+    priceRange: '$$',
+    acceptsReservations: true,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: HOTEL.address.street,
+      addressLocality: HOTEL.address.locality,
+      addressRegion: HOTEL.address.region,
+      postalCode: HOTEL.address.postalCode,
+      addressCountry: HOTEL.address.country,
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: HOTEL.geo.lat,
+      longitude: HOTEL.geo.lng,
+    },
+    openingHours: 'Mo-Su 19:00-21:00',
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
+/**
  * Breadcrumb schema for detail pages.
  */
 export function BreadcrumbJsonLd({ items }: { items: { name: string; url: string }[] }) {

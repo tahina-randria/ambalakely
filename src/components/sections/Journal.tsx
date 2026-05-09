@@ -1,10 +1,8 @@
-import Link from 'next/link';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { Kicker } from '@/components/atoms/Kicker';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { journalPosts } from '@/lib/data/rooms';
-import { ArrowRight, ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 
 export function Journal() {
   return (
@@ -18,10 +16,7 @@ export function Journal() {
           {journalPosts.map((post, i) => (
             <li key={post.id}>
               <ScrollReveal delay={i * 0.06}>
-                <Link
-                  href={`/journal/${post.id}`}
-                  className="group flex items-center justify-between py-8 md:py-10 border-b border-[var(--color-border-subtle)] hover:border-[var(--color-sand-12)] transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]"
-                >
+                <div className="flex items-center justify-between py-8 md:py-10 border-b border-[var(--color-border-subtle)]">
                   <div className="flex-1">
                     <div className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
                       {post.date}
@@ -30,27 +25,17 @@ export function Journal() {
                       {post.title}
                     </div>
                   </div>
-                  <ArrowUpRight
-                    size={24}
-                    className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-[color,transform] duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1 group-hover:-translate-y-1 shrink-0"
-                  />
-                </Link>
+                </div>
               </ScrollReveal>
             </li>
           ))}
         </ul>
 
-        <ScrollReveal className="mt-20">
-          <Link
-            href="/journal"
-            className="inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)] group"
-          >
-            All articles
-            <ArrowRight
-              size={18}
-              className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
-            />
-          </Link>
+        <ScrollReveal className="mt-12 md:mt-16">
+          <p className="text-[15px] leading-[1.6] text-[var(--color-text-muted)] max-w-[560px]">
+            New writing arrives every season. The journal lives in print at the
+            desk for now.
+          </p>
         </ScrollReveal>
       </Container>
     </Section>
