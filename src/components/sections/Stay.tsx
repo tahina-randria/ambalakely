@@ -34,18 +34,18 @@ export function Stay() {
   return (
     <Section id="stay" divider>
       <Container>
-        {/* Editorial intro */}
-        <ScrollReveal className="max-w-[700px] mb-20 md:mb-28">
-          <div className="caption mb-8">Stay</div>
-          <p className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[40px] leading-[1.2] tracking-[-0.025em] balance">
-            Same sand walls, same dark wood floors, same hot water bottles
-            at night. The difference is space, view and bed.
-          </p>
-        </ScrollReveal>
-
-        {/* Inline category links — no cards, no images, just typography */}
         <div className="mx-auto max-w-[920px]">
-          <ul>
+          {/* Editorial intro */}
+          <ScrollReveal>
+            <div className="caption mb-8">Stay</div>
+            <p className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[40px] leading-[1.2] tracking-[-0.025em] balance max-w-[680px]">
+              Same sand walls, same dark wood floors, same hot water bottles
+              at night. The difference is space, view and bed.
+            </p>
+          </ScrollReveal>
+
+          {/* Inline category links — aligned to same column, hairline rule above */}
+          <ul className="mt-20 md:mt-28 border-t border-[var(--color-border-subtle)]">
             {categories.map((cat) => (
               <ScrollReveal key={cat.id}>
                 <li className="border-b border-[var(--color-border-subtle)]">
@@ -57,14 +57,14 @@ export function Stay() {
                       <div className="caption text-[var(--color-text-muted)] mb-3">
                         {cat.count}
                       </div>
-                      <h3 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[56px] leading-[1] tracking-[-0.03em] group-hover:translate-x-2 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
+                      <h3 className="font-display font-light text-[var(--color-text)] text-[36px] md:text-[48px] leading-[1] tracking-[-0.03em] group-hover:translate-x-2 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
                         {cat.name}
                       </h3>
                       <p className="mt-4 text-[15px] leading-[1.55] text-[var(--color-text-muted)] max-w-[480px]">
                         {cat.spec}
                       </p>
                     </div>
-                    <div className="col-span-8 md:col-span-4 text-left md:text-right font-display font-light text-[var(--color-text)] text-[22px] md:text-[26px] tracking-[-0.02em] tabular-nums">
+                    <div className="col-span-8 md:col-span-4 text-left md:text-right font-display font-light text-[var(--color-text)] text-[20px] md:text-[24px] tracking-[-0.02em] tabular-nums">
                       From {fmt(cat.priceMga)} Ar
                     </div>
                     <div className="col-span-4 md:col-span-1 md:flex md:justify-end">
@@ -80,7 +80,7 @@ export function Stay() {
           </ul>
 
           <ScrollReveal>
-            <div className="mt-16 md:mt-20">
+            <div className="mt-12 md:mt-16">
               <Link
                 href="/rooms"
                 className="group inline-flex items-center gap-3 font-body text-[15px] font-medium text-[var(--color-text)]"
