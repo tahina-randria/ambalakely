@@ -11,7 +11,7 @@ const ROOM_CATEGORIES: { slug: string; priority: number }[] = [
 ];
 
 // Stable lastModified — only changes when content actually changes
-const LAST_UPDATE = new Date('2026-05-08');
+const LAST_UPDATE = new Date('2026-05-10');
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
