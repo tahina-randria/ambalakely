@@ -108,7 +108,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         <PageHero
           src={cat.heroImage}
           alt={`${cat.name} room at Hotel Ambalakely`}
-          title={cat.name}
+          title={[cat.name, 'room.']}
         />
 
         {/* ════════════════════════════════════════════════════════════

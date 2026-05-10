@@ -47,7 +47,7 @@ export default function RoomsPage() {
         <PageHero
           src={categories[0].heroImage}
           alt="View of the Supérieure rooms over the rice fields"
-          title="Ten."
+          title={['Ten rooms', 'at Ambalakely.']}
         />
 
         {/* ════════════════════════════════════════════════════════════

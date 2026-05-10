@@ -154,8 +154,8 @@ export default function DiningPage() {
       <main id="main">
         <PageHero
           src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2500w"
-          alt="Toko Telo kitchen, Hotel Ambalakely"
-          title="Toko Telo."
+          alt="Toko Telo restaurant at Hotel Ambalakely, Fianarantsoa Madagascar"
+          title={['Toko Telo,', 'the restaurant.']}
         />
 
         {/* ────────────────────────────────────────────────────────────

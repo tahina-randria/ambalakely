@@ -71,7 +71,7 @@ export default function AboutPage() {
         <PageHero
           src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w"
           alt="Hotel Ambalakely garden, Fianarantsoa Madagascar"
-          title={['Mamy', 'and Hasina.']}
+          title={['Mamy and Hasina,', 'founders of Ambalakely.']}
         />
 
         {/* ────────────────────────────────────────────────────────────

@@ -3,6 +3,12 @@
 import { ArrowDown } from '@phosphor-icons/react/dist/ssr';
 
 export function Hero() {
+  const lines = [
+    'Hotel Ambalakely.',
+    'Ten rooms in the highlands',
+    'of Madagascar.',
+  ];
+
   const openBooking = () => {
     window.dispatchEvent(new Event('open-booking'));
   };
@@ -25,23 +31,25 @@ export function Hero() {
       />
 
       <div className="relative h-full w-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
-        {/* Title — same scale as PageHero, monumental single statement */}
         <div className="mt-auto pb-14 md:pb-20 max-w-[1100px]">
-          <h1 className="font-display font-light tracking-[-0.04em] text-white text-[64px] leading-[0.92] md:text-[120px] md:leading-[0.9] lg:text-[180px] lg:leading-[0.9]">
-            <span className="block overflow-hidden">
-              <span
-                className="block hero-line-reveal"
-                style={{ ['--line-delay' as string]: '0.25s' }}
-              >
-                Ambalakely.
+          {/* H1 — multi-line, SEO-rich (Hotel Ambalakely + Ten rooms + highlands + Madagascar) */}
+          <h1 className="font-display font-light tracking-[-0.04em] text-white text-[44px] leading-[1] md:text-[72px] md:leading-[0.98] lg:text-[96px] lg:leading-[0.95]">
+            {lines.map((line, i) => (
+              <span key={i} className="block overflow-hidden">
+                <span
+                  className="block hero-line-reveal"
+                  style={{ ['--line-delay' as string]: `${0.25 + i * 0.09}s` }}
+                >
+                  {line}
+                </span>
               </span>
-            </span>
+            ))}
           </h1>
 
           {/* CTA */}
           <div
             className="hero-fade-up mt-10 md:mt-14"
-            style={{ ['--fade-delay' as string]: '0.85s' }}
+            style={{ ['--fade-delay' as string]: '0.95s' }}
           >
             <button
               type="button"
@@ -60,7 +68,7 @@ export function Hero() {
 
       <div
         className="hero-fade-up absolute bottom-8 right-5 md:right-8 lg:right-12 text-white/70 text-[20px] leading-none"
-        style={{ ['--fade-delay' as string]: '1.3s' }}
+        style={{ ['--fade-delay' as string]: '1.2s' }}
         aria-hidden="true"
       >
         ↓

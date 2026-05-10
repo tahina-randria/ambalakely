@@ -35,7 +35,7 @@ export default function JournalPage() {
         <PageHero
           src={articles[0].cover}
           alt="From the Hotel Ambalakely journal"
-          title="The notebook."
+          title={['Journal of', 'Hotel Ambalakely.']}
           hideCta
         />
 

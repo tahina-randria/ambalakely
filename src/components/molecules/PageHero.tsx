@@ -108,8 +108,8 @@ export function PageHero({
 
       <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
         {/* Title bottom-left + CTA */}
-        <div className="mt-auto pb-14 md:pb-20 max-w-[1100px]">
-          <h1 className="font-display font-light tracking-[-0.04em] text-white text-[64px] leading-[0.92] md:text-[120px] md:leading-[0.9] lg:text-[180px] lg:leading-[0.9]">
+        <div className="mt-auto pb-14 md:pb-20 max-w-[1280px]">
+          <h1 className="font-display font-light tracking-[-0.04em] text-white text-[44px] leading-[0.98] md:text-[80px] md:leading-[0.95] lg:text-[120px] lg:leading-[0.92] balance">
             {lines.map((line, i) => (
               <span key={i} className="block overflow-hidden">
                 <span

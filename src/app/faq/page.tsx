@@ -61,7 +61,7 @@ export default function FaqPage() {
         <PageHero
           src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2500w"
           alt="Hotel Ambalakely, Fianarantsoa Madagascar"
-          title="Practical."
+          title={['Frequently asked,', 'plainly answered.']}
         />
 
         {/* INTRO */}
