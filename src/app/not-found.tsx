@@ -13,7 +13,7 @@ export default function NotFound() {
       >
         <div className="mx-auto max-w-[920px] px-5 md:px-8">
           <div className="caption">404</div>
-          <h1 className="mt-8 font-display font-light text-[var(--color-text)] text-[64px] leading-[0.95] md:text-[112px] md:leading-[0.9] lg:text-[160px] lg:leading-[0.9] tracking-[-0.04em] balance">
+          <h1 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
             Off the path.
           </h1>
           <p className="mt-12 prose-editorial max-w-[480px]">

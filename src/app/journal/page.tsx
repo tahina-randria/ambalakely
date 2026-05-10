@@ -77,7 +77,7 @@ export default function JournalPage() {
                         <div className="caption text-[var(--color-text-muted)]">
                           {article.date} · {article.author}
                         </div>
-                        <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[40px] md:text-[64px] lg:text-[80px] leading-[0.98] tracking-[-0.035em] balance group-hover:translate-x-1 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
+                        <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[36px] md:text-[48px] leading-[1.02] tracking-[-0.03em] balance group-hover:translate-x-1 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
                           {article.title}
                         </h2>
                         <p className="mt-6 prose-editorial">{article.excerpt}</p>

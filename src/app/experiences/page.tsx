@@ -123,7 +123,7 @@ export default function ExperiencesPage() {
                 </div>
                 <div className="lg:col-span-9">
                   <ScrollReveal delay={0.05}>
-                    <h2 className="font-display font-light text-[var(--color-text)] text-[40px] leading-[1.02] md:text-[72px] md:leading-[0.95] lg:text-[96px] lg:leading-[0.92] tracking-[-0.04em] balance">
+                    <h2 className="font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                       {exp.name}
                     </h2>
                   </ScrollReveal>
@@ -189,7 +189,7 @@ export default function ExperiencesPage() {
               <div className="caption">Plan it with us</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
-              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[48px] leading-[0.98] md:text-[80px] md:leading-[0.95] lg:text-[112px] lg:leading-[0.92] tracking-[-0.04em] balance">
+              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                 Book the room. We arrange the days.
               </h2>
             </ScrollReveal>

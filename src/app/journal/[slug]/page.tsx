@@ -200,7 +200,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
               <div className="caption">Stay with us</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
-              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[72px] md:leading-[0.95] tracking-[-0.04em] balance">
+              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                 Read the rest in person.
               </h2>
             </ScrollReveal>

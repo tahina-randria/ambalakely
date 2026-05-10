@@ -272,7 +272,7 @@ export default function AboutPage() {
               <div className="caption">Stay with us</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
-              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[48px] leading-[0.98] md:text-[80px] md:leading-[0.95] lg:text-[112px] lg:leading-[0.92] tracking-[-0.04em] balance">
+              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                 Two nights or more. The garden gives more if you wait.
               </h2>
             </ScrollReveal>
@@ -295,7 +295,7 @@ export default function AboutPage() {
             <ScrollReveal>
               <Link
                 href="/rooms"
-                className="group inline-flex items-baseline gap-6 font-display font-light text-[var(--color-text)] text-[40px] md:text-[64px] tracking-[-0.03em] leading-[1.02]"
+                className="group inline-flex items-baseline gap-6 font-display font-light text-[var(--color-text)] text-[36px] md:text-[48px] tracking-[-0.03em] leading-[1.02]"
               >
                 <span>The rooms</span>
                 <ArrowRight

@@ -216,7 +216,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
               <div className="caption">Reserve</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
-              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[48px] leading-[0.98] md:text-[80px] md:leading-[0.95] lg:text-[112px] lg:leading-[0.92] tracking-[-0.04em] balance">
+              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                 A {cat.name.toLowerCase()} room, from{' '}
                 <span className="tabular-nums">{formatMga(cat.priceMga)}</span>{' '}
                 Ariary.
@@ -255,7 +255,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                         </div>
                       </div>
                       <div className="col-span-12 md:col-span-9">
-                        <h3 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[64px] lg:text-[80px] leading-[0.98] tracking-[-0.035em] group-hover:translate-x-2 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
+                        <h3 className="font-display font-light text-[var(--color-text)] text-[32px] md:text-[44px] leading-[1.05] tracking-[-0.03em] group-hover:translate-x-2 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
                           {o.name}
                         </h3>
                         <p className="mt-4 text-[15px] leading-[1.55] text-[var(--color-text-muted)] max-w-[480px]">

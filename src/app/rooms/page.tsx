@@ -118,7 +118,7 @@ export default function RoomsPage() {
                   </div>
                 </div>
                 <div className="mt-auto pb-14 md:pb-20">
-                  <h2 className="font-display font-light tracking-[-0.04em] text-white text-[56px] leading-[0.95] md:text-[112px] md:leading-[0.9] lg:text-[160px] lg:leading-[0.9]">
+                  <h2 className="font-display font-light tracking-[-0.03em] text-white text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] balance">
                     {cat.name}
                   </h2>
                 </div>
@@ -168,7 +168,7 @@ export default function RoomsPage() {
               <div className="caption">Reserve</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
-              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[48px] leading-[0.98] md:text-[80px] md:leading-[0.95] lg:text-[112px] lg:leading-[0.92] tracking-[-0.04em] balance">
+              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                 Direct booking.
               </h2>
             </ScrollReveal>

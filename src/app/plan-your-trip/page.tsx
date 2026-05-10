@@ -148,7 +148,7 @@ export default function PlanYourTripPage() {
                 </div>
                 <div className="lg:col-span-9 max-w-[760px]">
                   <ScrollReveal delay={0.05}>
-                    <h2 className="font-display font-light text-[var(--color-text)] text-[44px] leading-[1.02] md:text-[80px] md:leading-[0.95] lg:text-[112px] lg:leading-[0.92] tracking-[-0.04em] balance">
+                    <h2 className="font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                       {it.title}
                     </h2>
                   </ScrollReveal>
@@ -197,7 +197,7 @@ export default function PlanYourTripPage() {
               <div className="caption">Book your nights at Ambalakely</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
-              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[48px] leading-[0.98] md:text-[80px] md:leading-[0.95] lg:text-[112px] lg:leading-[0.92] tracking-[-0.04em] balance">
+              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                 We arrange the rest.
               </h2>
             </ScrollReveal>

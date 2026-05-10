@@ -107,7 +107,7 @@ export default function FaqPage() {
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <h2 className="font-display font-light text-[var(--color-text)] text-[48px] leading-[0.98] md:text-[80px] md:leading-[0.95] lg:text-[112px] lg:leading-[0.92] tracking-[-0.04em] balance">
+              <h2 className="font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                 Write to us, or just book.
               </h2>
             </ScrollReveal>
