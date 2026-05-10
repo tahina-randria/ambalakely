@@ -19,17 +19,17 @@ export function Book() {
 
           <ScrollReveal delay={0.05}>
             <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-              Direct booking.
-              <br />
-              No middleman.
+              Tell us when.
             </h2>
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
             <p className="mt-10 prose-editorial max-w-[520px]">
-              Free cancellation up to thirty days before arrival. Best rate
-              guaranteed when you book with us. Tell us your dates and we put it
-              together.
+              Two ways to reach us. The drawer for dates and rooms. WhatsApp or
+              email if you prefer to write. We answer within the day.
+            </p>
+            <p className="mt-4 caption text-[var(--color-text-muted)]">
+              Free cancellation up to thirty days before arrival.
             </p>
           </ScrollReveal>
 

@@ -13,6 +13,7 @@ import { StickyScrubImage } from '@/components/molecules/StickyScrubImage';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { categories, getCategory } from '@/lib/data/categories';
 import { HOTEL } from '@/lib/data/hotel';
+import { formatMga } from '@/lib/utils/format';
 
 type Params = { category: string };
 
@@ -40,10 +41,6 @@ export async function generateMetadata({
       images: [{ url: cat.heroImage, width: 1500, height: 1200, alt: cat.name }],
     },
   };
-}
-
-function formatMga(n: number) {
-  return n.toLocaleString('fr-FR').replace(/\s/g, ' ');
 }
 
 function HotelOfferJsonLd({ category }: { category: ReturnType<typeof getCategory> }) {
@@ -261,7 +258,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                         <p className="mt-4 text-[15px] leading-[1.55] text-[var(--color-text-muted)] max-w-[480px]">
                           {o.shortDescription} From{' '}
                           <span className="tabular-nums text-[var(--color-text)]">
-                            {formatMga(o.priceMga)} Ar
+                            {formatMga(o.priceMga)} Ariary
                           </span>
                           .
                         </p>

@@ -3,8 +3,7 @@ import { Check, Minus, ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import { FeatureIcon } from '@/components/atoms/FeatureIcon';
 import { comparison } from '@/lib/data/comparison';
 import { categories } from '@/lib/data/categories';
-
-const fmt = (n: number) => n.toLocaleString('fr-FR').replace(/\s/g, ' ');
+import { formatMga } from '@/lib/utils/format';
 
 /**
  * Quick-scan comparison grid. Same criteria across all 3 categories.
@@ -105,7 +104,7 @@ export function RoomComparison() {
           {categories.map((cat) => (
             <div key={cat.slug} className="col-span-4 md:col-span-3 px-2 md:px-4">
               <div className="font-display font-light text-[var(--color-text)] text-[22px] md:text-[32px] tracking-[-0.02em] leading-[1] tabular-nums">
-                {fmt(cat.priceMga)}
+                {formatMga(cat.priceMga)}
               </div>
               <div className="mt-1 caption text-[var(--color-text-muted)]">
                 Ariary · per night

@@ -3,6 +3,7 @@ import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import { formatMga } from '@/lib/utils/format';
 
 const categories = [
   {
@@ -27,8 +28,6 @@ const categories = [
     priceMga: 182000,
   },
 ];
-
-const fmt = (n: number) => n.toLocaleString('fr-FR').replace(/\s/g, ' ');
 
 export function Stay() {
   return (
@@ -65,7 +64,7 @@ export function Stay() {
                       </p>
                     </div>
                     <div className="col-span-8 md:col-span-4 text-left md:text-right font-display font-light text-[var(--color-text)] text-[20px] md:text-[24px] tracking-[-0.02em] tabular-nums">
-                      From {fmt(cat.priceMga)} Ar
+                      From {formatMga(cat.priceMga)} Ariary
                     </div>
                     <div className="col-span-4 md:col-span-1 md:flex md:justify-end">
                       <ArrowRight

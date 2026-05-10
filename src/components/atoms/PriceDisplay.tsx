@@ -1,9 +1,7 @@
 import { cn } from '@/lib/utils/cn';
+import { formatMga } from '@/lib/utils/format';
 
 type Size = 'sm' | 'md' | 'lg' | 'hero';
-
-const formatMga = (n: number) =>
-  n.toLocaleString('fr-FR').replace(/\s/g, ' ');
 
 /**
  * Typographic price display.
@@ -46,7 +44,7 @@ export function PriceDisplay({
     },
     hero: {
       kicker: 'text-[12px]',
-      mga: 'text-[64px] md:text-[88px] lg:text-[112px]',
+      mga: 'text-[44px] md:text-[56px]',
       eur: 'text-[16px]',
     },
   } as const;
@@ -76,7 +74,7 @@ export function PriceDisplay({
         )}
       >
         {formatMga(mga)}
-        <span className={cn('ml-2 font-light tracking-[-0.01em]', muted)}>Ar</span>
+        <span className={cn('ml-2 font-light tracking-[-0.01em]', muted)}>Ariary</span>
       </div>
       {showSuffix ? (
         <div className={cn('mt-2 font-mono uppercase tracking-[0.1em]', s.eur, muted)}>

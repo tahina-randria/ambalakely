@@ -172,7 +172,7 @@ export default function CommunityPage() {
           <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
               <div className="caption text-center mb-4">Timeline</div>
-              <h2 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[56px] leading-[1] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
+              <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
                 Ten years in five moments.
               </h2>
             </ScrollReveal>
@@ -206,7 +206,7 @@ export default function CommunityPage() {
           <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
               <div className="caption text-center mb-4">What we do</div>
-              <h2 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[56px] leading-[1] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
+              <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
                 Three pillars.
               </h2>
             </ScrollReveal>
@@ -264,7 +264,7 @@ export default function CommunityPage() {
           <div className="mx-auto max-w-[760px] px-5 md:px-8 text-center">
             <ScrollReveal>
               <div className="caption mb-4">Visit</div>
-              <h2 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[56px] leading-[1] tracking-[-0.03em] balance">
+              <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance">
                 Guests are welcome to come along.
               </h2>
             </ScrollReveal>
@@ -291,7 +291,7 @@ export default function CommunityPage() {
           <div className="mx-auto max-w-[760px] px-5 md:px-8 text-center">
             <ScrollReveal>
               <div className="caption mb-4">Your stay</div>
-              <h2 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[56px] leading-[1] tracking-[-0.03em] balance">
+              <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance">
                 Two percent of every stay.
               </h2>
             </ScrollReveal>
@@ -318,7 +318,7 @@ export default function CommunityPage() {
           <div className="mx-auto max-w-[920px] px-5 md:px-8 text-center">
             <ScrollReveal>
               <div className="caption mb-4">Stay with us</div>
-              <h2 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[56px] leading-[1] tracking-[-0.03em] balance">
+              <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance">
                 A night here is a week of school there.
               </h2>
             </ScrollReveal>

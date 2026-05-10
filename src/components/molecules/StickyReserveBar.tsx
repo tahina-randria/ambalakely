@@ -3,13 +3,12 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { cn } from '@/lib/utils/cn';
+import { formatMga } from '@/lib/utils/format';
 
 type Props = {
   name: string;
   priceMga: number;
 };
-
-const fmt = (n: number) => n.toLocaleString('fr-FR').replace(/\s/g, ' ');
 
 /**
  * Premium sticky reserve bar — appears after scrolling past hero.
@@ -52,7 +51,7 @@ export function StickyReserveBar({ name, priceMga }: Props) {
               From
             </span>
             <span className="font-display font-light text-[14px] md:text-[16px] tabular-nums shrink-0">
-              {fmt(priceMga)} Ar
+              {formatMga(priceMga)} Ariary
             </span>
           </div>
           <button

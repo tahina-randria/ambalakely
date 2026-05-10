@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
 };
 
-const fmt = (n: number) => n.toLocaleString('fr-FR').replace(/\s/g, ' ');
+import { formatMga } from '@/lib/utils/format';
 
 export default function RoomsPage() {
   return (
@@ -137,7 +137,7 @@ export default function RoomsPage() {
                   <p className="mt-12 font-display font-light italic text-[18px] leading-[1.55] text-[var(--color-text-muted)]">
                     {cat.size}, {cat.capacity.toLowerCase()}. {cat.bedSetup} From{' '}
                     <span className="not-italic tabular-nums text-[var(--color-text)]">
-                      {fmt(cat.priceMga)} Ariary
+                      {formatMga(cat.priceMga)} Ariary
                     </span>{' '}
                     per night.
                   </p>
