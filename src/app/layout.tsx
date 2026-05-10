@@ -25,8 +25,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || HOTEL.url),
   title: {
-    default: `${HOTEL.shortName}. ${HOTEL.tagline}`,
-    template: `%s · ${HOTEL.shortName}, Fianarantsoa`,
+    default: `${HOTEL.name} · Ten rooms in the highlands of Madagascar`,
+    template: `%s · ${HOTEL.name}, Fianarantsoa`,
   },
   description: HOTEL.description,
   applicationName: HOTEL.name,
@@ -45,16 +45,16 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: HOTEL.shortName,
+    title: `${HOTEL.name} · Madagascar`,
     description: HOTEL.tagline,
     url: '/',
-    siteName: HOTEL.shortName,
+    siteName: HOTEL.name,
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: HOTEL.shortName,
+    title: `${HOTEL.name} · Madagascar`,
     description: HOTEL.tagline,
   },
   robots: {

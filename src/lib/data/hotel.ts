@@ -32,6 +32,16 @@ export const HOTEL = {
   rooms: 10,
   priceRange: '182000-255000 MGA',
   starRating: 3,
+  /**
+   * Aggregate rating across booking platforms (TripAdvisor + Booking).
+   * Single source of truth for both the Reviews section UI and the
+   * Hotel JSON-LD. Update both at once when the numbers change.
+   */
+  rating: {
+    value: '4.9',
+    count: 127,
+    sources: ['TripAdvisor', 'Booking'] as string[],
+  },
   amenities: [
     'Restaurant',
     'Garden',

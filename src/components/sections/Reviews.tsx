@@ -3,6 +3,7 @@ import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { Star } from '@phosphor-icons/react/dist/ssr';
 import { reviews } from '@/lib/data/rooms';
+import { HOTEL } from '@/lib/data/hotel';
 
 /**
  * Editorial 'what guests say' page.
@@ -32,7 +33,8 @@ export function Reviews() {
                 ))}
               </div>
               <div className="caption text-[var(--color-text-muted)]">
-                4.9 average across 127 reviews on TripAdvisor and Booking
+                {HOTEL.rating.value} average across {HOTEL.rating.count} reviews on{' '}
+                {HOTEL.rating.sources.join(' and ')}
               </div>
             </div>
           </ScrollReveal>

@@ -11,8 +11,8 @@ import { reviews } from '@/lib/data/rooms';
 export function HotelJsonLd() {
   const aggregateRating = {
     '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    reviewCount: String(reviews.length),
+    ratingValue: HOTEL.rating.value,
+    reviewCount: String(HOTEL.rating.count),
     bestRating: '5',
     worstRating: '1',
   };
