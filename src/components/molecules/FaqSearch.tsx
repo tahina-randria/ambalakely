@@ -62,8 +62,8 @@ export function FaqSearch() {
 
   return (
     <div>
-      {/* Sticky search + pills bar */}
-      <div className="sticky top-[72px] z-10 bg-[var(--color-bg)]/95 backdrop-blur-[8px] border-b border-[var(--color-border-subtle)] -mx-5 md:-mx-8 lg:-mx-12 px-5 md:px-8 lg:px-12">
+      {/* Search + pills bar — static, not sticky */}
+      <div className="border-b border-[var(--color-border-subtle)]">
         <div className="py-5 md:py-6 flex flex-col gap-5">
           {/* Search input */}
           <label className="relative">
@@ -156,7 +156,7 @@ export function FaqSearch() {
             className="py-16 md:py-20 lg:py-24 border-t border-[var(--color-border-subtle)]"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-              <div className="lg:col-span-3 lg:sticky lg:top-[200px] self-start">
+              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
                 <ScrollReveal>
                   <div className="caption">{cat.label}</div>
                   <div className="mt-4 font-display font-light text-[var(--color-text-muted)] text-[15px]">

@@ -7,7 +7,17 @@ import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
-import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import {
+  ArrowRight,
+  GraduationCap,
+  HeartStraight,
+  Leaf,
+  Calendar,
+  Users,
+  House as HouseIcon,
+  MapPinLine,
+} from '@phosphor-icons/react/dist/ssr';
+import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 
 export const metadata: Metadata = {
   title: 'Community',
@@ -30,28 +40,34 @@ export const metadata: Metadata = {
   },
 };
 
-const numbers = [
-  { value: '10', label: 'Years' },
-  { value: '130', label: 'Children' },
-  { value: '4 000', label: 'Inhabitants' },
-  { value: '1', label: 'Quartier' },
+type Stat = { value: string; label: string; Icon: PhosphorIcon };
+type Mission = { title: string; body: string; Icon: PhosphorIcon };
+
+const numbers: Stat[] = [
+  { value: '10', label: 'Years', Icon: Calendar },
+  { value: '130', label: 'Children', Icon: Users },
+  { value: '4 000', label: 'Inhabitants', Icon: HouseIcon },
+  { value: '1', label: 'Quartier', Icon: MapPinLine },
 ];
 
-const missions = [
+const missions: Mission[] = [
   {
     title: 'Education',
     body:
       'Tutoring after the public school day. French, Malagasy, maths. Arts and music in the afternoons. A hot meal at noon on school days.',
+    Icon: GraduationCap,
   },
   {
     title: 'Health',
     body:
       'A small clinic on Mondays. The nurse comes from Fianarantsoa. People bring their children to be weighed, vaccinated, reassured. The medicines come at a reduced price from a partner pharmacy.',
+    Icon: HeartStraight,
   },
   {
     title: 'Environment',
     body:
       'A water spring restored in 2022 above the village, with new piping and a small concrete tank, now used by three hundred and forty people. A tree-planting programme each November.',
+    Icon: Leaf,
   },
 ];
 
@@ -149,19 +165,28 @@ export default function CommunityPage() {
             </ScrollReveal>
             <ScrollReveal>
               <ul className="grid grid-cols-2 md:grid-cols-4 border-y border-[var(--color-border-subtle)] divide-x divide-[var(--color-border-subtle)]">
-                {numbers.map((n) => (
-                  <li
-                    key={n.label}
-                    className="py-12 md:py-16 px-4 text-center flex flex-col items-center justify-center"
-                  >
-                    <div className="font-display font-light text-[var(--color-text)] text-[56px] md:text-[72px] lg:text-[88px] leading-[1] tracking-[-0.03em] tabular-nums whitespace-nowrap">
-                      {n.value}
-                    </div>
-                    <div className="mt-5 caption text-[var(--color-text-muted)]">
-                      {n.label}
-                    </div>
-                  </li>
-                ))}
+                {numbers.map((n) => {
+                  const Icon = n.Icon;
+                  return (
+                    <li
+                      key={n.label}
+                      className="py-12 md:py-16 px-4 text-center flex flex-col items-center justify-center"
+                    >
+                      <Icon
+                        size={22}
+                        weight="light"
+                        className="text-[var(--color-text-muted)] mb-6"
+                        aria-hidden
+                      />
+                      <div className="font-display font-light text-[var(--color-text)] text-[56px] md:text-[72px] lg:text-[88px] leading-[1] tracking-[-0.03em] tabular-nums whitespace-nowrap">
+                        {n.value}
+                      </div>
+                      <div className="mt-5 caption text-[var(--color-text-muted)]">
+                        {n.label}
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
             </ScrollReveal>
           </div>
@@ -211,21 +236,30 @@ export default function CommunityPage() {
               </h2>
             </ScrollReveal>
             <ul className="mt-20 md:mt-28 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-              {missions.map((m, i) => (
-                <ScrollReveal key={m.title} delay={i * 0.05}>
-                  <li>
-                    <div className="caption text-[var(--color-text-muted)] mb-4">
-                      0{i + 1}
-                    </div>
-                    <h3 className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em]">
-                      {m.title}
-                    </h3>
-                    <p className="mt-5 prose-editorial text-[15px] md:text-[16px]">
-                      {m.body}
-                    </p>
-                  </li>
-                </ScrollReveal>
-              ))}
+              {missions.map((m, i) => {
+                const Icon = m.Icon;
+                return (
+                  <ScrollReveal key={m.title} delay={i * 0.05}>
+                    <li>
+                      <Icon
+                        size={28}
+                        weight="light"
+                        className="text-[var(--color-text-muted)] mb-6"
+                        aria-hidden
+                      />
+                      <div className="caption text-[var(--color-text-muted)] mb-4">
+                        0{i + 1}
+                      </div>
+                      <h3 className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em]">
+                        {m.title}
+                      </h3>
+                      <p className="mt-5 prose-editorial text-[15px] md:text-[16px]">
+                        {m.body}
+                      </p>
+                    </li>
+                  </ScrollReveal>
+                );
+              })}
             </ul>
           </div>
         </section>

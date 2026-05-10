@@ -23,7 +23,6 @@ export function Story() {
 
           <div className="lg:col-span-5 px-5 md:px-12 lg:px-16 xl:px-24 py-20 md:py-32 lg:py-0 flex flex-col justify-center bg-[var(--color-bg)]">
             <ScrollReveal>
-              <div className="caption mb-8">The house</div>
               <h2 className="font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] balance">
                 Ten rooms, since 2018.
               </h2>

@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { Heading } from '@/components/atoms/Heading';
-import { Kicker } from '@/components/atoms/Kicker';
 import { ScrollReveal, Stagger, StaggerItem } from '@/lib/motion/ScrollReveal';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { experiences } from '@/lib/data/experiences';
@@ -12,8 +11,7 @@ export function Experiences() {
     <Section id="experiences" divider>
       <Container>
         <ScrollReveal className="mb-16 md:mb-24">
-          <Kicker>Experiences</Kicker>
-          <Heading variant="h2" className="mt-6 max-w-[800px]">
+          <Heading variant="h2" className="max-w-[800px]">
             Walk, weave, cook. What this land gives, when it gives it.
           </Heading>
         </ScrollReveal>
