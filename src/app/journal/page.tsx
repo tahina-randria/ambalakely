@@ -43,7 +43,7 @@ export default function JournalPage() {
         <section className="py-32 md:py-48 lg:py-56">
           <div className="mx-auto max-w-[700px] px-5 md:px-8">
             <ScrollReveal>
-              <p className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[40px] leading-[1.2] tracking-[-0.025em] balance">
+              <p className="lede-display">
                 Writing from Hasina and Mamy. The kitchen, the garden, the people who
                 pass through.
               </p>

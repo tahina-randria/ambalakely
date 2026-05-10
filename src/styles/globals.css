@@ -266,6 +266,24 @@ video {
   }
 }
 
+/* Page lede — the big thesis paragraph that opens a route, after PageHero.
+   Single source for the 28/40 pattern repeated across rooms, faq, journal,
+   experiences, community, plan-your-trip. */
+.lede-display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--color-text);
+  text-wrap: balance;
+}
+@media (min-width: 768px) {
+  .lede-display {
+    font-size: 40px;
+  }
+}
+
 /* Editorial prose — generous line height, no max width crampage */
 .prose-editorial {
   font-family: var(--font-body);
