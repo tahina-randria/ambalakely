@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 const numbers = [
   { value: '10', label: 'Years' },
   { value: '130', label: 'Children' },
-  { value: '4 000', label: 'Inhabitants' },
+  { value: '4 000', label: 'Inhabitants' },
   { value: '1', label: 'Quartier' },
 ];
 
@@ -118,7 +118,7 @@ export default function CommunityPage() {
               {numbers.map((n, i) => (
                 <ScrollReveal key={n.label} delay={i * 0.04}>
                   <li>
-                    <div className="font-display font-light text-[var(--color-text)] text-[56px] md:text-[88px] lg:text-[112px] leading-[0.92] tracking-[-0.04em] tabular-nums">
+                    <div className="font-display font-light text-[var(--color-text)] text-[48px] md:text-[72px] lg:text-[88px] leading-[1] tracking-[-0.03em] tabular-nums whitespace-nowrap">
                       {n.value}
                     </div>
                     <div className="mt-4 caption text-[var(--color-text-muted)]">
