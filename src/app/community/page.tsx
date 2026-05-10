@@ -247,9 +247,6 @@ export default function CommunityPage() {
                         className="text-[var(--color-text-muted)] mb-6"
                         aria-hidden
                       />
-                      <div className="caption text-[var(--color-text-muted)] mb-4">
-                        0{i + 1}
-                      </div>
                       <h3 className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em]">
                         {m.title}
                       </h3>
