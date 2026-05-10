@@ -141,26 +141,29 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* NUMBERS — bg-subtle alternance */}
+        {/* NUMBERS — magazine fact sheet, vertical hairlines between cells */}
         <section className="py-24 md:py-32 hair-rule bg-[var(--color-bg-subtle)]">
           <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption text-center mb-12 md:mb-16">In numbers</div>
+              <div className="caption text-center mb-16 md:mb-20">In numbers</div>
             </ScrollReveal>
-            <ul className="grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-8">
-              {numbers.map((n, i) => (
-                <ScrollReveal key={n.label} delay={i * 0.04}>
-                  <li className="text-center">
-                    <div className="font-display font-light text-[var(--color-text)] text-[48px] md:text-[64px] lg:text-[80px] leading-[1] tracking-[-0.03em] tabular-nums whitespace-nowrap">
+            <ScrollReveal>
+              <ul className="grid grid-cols-2 md:grid-cols-4 border-y border-[var(--color-border-subtle)] divide-x divide-[var(--color-border-subtle)]">
+                {numbers.map((n) => (
+                  <li
+                    key={n.label}
+                    className="py-12 md:py-16 px-4 text-center flex flex-col items-center justify-center"
+                  >
+                    <div className="font-display font-light text-[var(--color-text)] text-[56px] md:text-[72px] lg:text-[88px] leading-[1] tracking-[-0.03em] tabular-nums whitespace-nowrap">
                       {n.value}
                     </div>
-                    <div className="mt-4 caption text-[var(--color-text-muted)]">
+                    <div className="mt-5 caption text-[var(--color-text-muted)]">
                       {n.label}
                     </div>
                   </li>
-                </ScrollReveal>
-              ))}
-            </ul>
+                ))}
+              </ul>
+            </ScrollReveal>
           </div>
         </section>
 
