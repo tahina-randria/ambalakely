@@ -60,7 +60,7 @@ export const experiences: Experience[] = [
     duration: 'Four hours',
     tagline: 'Walk the garden with Hasina, then cook with the team.',
     body:
-      'Walk the garden with Hasina at eight in the morning, pick what looks good, then go straight to the kitchen. The kitchen team takes you through the day’s set menu, plus one of the signature dishes (often Zébu Marengo or Krumkake). Lunch is what you cooked together. Limited to four people per session, by request only, on days when there is space.',
+      'Walk the garden with Hasina at eight in the morning, pick what looks good, then go straight to the kitchen. The kitchen team takes you through the day’s set menu, plus one of the dishes the house is asked for most (often Zébu Marengo or Krumkake). Lunch is what you cooked together. Four people per session, by request only, on days when there is space.',
     best: 'All year.',
     cost: '120 000 Ariary per person.',
     image: `${SQ}/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2000w`,
