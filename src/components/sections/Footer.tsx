@@ -1,11 +1,25 @@
 import Link from 'next/link';
+import {
+  Phone,
+  WhatsappLogo,
+  Envelope,
+  InstagramLogo,
+} from '@phosphor-icons/react/dist/ssr';
+import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 import { Container } from '@/components/atoms/Container';
 import { NewsletterSignup } from '@/components/molecules/NewsletterSignup';
 import { HOTEL } from '@/lib/data/hotel';
 
 const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');
 
-const columns = [
+type NavColumn = {
+  title: string;
+  links: { label: string; href: string }[];
+};
+
+type ContactLink = { label: string; href: string; Icon: PhosphorIcon };
+
+const columns: NavColumn[] = [
   {
     title: 'Stay',
     links: [
@@ -33,14 +47,16 @@ const columns = [
       { label: 'FAQ', href: '/faq' },
     ],
   },
+];
+
+const contactLinks: ContactLink[] = [
+  { label: HOTEL.phone, href: `tel:${HOTEL.whatsapp}`, Icon: Phone },
+  { label: 'WhatsApp', href: `https://wa.me/${WA_DIGITS}`, Icon: WhatsappLogo },
+  { label: HOTEL.email, href: `mailto:${HOTEL.email}`, Icon: Envelope },
   {
-    title: 'Contact',
-    links: [
-      { label: HOTEL.phone, href: `tel:${HOTEL.whatsapp}` },
-      { label: 'WhatsApp', href: `https://wa.me/${WA_DIGITS}` },
-      { label: HOTEL.email, href: `mailto:${HOTEL.email}` },
-      { label: 'Instagram', href: 'https://instagram.com/hotelambalakely' },
-    ],
+    label: 'Instagram',
+    href: 'https://instagram.com/hotelambalakely',
+    Icon: InstagramLogo,
   },
 ];
 
@@ -80,6 +96,32 @@ export function Footer() {
                 </ul>
               </div>
             ))}
+
+            {/* Contact — with phosphor icons for fast scan */}
+            <div>
+              <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-5">
+                Contact
+              </div>
+              <ul className="space-y-3">
+                {contactLinks.map(({ label, href, Icon }) => (
+                  <li key={href}>
+                    <Link
+                      href={href}
+                      target={href.startsWith('http') ? '_blank' : undefined}
+                      rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="group inline-flex items-center gap-2.5 text-[15px] text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]"
+                    >
+                      <Icon
+                        size={16}
+                        weight="regular"
+                        className="text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors shrink-0"
+                      />
+                      <span>{label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* Bottom legal */}

@@ -7,7 +7,7 @@ import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
-import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight, Clock, MapTrifold } from '@phosphor-icons/react/dist/ssr';
 import { itineraries } from '@/lib/data/itineraries';
 
 export const metadata: Metadata = {
@@ -89,13 +89,15 @@ export default function PlanYourTripPage() {
                       href={`#${it.slug}`}
                       className="group block py-6 border-t border-[var(--color-border-subtle)]"
                     >
-                      <div className="caption text-[var(--color-text-muted)]">
+                      <div className="inline-flex items-center gap-2 caption text-[var(--color-text-muted)]">
+                        <Clock size={13} weight="regular" aria-hidden />
                         {it.duration}
                       </div>
                       <div className="mt-3 font-display font-light text-[var(--color-text)] text-[24px] md:text-[28px] tracking-[-0.02em] leading-[1.15] group-hover:translate-x-1 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
                         {it.title}
                       </div>
-                      <div className="mt-2 caption text-[var(--color-text-muted)]">
+                      <div className="mt-2 inline-flex items-center gap-2 caption text-[var(--color-text-muted)]">
+                        <MapTrifold size={13} weight="regular" aria-hidden />
                         {it.totalKm}
                       </div>
                     </Link>

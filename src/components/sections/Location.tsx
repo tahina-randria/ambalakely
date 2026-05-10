@@ -1,17 +1,33 @@
 import Link from 'next/link';
+import {
+  ArrowUpRight,
+  Buildings,
+  Drop,
+  Tree,
+  Mountains,
+  Car,
+  House,
+  AirplaneTakeoff,
+} from '@phosphor-icons/react/dist/ssr';
+import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { Kicker } from '@/components/atoms/Kicker';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { MapboxMap } from '@/components/molecules/MapboxMap';
-import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 
-const distances = [
-  { label: 'Antananarivo', sub: 'Capital · Ivato airport', meta: '8 h' },
-  { label: 'Antsirabe', sub: 'Thermal town', meta: '4 h' },
-  { label: 'Ranomafana', sub: 'National park', meta: '1 h 20' },
-  { label: 'Isalo', sub: 'Massif', meta: '5 h' },
+type Distance = { label: string; sub: string; meta: string; Icon: PhosphorIcon };
+
+const distances: Distance[] = [
+  { label: 'Antananarivo', sub: 'Capital · Ivato airport', meta: '8 h', Icon: Buildings },
+  { label: 'Antsirabe', sub: 'Thermal town', meta: '4 h', Icon: Drop },
+  { label: 'Ranomafana', sub: 'National park', meta: '1 h 20', Icon: Tree },
+  { label: 'Isalo', sub: 'Massif', meta: '5 h', Icon: Mountains },
 ];
+
+const RoadIcon = Car;
+const LocalIcon = House;
+const AirIcon = AirplaneTakeoff;
 
 export function Location() {
   return (
@@ -56,24 +72,35 @@ export function Location() {
                 From Ambalakely
               </div>
               <ul className="border-t border-[var(--color-border-subtle)]">
-                {distances.map((d) => (
-                  <li
-                    key={d.label}
-                    className="flex items-baseline justify-between gap-4 py-5 border-b border-[var(--color-border-subtle)]"
-                  >
-                    <div>
-                      <div className="font-display text-[18px] tracking-[-0.01em] text-[var(--color-text)]">
-                        {d.label}
+                {distances.map((d) => {
+                  const Icon = d.Icon;
+                  return (
+                    <li
+                      key={d.label}
+                      className="flex items-center justify-between gap-4 py-5 border-b border-[var(--color-border-subtle)]"
+                    >
+                      <div className="flex items-center gap-4 min-w-0">
+                        <Icon
+                          size={20}
+                          weight="light"
+                          className="text-[var(--color-text-muted)] shrink-0"
+                          aria-hidden
+                        />
+                        <div className="min-w-0">
+                          <div className="font-display text-[18px] tracking-[-0.01em] text-[var(--color-text)]">
+                            {d.label}
+                          </div>
+                          <div className="mt-0.5 text-[13px] text-[var(--color-text-muted)] truncate">
+                            {d.sub}
+                          </div>
+                        </div>
                       </div>
-                      <div className="mt-0.5 text-[13px] text-[var(--color-text-muted)]">
-                        {d.sub}
+                      <div className="font-mono text-[13px] tabular-nums text-[var(--color-text)] shrink-0">
+                        {d.meta}
                       </div>
-                    </div>
-                    <div className="font-mono text-[13px] tabular-nums text-[var(--color-text)] shrink-0">
-                      {d.meta}
-                    </div>
-                  </li>
-                ))}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>
@@ -83,6 +110,12 @@ export function Location() {
         <ScrollReveal delay={0.1} className="mt-20 md:mt-24">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
             <div>
+              <RoadIcon
+                size={22}
+                weight="light"
+                className="text-[var(--color-text-muted)] mb-4"
+                aria-hidden
+              />
               <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-3">
                 By road from Antananarivo
               </div>
@@ -95,6 +128,12 @@ export function Location() {
               </p>
             </div>
             <div>
+              <LocalIcon
+                size={22}
+                weight="light"
+                className="text-[var(--color-text-muted)] mb-4"
+                aria-hidden
+              />
               <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-3">
                 From Fianarantsoa centre
               </div>
@@ -107,6 +146,12 @@ export function Location() {
               </p>
             </div>
             <div>
+              <AirIcon
+                size={22}
+                weight="light"
+                className="text-[var(--color-text-muted)] mb-4"
+                aria-hidden
+              />
               <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-3">
                 By air
               </div>

@@ -2,9 +2,33 @@
 
 import { useState, useMemo } from 'react';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
-import { MagnifyingGlass, X } from '@phosphor-icons/react/dist/ssr';
+import {
+  MagnifyingGlass,
+  X,
+  CalendarBlank,
+  Airplane,
+  Bed,
+  ForkKnife,
+  MapPin,
+  Wallet,
+  FirstAid,
+  Lightbulb,
+} from '@phosphor-icons/react/dist/ssr';
+import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 import { faq } from '@/lib/data/faq';
 import { cn } from '@/lib/utils/cn';
+
+/** Slug to icon — Phosphor icon per FAQ category for fast scanning. */
+const categoryIcon: Record<string, PhosphorIcon> = {
+  booking: CalendarBlank,
+  arrival: Airplane,
+  rooms: Bed,
+  food: ForkKnife,
+  nearby: MapPin,
+  money: Wallet,
+  health: FirstAid,
+  practical: Lightbulb,
+};
 
 /**
  * Searchable FAQ with category pill filter.
@@ -83,21 +107,27 @@ export function FaqSearch() {
             >
               All
             </button>
-            {faq.map((cat) => (
-              <button
-                key={cat.slug}
-                type="button"
-                onClick={() => setActiveCategory(cat.slug)}
-                className={cn(
-                  'px-3.5 md:px-4 py-1.5 md:py-2 caption transition-colors duration-[var(--duration-fast)]',
-                  activeCategory === cat.slug
-                    ? 'bg-[var(--color-sand-12)] text-[var(--color-sand-1)]'
-                    : 'border border-[var(--color-border)] text-[var(--color-text)] hover:border-[var(--color-sand-12)]',
-                )}
-              >
-                {cat.label}
-              </button>
-            ))}
+            {faq.map((cat) => {
+              const Icon = categoryIcon[cat.slug];
+              return (
+                <button
+                  key={cat.slug}
+                  type="button"
+                  onClick={() => setActiveCategory(cat.slug)}
+                  className={cn(
+                    'inline-flex items-center gap-2 px-3.5 md:px-4 py-1.5 md:py-2 caption transition-colors duration-[var(--duration-fast)]',
+                    activeCategory === cat.slug
+                      ? 'bg-[var(--color-sand-12)] text-[var(--color-sand-1)]'
+                      : 'border border-[var(--color-border)] text-[var(--color-text)] hover:border-[var(--color-sand-12)]',
+                  )}
+                >
+                  {Icon ? (
+                    <Icon size={14} weight="regular" className="shrink-0" />
+                  ) : null}
+                  {cat.label}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
