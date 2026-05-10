@@ -32,8 +32,8 @@ export function Hero() {
 
       <div className="relative h-full w-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
         <div className="mt-auto pb-14 md:pb-20 max-w-[920px]">
-          {/* H1 — multi-line, SEO-rich (Hotel Ambalakely + Ten rooms + highlands + Madagascar) */}
-          <h1 className="font-display font-light tracking-[-0.03em] text-white text-[40px] leading-[1.02] md:text-[60px] md:leading-[1] lg:text-[80px] lg:leading-[0.98] balance">
+          {/* H1 — multi-line, SEO-rich */}
+          <h1 className="font-display font-light tracking-[-0.03em] text-white text-[56px] leading-[1] balance">
             {lines.map((line, i) => (
               <span key={i} className="block overflow-hidden">
                 <span
