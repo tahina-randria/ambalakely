@@ -21,6 +21,8 @@ export type Article = {
   body: string[];
   /** Optional pull quote shown halfway through */
   pullQuote?: string;
+  /** Optional inline image after pull quote (full-bleed) */
+  inlineImage?: { src: string; alt: string };
 };
 
 export const articles: Article[] = [
@@ -36,6 +38,10 @@ export const articles: Article[] = [
     cover: `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w`,
     pullQuote:
       'A hundred and thirty children every week, three of whom now teach the youngest ones.',
+    inlineImage: {
+      src: `${SQ}/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w`,
+      alt: 'Hope for the Future, children of Tanambao',
+    },
     body: [
       'In 2014 we walked our own quartier in the middle of the day and counted the children. They were at home or in the streets, not in school. A short survey told us about a hundred and thirty of them, from the quartier of Tanambao alone, were rarely or never going to the public school.',
       'We had been working in tourism for years. We had seen children begging in every region we travelled through Madagascar. The thing that made us act was that this time the children were our neighbours.',
@@ -61,6 +67,10 @@ export const articles: Article[] = [
     cover: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2500w`,
     pullQuote:
       'I do not write the menu the night before. I write it the morning of, after I have walked the garden.',
+    inlineImage: {
+      src: `${SQ}/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2500w`,
+      alt: 'The kitchen at Hotel Ambalakely',
+    },
     body: [
       'I do not write the menu the night before. I write it the morning of, after I have walked the garden. There is a chair under the pomelo tree where I sit with a coffee for ten minutes before I look at anything. The walk takes another twenty.',
       'In April the garden is in a slow transition. The rains are ending, the cold has not yet started. The pomelo tree finished dropping in March, but the late fruit is still good for marmelade. The tomatoes are at the end of their season, sweet and small and starting to crack. The aubergines are at their peak. The watercress is just thinking about coming up at the bottom of the garden where the water sits.',
@@ -86,6 +96,10 @@ export const articles: Article[] = [
     cover: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2500w`,
     pullQuote:
       'You make a place koselig the way you make a soup. Quietly, with what is around, with attention to the cold outside the window.',
+    inlineImage: {
+      src: `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w`,
+      alt: 'A Supérieure room at Hotel Ambalakely',
+    },
     body: [
       'My Norwegian godmother lived in a small wooden house in the hills above Oslo. There was always a fire in the room you sat in, never in the rooms you did not. There were always more woollen blankets than chairs. The light was always low in the evening, and someone always got up to put on the kettle without asking.',
       'I spent four winters with her between fourteen and eighteen, learning Norwegian and learning to cook. I could not have told you then what koselig was. I would have said it meant cosy. That is what the dictionary says. The dictionary is wrong, or at least incomplete.',

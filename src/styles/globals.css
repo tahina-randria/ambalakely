@@ -177,10 +177,28 @@ video {
   will-change: opacity, transform;
 }
 
+/* Page transition — fade-up on route change. Wraps each page via app/template.tsx */
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.page-transition {
+  animation: page-fade-in 0.65s cubic-bezier(0.2, 0, 0, 1) both;
+  will-change: opacity, transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-line-reveal,
   .hero-bg-settle,
-  .hero-fade-up {
+  .hero-fade-up,
+  .page-transition {
     animation: none !important;
   }
 }

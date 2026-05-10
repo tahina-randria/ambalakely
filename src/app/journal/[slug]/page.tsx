@@ -154,6 +154,21 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
         ) : null}
 
         {/* ════════════════════════════════════════════════════════════
+            INLINE IMAGE — full bleed, atmospheric break
+        ════════════════════════════════════════════════════════════ */}
+        {article.inlineImage ? (
+          <section className="relative aspect-[16/9] md:aspect-[21/9] w-full bg-[var(--color-bg-muted)]">
+            <Image
+              src={article.inlineImage.src}
+              alt={article.inlineImage.alt}
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+          </section>
+        ) : null}
+
+        {/* ════════════════════════════════════════════════════════════
             ARTICLE BODY — second half
         ════════════════════════════════════════════════════════════ */}
         <section className={`${article.pullQuote ? 'pt-20 md:pt-32 hair-rule' : ''} pb-32 md:pb-48`}>
