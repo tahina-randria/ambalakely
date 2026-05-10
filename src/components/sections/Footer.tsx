@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import { Container } from '@/components/atoms/Container';
 import { NewsletterSignup } from '@/components/molecules/NewsletterSignup';
+import { HOTEL } from '@/lib/data/hotel';
+
+const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');
 
 const columns = [
   {
@@ -33,8 +36,9 @@ const columns = [
   {
     title: 'Contact',
     links: [
-      { label: '+261 34 02 654 70', href: 'tel:+261340265470' },
-      { label: 'reservation@hotelambalakely.com', href: 'mailto:reservation@hotelambalakely.com' },
+      { label: HOTEL.phone, href: `tel:${HOTEL.whatsapp}` },
+      { label: 'WhatsApp', href: `https://wa.me/${WA_DIGITS}` },
+      { label: HOTEL.email, href: `mailto:${HOTEL.email}` },
       { label: 'Instagram', href: 'https://instagram.com/hotelambalakely' },
     ],
   },

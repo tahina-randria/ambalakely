@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 const numbers = [
   { value: '10', label: 'Years' },
   { value: '130', label: 'Children' },
-  { value: '4 000', label: 'Inhabitants' },
+  { value: '4 000', label: 'Inhabitants' },
   { value: '1', label: 'Quartier' },
 ];
 
@@ -55,6 +55,39 @@ const missions = [
   },
 ];
 
+const timeline = [
+  {
+    year: '2014',
+    title: 'A borrowed room',
+    body:
+      'We start with six children in a room lent to us by a family in Tanambao. A retired teacher carries a blackboard from a closed school in Fianarantsoa.',
+  },
+  {
+    year: '2018',
+    title: 'The hotel opens',
+    body:
+      'Hotel Ambalakely opens in October. From the first night, two percent of every booking goes to the school next door.',
+  },
+  {
+    year: '2019',
+    title: 'A small clinic',
+    body:
+      'Two rooms, a nurse from Fianarantsoa on Mondays. People bring their children to be weighed, vaccinated, reassured. Medicines from a partner pharmacy at a reduced price.',
+  },
+  {
+    year: '2022',
+    title: 'The water spring',
+    body:
+      'A spring above the village, untouched for twenty years, is cleaned out. New pipe, a small concrete tank. Three hundred and forty people now use the tap.',
+  },
+  {
+    year: 'Today',
+    title: 'A hundred and thirty children',
+    body:
+      'Three of them have come back as teachers. The same Wednesday and Saturday afternoons, ten years on.',
+  },
+];
+
 export default function CommunityPage() {
   return (
     <>
@@ -72,11 +105,11 @@ export default function CommunityPage() {
           title={['Hope for the Future,', 'the school of Ambalakely.']}
         />
 
-        {/* INTRO — Hasina voice, real story */}
-        <section className="py-32 md:py-48 lg:py-64">
+        {/* INTRO — centered */}
+        <section className="py-32 md:py-48 lg:py-56">
           <div className="mx-auto max-w-[700px] px-5 md:px-8">
             <ScrollReveal>
-              <p className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[40px] leading-[1.2] tracking-[-0.025em] balance">
+              <p className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.2] tracking-[-0.025em] balance">
                 A school for the children of our quartier. Ten years, started before
                 we opened the rooms.
               </p>
@@ -84,9 +117,9 @@ export default function CommunityPage() {
             <ScrollReveal delay={0.05}>
               <div className="mt-14 prose-editorial space-y-6">
                 <p>
-                  Hope for the Future is the small charity we started ten years ago
-                  in the quartier of Tanambao, in the village of Ambalakely. The
-                  village has around four thousand inhabitants and sits twelve
+                  Hope for the Future is the small charity we started ten years
+                  ago in the quartier of Tanambao, in the village of Ambalakely.
+                  The village has around four thousand inhabitants and sits twelve
                   kilometres north of Fianarantsoa, on a hill at the edge of the
                   rice fields.
                 </p>
@@ -108,17 +141,17 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* NUMBERS */}
-        <section className="hair-rule py-24 md:py-32">
-          <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
+        {/* NUMBERS — bg-subtle alternance */}
+        <section className="py-24 md:py-32 hair-rule bg-[var(--color-bg-subtle)]">
+          <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption mb-12">In numbers</div>
+              <div className="caption text-center mb-12 md:mb-16">In numbers</div>
             </ScrollReveal>
             <ul className="grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-8">
               {numbers.map((n, i) => (
                 <ScrollReveal key={n.label} delay={i * 0.04}>
-                  <li>
-                    <div className="font-display font-light text-[var(--color-text)] text-[48px] md:text-[72px] lg:text-[88px] leading-[1] tracking-[-0.03em] tabular-nums whitespace-nowrap">
+                  <li className="text-center">
+                    <div className="font-display font-light text-[var(--color-text)] text-[48px] md:text-[64px] lg:text-[80px] leading-[1] tracking-[-0.03em] tabular-nums whitespace-nowrap">
                       {n.value}
                     </div>
                     <div className="mt-4 caption text-[var(--color-text-muted)]">
@@ -131,42 +164,70 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* MISSIONS — three pillars */}
+        {/* TIMELINE — vertical, hairline rules */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule">
           <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
-                <ScrollReveal>
-                  <div className="caption">What we do</div>
-                  <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em] max-w-[260px]">
-                    Three pillars.
-                  </h2>
+            <ScrollReveal>
+              <div className="caption text-center mb-4">Timeline</div>
+              <h2 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[56px] leading-[1] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
+                Ten years in five moments.
+              </h2>
+            </ScrollReveal>
+
+            <ul className="mt-20 md:mt-28 mx-auto max-w-[860px] border-t border-[var(--color-border-subtle)]">
+              {timeline.map((t, i) => (
+                <ScrollReveal key={t.year} delay={i * 0.05}>
+                  <li className="grid grid-cols-12 gap-6 py-10 md:py-14 border-b border-[var(--color-border-subtle)]">
+                    <div className="col-span-3 md:col-span-2">
+                      <div className="font-mono text-[12px] tabular-nums text-[var(--color-text-muted)] tracking-[0.05em] uppercase">
+                        {t.year}
+                      </div>
+                    </div>
+                    <div className="col-span-9 md:col-span-10 max-w-[640px]">
+                      <h3 className="font-display font-light text-[var(--color-text)] text-[24px] md:text-[32px] leading-[1.05] tracking-[-0.025em]">
+                        {t.title}
+                      </h3>
+                      <p className="mt-4 prose-editorial text-[15px] md:text-[16px]">
+                        {t.body}
+                      </p>
+                    </div>
+                  </li>
                 </ScrollReveal>
-              </div>
-              <div className="lg:col-span-9">
-                <ul className="border-t border-[var(--color-border-subtle)]">
-                  {missions.map((m, i) => (
-                    <ScrollReveal key={m.title} delay={i * 0.04}>
-                      <li className="grid grid-cols-12 gap-6 py-10 md:py-14 border-b border-[var(--color-border-subtle)]">
-                        <div className="col-span-3 md:col-span-2 caption text-[var(--color-text-muted)] uppercase mt-1">
-                          0{i + 1}
-                        </div>
-                        <div className="col-span-9 md:col-span-10 max-w-[640px]">
-                          <h3 className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[40px] leading-[1.05] tracking-[-0.025em]">
-                            {m.title}
-                          </h3>
-                          <p className="mt-5 prose-editorial">{m.body}</p>
-                        </div>
-                      </li>
-                    </ScrollReveal>
-                  ))}
-                </ul>
-              </div>
-            </div>
+              ))}
+            </ul>
           </div>
         </section>
 
-        {/* IMAGE — community photo */}
+        {/* MISSIONS — bg-subtle alternance, 3 pillars */}
+        <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-bg-subtle)]">
+          <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
+            <ScrollReveal>
+              <div className="caption text-center mb-4">What we do</div>
+              <h2 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[56px] leading-[1] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
+                Three pillars.
+              </h2>
+            </ScrollReveal>
+            <ul className="mt-20 md:mt-28 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+              {missions.map((m, i) => (
+                <ScrollReveal key={m.title} delay={i * 0.05}>
+                  <li>
+                    <div className="caption text-[var(--color-text-muted)] mb-4">
+                      0{i + 1}
+                    </div>
+                    <h3 className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em]">
+                      {m.title}
+                    </h3>
+                    <p className="mt-5 prose-editorial text-[15px] md:text-[16px]">
+                      {m.body}
+                    </p>
+                  </li>
+                </ScrollReveal>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* IMAGE — full bleed */}
         <section className="relative aspect-[16/9] md:aspect-[21/9] w-full bg-[var(--color-bg-muted)]">
           <Image
             src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
@@ -177,15 +238,15 @@ export default function CommunityPage() {
           />
         </section>
 
-        {/* PULL QUOTE — Hasina */}
+        {/* PULL QUOTE — centered */}
         <section className="py-32 md:py-48 hair-rule">
-          <div className="mx-auto max-w-[1000px] px-5 md:px-8 lg:px-12">
+          <div className="mx-auto max-w-[1000px] px-5 md:px-8 lg:px-12 text-center">
             <ScrollReveal>
-              <p className="pull-quote max-w-[28ch]">
-                &ldquo;We knew the hotel would pay for the work next door before we
-                built the hotel.&rdquo;
+              <p className="pull-quote mx-auto max-w-[28ch]">
+                &ldquo;We knew the hotel would pay for the work next door before
+                we built the hotel.&rdquo;
               </p>
-              <div className="mt-12 flex items-center gap-4">
+              <div className="mt-12 inline-flex items-center gap-4">
                 <div className="w-12 border-t border-[var(--color-sand-12)]" />
                 <div className="font-display text-[18px] tracking-[-0.005em] text-[var(--color-text)]">
                   Hasina
@@ -195,97 +256,79 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* VISIT */}
+        {/* VISIT — bg-subtle alternance */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-bg-subtle)]">
-          <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
-                <ScrollReveal>
-                  <div className="caption">Visit</div>
-                </ScrollReveal>
+          <div className="mx-auto max-w-[760px] px-5 md:px-8 text-center">
+            <ScrollReveal>
+              <div className="caption mb-4">Visit</div>
+              <h2 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[56px] leading-[1] tracking-[-0.03em] balance">
+                Guests are welcome to come along.
+              </h2>
+            </ScrollReveal>
+            <ScrollReveal delay={0.05}>
+              <div className="mt-12 prose-editorial space-y-6 text-left">
+                <p>
+                  Half-days on Tuesdays or Thursdays. We arrange a driver and one
+                  of the team to walk you through. There is no formal tour. You
+                  meet the teachers, you see the classroom, you have a tea. If
+                  you bring something to give, we ask you to give it directly to
+                  the school, not to the children.
+                </p>
+                <p>
+                  Tell us at booking if you want this in your stay. There is no
+                  cost.
+                </p>
               </div>
-              <div className="lg:col-span-9 max-w-[760px]">
-                <ScrollReveal>
-                  <h2 className="font-display font-light text-[var(--color-text)] text-[36px] md:text-[56px] lg:text-[72px] leading-[1] tracking-[-0.035em] balance">
-                    Guests are welcome to come along.
-                  </h2>
-                </ScrollReveal>
-                <ScrollReveal delay={0.05}>
-                  <div className="mt-10 prose-editorial space-y-6">
-                    <p>
-                      Half-days on Tuesdays or Thursdays. We arrange a driver and
-                      one of the team to walk you through. There is no formal
-                      tour. You meet the teachers, you see the classroom, you have
-                      a tea. If you bring something to give, we ask you to give it
-                      directly to the school, not to the children.
-                    </p>
-                    <p>
-                      Tell us at booking if you want this in your stay. There is
-                      no cost.
-                    </p>
-                  </div>
-                </ScrollReveal>
-              </div>
-            </div>
+            </ScrollReveal>
           </div>
         </section>
 
         {/* HOW A STAY SUPPORTS */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule">
-          <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
-                <ScrollReveal>
-                  <div className="caption">Your stay</div>
-                </ScrollReveal>
+          <div className="mx-auto max-w-[760px] px-5 md:px-8 text-center">
+            <ScrollReveal>
+              <div className="caption mb-4">Your stay</div>
+              <h2 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[56px] leading-[1] tracking-[-0.03em] balance">
+                Two percent of every stay.
+              </h2>
+            </ScrollReveal>
+            <ScrollReveal delay={0.05}>
+              <div className="mt-12 prose-editorial space-y-6 text-left">
+                <p>
+                  Two percent of every room booked at Hotel Ambalakely goes
+                  directly to Hope for the Future. It pays for the teachers, the
+                  materials, the meal at noon, and the small clinic that opens on
+                  Mondays.
+                </p>
+                <p>
+                  The rest comes from a few private donors and Hasina&rsquo;s
+                  Norwegian network. We publish a short audited summary every
+                  January, available on request at the desk.
+                </p>
               </div>
-              <div className="lg:col-span-9 max-w-[760px]">
-                <ScrollReveal>
-                  <h2 className="font-display font-light text-[var(--color-text)] text-[36px] md:text-[56px] lg:text-[72px] leading-[1] tracking-[-0.035em] balance">
-                    Two percent of every stay.
-                  </h2>
-                </ScrollReveal>
-                <ScrollReveal delay={0.05}>
-                  <div className="mt-10 prose-editorial space-y-6">
-                    <p>
-                      Two percent of every room booked at Hotel Ambalakely goes
-                      directly to Hope for the Future. It pays for the teachers,
-                      the materials, the meal at noon, and the small clinic that
-                      opens on Mondays.
-                    </p>
-                    <p>
-                      The rest comes from a few private donors and Hasina&rsquo;s
-                      Norwegian network. We publish a short audited summary every
-                      January, available on request at the desk.
-                    </p>
-                  </div>
-                </ScrollReveal>
-              </div>
-            </div>
+            </ScrollReveal>
           </div>
         </section>
 
         {/* CTA */}
-        <section className="py-32 md:py-48 lg:py-64 hair-rule">
-          <div className="mx-auto max-w-[920px] px-5 md:px-8">
+        <section className="py-32 md:py-48 lg:py-64 hair-rule bg-[var(--color-bg-subtle)]">
+          <div className="mx-auto max-w-[920px] px-5 md:px-8 text-center">
             <ScrollReveal>
-              <div className="caption">Stay with us</div>
-            </ScrollReveal>
-            <ScrollReveal delay={0.05}>
-              <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[48px] leading-[0.98] md:text-[80px] md:leading-[0.95] lg:text-[112px] lg:leading-[0.92] tracking-[-0.04em] balance">
+              <div className="caption mb-4">Stay with us</div>
+              <h2 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[56px] leading-[1] tracking-[-0.03em] balance">
                 A night here is a week of school there.
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
-              <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
+              <div className="mt-12 inline-flex flex-wrap items-baseline gap-x-10 gap-y-6 justify-center">
                 <BookingButton>Check availability</BookingButton>
                 <Link
                   href="/about"
-                  className="group inline-flex items-center gap-3 font-display font-light text-[var(--color-text)] text-[24px] md:text-[28px] tracking-[-0.02em] leading-[1.05]"
+                  className="group inline-flex items-center gap-3 font-body text-[15px] font-medium text-[var(--color-text)]"
                 >
                   Read about the house
                   <ArrowRight
-                    size={22}
+                    size={18}
                     className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
                   />
                 </Link>
