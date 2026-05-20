@@ -7,10 +7,11 @@ import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
+import { FeatureIcon } from '@/components/atoms/FeatureIcon';
 import { PageHero } from '@/components/molecules/PageHero';
 import { StickyReserveBar } from '@/components/molecules/StickyReserveBar';
 import { StickyScrubImage } from '@/components/molecules/StickyScrubImage';
-import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight, Bed, ArrowsOut, Users, Mountains } from '@phosphor-icons/react/dist/ssr';
 import { categories, getCategory } from '@/lib/data/categories';
 import { HOTEL } from '@/lib/data/hotel';
 import { formatMga } from '@/lib/utils/format';
@@ -109,25 +110,35 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         />
 
         {/* ════════════════════════════════════════════════════════════
-            EDITORIAL OPENING — single column prose, magazine voice
+            EDITORIAL OPENING — lede + key facts spec sheet + long prose
         ════════════════════════════════════════════════════════════ */}
         <section className="py-32 md:py-48 lg:py-64">
-          <div className="mx-auto max-w-[700px] px-5 md:px-8">
+          <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <p className="lede-display">
+              <p className="lede-display max-w-[700px]">
                 {cat.shortDescription}
               </p>
             </ScrollReveal>
+
+            {/* Quick facts — magazine spec sheet, hairline rules */}
             <ScrollReveal delay={0.05}>
-              <div className="mt-14 prose-editorial">
+              <dl className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 border-y border-[var(--color-border-subtle)] divide-x divide-[var(--color-border-subtle)]">
+                <SpecItem Icon={Bed} label="Bed" value={cat.bedSetup} />
+                <SpecItem Icon={ArrowsOut} label="Size" value={cat.size} />
+                <SpecItem Icon={Users} label="Capacity" value={cat.capacity} />
+                <SpecItem Icon={Mountains} label="View" value={cat.view} />
+              </dl>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.1}>
+              <div className="mt-16 md:mt-20 max-w-[700px] prose-editorial">
                 <p>{cat.longDescription}</p>
               </div>
             </ScrollReveal>
-            <ScrollReveal delay={0.1}>
-              {/* Inline specs — woven into prose, not a sheet */}
-              <p className="mt-12 font-display font-light italic text-[18px] md:text-[20px] leading-[1.55] text-[var(--color-text-muted)] max-w-[60ch]">
-                {cat.size}, {cat.capacity.toLowerCase()}. {cat.bedSetup} {cat.count}{' '}
-                in the house. From{' '}
+
+            <ScrollReveal delay={0.15}>
+              <p className="mt-10 max-w-[700px] font-display font-light italic text-[var(--color-text-muted)] text-[17px] md:text-[19px] leading-[1.55]">
+                {cat.count} in the house. From{' '}
                 <span className="not-italic tabular-nums text-[var(--color-text)]">
                   {formatMga(cat.priceMga)} Ariary
                 </span>{' '}
@@ -147,22 +158,31 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         />
 
         {/* ════════════════════════════════════════════════════════════
-            EDITORIAL CONTINUATION — what's in the room, as prose
+            FEATURES — clean two-column list with Phosphor icons
         ════════════════════════════════════════════════════════════ */}
         <section className="py-32 md:py-48 lg:py-64">
-          <div className="mx-auto max-w-[700px] px-5 md:px-8">
+          <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption mb-8">In every room</div>
+              <div className="caption mb-12 md:mb-16">In every room</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
-              <p className="prose-editorial">
-                {cat.features.map((f, i) => (
-                  <span key={f.label}>
-                    {f.label}
-                    {i < cat.features.length - 1 ? '. ' : '.'}
-                  </span>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-20 border-t border-[var(--color-border-subtle)]">
+                {cat.features.map((f) => (
+                  <li
+                    key={f.label}
+                    className="flex items-start gap-4 py-5 md:py-6 border-b border-[var(--color-border-subtle)]"
+                  >
+                    <FeatureIcon
+                      name={f.icon}
+                      size={20}
+                      className="text-[var(--color-text-muted)] shrink-0 mt-0.5"
+                    />
+                    <span className="font-display font-light text-[var(--color-text)] text-[16px] md:text-[17px] leading-[1.45] tracking-[-0.005em]">
+                      {f.label}
+                    </span>
+                  </li>
                 ))}
-              </p>
+              </ul>
             </ScrollReveal>
           </div>
         </section>
@@ -189,7 +209,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
               <div className="caption">A note from {cat.concierge.signed}</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
-              <p className="mt-10 font-display font-light italic text-[var(--color-text)] text-[26px] md:text-[36px] lg:text-[42px] leading-[1.3] tracking-[-0.02em]">
+              <p className="mt-10 font-display font-light italic text-[var(--color-text)] text-[26px] md:text-[36px] leading-[1.3] tracking-[-0.02em]">
                 &ldquo;{cat.concierge.body}&rdquo;
               </p>
             </ScrollReveal>
@@ -244,28 +264,48 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                   <li className="border-t border-[var(--color-border-subtle)] last:border-b">
                     <Link
                       href={`/rooms/${o.slug}`}
-                      className="group block py-10 md:py-14 grid grid-cols-12 gap-6 items-baseline"
+                      className="group block py-8 md:py-10 grid grid-cols-12 gap-6 items-center"
                     >
-                      <div className="col-span-12 md:col-span-2">
+                      {/* Thumbnail */}
+                      <div className="col-span-4 md:col-span-3">
+                        <div className="relative aspect-[4/3] overflow-hidden bg-[var(--color-bg-muted)]">
+                          <Image
+                            src={o.heroImage}
+                            alt={`${o.name} room`}
+                            fill
+                            sizes="(min-width: 768px) 25vw, 33vw"
+                            className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-[1.04]"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Caption number */}
+                      <div className="hidden md:block md:col-span-1">
                         <div className="caption text-[var(--color-text-muted)]">
                           {o.number}
                         </div>
                       </div>
-                      <div className="col-span-12 md:col-span-9">
-                        <h3 className="font-display font-light text-[var(--color-text)] text-[32px] md:text-[44px] leading-[1.05] tracking-[-0.03em] group-hover:translate-x-2 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
+
+                      {/* Name + short description + price */}
+                      <div className="col-span-8 md:col-span-7">
+                        <h3 className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[40px] leading-[1.05] tracking-[-0.03em] group-hover:translate-x-2 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
                           {o.name}
                         </h3>
-                        <p className="mt-4 text-[15px] leading-[1.55] text-[var(--color-text-muted)] max-w-[480px]">
-                          {o.shortDescription} From{' '}
+                        <p className="mt-3 text-[14px] md:text-[15px] leading-[1.55] text-[var(--color-text-muted)] max-w-[480px]">
+                          {o.shortDescription}
+                        </p>
+                        <p className="mt-2 text-[14px] md:text-[15px] text-[var(--color-text-muted)]">
+                          From{' '}
                           <span className="tabular-nums text-[var(--color-text)]">
                             {formatMga(o.priceMga)} Ariary
                           </span>
-                          .
                         </p>
                       </div>
-                      <div className="col-span-12 md:col-span-1 md:flex md:justify-end">
+
+                      {/* Arrow */}
+                      <div className="hidden md:flex md:col-span-1 md:justify-end">
                         <ArrowRight
-                          size={28}
+                          size={24}
                           className="text-[var(--color-text-muted)] transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-2 group-hover:text-[var(--color-text)]"
                         />
                       </div>
@@ -279,5 +319,36 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
       </main>
       <Footer />
     </>
+  );
+}
+
+/**
+ * SpecItem — one cell of the key-facts spec sheet.
+ * Icon + label small caps on top, value as display type below.
+ */
+function SpecItem({
+  Icon,
+  label,
+  value,
+}: {
+  Icon: typeof Bed;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="px-4 md:px-6 py-8 md:py-10 flex flex-col items-start">
+      <Icon
+        size={20}
+        weight="light"
+        className="text-[var(--color-text-muted)] mb-5"
+        aria-hidden
+      />
+      <div className="caption text-[var(--color-text-muted)] mb-2">
+        {label}
+      </div>
+      <div className="font-display font-light text-[var(--color-text)] text-[17px] md:text-[19px] leading-[1.3] tracking-[-0.01em]">
+        {value}
+      </div>
+    </div>
   );
 }
