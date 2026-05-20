@@ -105,33 +105,35 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
         />
 
         {/* ════════════════════════════════════════════════════════════
-            BYLINE
+            BYLINE + EXCERPT + ARTICLE BODY (first half)
+            Substack-tight rhythm : kicker, excerpt, meta row, hr, body
         ════════════════════════════════════════════════════════════ */}
-        <section className="py-20 md:py-28 lg:py-32">
-          <div className="mx-auto max-w-[760px] px-5 md:px-8">
-            <ScrollReveal>
-              <div className="flex items-center gap-4">
-                <div className="w-10 border-t border-[var(--color-sand-12)]" />
-                <div>
-                  <div className="font-display text-[18px] tracking-[-0.005em] text-[var(--color-text)]">
-                    {article.author}
-                  </div>
-                  <div className="caption text-[var(--color-text-muted)] mt-1">
-                    {article.authorRole}
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════════════════════════════
-            ARTICLE BODY — first half
-        ════════════════════════════════════════════════════════════ */}
-        <section className="pb-20 md:pb-32">
+        <section className="pt-20 md:pt-28 lg:pt-32 pb-20 md:pb-32">
           <div className="mx-auto max-w-[680px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="prose-editorial text-[18px] md:text-[20px] leading-[1.7] space-y-7">
+              <div className="caption text-[var(--color-text-muted)]">
+                From the journal
+              </div>
+              <p className="mt-6 font-display font-light text-[var(--color-text)] text-[22px] md:text-[26px] leading-[1.35] tracking-[-0.015em] balance">
+                {article.excerpt}
+              </p>
+              <div className="mt-10 flex items-center gap-4 text-[14px]">
+                <div className="font-display tracking-[-0.005em] text-[var(--color-text)]">
+                  {article.author}
+                </div>
+                <div className="w-1 h-1 rounded-full bg-[var(--color-text-muted)]" />
+                <div className="caption text-[var(--color-text-muted)]">
+                  {article.authorRole}
+                </div>
+                <div className="w-1 h-1 rounded-full bg-[var(--color-text-muted)]" />
+                <div className="caption text-[var(--color-text-muted)]">
+                  {article.date}
+                </div>
+              </div>
+              <hr className="mt-10 border-t border-[var(--color-border-subtle)]" />
+            </ScrollReveal>
+            <ScrollReveal delay={0.05}>
+              <div className="mt-12 prose-editorial text-[18px] md:text-[20px] leading-[1.7] space-y-7">
                 {beforeQuote.map((p, i) => (
                   <p key={i}>{p}</p>
                 ))}

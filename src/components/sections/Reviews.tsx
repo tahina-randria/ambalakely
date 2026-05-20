@@ -38,29 +38,30 @@ export function Reviews() {
             </div>
           </ScrollReveal>
 
-          {/* Quotes — vertical stack with hairline rules */}
+          {/* Quotes — vertical stack with hairline rules.
+              Magazine pull-quote treatment : large display type, single
+              source label small caps on top, attribution under the quote
+              with a thin connecting rule. */}
           <ul className="border-t border-[var(--color-border-subtle)]">
             {reviews.map((review, i) => (
               <ScrollReveal key={`${review.author}-${i}`} delay={i * 0.05}>
                 <li className="border-b border-[var(--color-border-subtle)]">
-                  <figure className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 py-12 md:py-16">
-                    {/* Source label, top-left */}
-                    <div className="lg:col-span-3">
-                      <div className="caption text-[var(--color-text-muted)]">
-                        {review.source}
-                      </div>
-                      <div className="mt-3 font-display text-[18px] tracking-[-0.005em] text-[var(--color-text)]">
-                        {review.author}
-                      </div>
-                      <div className="mt-1 caption text-[var(--color-text-muted)]">
-                        {review.city}
-                      </div>
+                  <figure className="py-16 md:py-24 max-w-[920px]">
+                    <div className="caption text-[var(--color-text-muted)]">
+                      {review.source}
                     </div>
-
-                    {/* Quote */}
-                    <blockquote className="lg:col-span-9 font-display font-light text-[var(--color-text)] text-[22px] md:text-[28px] lg:text-[32px] leading-[1.35] tracking-[-0.015em] balance max-w-[820px]">
+                    <blockquote className="mt-6 md:mt-8 font-display font-light text-[var(--color-text)] text-[26px] md:text-[36px] lg:text-[44px] leading-[1.25] md:leading-[1.2] tracking-[-0.02em] balance">
                       &ldquo;{review.quote}&rdquo;
                     </blockquote>
+                    <figcaption className="mt-8 md:mt-10 flex items-center gap-4">
+                      <div className="w-10 border-t border-[var(--color-sand-12)]" />
+                      <div className="font-display text-[16px] tracking-[-0.005em] text-[var(--color-text)]">
+                        {review.author}
+                      </div>
+                      <div className="caption text-[var(--color-text-muted)]">
+                        {review.city}
+                      </div>
+                    </figcaption>
                   </figure>
                 </li>
               </ScrollReveal>

@@ -44,12 +44,15 @@ export function Story() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
-              <p className="mt-10 font-display font-light italic text-[var(--color-text-muted)] text-[18px] md:text-[20px] leading-[1.5] max-w-[420px]">
-                &ldquo;The hotel is the family home as much as it is a place for
-                guests.&rdquo;
-              </p>
-              <div className="mt-4 caption text-[var(--color-text-muted)]">
-                Hasina
+              <blockquote className="mt-12 font-display font-light italic text-[var(--color-text)] text-[20px] md:text-[22px] leading-[1.45] tracking-[-0.005em] max-w-[420px]">
+                &ldquo;The hotel is the family home as much as it is a place
+                for guests.&rdquo;
+              </blockquote>
+              <div className="mt-6 flex items-center gap-4">
+                <div className="w-10 border-t border-[var(--color-sand-12)]" />
+                <div className="font-display text-[16px] tracking-[-0.005em] text-[var(--color-text)]">
+                  Hasina
+                </div>
               </div>
             </ScrollReveal>
 
