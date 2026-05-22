@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-22
+Last updated: 2026-05-22 (Sanity CMS setup on PC 2)
 
 ---
 
@@ -319,8 +319,13 @@ A simple way: build a temporary `/admin/photos` page that lists all 47 in a grid
   5. "Where to stay on the RN7"
 - **Existing 3 fake articles** in `data/articles.ts` (Hasina-voice essays previously invented) should be **deleted or archived** — they are not real and shouldn't be on the site. The real Squarespace blog has 4 hiking articles by Max William RAFALIARISON; we should either import those properly or leave /journal empty until Hasina writes.
 
-### Tier 4 — CMS (later, when content is stable)
-- **Sanity CMS migration** : schemas already designed (see git history for `sanity/` folder before reversion). Re-install when React 19.2 stabilizes or use older Sanity version. Migrate all content from .ts to Sanity. Add Studio at `/studio` for Hasina to edit.
+### Tier 4 — CMS (DONE on `feat/cms-setup` branch, see section 11)
+- ✅ Sanity installed at `sanity@5.26`, `next-sanity@12`, `@sanity/client@7`, `@sanity/vision@5`, `@sanity/image-url@2`
+- ✅ Studio mounted at `/studio` (login OK, list views OK ; doc-edit crashes — workaround = `sanity.io/manage`, see section 11)
+- ✅ 10 schemas (FR/EN bilingual via `localeString`/`localeText`/`localePortableText`)
+- ✅ 88 docs migrated (1 hotel, 3 roomCategory, 9 review, 3 article, 10 excursion, 3 itinerary, 47 faq, 4 staff, 1 community, 7 page)
+- ✅ 47 photos uploaded as Sanity assets
+- ⚠️ Frontend wiring : partial (6 of ~22 files). Pattern established. Remaining listed in this section's pending list.
 
 ### Tier 5 — i18n
 - **FR ↔ EN bilingual** : `next-intl` is already installed. Add EN translations to all pages. Default route: FR. EN at `/en/...`. Hreflang properly set.
@@ -337,58 +342,104 @@ A simple way: build a temporary `/admin/photos` page that lists all 47 in a grid
 
 ## 10. Commands
 
+Project uses **pnpm** (lockfile is `pnpm-lock.yaml`). If you don't have pnpm:
 ```bash
-# Install (use --legacy-peer-deps because of next-intl peer)
-npm install --legacy-peer-deps
+corepack enable && corepack prepare pnpm@latest --activate
+```
+
+```bash
+# Install
+pnpm install
 
 # Dev (port 3000)
-npm run dev
+pnpm dev
 
 # Typecheck
-npx tsc --noEmit
+pnpm typecheck    # or: npx tsc --noEmit
 
 # Build
-npm run build
+pnpm build
+
+# Sanity scripts (need .env.local with SANITY_API_WRITE_TOKEN)
+pnpm migrate:sanity     # idempotent, re-populates 88 docs
+pnpm photos:upload      # idempotent, uploads 47 webp photos
 
 # Deploy (Vercel)
 npx vercel --prod --yes
-# then alias the new deployment to the stable domain:
 npx vercel alias <new-deploy-url> ambalakely.vercel.app
 
 # Lint
-npm run lint
+pnpm lint
 ```
 
-Environment variables (`.env.local`):
+Environment variables (`.env.local`, never committed):
 ```
-NEXT_PUBLIC_MAPBOX_TOKEN=<COPY THIS FROM YOUR ORIGINAL PC .env.local — DO NOT COMMIT>
+NEXT_PUBLIC_MAPBOX_TOKEN=<copy from your other PC>
+NEXT_PUBLIC_SANITY_PROJECT_ID=zfb59l35
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_API_VERSION=2025-01-01
+SANITY_API_WRITE_TOKEN=<copy from your other PC — read+write Editor token>
 ```
 
-Copy `.env.local` directly from the original PC to the new PC. It's gitignored and not in the repo.
+Copy `.env.local` directly from the other PC (it's gitignored). To regenerate the Sanity write token: https://www.sanity.io/manage/project/zfb59l35/api → Tokens → Add API token (Editor).
 
 If deploying on the second PC, you'll need:
 - Vercel CLI login: `npx vercel login` (the user account that owns the `ambalakely` project)
 - Or pull the existing `.vercel` folder from the original PC
 
-## 11. The Sanity story (why it's deferred)
+## 11. Sanity CMS — current state (set up on PC 2, branch `feat/cms-setup`)
 
-Earlier this session I:
-1. Installed Sanity (`sanity@5.26.0`, `next-sanity@13`, `@sanity/client`, etc.)
-2. Built full schemas in `sanity/schemas/` (hotel, roomCategory, review, article, excursion, itinerary, faq, staff, community, page)
-3. Set up `sanity.config.ts` and `/studio` route
+### Sanity project info
+- **Org** : "Hôtel Ambalakely" — `o03TtHcBm` (own org, separate from Mpiaradia and Maison de la Poterie)
+- **Project** : `hotel-ambalakely` — `zfb59l35`
+- **Dataset** : `production`
+- **Plan** : Growth Trial (30 days, then auto-downgrades to Free — no CC required)
+- **API token** : `migration-script` (Editor perms) saved in local `.env.local` (never committed)
+- **CORS** : `http://localhost:3000` allowed with credentials
 
-Then I hit a build error: `Sanity 5.26 requires React 19.2+ for useEffectEvent`. Our `react@19.0.0` was too old at that exact moment.
+### What's wired
+- **Schemas** in `sanity/schemas/` : 10 doc types (hotel, roomCategory, review, article, excursion, itinerary, faq, staff, community, page)
+- **Locale helpers** in `sanity/lib/locale.ts` : `localeString`, `localeText`, `localePortableText` for FR/EN bilingual fields + `pickLocale()` runtime helper
+- **GROQ queries** in `sanity/lib/queries.ts` : each projects to a flat shape matching the `.ts` exports (coalesce fr → en → "")
+- **Fetchers** in `sanity/lib/fetch.ts` : React.cache-wrapped, with graceful fallback to `.ts` if Sanity returns empty/fails. ISR 60s in prod.
+- **Migration script** `scripts/migrate-to-sanity.ts` (run via `pnpm migrate:sanity`) : idempotent (`createOrReplace` + deterministic `_id`s). 88 docs migrated.
+- **Photo upload script** `scripts/upload-photos.ts` (run via `pnpm photos:upload`) : 47 webp uploaded as Sanity assets. Mapping at `scripts/photo-asset-map.json`. Photos NOT yet wired to schemas — that's T1.7.
+- **Verify script** `scripts/verify-sanity.ts` : GROQ counts + samples to sanity-check the dataset.
 
-I uninstalled Sanity to unblock the build, deleted the `sanity/` folder and `/studio` route, and we decided to migrate later (Tier 4) when:
-- All content is stable in `.ts` files
-- React 19.2+ becomes the default
-- OR we use older Sanity version compatible with React 19.0
+### Frontend wiring status (Phase B, partial)
+- ✅ Components wired to Sanity (server fetch with fallback): **Reviews, Footer, Book, HotelJsonLd / RestaurantJsonLd / BreadcrumbJsonLd, Experiences (section), Journal (section)**
+- ⚠️ Not yet wired (~16 files, same pattern — see Tier 4 reste in `tasks` of the PR description):
+  - Pages : `about`, `dining`, `experiences`, `faq`, `journal/page.tsx`, `journal/[slug]`, `plan-your-trip`, `rooms`, `rooms/[category]`
+  - Client components : `BookingDrawer`, `FaqSearch` (need data via prop from server parent)
+  - Metadata generators : `sitemap`, `robots`, `opengraph-image`, `layout` (`metadata` → `generateMetadata`)
+  - `RoomComparison` (uses `comparison.ts` which isn't in Sanity schema)
 
-When you come back to it:
-- The schemas I designed are reasonable starting points — git log will have them
-- Use `npx sanity init` with the project name `hotel-ambalakely` and dataset `production`
-- Get the projectId and write token, put in `.env.local`
-- Write a migration script that takes `.ts` data and pushes to Sanity via `@sanity/client`
+### Known bug — Studio doc-edit crash (workaround documented)
+Opening any individual document in the local `/studio` crashes with:
+```
+TypeError: (0, react__WEBPACK_IMPORTED_MODULE_X__.useEffectEvent) is not a function
+  at useResetHistoryParams (sanity/lib/.../structureTool.mjs)
+```
+Root cause: `next/dist/compiled/react` (the React Next bundles internally for client components in App Router) does **not** include `useEffectEvent`, even though our project's `react@19.2.5` exports it. Sanity 5.26's `useResetHistoryParams` hook calls it directly. The bundled React wins resolution.
+
+Tested without fix: `pnpm dedupe`, downgrade `sanity@5.13`, alias `react`/`react-dom` to project copy in `next.config.ts` (broke `react/jsx-runtime`), `transpilePackages: ['sanity', '@sanity/vision', 'next-sanity']`. None resolved the underlying compiled-React mismatch.
+
+**Workarounds available now**:
+1. **List views work** — Hasina can see all docs in `/studio` but can't open them for editing locally
+2. **Hosted dashboard** — edit docs via `https://www.sanity.io/manage/project/zfb59l35` (basic content browser)
+3. **Deploy the Studio** — `npx sanity deploy` publishes our config to `<hostname>.sanity.studio` (cloud build, no Next bundling = no bug). Pick a hostname like `hotel-ambalakely` or `ambalakely`.
+
+**Permanent fix** likely needs either:
+- Sanity to vendor a fallback for `useEffectEvent`
+- Next.js to ship a `useEffectEvent`-enabled compiled React
+- Or a webpack rule that aliases sanity's React-import to the project's React (without breaking `react/jsx-runtime` and other subpaths)
+
+### How to re-run the migration (idempotent)
+```bash
+pnpm migrate:sanity     # re-populates 88 docs (createOrReplace, no dupes)
+pnpm photos:upload      # re-uploads photos (skips existing by originalFilename)
+pnpm tsx scripts/verify-sanity.ts   # prints counts + samples
+```
 
 ## 12. Git workflow
 
