@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { AUDIENCE_ID, FROM_EMAIL, getResend } from '@/lib/email/client';
+import { FROM_EMAIL, HOTEL_REPLY_TO, getResend } from '@/lib/email/client';
 import { NewsletterWelcome } from '@/lib/email/templates/NewsletterWelcome';
 
 export const runtime = 'nodejs';
@@ -56,18 +56,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!AUDIENCE_ID) {
-    console.error('[newsletter] RESEND_AUDIENCE_ID not configured');
-    return NextResponse.json(
-      { error: 'Audience non configurée.' },
-      { status: 503 },
-    );
-  }
-
   try {
     const contact = await resend.contacts.create({
       email,
-      audienceId: AUDIENCE_ID,
       unsubscribed: false,
     });
 
@@ -87,6 +78,7 @@ export async function POST(req: NextRequest) {
       const welcome = await resend.emails.send({
         from: FROM_EMAIL,
         to: email,
+        replyTo: HOTEL_REPLY_TO,
         subject: 'Bienvenue dans la lettre saisonnière d\'Ambalakely',
         react: NewsletterWelcome(),
       });

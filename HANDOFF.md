@@ -387,10 +387,9 @@ SENTRY_ORG=mita-studio
 SENTRY_PROJECT=hotel-ambalakely
 SENTRY_AUTH_TOKEN=...
 
-# Resend (add these — see section 16)
+# Resend (mita-studio org, free tier — see section 16)
 RESEND_API_KEY=re_...
-RESEND_FROM_EMAIL="Hôtel Ambalakely <hello@hotelambalakely.com>"
-RESEND_AUDIENCE_ID=<from resend.com/audiences>
+RESEND_FROM_EMAIL=Hôtel Ambalakely <ambalakely@mita-studio.com>
 ```
 
 Copy `.env.local` directly from the other PC (it's gitignored). To regenerate the Sanity write token: https://www.sanity.io/manage/project/zfb59l35/api → Tokens → Add API token (Editor).
@@ -490,28 +489,33 @@ If user pushes "more content faster", remind them : 1 great article > 10 thin on
 - **`src/lib/email/client.ts`** : `getResend()` returns a singleton or `null` if `RESEND_API_KEY` is absent (routes degrade to 503).
 - **`src/lib/email/templates/`** : React Email components — `BookingRequest` (notif Hasina), `BookingAck` (accusé client FR), `NewsletterWelcome` (FR), `_shared` (Shell + design tokens).
 - **`src/app/api/booking-request/route.ts`** : POST handler. Zod schema (arrival/departure ISO dates, guests 1–20, name, email, phone?, message?, honeypot `company`). Rate limit in-memory 5/h/IP. Sends 2 emails (notif `hello@hotelambalakely.com` + accusé client). 1–4 guests only — 5+ goes to WhatsApp/email direct.
-- **`src/app/api/newsletter/route.ts`** : POST handler. Zod schema (email + honeypot). Adds to Resend audience (`resend.contacts.create`) + welcome email. Rate limit 10/h/IP. Idempotent (re-subscribe is a no-op).
+- **`src/app/api/newsletter/route.ts`** : POST handler. Zod schema (email + honeypot). Adds to the default Resend audience via `resend.contacts.create({ email, unsubscribed: false })` + sends welcome email. Rate limit 10/h/IP. Idempotent (re-subscribe is a no-op — Resend returns a validation error which we swallow).
 - **`BookingDrawer.tsx`** : full form (dates, guests, name, email, phone, message), state machine `idle | submitting | success | error`, honeypot, success panel. Group flow (5+ guests) unchanged.
 - **`NewsletterSignup.tsx`** : POST `/api/newsletter`, error display, honeypot.
 
-### Required env vars (Hasina or the dev sets these)
+### Required env vars
 ```
-RESEND_API_KEY=re_...                                            # Resend dashboard → API Keys
-RESEND_FROM_EMAIL="Hôtel Ambalakely <hello@hotelambalakely.com>" # needs verified domain
-RESEND_AUDIENCE_ID=...                                            # Resend dashboard → Audiences
+RESEND_API_KEY=re_...                                          # Resend dashboard → API Keys
+RESEND_FROM_EMAIL=Hôtel Ambalakely <ambalakely@mita-studio.com>
 ```
+
+The Resend free tier limits 1 verified domain per account and `mita-studio.com` was already taken by the parent studio. We send from an alias on that domain and the code sets `replyTo: hello@hotelambalakely.com` on every guest-facing email so Reply lands in the hotel inbox. When you eventually upgrade to Pro and verify `hotelambalakely.com`, swap one env var (`RESEND_FROM_EMAIL`) and you're done.
 
 If unset, the routes return 503 (no crash). The build does not require them.
 
-### Setup steps (one-time, manual — needs user)
-1. **Create Resend account** at https://resend.com (free tier: 100 emails/day, 1 domain).
-2. **Add and verify domain `hotelambalakely.com`** in Resend → Domains. Add the 3 DNS records (SPF, DKIM, DMARC) to whatever DNS host is current (Squarespace right now, Cloudflare later). Wait for verification (5–30 min).
-3. **Create an audience** "Newsletter Ambalakely" → copy `audienceId`.
-4. **Create an API key** with full access scoped to this project → copy `re_...`.
-5. **Paste into `.env.local`** locally + add to Vercel project env (Production + Preview).
-6. **Test end-to-end** : `pnpm dev`, fill the booking drawer with a real email, confirm both emails arrive. Then test newsletter signup.
+### What was set up (2026-05-22, mita-studio Resend org)
+1. **API key** `hotel-ambalakely-prod` (Full access) — created via Chrome MCP. Stored in `.env.local`.
+2. **No audience to create** — Resend's current model has a single audience per workspace, so `resend.contacts.create({ email, unsubscribed: false })` writes to it without an `audienceId`.
+3. **Sender domain** — using `mita-studio.com` (verified 3 months ago for the studio). Free-tier domain quota = 1, no second domain possible without upgrading.
 
-Until the domain is verified, dev can use `RESEND_FROM_EMAIL="Hôtel Ambalakely <onboarding@resend.dev>"` — this works without DNS but flagged as "via resend.dev".
+### Upgrading the sender domain (when ready)
+1. Resend → upgrade to Pro ($20/mo) or move the hotel to its own free workspace (also paid).
+2. Add `hotelambalakely.com`, configure 3 DNS records at the registrar (Squarespace today, Cloudflare later).
+3. Once verified, set `RESEND_FROM_EMAIL=Hôtel Ambalakely <hello@hotelambalakely.com>` locally + on Vercel. Done.
+
+### Test end-to-end
+- `pnpm dev`, open the booking drawer, submit with a real inbox of yours — both the notif (to `hello@hotelambalakely.com`) and the accusé client should arrive within seconds. Reply to the accusé → it lands in `hello@hotelambalakely.com`.
+- Newsletter signup in the footer — the contact appears in Resend → Audience → Contacts, and a welcome email arrives.
 
 ### Operational notes
 - **Rate limits in-memory** : the `Map<ip, timestamps[]>` resets per server restart. Fine for low traffic. If we hit Vercel multiple cold starts, consider Upstash Redis later.

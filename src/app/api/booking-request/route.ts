@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { FROM_EMAIL, HOTEL_INBOX, getResend } from '@/lib/email/client';
+import { FROM_EMAIL, HOTEL_INBOX, HOTEL_REPLY_TO, getResend } from '@/lib/email/client';
 import { BookingRequest } from '@/lib/email/templates/BookingRequest';
 import { BookingAck } from '@/lib/email/templates/BookingAck';
 
@@ -95,6 +95,7 @@ export async function POST(req: NextRequest) {
       resend.emails.send({
         from: FROM_EMAIL,
         to: normalized.email,
+        replyTo: HOTEL_REPLY_TO,
         subject: 'Votre demande à l\'Hôtel Ambalakely',
         react: BookingAck(normalized),
       }),

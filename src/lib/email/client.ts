@@ -4,10 +4,15 @@ import { Resend } from 'resend';
  * Resend client singleton. Returns null when RESEND_API_KEY is absent so
  * the API routes can degrade gracefully (return 503) instead of crashing.
  *
- * In dev without a verified domain, set:
- *   RESEND_FROM_EMAIL="Hôtel Ambalakely <onboarding@resend.dev>"
- * In prod with hotelambalakely.com verified in Resend:
- *   RESEND_FROM_EMAIL="Hôtel Ambalakely <hello@hotelambalakely.com>"
+ * Sending domain: Resend's free tier limits one custom domain per account
+ * and mita-studio.com is already taken by the parent studio, so we send
+ * from an alias on that verified domain and use HOTEL_REPLY_TO so guests
+ * still reach hello@hotelambalakely.com when they hit Reply. Migration
+ * to a real hotelambalakely.com sender = swap RESEND_FROM_EMAIL when the
+ * upgrade lands.
+ *
+ * Example:
+ *   RESEND_FROM_EMAIL="Hôtel Ambalakely <ambalakely@mita-studio.com>"
  */
 
 let cached: Resend | null = null;
@@ -24,4 +29,4 @@ export const FROM_EMAIL =
 
 export const HOTEL_INBOX = 'hello@hotelambalakely.com';
 
-export const AUDIENCE_ID = process.env.RESEND_AUDIENCE_ID ?? null;
+export const HOTEL_REPLY_TO = 'hello@hotelambalakely.com';
