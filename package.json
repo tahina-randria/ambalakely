@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.7",
+    "@react-email/components": "^1.0.12",
     "@sanity/client": "^7.22.0",
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^5.26.0",
@@ -34,7 +35,8 @@
     "resend": "^6.12.2",
     "sanity": "^5.26.0",
     "styled-components": "^6.4.2",
-    "tailwind-merge": "^2.5.5"
+    "tailwind-merge": "^2.5.5",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.0",

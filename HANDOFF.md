@@ -379,6 +379,18 @@ NEXT_PUBLIC_SANITY_PROJECT_ID=zfb59l35
 NEXT_PUBLIC_SANITY_DATASET=production
 NEXT_PUBLIC_SANITY_API_VERSION=2025-01-01
 SANITY_API_WRITE_TOKEN=<copy from your other PC — read+write Editor token>
+
+# Sentry (already configured)
+NEXT_PUBLIC_SENTRY_DSN=...
+SENTRY_DSN=...
+SENTRY_ORG=mita-studio
+SENTRY_PROJECT=hotel-ambalakely
+SENTRY_AUTH_TOKEN=...
+
+# Resend (add these — see section 16)
+RESEND_API_KEY=re_...
+RESEND_FROM_EMAIL="Hôtel Ambalakely <hello@hotelambalakely.com>"
+RESEND_AUDIENCE_ID=<from resend.com/audiences>
 ```
 
 Copy `.env.local` directly from the other PC (it's gitignored). To regenerate the Sanity write token: https://www.sanity.io/manage/project/zfb59l35/api → Tokens → Add API token (Editor).
@@ -414,25 +426,14 @@ If deploying on the second PC, you'll need:
   - Metadata generators : `sitemap`, `robots`, `opengraph-image`, `layout` (`metadata` → `generateMetadata`)
   - `RoomComparison` (uses `comparison.ts` which isn't in Sanity schema)
 
-### Known bug — Studio doc-edit crash (workaround documented)
-Opening any individual document in the local `/studio` crashes with:
-```
-TypeError: (0, react__WEBPACK_IMPORTED_MODULE_X__.useEffectEvent) is not a function
-  at useResetHistoryParams (sanity/lib/.../structureTool.mjs)
-```
-Root cause: `next/dist/compiled/react` (the React Next bundles internally for client components in App Router) does **not** include `useEffectEvent`, even though our project's `react@19.2.5` exports it. Sanity 5.26's `useResetHistoryParams` hook calls it directly. The bundled React wins resolution.
+### Known bug — Studio `useEffectEvent` (now contourné par redirect)
+Le local `/studio` ne charge plus le bundle Sanity. La route est un simple redirect server-side vers `https://hotel-ambalakely.sanity.studio/` (Studio cloud déployé).
 
-Tested without fix: `pnpm dedupe`, downgrade `sanity@5.13`, alias `react`/`react-dom` to project copy in `next.config.ts` (broke `react/jsx-runtime`), `transpilePackages: ['sanity', '@sanity/vision', 'next-sanity']`. None resolved the underlying compiled-React mismatch.
+Raison : `next/dist/compiled/react` n'expose pas `useEffectEvent` même si notre `react@19.2.5` le fait. Sanity 5.26 (`useResetHistoryParams`) en dépend → le bundle webpack échoue à la fois en dev (édition de docs) **et au build production** (`pnpm build` rouge tant que le studio était bundlé). Tentatives : `pnpm dedupe`, downgrade, alias React, `transpilePackages` — aucune n'a marché.
 
-**Workarounds available now**:
-1. **List views work** — Hasina can see all docs in `/studio` but can't open them for editing locally
-2. **Hosted dashboard** — edit docs via `https://www.sanity.io/manage/project/zfb59l35` (basic content browser)
-3. **Deploy the Studio** — `npx sanity deploy` publishes our config to `<hostname>.sanity.studio` (cloud build, no Next bundling = no bug). Pick a hostname like `hotel-ambalakely` or `ambalakely`.
+**Fix appliqué (2026-05-22)** : `src/app/studio/[[...tool]]/page.tsx` ne fait plus que `redirect('https://hotel-ambalakely.sanity.studio/')`. Layout simplifié (plus d'import `next-sanity/studio`). Hasina édite via le cloud, le build production est vert.
 
-**Permanent fix** likely needs either:
-- Sanity to vendor a fallback for `useEffectEvent`
-- Next.js to ship a `useEffectEvent`-enabled compiled React
-- Or a webpack rule that aliases sanity's React-import to the project's React (without breaking `react/jsx-runtime` and other subpaths)
+Restaurer le studio local (quand Sanity patchera) : revenir au composant `<NextStudio config={config} />` + re-importer `metadata, viewport` depuis `next-sanity/studio` dans le layout.
 
 ### How to re-run the migration (idempotent)
 ```bash
@@ -482,6 +483,41 @@ User wants to be **#1 ranking when people search Madagascar tourism**. We discus
 - Long-term : possibly expand to 100+ pages covering all Madagascar regions, but earned through depth, not volume
 
 If user pushes "more content faster", remind them : 1 great article > 10 thin ones. Hasina's voice is the moat — quality of writing is what makes the site unique vs Lonely Planet.
+
+## 16. Resend — booking + newsletter (2026-05-22)
+
+### What's wired
+- **`src/lib/email/client.ts`** : `getResend()` returns a singleton or `null` if `RESEND_API_KEY` is absent (routes degrade to 503).
+- **`src/lib/email/templates/`** : React Email components — `BookingRequest` (notif Hasina), `BookingAck` (accusé client FR), `NewsletterWelcome` (FR), `_shared` (Shell + design tokens).
+- **`src/app/api/booking-request/route.ts`** : POST handler. Zod schema (arrival/departure ISO dates, guests 1–20, name, email, phone?, message?, honeypot `company`). Rate limit in-memory 5/h/IP. Sends 2 emails (notif `hello@hotelambalakely.com` + accusé client). 1–4 guests only — 5+ goes to WhatsApp/email direct.
+- **`src/app/api/newsletter/route.ts`** : POST handler. Zod schema (email + honeypot). Adds to Resend audience (`resend.contacts.create`) + welcome email. Rate limit 10/h/IP. Idempotent (re-subscribe is a no-op).
+- **`BookingDrawer.tsx`** : full form (dates, guests, name, email, phone, message), state machine `idle | submitting | success | error`, honeypot, success panel. Group flow (5+ guests) unchanged.
+- **`NewsletterSignup.tsx`** : POST `/api/newsletter`, error display, honeypot.
+
+### Required env vars (Hasina or the dev sets these)
+```
+RESEND_API_KEY=re_...                                            # Resend dashboard → API Keys
+RESEND_FROM_EMAIL="Hôtel Ambalakely <hello@hotelambalakely.com>" # needs verified domain
+RESEND_AUDIENCE_ID=...                                            # Resend dashboard → Audiences
+```
+
+If unset, the routes return 503 (no crash). The build does not require them.
+
+### Setup steps (one-time, manual — needs user)
+1. **Create Resend account** at https://resend.com (free tier: 100 emails/day, 1 domain).
+2. **Add and verify domain `hotelambalakely.com`** in Resend → Domains. Add the 3 DNS records (SPF, DKIM, DMARC) to whatever DNS host is current (Squarespace right now, Cloudflare later). Wait for verification (5–30 min).
+3. **Create an audience** "Newsletter Ambalakely" → copy `audienceId`.
+4. **Create an API key** with full access scoped to this project → copy `re_...`.
+5. **Paste into `.env.local`** locally + add to Vercel project env (Production + Preview).
+6. **Test end-to-end** : `pnpm dev`, fill the booking drawer with a real email, confirm both emails arrive. Then test newsletter signup.
+
+Until the domain is verified, dev can use `RESEND_FROM_EMAIL="Hôtel Ambalakely <onboarding@resend.dev>"` — this works without DNS but flagged as "via resend.dev".
+
+### Operational notes
+- **Rate limits in-memory** : the `Map<ip, timestamps[]>` resets per server restart. Fine for low traffic. If we hit Vercel multiple cold starts, consider Upstash Redis later.
+- **Honeypot `company`** : an empty hidden input. Bots fill it, real users don't. Server returns 200 OK silently when filled (no email sent).
+- **Reply-To** : booking notif emails set `replyTo: data.email` so Hasina can reply directly to the guest.
+- **Bilingual** : current templates are FR only. EN versions can be added when i18n lands (Tier 5).
 
 ---
 

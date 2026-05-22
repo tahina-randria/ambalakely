@@ -18,14 +18,28 @@ export function NewsletterSignup({
   className?: string;
 }) {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'done'>('idle');
+  const [company, setCompany] = useState('');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'done' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email || status === 'submitting' || status === 'done') return;
     setStatus('submitting');
-    // Phase tech : POST /api/newsletter
-    setTimeout(() => setStatus('done'), 600);
+    setErrorMsg(null);
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, company }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) throw new Error(data.error ?? 'Inscription impossible.');
+      setStatus('done');
+    } catch (err) {
+      setStatus('error');
+      setErrorMsg(err instanceof Error ? err.message : 'Inscription impossible.');
+    }
   };
 
   const isDark = variant === 'dark';
@@ -81,6 +95,8 @@ export function NewsletterSignup({
             name="company"
             tabIndex={-1}
             autoComplete="off"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
             className="absolute -left-[9999px] w-0 h-0"
             aria-hidden="true"
           />
@@ -99,6 +115,17 @@ export function NewsletterSignup({
           </button>
         </div>
       )}
+      {status === 'error' && errorMsg ? (
+        <p
+          role="alert"
+          className={cn(
+            'text-[13px] leading-[1.5]',
+            isDark ? 'text-[#fca5a5]' : 'text-[#dc2626]',
+          )}
+        >
+          {errorMsg}
+        </p>
+      ) : null}
     </form>
   );
 }
