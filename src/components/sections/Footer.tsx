@@ -8,9 +8,7 @@ import {
 import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 import { Container } from '@/components/atoms/Container';
 import { NewsletterSignup } from '@/components/molecules/NewsletterSignup';
-import { HOTEL } from '@/lib/data/hotel';
-
-const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');
+import { fetchHotel } from '@/sanity/lib/fetch';
 
 type NavColumn = {
   title: string;
@@ -49,18 +47,21 @@ const columns: NavColumn[] = [
   },
 ];
 
-const contactLinks: ContactLink[] = [
-  { label: HOTEL.phone, href: `tel:${HOTEL.whatsapp}`, Icon: Phone },
-  { label: 'WhatsApp', href: `https://wa.me/${WA_DIGITS}`, Icon: WhatsappLogo },
-  { label: HOTEL.email, href: `mailto:${HOTEL.email}`, Icon: Envelope },
-  {
-    label: 'Instagram',
-    href: 'https://instagram.com/hotelambalakely',
-    Icon: InstagramLogo,
-  },
-];
+export async function Footer() {
+  const HOTEL = await fetchHotel();
+  const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');
 
-export function Footer() {
+  const contactLinks: ContactLink[] = [
+    { label: HOTEL.phone, href: `tel:${HOTEL.whatsapp}`, Icon: Phone },
+    { label: 'WhatsApp', href: `https://wa.me/${WA_DIGITS}`, Icon: WhatsappLogo },
+    { label: HOTEL.email, href: `mailto:${HOTEL.email}`, Icon: Envelope },
+    {
+      label: 'Instagram',
+      href: 'https://instagram.com/hotelambalakely',
+      Icon: InstagramLogo,
+    },
+  ];
+
   return (
     <footer className="border-t border-[var(--color-border-subtle)] bg-[var(--color-bg-subtle)]">
       <Container>

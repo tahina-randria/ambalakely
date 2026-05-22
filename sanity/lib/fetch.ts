@@ -11,6 +11,7 @@
  * passing the resolved value as a prop.
  */
 
+import { cache } from 'react';
 import { sanityClient } from './client';
 import {
   HOTEL_QUERY,
@@ -57,18 +58,18 @@ async function sanityFetch<T>(query: string, params: Record<string, unknown> = {
 
 export type Hotel = typeof HOTEL_FALLBACK;
 
-export async function fetchHotel(): Promise<Hotel> {
+export const fetchHotel = cache(async (): Promise<Hotel> => {
   const data = await sanityFetch<Partial<Hotel>>(HOTEL_QUERY);
   if (!data || !data.name) return HOTEL_FALLBACK;
   // Merge Sanity data over fallback, so any missing field uses fallback.
   return { ...HOTEL_FALLBACK, ...(data as Hotel) };
-}
+});
 
 // ─── Room categories ──────────────────────────────────────────────────────
 
 type Category = (typeof CATEGORIES_FALLBACK)[number];
 
-export async function fetchCategories(): Promise<Category[]> {
+export const fetchCategories = cache(async (): Promise<Category[]> => {
   const data = await sanityFetch<Category[]>(ROOM_CATEGORIES_QUERY);
   if (!data || data.length === 0) return CATEGORIES_FALLBACK;
   // Merge with fallback per-category so heroImage / gallery URLs stay
@@ -77,7 +78,7 @@ export async function fetchCategories(): Promise<Category[]> {
     const fallback = CATEGORIES_FALLBACK.find((f) => f.slug === cat.slug);
     return fallback ? { ...fallback, ...cat, heroImage: cat.heroImage || fallback.heroImage, gallery: cat.gallery?.length ? cat.gallery : fallback.gallery } : cat;
   }) as Category[];
-}
+});
 
 export async function fetchCategoryBySlug(slug: string): Promise<Category | undefined> {
   const cats = await fetchCategories();
@@ -88,11 +89,11 @@ export async function fetchCategoryBySlug(slug: string): Promise<Category | unde
 
 type Review = (typeof REVIEWS_FALLBACK)[number];
 
-export async function fetchReviews(): Promise<readonly Review[]> {
+export const fetchReviews = cache(async (): Promise<readonly Review[]> => {
   const data = await sanityFetch<Review[]>(REVIEWS_QUERY);
   if (!data || data.length === 0) return REVIEWS_FALLBACK;
   return data;
-}
+});
 
 // ─── Articles ─────────────────────────────────────────────────────────────
 
@@ -125,14 +126,14 @@ function adaptArticle(raw: SanityArticle, fallback?: Article): Article {
   };
 }
 
-export async function fetchArticles(): Promise<Article[]> {
+export const fetchArticles = cache(async (): Promise<Article[]> => {
   const data = await sanityFetch<SanityArticle[]>(ARTICLES_QUERY);
   if (!data || data.length === 0) return [...ARTICLES_FALLBACK];
   return data.map((raw) => {
     const fallback = ARTICLES_FALLBACK.find((f) => f.slug === raw.slug);
     return adaptArticle(raw, fallback);
   });
-}
+});
 
 export async function fetchArticleBySlug(slug: string): Promise<Article | undefined> {
   const data = await sanityFetch<SanityArticle | null>(ARTICLE_BY_SLUG_QUERY, { slug });
@@ -145,7 +146,7 @@ export async function fetchArticleBySlug(slug: string): Promise<Article | undefi
 
 type Excursion = (typeof EXCURSIONS_FALLBACK)[number];
 
-export async function fetchExcursions(): Promise<Excursion[]> {
+export const fetchExcursions = cache(async (): Promise<Excursion[]> => {
   const data = await sanityFetch<Excursion[]>(EXCURSIONS_QUERY);
   if (!data || data.length === 0) return [...EXCURSIONS_FALLBACK];
   // Merge with fallback to keep image URLs until photos are wired.
@@ -153,20 +154,20 @@ export async function fetchExcursions(): Promise<Excursion[]> {
     const fb = EXCURSIONS_FALLBACK.find((f) => f.slug === e.slug);
     return fb ? { ...fb, ...e, image: e.image || fb.image } : e;
   }) as Excursion[];
-}
+});
 
 // ─── Itineraries ──────────────────────────────────────────────────────────
 
 type Itinerary = (typeof ITINERARIES_FALLBACK)[number];
 
-export async function fetchItineraries(): Promise<Itinerary[]> {
+export const fetchItineraries = cache(async (): Promise<Itinerary[]> => {
   const data = await sanityFetch<Itinerary[]>(ITINERARIES_QUERY);
   if (!data || data.length === 0) return [...ITINERARIES_FALLBACK];
   return data.map((it) => {
     const fb = ITINERARIES_FALLBACK.find((f) => f.slug === it.slug);
     return fb ? { ...fb, ...it, image: it.image || fb.image, best: fb.best, totalKm: fb.totalKm } : it;
   }) as Itinerary[];
-}
+});
 
 // ─── FAQ ──────────────────────────────────────────────────────────────────
 
@@ -194,7 +195,7 @@ const FAQ_CATEGORY_LABEL_MAP: Record<string, string> = {
   practical: 'Practical',
 };
 
-export async function fetchFaq(): Promise<FaqCategory[]> {
+export const fetchFaq = cache(async (): Promise<FaqCategory[]> => {
   const data = await sanityFetch<FlatFaq[]>(FAQ_QUERY);
   if (!data || data.length === 0) return [...FAQ_FALLBACK];
 
@@ -207,7 +208,7 @@ export async function fetchFaq(): Promise<FaqCategory[]> {
     groups.get(slug)!.entries.push({ q: item.q, a: item.a });
   }
   return Array.from(groups.values());
-}
+});
 
 // ─── Staff (no .ts fallback — facts in HANDOFF only) ──────────────────────
 
@@ -218,10 +219,10 @@ export type Staff = {
   photo: string | null;
 };
 
-export async function fetchStaff(): Promise<Staff[]> {
+export const fetchStaff = cache(async (): Promise<Staff[]> => {
   const data = await sanityFetch<Staff[]>(STAFF_QUERY);
   return data ?? [];
-}
+});
 
 // ─── Community (HFF) — no .ts fallback ────────────────────────────────────
 
@@ -243,6 +244,6 @@ export type Community = {
   };
 };
 
-export async function fetchCommunity(): Promise<Community | null> {
+export const fetchCommunity = cache(async (): Promise<Community | null> => {
   return await sanityFetch<Community>(COMMUNITY_QUERY);
-}
+});
