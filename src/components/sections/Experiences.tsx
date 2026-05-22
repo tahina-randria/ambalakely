@@ -4,9 +4,10 @@ import { Section } from '@/components/atoms/Section';
 import { Heading } from '@/components/atoms/Heading';
 import { ScrollReveal, Stagger, StaggerItem } from '@/lib/motion/ScrollReveal';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
-import { experiences } from '@/lib/data/experiences';
+import { fetchExcursions } from '@/sanity/lib/fetch';
 
-export function Experiences() {
+export async function Experiences() {
+  const experiences = await fetchExcursions();
   return (
     <Section id="experiences" divider>
       <Container>

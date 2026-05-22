@@ -4,9 +4,10 @@ import { Section } from '@/components/atoms/Section';
 import { Kicker } from '@/components/atoms/Kicker';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { ArrowRight, ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
-import { articles } from '@/lib/data/articles';
+import { fetchArticles } from '@/sanity/lib/fetch';
 
-export function Journal() {
+export async function Journal() {
+  const articles = await fetchArticles();
   return (
     <Section id="journal" divider>
       <Container>
