@@ -122,7 +122,7 @@ export const HOTEL = {
   },
 
   images: {
-    hero: 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/1736180000-EXTERIEUR/exterieur.jpg',
+    hero: 'https://ambalakely.vercel.app/photos/p23_hotel_ambalakely_dsc6429.webp',
     logo: 'https://hotelambalakely.com/logo.png',
   },
 } as const;

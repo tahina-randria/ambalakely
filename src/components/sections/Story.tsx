@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import { PHOTOS } from '@/lib/data/photos';
 
 export function Story() {
   return (
@@ -13,11 +14,12 @@ export function Story() {
         <div className="grid grid-cols-1 lg:grid-cols-12 lg:min-h-[100vh]">
           <ScrollReveal className="lg:col-span-7 relative aspect-[4/5] lg:aspect-auto bg-[var(--color-bg-muted)] overflow-hidden">
             <Image
-              src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/5766ca0c-fb44-4459-b2a0-468c184fe728/hotel.JPG?format=2500w"
+              src={PHOTOS.story.path}
               alt="Hotel Ambalakely main building, Fianarantsoa"
               fill
               sizes="(min-width: 1024px) 58vw, 100vw"
               className="object-cover"
+              priority
             />
           </ScrollReveal>
 

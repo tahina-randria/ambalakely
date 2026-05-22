@@ -7,6 +7,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Kicker } from '@/components/atoms/Kicker';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import { PHOTOS } from '@/lib/data/photos';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -110,8 +111,8 @@ export function Dining() {
           }}
         >
           <Image
-            src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2500w"
-            alt="Toko Telo kitchen"
+            src={PHOTOS.diningSection.path}
+            alt="Toko Telo dining room"
             fill
             sizes="100vw"
             className="object-cover"
