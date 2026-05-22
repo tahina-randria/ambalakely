@@ -6,6 +6,9 @@ import { SmoothScrollProvider } from '@/lib/motion/SmoothScrollProvider';
 import { ScrollProgress } from '@/components/atoms/ScrollProgress';
 import { HotelJsonLd } from '@/components/atoms/JsonLd';
 import { PostHogProvider } from '@/components/atoms/PostHogProvider';
+import { SentryConsentSync } from '@/components/atoms/SentryConsentSync';
+import { ConsentProvider } from '@/lib/consent';
+import { CookieBanner } from '@/components/molecules/CookieBanner';
 import { fetchHotel } from '@/sanity/lib/fetch';
 import '@/styles/globals.css';
 
@@ -90,9 +93,13 @@ export default function RootLayout({
       <body>
         <a href="#main" className="skip-link">Skip to content</a>
         <ScrollProgress />
-        <PostHogProvider>
-          <SmoothScrollProvider>{children}</SmoothScrollProvider>
-        </PostHogProvider>
+        <ConsentProvider>
+          <SentryConsentSync />
+          <PostHogProvider>
+            <SmoothScrollProvider>{children}</SmoothScrollProvider>
+          </PostHogProvider>
+          <CookieBanner />
+        </ConsentProvider>
         <Analytics />
         <SpeedInsights />
       </body>

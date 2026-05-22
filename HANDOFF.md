@@ -519,6 +519,32 @@ Until the domain is verified, dev can use `RESEND_FROM_EMAIL="Hôtel Ambalakely 
 - **Reply-To** : booking notif emails set `replyTo: data.email` so Hasina can reply directly to the guest.
 - **Bilingual** : current templates are FR only. EN versions can be added when i18n lands (Tier 5).
 
+## 17. Consent / GDPR (2026-05-22)
+
+### What's wired
+- **`src/lib/consent/index.tsx`** : `ConsentProvider`, `useConsent()` hook, `readConsent()` helper, types. localStorage key `ambalakely.consent.v1` (bump version to re-prompt).
+- **`src/components/molecules/CookieBanner.tsx`** : footer-fixed banner, "Tout accepter" / "Refuser" / "Personnaliser" with per-category checkboxes (Mesure d'audience, Suivi d'erreurs). Only renders post-hydration if no choice yet.
+- **`src/lib/analytics/sentry.ts`** : `initSentryClient()` + `disableSentryClient()` — idempotent, no-op without DSN/prod.
+- **`src/components/atoms/SentryConsentSync.tsx`** : observes consent → calls init/disable on Sentry.
+- **`src/components/atoms/PostHogProvider.tsx`** : reads consent, skips init until analytics consent is on, calls `opt_out_capturing` on refusal.
+- **`instrumentation-client.ts`** : at boot, reads localStorage; only inits Sentry if user already opted in on a previous visit.
+
+### Categories
+- **analytics** → PostHog (autocapture, pageviews). Opt-in.
+- **errorTracking** → Sentry (errors + session replay 10%). Opt-in.
+- **Vercel Analytics + Speed Insights** : cookieless, no PII, no consent required per Vercel docs → always on.
+
+### Behaviour
+- First visit : banner shown. No PostHog, no Sentry yet.
+- Click "Tout accepter" → consent saved, PostHog + Sentry init.
+- Click "Refuser" → consent saved (all false), nothing inits.
+- Click "Personnaliser" → checkboxes appear, "Enregistrer ma sélection" persists granular choice.
+- Choice persists across visits (localStorage). To re-prompt, bump the storage key version or call `consent.reset()` from a UI footer link (not yet added).
+
+### To extend later
+- Footer link "Gérer les cookies" calling `useConsent().reset()` so users can change their mind.
+- Translate the banner copy when `next-intl` lands.
+
 ---
 
 ## End of HANDOFF
