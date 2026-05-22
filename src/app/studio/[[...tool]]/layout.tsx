@@ -1,4 +1,9 @@
-export { metadata, viewport } from 'next-sanity/studio';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Studio — Hôtel Ambalakely',
+  robots: { index: false, follow: false },
+};
 
 export default function StudioLayout({
   children,
