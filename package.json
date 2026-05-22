@@ -33,6 +33,7 @@
     "react-dom": "^19.0.0",
     "resend": "^6.12.2",
     "sanity": "^5.26.0",
+    "styled-components": "^6.4.2",
     "tailwind-merge": "^2.5.5"
   },
   "devDependencies": {
