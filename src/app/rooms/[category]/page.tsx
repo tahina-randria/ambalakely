@@ -12,13 +12,14 @@ import { PageHero } from '@/components/molecules/PageHero';
 import { StickyReserveBar } from '@/components/molecules/StickyReserveBar';
 import { StickyScrubImage } from '@/components/molecules/StickyScrubImage';
 import { ArrowRight, Bed, ArrowsOut, Users, Mountains } from '@phosphor-icons/react/dist/ssr';
-import { categories, getCategory } from '@/lib/data/categories';
-import { HOTEL } from '@/lib/data/hotel';
+import type { Category } from '@/lib/data/categories';
+import { fetchCategories, fetchCategoryBySlug, fetchHotel } from '@/sanity/lib/fetch';
 import { formatMga } from '@/lib/utils/format';
 
 type Params = { category: string };
 
 export async function generateStaticParams() {
+  const categories = await fetchCategories();
   return categories.map((c) => ({ category: c.slug }));
 }
 
@@ -28,7 +29,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { category } = await params;
-  const cat = getCategory(category);
+  const [cat, HOTEL] = await Promise.all([fetchCategoryBySlug(category), fetchHotel()]);
   if (!cat) return { title: 'Room not found' };
 
   return {
@@ -44,8 +45,9 @@ export async function generateMetadata({
   };
 }
 
-function HotelOfferJsonLd({ category }: { category: ReturnType<typeof getCategory> }) {
+async function HotelOfferJsonLd({ category }: { category: Category | undefined }) {
   if (!category) return null;
+  const HOTEL = await fetchHotel();
   const data = {
     '@context': 'https://schema.org',
     '@type': 'HotelRoom',
@@ -85,10 +87,13 @@ function HotelOfferJsonLd({ category }: { category: ReturnType<typeof getCategor
 
 export default async function RoomCategoryPage({ params }: { params: Promise<Params> }) {
   const { category } = await params;
-  const cat = getCategory(category);
+  const [cat, allCategories] = await Promise.all([
+    fetchCategoryBySlug(category),
+    fetchCategories(),
+  ]);
   if (!cat) notFound();
 
-  const others = categories.filter((c) => c.slug !== cat.slug);
+  const others = allCategories.filter((c) => c.slug !== cat.slug);
 
   return (
     <>

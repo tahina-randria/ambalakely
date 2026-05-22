@@ -7,7 +7,7 @@ import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
-import { articles } from '@/lib/data/articles';
+import { fetchArticles } from '@/sanity/lib/fetch';
 
 export const metadata: Metadata = {
   title: 'Journal',
@@ -21,7 +21,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function JournalPage() {
+export default async function JournalPage() {
+  const articles = await fetchArticles();
   return (
     <>
       <BreadcrumbJsonLd

@@ -5,7 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SmoothScrollProvider } from '@/lib/motion/SmoothScrollProvider';
 import { ScrollProgress } from '@/components/atoms/ScrollProgress';
 import { HotelJsonLd } from '@/components/atoms/JsonLd';
-import { HOTEL } from '@/lib/data/hotel';
+import { fetchHotel } from '@/sanity/lib/fetch';
 import '@/styles/globals.css';
 
 const geist = Geist({
@@ -22,56 +22,59 @@ const geistMono = Geist_Mono({
   weight: ['400', '500'],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || HOTEL.url),
-  title: {
-    default: `${HOTEL.name} · Ten rooms in the highlands of Madagascar`,
-    template: `%s · ${HOTEL.name}, Fianarantsoa`,
-  },
-  description: HOTEL.description,
-  applicationName: HOTEL.name,
-  authors: [{ name: HOTEL.legalName, url: HOTEL.url }],
-  generator: 'Next.js',
-  keywords: [
-    'Hotel Ambalakely',
-    'Fianarantsoa hotel',
-    'Madagascar hotel',
-    'RN7 hotel',
-    'Highlands Madagascar',
-    'Betsileo hotel',
-    'small hotel Madagascar',
-  ],
-  alternates: {
-    canonical: '/',
-  },
-  openGraph: {
-    title: `${HOTEL.name} · Madagascar`,
-    description: HOTEL.tagline,
-    url: '/',
-    siteName: HOTEL.name,
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `${HOTEL.name} · Madagascar`,
-    description: HOTEL.tagline,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+export async function generateMetadata(): Promise<Metadata> {
+  const HOTEL = await fetchHotel();
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || HOTEL.url),
+    title: {
+      default: `${HOTEL.name} · Ten rooms in the highlands of Madagascar`,
+      template: `%s · ${HOTEL.name}, Fianarantsoa`,
+    },
+    description: HOTEL.description,
+    applicationName: HOTEL.name,
+    authors: [{ name: HOTEL.legalName, url: HOTEL.url }],
+    generator: 'Next.js',
+    keywords: [
+      'Hotel Ambalakely',
+      'Fianarantsoa hotel',
+      'Madagascar hotel',
+      'RN7 hotel',
+      'Highlands Madagascar',
+      'Betsileo hotel',
+      'small hotel Madagascar',
+    ],
+    alternates: {
+      canonical: '/',
+    },
+    openGraph: {
+      title: `${HOTEL.name} · Madagascar`,
+      description: HOTEL.tagline,
+      url: '/',
+      siteName: HOTEL.name,
+      locale: 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${HOTEL.name} · Madagascar`,
+      description: HOTEL.tagline,
+    },
+    robots: {
       index: true,
       follow: true,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-      'max-video-preview': -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1,
+      },
     },
-  },
-  icons: {
-    icon: '/favicon.ico',
-  },
-};
+    icons: {
+      icon: '/favicon.ico',
+    },
+  };
+}
 
 export default function RootLayout({
   children,

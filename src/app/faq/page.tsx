@@ -6,8 +6,8 @@ import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
 import { FaqSearch } from '@/components/molecules/FaqSearch';
-import { faq } from '@/lib/data/faq';
-import { HOTEL } from '@/lib/data/hotel';
+import type { FaqCategory } from '@/lib/data/faq';
+import { fetchFaq, fetchHotel } from '@/sanity/lib/fetch';
 
 export const metadata: Metadata = {
   title: 'FAQ',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 };
 
 /** FAQPage JSON-LD for rich results in Google search. */
-function FaqJsonLd() {
+function FaqJsonLd({ faq }: { faq: FaqCategory[] }) {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -46,7 +46,8 @@ function FaqJsonLd() {
   );
 }
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  const [faq, HOTEL] = await Promise.all([fetchFaq(), fetchHotel()]);
   return (
     <>
       <BreadcrumbJsonLd
@@ -55,7 +56,7 @@ export default function FaqPage() {
           { name: 'FAQ', url: '/faq' },
         ]}
       />
-      <FaqJsonLd />
+      <FaqJsonLd faq={faq} />
       <Nav />
       <main id="main">
         <PageHero
@@ -99,7 +100,7 @@ export default function FaqPage() {
         {/* SEARCH + CATEGORY FILTER + RESULTS */}
         <section className="hair-rule pb-32 md:pb-48 lg:pb-56">
           <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
-            <FaqSearch />
+            <FaqSearch faq={faq} />
           </div>
         </section>
 

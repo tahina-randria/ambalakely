@@ -1,9 +1,9 @@
 import type { MetadataRoute } from 'next';
-import { HOTEL } from '@/lib/data/hotel';
+import { fetchHotel } from '@/sanity/lib/fetch';
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || HOTEL.url;
-
-export default function robots(): MetadataRoute.Robots {
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const HOTEL = await fetchHotel();
+  const BASE = process.env.NEXT_PUBLIC_SITE_URL || HOTEL.url;
   return {
     rules: [
       {

@@ -9,12 +9,13 @@ import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
-import { articles, getArticle } from '@/lib/data/articles';
-import { HOTEL } from '@/lib/data/hotel';
+import type { Article } from '@/lib/data/articles';
+import { fetchArticles, fetchArticleBySlug, fetchHotel } from '@/sanity/lib/fetch';
 
 type Params = { slug: string };
 
 export async function generateStaticParams() {
+  const articles = await fetchArticles();
   return articles.map((a) => ({ slug: a.slug }));
 }
 
@@ -24,7 +25,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = getArticle(slug);
+  const article = await fetchArticleBySlug(slug);
   if (!article) return { title: 'Article not found' };
 
   return {
@@ -43,8 +44,9 @@ export async function generateMetadata({
   };
 }
 
-function ArticleJsonLd({ article }: { article: ReturnType<typeof getArticle> }) {
+async function ArticleJsonLd({ article }: { article: Article | undefined }) {
   if (!article) return null;
+  const HOTEL = await fetchHotel();
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -77,10 +79,11 @@ function ArticleJsonLd({ article }: { article: ReturnType<typeof getArticle> }) 
 
 export default async function ArticlePage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const article = getArticle(slug);
+  const article = await fetchArticleBySlug(slug);
   if (!article) notFound();
 
-  const others = articles.filter((a) => a.slug !== article.slug);
+  const allArticles = await fetchArticles();
+  const others = allArticles.filter((a) => a.slug !== article.slug);
   const middleIndex = Math.floor(article.body.length / 2);
   const beforeQuote = article.body.slice(0, middleIndex);
   const afterQuote = article.body.slice(middleIndex);

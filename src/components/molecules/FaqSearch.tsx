@@ -15,7 +15,7 @@ import {
   Lightbulb,
 } from '@phosphor-icons/react/dist/ssr';
 import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
-import { faq } from '@/lib/data/faq';
+import type { FaqCategory } from '@/lib/data/faq';
 import { cn } from '@/lib/utils/cn';
 
 /** Slug to icon — Phosphor icon per FAQ category for fast scanning. */
@@ -36,7 +36,7 @@ const categoryIcon: Record<string, PhosphorIcon> = {
  * - Pills for each category, click to filter
  * - Live filter as you type, matches across question + answer text
  */
-export function FaqSearch() {
+export function FaqSearch({ faq }: { faq: FaqCategory[] }) {
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
