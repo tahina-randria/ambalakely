@@ -1,94 +1,63 @@
-import { Container } from '@/components/atoms/Container';
+import Image from 'next/image';
+import Link from 'next/link';
 import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 
-const signals = [
-  {
-    label: 'Featured in',
-    items: ['Condé Nast Traveler', 'Le Monde', 'NRK', 'Cereal Magazine'],
-  },
-  {
-    label: 'Recognition',
-    items: [
-      'Travelers\u2019 Choice 2024',
-      'Sustainable Hospitality',
-      'Design Hotels Nominee',
-    ],
-  },
-  {
-    label: 'Payments',
-    items: ['Visa', 'Mastercard', 'MVola', 'Orange Money', 'PCI DSS Level 1'],
-  },
-];
-
-const stats = [
-  { value: '18', label: 'permanent staff' },
-  { value: '97%', label: 'locally employed' },
-  { value: '12', label: 'families supported' },
-  { value: '0', label: 'single-use plastics' },
-];
-
+/**
+ * Hope for the Future preview on homepage.
+ * Full-bleed image with overlay caption + h2, link to /community.
+ * No more inset image+text card — full cinematic moment.
+ */
 export function Trust() {
   return (
-    <Section id="trust" divider>
-      <Container>
-        <ScrollReveal className="max-w-[680px] mb-20">
-          <div className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-text-muted)] mb-6">
-            Trusted
-          </div>
-          <h2 className="font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[36px] leading-[1.1] md:text-[48px] md:leading-[1.05] balance">
-            Staying here should feel as safe as it feels quiet.
-          </h2>
-        </ScrollReveal>
+    <Section id="trust" divider bleed>
+      <div className="relative h-[80vh] md:h-[100vh] w-full overflow-hidden bg-[var(--color-sand-12)]">
+        <Image
+          src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
+          alt="Hope for the Future, school in Tanambao village"
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/65"
+        />
 
-        {/* Stats row */}
-        <ScrollReveal delay={0.1}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-6 py-12 border-y border-[var(--color-border-subtle)]">
-            {stats.map((s) => (
-              <div key={s.label} className="flex flex-col">
-                <div className="font-display font-light text-[56px] leading-[1] tracking-[-0.03em] text-[var(--color-text)] md:text-[72px]">
-                  {s.value}
-                </div>
-                <div className="mt-3 font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
-                  {s.label}
-                </div>
-              </div>
-            ))}
+        <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
+          <div className="pt-16 md:pt-24">
+            <div className="caption text-white/75">Community</div>
           </div>
-        </ScrollReveal>
 
-        {/* Trust signals columns */}
-        <ScrollReveal delay={0.15} className="mt-20">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-            {signals.map((col) => (
-              <div key={col.label} className="flex flex-col">
-                <div className="font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-text-muted)] mb-5">
-                  {col.label}
-                </div>
-                <ul className="flex flex-col gap-3">
-                  {col.items.map((item) => (
-                    <li
-                      key={item}
-                      className="font-body text-[16px] text-[var(--color-text)]"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div className="mt-auto pb-14 md:pb-20 max-w-[920px]">
+            <ScrollReveal>
+              <h2 className="font-display font-light tracking-[-0.03em] text-white text-[44px] leading-[1.05] md:text-[56px] md:leading-[1.02] balance">
+                Two percent of every stay supports a school next door.
+              </h2>
+            </ScrollReveal>
+            <ScrollReveal delay={0.05}>
+              <p className="mt-8 text-[16px] leading-[1.6] text-white/85 max-w-[560px]">
+                Hope for the Future opened in 2014. A hundred and thirty children
+                from Tanambao, the quartier of Ambalakely. Ten years of the same
+                Wednesday and Saturday afternoons.
+              </p>
+            </ScrollReveal>
+            <ScrollReveal delay={0.1}>
+              <Link
+                href="/community"
+                className="mt-10 group inline-flex items-center gap-2 font-body text-[15px] font-medium text-white"
+              >
+                Read about Hope for the Future
+                <ArrowRight
+                  size={18}
+                  className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
+                />
+              </Link>
+            </ScrollReveal>
           </div>
-        </ScrollReveal>
-
-        {/* Security strip */}
-        <ScrollReveal delay={0.2} className="mt-20 pt-10 border-t border-[var(--color-border-subtle)]">
-          <p className="font-body text-[15px] leading-[1.6] text-[var(--color-text-muted)] max-w-[720px]">
-            Payments are processed by our certified banking partner. Card numbers are never
-            stored on our systems. Handled directly by a PCI&#160;DSS Level&#160;1 gateway.
-            All communication is encrypted in transit (TLS&#160;1.3) and at rest (AES&#160;256).
-          </p>
-        </ScrollReveal>
-      </Container>
+        </div>
+      </div>
     </Section>
   );
 }

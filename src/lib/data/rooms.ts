@@ -1,6 +1,7 @@
 /**
- * Placeholder room data — Betsileo toponyms.
- * To be replaced once Hasina's team provides real names, photos, prices.
+ * Données chambres + avis — extraites de hotelambalakely.com (Squarespace).
+ * 3 catégories, 10 chambres au total, données réelles depuis le PDF Tarifs 2026
+ * et le document de description Kirsten.
  */
 
 export type Room = {
@@ -10,124 +11,210 @@ export type Room = {
   size: string;
   capacity: string;
   priceMga: number;
-  priceEur: number;
   image: string;
+  description?: string;
 };
 
+const SQ =
+  'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d';
+
 export const rooms: Room[] = [
+  // 2 Supérieure — Rogaland Suite + Kristiansand Suite (chambres 14 et 15)
   {
-    id: 'sahambavy',
-    number: '01',
-    name: 'Sahambavy',
-    size: '28 m²',
-    capacity: 'For two',
-    priceMga: 350000,
-    priceEur: 67,
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80',
+    id: 'superieure-14-rogaland',
+    number: '14',
+    name: 'Rogaland Suite',
+    size: '43 m²',
+    capacity: '1 à 4 personnes',
+    priceMga: 255000,
+    image: `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg`,
+    description:
+      'Lit king size 200×200 en palissandre, lit simple supplémentaire possible. Vue sur les rizières.',
   },
   {
-    id: 'ranomafana',
-    number: '02',
-    name: 'Ranomafana',
-    size: '32 m²',
-    capacity: 'For two',
-    priceMga: 380000,
-    priceEur: 72,
-    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=80',
+    id: 'superieure-15-kristiansand',
+    number: '15',
+    name: 'Kristiansand Suite',
+    size: '43 m²',
+    capacity: '1 à 4 personnes',
+    priceMga: 255000,
+    image: `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg`,
+    description:
+      'Lit king size 200×200 en palissandre, lit simple supplémentaire possible. Vue sur les rizières.',
+  },
+  // 4 Confort — chambres 1, 2, 11, 12
+  {
+    id: 'confort-1',
+    number: '1',
+    name: 'Confort',
+    size: '29 m²',
+    capacity: '1 à 3 personnes',
+    priceMga: 226000,
+    image: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg`,
+    description:
+      'King size 200×200 en palissandre + un lit simple 90×200 en katrafay. Vue jardin.',
   },
   {
-    id: 'isalo',
-    number: '03',
-    name: 'Isalo',
-    size: '28 m²',
-    capacity: 'For two or three',
-    priceMga: 420000,
-    priceEur: 80,
-    image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1200&q=80',
+    id: 'confort-2',
+    number: '2',
+    name: 'Confort',
+    size: '29 m²',
+    capacity: '1 à 3 personnes',
+    priceMga: 226000,
+    image: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg`,
+    description:
+      'King size 200×200 en palissandre + un lit simple 90×200 en katrafay. Vue jardin.',
   },
   {
-    id: 'andringitra',
-    number: '04',
-    name: 'Andringitra',
-    size: '36 m²',
-    capacity: 'For two',
-    priceMga: 450000,
-    priceEur: 86,
-    image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1200&q=80',
+    id: 'confort-11',
+    number: '11',
+    name: 'Confort',
+    size: '29 m²',
+    capacity: '1 à 3 personnes',
+    priceMga: 226000,
+    image: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg`,
+    description:
+      'King size 200×200 en palissandre + un lit simple 90×200 en katrafay. À l\'étage, vue dégagée sur les hautes terres.',
   },
   {
-    id: 'tsaranoro',
-    number: '05',
-    name: 'Tsaranoro',
-    size: '42 m²',
-    capacity: 'For four',
-    priceMga: 620000,
-    priceEur: 118,
-    image: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=1200&q=80',
+    id: 'confort-12',
+    number: '12',
+    name: 'Confort',
+    size: '29 m²',
+    capacity: '1 à 3 personnes',
+    priceMga: 226000,
+    image: `${SQ}/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg`,
+    description:
+      'King size 200×200 en palissandre + un lit simple 90×200 en katrafay. À l\'étage, vue dégagée sur les hautes terres.',
+  },
+  // 4 Standard — chambres 4, 5, 6, 7 (2 doubles, 2 twin)
+  {
+    id: 'standard-4',
+    number: '4',
+    name: 'Standard',
+    size: '21 m²',
+    capacity: '1 à 2 personnes',
+    priceMga: 182000,
+    image: `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg`,
+    description: 'Lit double 180×200 en katrafay. Vue jardin.',
   },
   {
-    id: 'antanifotsy',
-    number: '06',
-    name: 'Antanifotsy',
-    size: '30 m²',
-    capacity: 'For two',
-    priceMga: 400000,
-    priceEur: 76,
-    image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=1200&q=80',
+    id: 'standard-5',
+    number: '5',
+    name: 'Standard',
+    size: '21 m²',
+    capacity: '1 à 2 personnes',
+    priceMga: 182000,
+    image: `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg`,
+    description: 'Lit double 180×200 en katrafay. Vue jardin.',
   },
   {
-    id: 'ambositra',
-    number: '07',
-    name: 'Ambositra',
-    size: '28 m²',
-    capacity: 'For two',
-    priceMga: 360000,
-    priceEur: 69,
-    image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&q=80',
+    id: 'standard-6',
+    number: '6',
+    name: 'Standard',
+    size: '21 m²',
+    capacity: '1 à 2 personnes',
+    priceMga: 182000,
+    image: `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg`,
+    description: 'Deux lits simples 90×200 en palissandre. Vue jardin.',
   },
   {
-    id: 'ihosy',
-    number: '08',
-    name: 'Ihosy',
-    size: '30 m²',
-    capacity: 'For two',
-    priceMga: 380000,
-    priceEur: 72,
-    image: 'https://images.unsplash.com/photo-1616047006789-b7af5afb8c20?w=1200&q=80',
-  },
-  {
-    id: 'ranohira',
-    number: '09',
-    name: 'Ranohira',
-    size: '26 m²',
-    capacity: 'For two',
-    priceMga: 340000,
-    priceEur: 65,
-    image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80',
-  },
-  {
-    id: 'fianarantsoa',
-    number: '10',
-    name: 'Fianarantsoa',
-    size: '48 m²',
-    capacity: 'Family · for four',
-    priceMga: 720000,
-    priceEur: 137,
-    image: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1200&q=80',
+    id: 'standard-7',
+    number: '7',
+    name: 'Standard',
+    size: '21 m²',
+    capacity: '1 à 2 personnes',
+    priceMga: 182000,
+    image: `${SQ}/53ff20cf-dede-47c0-9d6f-4df2d9e1a8ae/standard.jpg`,
+    description: 'Deux lits simples 90×200 en palissandre. Vue jardin.',
   },
 ];
 
-export const experiences = [
-  { id: 'ranomafana', number: '01', title: 'Ranomafana National Park', subtitle: 'Full-day guided walk', duration: '8 h' },
-  { id: 'silk', number: '02', title: 'Silk workshop', subtitle: 'Betsileo traditional weaving', duration: '3 h' },
-  { id: 'cooking', number: '03', title: 'Cooking session', subtitle: 'With the kitchen', duration: '4 h' },
-  { id: 'vineyard', number: '04', title: 'Vineyard visit', subtitle: 'Sahambavy estate', duration: '½ day' },
-  { id: 'andringitra-trek', number: '05', title: 'Andringitra trek', subtitle: 'Three days, two nights', duration: '3 d' },
-  { id: 'market', number: '06', title: 'Market & basketry', subtitle: 'Betsileo craftsmanship', duration: '½ day' },
+export const journalPosts = [
+  {
+    id: 'koselig',
+    date: 'APRIL 2026',
+    title: 'Koselig in the highlands. What it means here.',
+  },
+  {
+    id: 'garden',
+    date: 'MARCH 2026',
+    title: 'What the garden gives in April.',
+  },
+  {
+    id: 'hope',
+    date: 'FEBRUARY 2026',
+    title: 'Ten years of Hope for the Future.',
+  },
 ] as const;
 
-export const journalPosts = [
-  { id: 'silence', date: 'MARCH 2026', title: 'On silence, and why we don\u2019t have televisions.' },
-  { id: 'harvest', date: 'FEBRUARY 2026', title: 'Notes from the 2025 harvest.' },
-  { id: 'closure', date: 'JANUARY 2026', title: 'Why we close in December.' },
+/**
+ * Avis clients — verbatim depuis hotelambalakely.com (FR).
+ * Aucun avis inventé : tous extraits du site Squarespace public.
+ * 9 avis vérifiables sur TripAdvisor, Booking ou Google.
+ */
+export const reviews = [
+  {
+    quote:
+      'Un véritable joyau ! Un bel emplacement construit dans le style Betsileo, avec un personnel amical.',
+    author: 'Polly P.',
+    city: '',
+    source: 'TripAdvisor',
+  },
+  {
+    quote:
+      'Emplacement unique à la campagne. L’Hôtel Ambalakely est un véritable joyau situé à 10 minutes.',
+    author: 'KingfisherOslo',
+    city: 'Oslo',
+    source: 'TripAdvisor',
+  },
+  {
+    quote:
+      'Un trésor rare au milieu de Madagascar ! Excellent séjour. Nous sommes toujours accueillis avec des sourires.',
+    author: 'Ada',
+    city: '',
+    source: 'Booking',
+  },
+  {
+    quote:
+      'Excellente nuit à Ambalakely. C’est l’endroit parfait où séjourner, très agréable ambiance.',
+    author: 'Bernt R.',
+    city: '',
+    source: 'TripAdvisor',
+  },
+  {
+    quote:
+      'Très bel hôtel avec jardin paisible. Le repas était excellent. Chambres spacieuses et propres.',
+    author: 'Ruth Barbara W.',
+    city: '',
+    source: 'Google',
+  },
+  {
+    quote:
+      'Bel endroit ! Le propriétaire parle un anglais parfait, nous avons eu un surclassement de chambre.',
+    author: 'Anna Maria',
+    city: '',
+    source: 'Google',
+  },
+  {
+    quote:
+      'Super endroit où séjourner. Nous y avons passé une seule nuit mais aurions aimé rester plus longtemps.',
+    author: 'Femke V.',
+    city: '',
+    source: 'TripAdvisor',
+  },
+  {
+    quote:
+      'Très bel endroit. Un très bon service, une excellente nourriture et une atmosphère relaxante fantastique.',
+    author: 'Kristin O. V.',
+    city: '',
+    source: 'TripAdvisor',
+  },
+  {
+    quote:
+      'Un must absolu si vous êtes en ville. Emplacement idyllique, juste à côté des rizières absolument tranquille.',
+    author: 'Giovanni',
+    city: '',
+    source: 'Booking',
+  },
 ] as const;
