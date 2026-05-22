@@ -5,6 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SmoothScrollProvider } from '@/lib/motion/SmoothScrollProvider';
 import { ScrollProgress } from '@/components/atoms/ScrollProgress';
 import { HotelJsonLd } from '@/components/atoms/JsonLd';
+import { PostHogProvider } from '@/components/atoms/PostHogProvider';
 import { fetchHotel } from '@/sanity/lib/fetch';
 import '@/styles/globals.css';
 
@@ -89,7 +90,9 @@ export default function RootLayout({
       <body>
         <a href="#main" className="skip-link">Skip to content</a>
         <ScrollProgress />
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <PostHogProvider>
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        </PostHogProvider>
         <Analytics />
         <SpeedInsights />
       </body>
