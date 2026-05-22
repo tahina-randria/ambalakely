@@ -7,10 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "migrate:sanity": "tsx scripts/migrate-to-sanity.ts",
+    "photos:upload": "tsx scripts/upload-photos.ts"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.7",
+    "@react-email/components": "^1.0.12",
+    "@sanity/client": "^7.22.0",
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/vision": "^5.26.0",
+    "@sentry/nextjs": "^10.53.1",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "clsx": "^2.1.1",
@@ -20,10 +27,16 @@
     "motion": "^11.15.0",
     "next": "^15.1.6",
     "next-intl": "^3.26.3",
+    "next-sanity": "^12.4.5",
+    "posthog-js": "^1.374.3",
+    "posthog-node": "^5.34.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "resend": "^6.12.2",
-    "tailwind-merge": "^2.5.5"
+    "sanity": "^5.26.0",
+    "styled-components": "^6.4.2",
+    "tailwind-merge": "^2.5.5",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.0",
@@ -32,10 +45,12 @@
     "@types/react": "^19.0.7",
     "@types/react-dom": "^19.0.3",
     "autoprefixer": "^10.4.20",
+    "dotenv": "^17.4.2",
     "eslint": "^9.18.0",
     "eslint-config-next": "^15.1.6",
     "postcss": "^8.5.1",
     "tailwindcss": "^4.0.0",
+    "tsx": "^4.22.3",
     "typescript": "^5.7.3"
   }
 }

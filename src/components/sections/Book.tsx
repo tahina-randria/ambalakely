@@ -1,11 +1,12 @@
 import { Container } from '@/components/atoms/Container';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BookingButton } from '@/components/atoms/BookingButton';
-import { HOTEL } from '@/lib/data/hotel';
+import { fetchHotel } from '@/sanity/lib/fetch';
 
-const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');
+export async function Book() {
+  const HOTEL = await fetchHotel();
+  const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');
 
-export function Book() {
   return (
     <section
       id="book"

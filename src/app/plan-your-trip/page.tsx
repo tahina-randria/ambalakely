@@ -8,7 +8,7 @@ import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight, Clock, MapTrifold } from '@phosphor-icons/react/dist/ssr';
-import { itineraries } from '@/lib/data/itineraries';
+import { fetchItineraries } from '@/sanity/lib/fetch';
 
 export const metadata: Metadata = {
   title: 'Plan your trip',
@@ -30,7 +30,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PlanYourTripPage() {
+export default async function PlanYourTripPage() {
+  const itineraries = await fetchItineraries();
   return (
     <>
       <BreadcrumbJsonLd

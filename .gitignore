@@ -6,6 +6,7 @@ node_modules
 .next
 out
 dist
+.sanity
 
 # env
 .env
@@ -31,3 +32,6 @@ next-env.d.ts
 .vscode
 .idea
 .claude/scheduled_tasks.lock
+
+# source documents (PDF/docx/pptx + HD photo originals, ~150 MB, local only)
+docs/

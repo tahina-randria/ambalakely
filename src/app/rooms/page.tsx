@@ -9,7 +9,7 @@ import { BookingButton } from '@/components/atoms/BookingButton';
 import { RoomComparison } from '@/components/molecules/RoomComparison';
 import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
-import { categories } from '@/lib/data/categories';
+import { fetchCategories } from '@/sanity/lib/fetch';
 
 export const metadata: Metadata = {
   title: 'Rooms',
@@ -33,7 +33,8 @@ export const metadata: Metadata = {
 
 import { formatMga } from '@/lib/utils/format';
 
-export default function RoomsPage() {
+export default async function RoomsPage() {
+  const categories = await fetchCategories();
   return (
     <>
       <BreadcrumbJsonLd

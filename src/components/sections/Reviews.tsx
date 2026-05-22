@@ -2,15 +2,17 @@ import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { Star } from '@phosphor-icons/react/dist/ssr';
-import { reviews } from '@/lib/data/rooms';
-import { HOTEL } from '@/lib/data/hotel';
+import { fetchHotel, fetchReviews } from '@/sanity/lib/fetch';
 
 /**
  * Editorial 'what guests say' page.
  * All four real quotes visible at once, hairline-ruled list.
  * No rotation, no arrows. Confident magazine treatment.
+ *
+ * Data: Sanity (with .ts fallback via fetchReviews/fetchHotel).
  */
-export function Reviews() {
+export async function Reviews() {
+  const [HOTEL, reviews] = await Promise.all([fetchHotel(), fetchReviews()]);
   return (
     <Section id="reviews" divider>
       <Container>

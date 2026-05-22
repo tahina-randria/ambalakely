@@ -9,7 +9,7 @@ import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
-import { HOTEL } from '@/lib/data/hotel';
+import { fetchHotel } from '@/sanity/lib/fetch';
 
 export const metadata: Metadata = {
   title: 'À propos',
@@ -58,7 +58,8 @@ const milestones = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const HOTEL = await fetchHotel();
   return (
     <>
       <BreadcrumbJsonLd

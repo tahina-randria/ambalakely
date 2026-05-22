@@ -1,5 +1,4 @@
-import { HOTEL } from '@/lib/data/hotel';
-import { reviews } from '@/lib/data/rooms';
+import { fetchHotel, fetchReviews } from '@/sanity/lib/fetch';
 
 /**
  * JSON-LD structured data for Google rich results.
@@ -7,9 +6,11 @@ import { reviews } from '@/lib/data/rooms';
  * - Aggregated reviews (note moyenne calculee)
  *
  * Place dans <head> via dangerouslySetInnerHTML (best practice Next 15).
+ * Data: Sanity (with .ts fallback via fetchHotel/fetchReviews).
  */
-export function HotelJsonLd() {
-  // AggregateRating uniquement si on a une vraie note confirmée
+export async function HotelJsonLd() {
+  const [HOTEL, reviews] = await Promise.all([fetchHotel(), fetchReviews()]);
+
   const aggregateRating =
     HOTEL.rating.value && HOTEL.rating.count
       ? {
@@ -74,7 +75,8 @@ export function HotelJsonLd() {
 /**
  * Restaurant schema for /dining page.
  */
-export function RestaurantJsonLd() {
+export async function RestaurantJsonLd() {
+  const HOTEL = await fetchHotel();
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Restaurant',
@@ -115,7 +117,8 @@ export function RestaurantJsonLd() {
 /**
  * Breadcrumb schema for detail pages.
  */
-export function BreadcrumbJsonLd({ items }: { items: { name: string; url: string }[] }) {
+export async function BreadcrumbJsonLd({ items }: { items: { name: string; url: string }[] }) {
+  const HOTEL = await fetchHotel();
   const data = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

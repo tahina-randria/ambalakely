@@ -1,8 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { HOTEL } from '@/lib/data/hotel';
-import { articles } from '@/lib/data/articles';
-
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || HOTEL.url;
+import { fetchHotel, fetchArticles } from '@/sanity/lib/fetch';
 
 const ROOM_CATEGORIES: { slug: string; priority: number }[] = [
   { slug: 'superieure', priority: 0.9 },
@@ -13,7 +10,10 @@ const ROOM_CATEGORIES: { slug: string; priority: number }[] = [
 // Stable lastModified — only changes when content actually changes
 const LAST_UPDATE = new Date('2026-05-10');
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [HOTEL, articles] = await Promise.all([fetchHotel(), fetchArticles()]);
+  const BASE = process.env.NEXT_PUBLIC_SITE_URL || HOTEL.url;
+
   const staticPages: MetadataRoute.Sitemap = [
     { url: `${BASE}/`, lastModified: LAST_UPDATE, changeFrequency: 'weekly', priority: 1 },
     { url: `${BASE}/rooms`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.95 },

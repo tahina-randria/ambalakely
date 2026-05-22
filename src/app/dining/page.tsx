@@ -18,7 +18,7 @@ import {
   Pizza,
 } from '@phosphor-icons/react/dist/ssr';
 import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
-import { HOTEL } from '@/lib/data/hotel';
+import { fetchHotel } from '@/sanity/lib/fetch';
 import { formatMga } from '@/lib/utils/format';
 
 export const metadata: Metadata = {
@@ -60,16 +60,6 @@ const mealExtras = [
   'Enfant de moins de 5 ans : offert',
 ];
 
-/**
- * Horaires réels du restaurant — document Kirsten.
- */
-const hours: { label: string; value: string; Icon: PhosphorIcon }[] = [
-  { label: 'Petit déjeuner', value: HOTEL.hours.breakfast, Icon: Sun },
-  { label: 'Déjeuner', value: HOTEL.hours.lunch, Icon: SunHorizon },
-  { label: 'Dîner', value: HOTEL.hours.dinner, Icon: Moon },
-  { label: 'Terrasse pizza', value: HOTEL.hours.pizzaTerrace, Icon: Pizza },
-];
-
 const facts: { label: string; value: string; Icon: PhosphorIcon }[] = [
   { label: 'Couverts', value: 'Cinquante', Icon: Users },
   { label: 'Service', value: 'À la carte, 1 à 3 services', Icon: ForkKnife },
@@ -77,7 +67,16 @@ const facts: { label: string; value: string; Icon: PhosphorIcon }[] = [
   { label: 'Réservation', value: '24 h à l\'avance', Icon: Clock },
 ];
 
-export default function DiningPage() {
+export default async function DiningPage() {
+  const HOTEL = await fetchHotel();
+  // Horaires réels du restaurant — document Kirsten.
+  const hours: { label: string; value: string; Icon: PhosphorIcon }[] = [
+    { label: 'Petit déjeuner', value: HOTEL.hours.breakfast, Icon: Sun },
+    { label: 'Déjeuner', value: HOTEL.hours.lunch, Icon: SunHorizon },
+    { label: 'Dîner', value: HOTEL.hours.dinner, Icon: Moon },
+    { label: 'Terrasse pizza', value: HOTEL.hours.pizzaTerrace, Icon: Pizza },
+  ];
+
   return (
     <>
       <BreadcrumbJsonLd

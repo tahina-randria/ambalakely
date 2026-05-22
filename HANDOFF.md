@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-22
+Last updated: 2026-05-22 (Sanity CMS setup on PC 2)
 
 ---
 
@@ -319,8 +319,13 @@ A simple way: build a temporary `/admin/photos` page that lists all 47 in a grid
   5. "Where to stay on the RN7"
 - **Existing 3 fake articles** in `data/articles.ts` (Hasina-voice essays previously invented) should be **deleted or archived** — they are not real and shouldn't be on the site. The real Squarespace blog has 4 hiking articles by Max William RAFALIARISON; we should either import those properly or leave /journal empty until Hasina writes.
 
-### Tier 4 — CMS (later, when content is stable)
-- **Sanity CMS migration** : schemas already designed (see git history for `sanity/` folder before reversion). Re-install when React 19.2 stabilizes or use older Sanity version. Migrate all content from .ts to Sanity. Add Studio at `/studio` for Hasina to edit.
+### Tier 4 — CMS (DONE on `feat/cms-setup` branch, see section 11)
+- ✅ Sanity installed at `sanity@5.26`, `next-sanity@12`, `@sanity/client@7`, `@sanity/vision@5`, `@sanity/image-url@2`
+- ✅ Studio mounted at `/studio` (login OK, list views OK ; doc-edit crashes — workaround = `sanity.io/manage`, see section 11)
+- ✅ 10 schemas (FR/EN bilingual via `localeString`/`localeText`/`localePortableText`)
+- ✅ 88 docs migrated (1 hotel, 3 roomCategory, 9 review, 3 article, 10 excursion, 3 itinerary, 47 faq, 4 staff, 1 community, 7 page)
+- ✅ 47 photos uploaded as Sanity assets
+- ⚠️ Frontend wiring : partial (6 of ~22 files). Pattern established. Remaining listed in this section's pending list.
 
 ### Tier 5 — i18n
 - **FR ↔ EN bilingual** : `next-intl` is already installed. Add EN translations to all pages. Default route: FR. EN at `/en/...`. Hreflang properly set.
@@ -337,58 +342,104 @@ A simple way: build a temporary `/admin/photos` page that lists all 47 in a grid
 
 ## 10. Commands
 
+Project uses **pnpm** (lockfile is `pnpm-lock.yaml`). If you don't have pnpm:
 ```bash
-# Install (use --legacy-peer-deps because of next-intl peer)
-npm install --legacy-peer-deps
+corepack enable && corepack prepare pnpm@latest --activate
+```
+
+```bash
+# Install
+pnpm install
 
 # Dev (port 3000)
-npm run dev
+pnpm dev
 
 # Typecheck
-npx tsc --noEmit
+pnpm typecheck    # or: npx tsc --noEmit
 
 # Build
-npm run build
+pnpm build
+
+# Sanity scripts (need .env.local with SANITY_API_WRITE_TOKEN)
+pnpm migrate:sanity     # idempotent, re-populates 88 docs
+pnpm photos:upload      # idempotent, uploads 47 webp photos
 
 # Deploy (Vercel)
 npx vercel --prod --yes
-# then alias the new deployment to the stable domain:
 npx vercel alias <new-deploy-url> ambalakely.vercel.app
 
 # Lint
-npm run lint
+pnpm lint
 ```
 
-Environment variables (`.env.local`):
+Environment variables (`.env.local`, never committed):
 ```
-NEXT_PUBLIC_MAPBOX_TOKEN=<COPY THIS FROM YOUR ORIGINAL PC .env.local — DO NOT COMMIT>
+NEXT_PUBLIC_MAPBOX_TOKEN=<copy from your other PC>
+NEXT_PUBLIC_SANITY_PROJECT_ID=zfb59l35
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_API_VERSION=2025-01-01
+SANITY_API_WRITE_TOKEN=<copy from your other PC — read+write Editor token>
+
+# Sentry (already configured)
+NEXT_PUBLIC_SENTRY_DSN=...
+SENTRY_DSN=...
+SENTRY_ORG=mita-studio
+SENTRY_PROJECT=hotel-ambalakely
+SENTRY_AUTH_TOKEN=...
+
+# Resend (mita-studio org, free tier — see section 16)
+RESEND_API_KEY=re_...
+RESEND_FROM_EMAIL=Hôtel Ambalakely <ambalakely@mita-studio.com>
 ```
 
-Copy `.env.local` directly from the original PC to the new PC. It's gitignored and not in the repo.
+Copy `.env.local` directly from the other PC (it's gitignored). To regenerate the Sanity write token: https://www.sanity.io/manage/project/zfb59l35/api → Tokens → Add API token (Editor).
 
 If deploying on the second PC, you'll need:
 - Vercel CLI login: `npx vercel login` (the user account that owns the `ambalakely` project)
 - Or pull the existing `.vercel` folder from the original PC
 
-## 11. The Sanity story (why it's deferred)
+## 11. Sanity CMS — current state (set up on PC 2, branch `feat/cms-setup`)
 
-Earlier this session I:
-1. Installed Sanity (`sanity@5.26.0`, `next-sanity@13`, `@sanity/client`, etc.)
-2. Built full schemas in `sanity/schemas/` (hotel, roomCategory, review, article, excursion, itinerary, faq, staff, community, page)
-3. Set up `sanity.config.ts` and `/studio` route
+### Sanity project info
+- **Org** : "Hôtel Ambalakely" — `o03TtHcBm` (own org, separate from Mpiaradia and Maison de la Poterie)
+- **Project** : `hotel-ambalakely` — `zfb59l35`
+- **Dataset** : `production`
+- **Plan** : Growth Trial (30 days, then auto-downgrades to Free — no CC required)
+- **API token** : `migration-script` (Editor perms) saved in local `.env.local` (never committed)
+- **CORS** : `http://localhost:3000` allowed with credentials
 
-Then I hit a build error: `Sanity 5.26 requires React 19.2+ for useEffectEvent`. Our `react@19.0.0` was too old at that exact moment.
+### What's wired
+- **Schemas** in `sanity/schemas/` : 10 doc types (hotel, roomCategory, review, article, excursion, itinerary, faq, staff, community, page)
+- **Locale helpers** in `sanity/lib/locale.ts` : `localeString`, `localeText`, `localePortableText` for FR/EN bilingual fields + `pickLocale()` runtime helper
+- **GROQ queries** in `sanity/lib/queries.ts` : each projects to a flat shape matching the `.ts` exports (coalesce fr → en → "")
+- **Fetchers** in `sanity/lib/fetch.ts` : React.cache-wrapped, with graceful fallback to `.ts` if Sanity returns empty/fails. ISR 60s in prod.
+- **Migration script** `scripts/migrate-to-sanity.ts` (run via `pnpm migrate:sanity`) : idempotent (`createOrReplace` + deterministic `_id`s). 88 docs migrated.
+- **Photo upload script** `scripts/upload-photos.ts` (run via `pnpm photos:upload`) : 47 webp uploaded as Sanity assets. Mapping at `scripts/photo-asset-map.json`. Photos NOT yet wired to schemas — that's T1.7.
+- **Verify script** `scripts/verify-sanity.ts` : GROQ counts + samples to sanity-check the dataset.
 
-I uninstalled Sanity to unblock the build, deleted the `sanity/` folder and `/studio` route, and we decided to migrate later (Tier 4) when:
-- All content is stable in `.ts` files
-- React 19.2+ becomes the default
-- OR we use older Sanity version compatible with React 19.0
+### Frontend wiring status (Phase B, partial)
+- ✅ Components wired to Sanity (server fetch with fallback): **Reviews, Footer, Book, HotelJsonLd / RestaurantJsonLd / BreadcrumbJsonLd, Experiences (section), Journal (section)**
+- ⚠️ Not yet wired (~16 files, same pattern — see Tier 4 reste in `tasks` of the PR description):
+  - Pages : `about`, `dining`, `experiences`, `faq`, `journal/page.tsx`, `journal/[slug]`, `plan-your-trip`, `rooms`, `rooms/[category]`
+  - Client components : `BookingDrawer`, `FaqSearch` (need data via prop from server parent)
+  - Metadata generators : `sitemap`, `robots`, `opengraph-image`, `layout` (`metadata` → `generateMetadata`)
+  - `RoomComparison` (uses `comparison.ts` which isn't in Sanity schema)
 
-When you come back to it:
-- The schemas I designed are reasonable starting points — git log will have them
-- Use `npx sanity init` with the project name `hotel-ambalakely` and dataset `production`
-- Get the projectId and write token, put in `.env.local`
-- Write a migration script that takes `.ts` data and pushes to Sanity via `@sanity/client`
+### Known bug — Studio `useEffectEvent` (now contourné par redirect)
+Le local `/studio` ne charge plus le bundle Sanity. La route est un simple redirect server-side vers `https://hotel-ambalakely.sanity.studio/` (Studio cloud déployé).
+
+Raison : `next/dist/compiled/react` n'expose pas `useEffectEvent` même si notre `react@19.2.5` le fait. Sanity 5.26 (`useResetHistoryParams`) en dépend → le bundle webpack échoue à la fois en dev (édition de docs) **et au build production** (`pnpm build` rouge tant que le studio était bundlé). Tentatives : `pnpm dedupe`, downgrade, alias React, `transpilePackages` — aucune n'a marché.
+
+**Fix appliqué (2026-05-22)** : `src/app/studio/[[...tool]]/page.tsx` ne fait plus que `redirect('https://hotel-ambalakely.sanity.studio/')`. Layout simplifié (plus d'import `next-sanity/studio`). Hasina édite via le cloud, le build production est vert.
+
+Restaurer le studio local (quand Sanity patchera) : revenir au composant `<NextStudio config={config} />` + re-importer `metadata, viewport` depuis `next-sanity/studio` dans le layout.
+
+### How to re-run the migration (idempotent)
+```bash
+pnpm migrate:sanity     # re-populates 88 docs (createOrReplace, no dupes)
+pnpm photos:upload      # re-uploads photos (skips existing by originalFilename)
+pnpm tsx scripts/verify-sanity.ts   # prints counts + samples
+```
 
 ## 12. Git workflow
 
@@ -431,6 +482,72 @@ User wants to be **#1 ranking when people search Madagascar tourism**. We discus
 - Long-term : possibly expand to 100+ pages covering all Madagascar regions, but earned through depth, not volume
 
 If user pushes "more content faster", remind them : 1 great article > 10 thin ones. Hasina's voice is the moat — quality of writing is what makes the site unique vs Lonely Planet.
+
+## 16. Resend — booking + newsletter (2026-05-22)
+
+### What's wired
+- **`src/lib/email/client.ts`** : `getResend()` returns a singleton or `null` if `RESEND_API_KEY` is absent (routes degrade to 503).
+- **`src/lib/email/templates/`** : React Email components — `BookingRequest` (notif Hasina), `BookingAck` (accusé client FR), `NewsletterWelcome` (FR), `_shared` (Shell + design tokens).
+- **`src/app/api/booking-request/route.ts`** : POST handler. Zod schema (arrival/departure ISO dates, guests 1–20, name, email, phone?, message?, honeypot `company`). Rate limit in-memory 5/h/IP. Sends 2 emails (notif `hello@hotelambalakely.com` + accusé client). 1–4 guests only — 5+ goes to WhatsApp/email direct.
+- **`src/app/api/newsletter/route.ts`** : POST handler. Zod schema (email + honeypot). Adds to the default Resend audience via `resend.contacts.create({ email, unsubscribed: false })` + sends welcome email. Rate limit 10/h/IP. Idempotent (re-subscribe is a no-op — Resend returns a validation error which we swallow).
+- **`BookingDrawer.tsx`** : full form (dates, guests, name, email, phone, message), state machine `idle | submitting | success | error`, honeypot, success panel. Group flow (5+ guests) unchanged.
+- **`NewsletterSignup.tsx`** : POST `/api/newsletter`, error display, honeypot.
+
+### Required env vars
+```
+RESEND_API_KEY=re_...                                          # Resend dashboard → API Keys
+RESEND_FROM_EMAIL=Hôtel Ambalakely <ambalakely@mita-studio.com>
+```
+
+The Resend free tier limits 1 verified domain per account and `mita-studio.com` was already taken by the parent studio. We send from an alias on that domain and the code sets `replyTo: hello@hotelambalakely.com` on every guest-facing email so Reply lands in the hotel inbox. When you eventually upgrade to Pro and verify `hotelambalakely.com`, swap one env var (`RESEND_FROM_EMAIL`) and you're done.
+
+If unset, the routes return 503 (no crash). The build does not require them.
+
+### What was set up (2026-05-22, mita-studio Resend org)
+1. **API key** `hotel-ambalakely-prod` (Full access) — created via Chrome MCP. Stored in `.env.local`.
+2. **No audience to create** — Resend's current model has a single audience per workspace, so `resend.contacts.create({ email, unsubscribed: false })` writes to it without an `audienceId`.
+3. **Sender domain** — using `mita-studio.com` (verified 3 months ago for the studio). Free-tier domain quota = 1, no second domain possible without upgrading.
+
+### Upgrading the sender domain (when ready)
+1. Resend → upgrade to Pro ($20/mo) or move the hotel to its own free workspace (also paid).
+2. Add `hotelambalakely.com`, configure 3 DNS records at the registrar (Squarespace today, Cloudflare later).
+3. Once verified, set `RESEND_FROM_EMAIL=Hôtel Ambalakely <hello@hotelambalakely.com>` locally + on Vercel. Done.
+
+### Test end-to-end
+- `pnpm dev`, open the booking drawer, submit with a real inbox of yours — both the notif (to `hello@hotelambalakely.com`) and the accusé client should arrive within seconds. Reply to the accusé → it lands in `hello@hotelambalakely.com`.
+- Newsletter signup in the footer — the contact appears in Resend → Audience → Contacts, and a welcome email arrives.
+
+### Operational notes
+- **Rate limits in-memory** : the `Map<ip, timestamps[]>` resets per server restart. Fine for low traffic. If we hit Vercel multiple cold starts, consider Upstash Redis later.
+- **Honeypot `company`** : an empty hidden input. Bots fill it, real users don't. Server returns 200 OK silently when filled (no email sent).
+- **Reply-To** : booking notif emails set `replyTo: data.email` so Hasina can reply directly to the guest.
+- **Bilingual** : current templates are FR only. EN versions can be added when i18n lands (Tier 5).
+
+## 17. Consent / GDPR (2026-05-22)
+
+### What's wired
+- **`src/lib/consent/index.tsx`** : `ConsentProvider`, `useConsent()` hook, `readConsent()` helper, types. localStorage key `ambalakely.consent.v1` (bump version to re-prompt).
+- **`src/components/molecules/CookieBanner.tsx`** : footer-fixed banner, "Tout accepter" / "Refuser" / "Personnaliser" with per-category checkboxes (Mesure d'audience, Suivi d'erreurs). Only renders post-hydration if no choice yet.
+- **`src/lib/analytics/sentry.ts`** : `initSentryClient()` + `disableSentryClient()` — idempotent, no-op without DSN/prod.
+- **`src/components/atoms/SentryConsentSync.tsx`** : observes consent → calls init/disable on Sentry.
+- **`src/components/atoms/PostHogProvider.tsx`** : reads consent, skips init until analytics consent is on, calls `opt_out_capturing` on refusal.
+- **`instrumentation-client.ts`** : at boot, reads localStorage; only inits Sentry if user already opted in on a previous visit.
+
+### Categories
+- **analytics** → PostHog (autocapture, pageviews). Opt-in.
+- **errorTracking** → Sentry (errors + session replay 10%). Opt-in.
+- **Vercel Analytics + Speed Insights** : cookieless, no PII, no consent required per Vercel docs → always on.
+
+### Behaviour
+- First visit : banner shown. No PostHog, no Sentry yet.
+- Click "Tout accepter" → consent saved, PostHog + Sentry init.
+- Click "Refuser" → consent saved (all false), nothing inits.
+- Click "Personnaliser" → checkboxes appear, "Enregistrer ma sélection" persists granular choice.
+- Choice persists across visits (localStorage). To re-prompt, bump the storage key version or call `consent.reset()` from a UI footer link (not yet added).
+
+### To extend later
+- Footer link "Gérer les cookies" calling `useConsent().reset()` so users can change their mind.
+- Translate the banner copy when `next-intl` lands.
 
 ---
 

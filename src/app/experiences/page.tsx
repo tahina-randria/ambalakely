@@ -8,7 +8,7 @@ import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
-import { experiences } from '@/lib/data/experiences';
+import { fetchExcursions } from '@/sanity/lib/fetch';
 
 export const metadata: Metadata = {
   title: 'Experiences',
@@ -30,7 +30,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ExperiencesPage() {
+export default async function ExperiencesPage() {
+  const experiences = await fetchExcursions();
   return (
     <>
       <BreadcrumbJsonLd
