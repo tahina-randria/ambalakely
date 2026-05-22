@@ -42,28 +42,9 @@ export const metadata: Metadata = {
 };
 
 /**
- * Plats signature confirmés depuis le site Squarespace et le document Kirsten.
- * Aucun plat inventé : seulement ceux explicitement mentionnés.
- */
-const signatureDishes = [
-  {
-    name: 'Zébu Marengo',
-    body:
-      'Zébu tendre mijoté dans une sauce tomate aux herbes, accompagné de vin local.',
-  },
-  {
-    name: 'Kjøttkaker',
-    body: 'Boulettes de viande à la scandinave. Une signature norvégienne.',
-  },
-  {
-    name: 'Krumkake',
-    body:
-      'Gaufre roulée norvégienne, servie avec un fruit frais ou un sorbet maison.',
-  },
-];
-
-/**
  * Tarifs réels — extraits du PDF Tarifs Publics 2026.
+ * Pas de menu détaillé pour l'instant : on attend que Hasina valide
+ * la sélection de plats à mettre en ligne.
  */
 const meals = [
   { label: 'Petit déjeuner Malagasy', priceMga: 25000 },
@@ -196,41 +177,8 @@ export default function DiningPage() {
           </div>
         </section>
 
-        {/* SIGNATURE DISHES */}
-        <section className="py-32 md:py-48 lg:py-56 hair-rule">
-          <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
-                <ScrollReveal>
-                  <div className="caption">Plats signature</div>
-                  <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em] max-w-[260px]">
-                    Trois plats qui reviennent souvent.
-                  </h2>
-                  <p className="mt-6 prose-editorial text-[15px]">
-                    Le menu change avec le jardin. Végétarien, vegan ou allergies :
-                    nous prévenir 24 h à l\'avance.
-                  </p>
-                </ScrollReveal>
-              </div>
-              <div className="lg:col-span-9">
-                <ul className="border-t border-[var(--color-border-subtle)]">
-                  {signatureDishes.map((dish) => (
-                    <ScrollReveal key={dish.name}>
-                      <li className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 py-8 md:py-10 border-b border-[var(--color-border-subtle)]">
-                        <div className="md:col-span-5 font-display font-light text-[22px] md:text-[28px] tracking-[-0.02em] leading-[1.15] text-[var(--color-text)]">
-                          {dish.name}
-                        </div>
-                        <p className="md:col-span-7 text-[15px] md:text-[16px] leading-[1.6] text-[var(--color-text-muted)] max-w-[520px]">
-                          {dish.body}
-                        </p>
-                      </li>
-                    </ScrollReveal>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </Container>
-        </section>
+        {/* Section "plats signature" retirée pour l'instant —
+            à activer quand Hasina aura validé la sélection. */}
 
         {/* HOURS + PRICING */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-bg-subtle)]">
