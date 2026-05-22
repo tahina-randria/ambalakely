@@ -20,22 +20,28 @@ export function Reviews() {
             <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] tracking-[-0.03em] balance max-w-[720px]">
               What people say.
             </h2>
-            <div className="mt-8 flex items-center gap-3">
-              <div className="flex gap-0.5">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    size={14}
-                    weight="fill"
-                    className="text-[var(--color-text)]"
-                  />
-                ))}
+            {HOTEL.rating.value && HOTEL.rating.count ? (
+              <div className="mt-8 flex items-center gap-3">
+                <div className="flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      size={14}
+                      weight="fill"
+                      className="text-[var(--color-text)]"
+                    />
+                  ))}
+                </div>
+                <div className="caption text-[var(--color-text-muted)]">
+                  {HOTEL.rating.value} sur 5 — {HOTEL.rating.count} avis sur{' '}
+                  {HOTEL.rating.sources.join(' et ')}
+                </div>
               </div>
-              <div className="caption text-[var(--color-text-muted)]">
-                {HOTEL.rating.value} average across {HOTEL.rating.count} reviews on{' '}
-                {HOTEL.rating.sources.join(' and ')}
+            ) : (
+              <div className="mt-8 caption text-[var(--color-text-muted)]">
+                Avis vérifiés sur {HOTEL.rating.sources.join(' et ')}
               </div>
-            </div>
+            )}
           </ScrollReveal>
 
           {/* Quotes — vertical stack with hairline rules.

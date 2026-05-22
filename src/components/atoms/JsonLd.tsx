@@ -9,15 +9,19 @@ import { reviews } from '@/lib/data/rooms';
  * Place dans <head> via dangerouslySetInnerHTML (best practice Next 15).
  */
 export function HotelJsonLd() {
-  const aggregateRating = {
-    '@type': 'AggregateRating',
-    ratingValue: HOTEL.rating.value,
-    reviewCount: String(HOTEL.rating.count),
-    bestRating: '5',
-    worstRating: '1',
-  };
+  // AggregateRating uniquement si on a une vraie note confirmée
+  const aggregateRating =
+    HOTEL.rating.value && HOTEL.rating.count
+      ? {
+          '@type': 'AggregateRating',
+          ratingValue: HOTEL.rating.value,
+          reviewCount: String(HOTEL.rating.count),
+          bestRating: '5',
+          worstRating: '1',
+        }
+      : undefined;
 
-  const data = {
+  const data: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Hotel',
     '@id': `${HOTEL.url}/#hotel`,
@@ -28,10 +32,6 @@ export function HotelJsonLd() {
     email: HOTEL.email,
     image: HOTEL.images.hero,
     priceRange: HOTEL.priceRange,
-    starRating: {
-      '@type': 'Rating',
-      ratingValue: String(HOTEL.starRating),
-    },
     address: {
       '@type': 'PostalAddress',
       streetAddress: HOTEL.address.street,
@@ -53,7 +53,6 @@ export function HotelJsonLd() {
     })),
     availableLanguage: HOTEL.languages,
     sameAs: [HOTEL.socials.instagram, HOTEL.socials.facebook],
-    aggregateRating,
     review: reviews.map((r) => ({
       '@type': 'Review',
       reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
@@ -62,6 +61,7 @@ export function HotelJsonLd() {
       publisher: { '@type': 'Organization', name: r.source },
     })),
   };
+  if (aggregateRating) data.aggregateRating = aggregateRating;
 
   return (
     <script

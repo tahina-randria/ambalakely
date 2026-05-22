@@ -12,6 +12,11 @@ import {
   GraduationCap,
   HeartStraight,
   Leaf,
+  PaintBrush,
+  MusicNotes,
+  PersonSimpleRun,
+  Translate,
+  BookOpen,
   Calendar,
   Users,
   House as HouseIcon,
@@ -20,87 +25,124 @@ import {
 import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 
 export const metadata: Metadata = {
-  title: 'Community',
+  title: 'Hope for the Future',
   description:
-    'Hope for the Future. A school for the children of Tanambao, the quartier of Ambalakely, Madagascar. A portion of every stay at the hotel supports it.',
+    'Hope for the Future : une école pour les enfants de Tanambao, le quartier d\'Ambalakely à Madagascar. 130 enfants, neuf programmes éducatifs et sociaux, un nouveau bâtiment Akanimamy construit depuis 2020.',
   alternates: { canonical: '/community' },
   openGraph: {
-    title: 'Community · Hotel Ambalakely',
-    description:
-      'Hope for the Future. A school for the children of Tanambao, Ambalakely.',
+    title: 'Hope for the Future · Hôtel Ambalakely',
+    description: 'Une école pour les enfants de Tanambao, soutenue par chaque nuit à l\'hôtel.',
     url: '/community',
     images: [
       {
         url: 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=1500w',
         width: 1500,
         height: 1200,
-        alt: 'Hope for the Future school in Tanambao, Ambalakely',
+        alt: 'Hope for the Future, les enfants de Tanambao, Ambalakely',
       },
     ],
   },
 };
 
 type Stat = { value: string; label: string; Icon: PhosphorIcon };
-type Mission = { title: string; body: string; Icon: PhosphorIcon };
+type Program = { title: string; body: string; Icon: PhosphorIcon };
 
+/**
+ * Chiffres clés — confirmés depuis le PowerPoint "Akanimamy by Seheno".
+ */
 const numbers: Stat[] = [
-  { value: '10', label: 'Years', Icon: Calendar },
-  { value: '130', label: 'Children', Icon: Users },
-  { value: '4 000', label: 'Inhabitants', Icon: HouseIcon },
-  { value: '1', label: 'Quartier', Icon: MapPinLine },
+  { value: '130', label: 'Enfants actifs', Icon: Users },
+  { value: '~4 000', label: 'Habitants Ambalakely', Icon: HouseIcon },
+  { value: '1', label: 'Quartier Tanambao', Icon: MapPinLine },
+  { value: '152 m²', label: 'Akanimamy', Icon: Calendar },
 ];
 
-const missions: Mission[] = [
+/**
+ * Programmes — extraits du PPT (qui en liste 9 + 1 à venir).
+ * On retire les volets confessionnels par choix éditorial business ;
+ * on garde l'esprit séculier de l'association tel qu'il est visible
+ * de l'extérieur.
+ */
+const programs: Program[] = [
   {
-    title: 'Education',
+    title: 'Éducation',
     body:
-      'Tutoring after the public school day. French, Malagasy, maths. Arts and music in the afternoons. A hot meal at noon on school days.',
+      'Soutien scolaire après l\'école publique. Cours supplémentaires, ressources éducatives, un repas chaud à midi les jours d\'école.',
     Icon: GraduationCap,
   },
   {
-    title: 'Health',
+    title: 'Santé et hygiène',
     body:
-      'A small clinic on Mondays. The nurse comes from Fianarantsoa. People bring their children to be weighed, vaccinated, reassured. The medicines come at a reduced price from a partner pharmacy.',
+      'Notions de soins de base et d\'hygiène. Pesée et accompagnement régulier des enfants.',
     Icon: HeartStraight,
   },
   {
-    title: 'Environment',
+    title: 'Arts',
+    body: 'Dessin, peinture, travaux pratiques, théâtre. Les enfants apprennent à créer.',
+    Icon: PaintBrush,
+  },
+  {
+    title: 'Musique',
+    body: 'Initiation à la flûte, au violon, au piano et à la guitare.',
+    Icon: MusicNotes,
+  },
+  {
+    title: 'Danse et sport',
     body:
-      'A water spring restored in 2022 above the village, with new piping and a small concrete tank, now used by three hundred and forty people. A tree-planting programme each November.',
+      'Mouvement, travail d\'équipe. Un terrain de basket et de volley en projet à Akanimamy.',
+    Icon: PersonSimpleRun,
+  },
+  {
+    title: 'Langues',
+    body: 'Clubs d\'anglais, cours de norvégien, français en projet.',
+    Icon: Translate,
+  },
+  {
+    title: 'Environnement et agriculture',
+    body:
+      'Sensibilisation à l\'écologie, plantation d\'arbres, potager à Akanimamy.',
     Icon: Leaf,
+  },
+  {
+    title: 'Histoire et connaissances',
+    body: 'Histoire générale, culture Betsileo, connaissances générales.',
+    Icon: BookOpen,
   },
 ];
 
+/**
+ * Repères vérifiés — pas de chronologie inventée.
+ */
 const timeline = [
   {
     year: '2014',
-    title: 'A borrowed room',
+    title: 'Premiers cours',
     body:
-      'We start with six children in a room lent to us by a family in Tanambao. A retired teacher carries a blackboard from a closed school in Fianarantsoa.',
+      'Mamy et Hasina lancent Hope for the Future avec une poignée d\'enfants du quartier de Tanambao.',
   },
   {
     year: '2018',
-    title: 'The hotel opens',
+    title: 'L\'hôtel ouvre',
     body:
-      'Hotel Ambalakely opens in October. From the first night, two percent of every booking goes to the school next door.',
+      'L\'Hôtel Ambalakely ouvre en octobre. Dès la première nuit, une part de chaque réservation soutient l\'école.',
   },
   {
     year: '2019',
-    title: 'A small clinic',
+    title: 'Le terrain',
     body:
-      'Two rooms, a nurse from Fianarantsoa on Mondays. People bring their children to be weighed, vaccinated, reassured. Medicines from a partner pharmacy at a reduced price.',
+      'Acquisition d\'un terrain de 2 000 m² grâce aux dons d\'amis du projet. Premier pas vers un vrai foyer pour les enfants.',
   },
   {
-    year: '2022',
-    title: 'The water spring',
+    year: '2020',
+    title: 'Akanimamy commence',
     body:
-      'A spring above the village, untouched for twenty years, is cleaned out. New pipe, a small concrete tank. Three hundred and forty people now use the tap.',
+      'Premier septembre 2020 : pose de la première pierre d\'Akanimamy, un bâtiment de 152 m² qui sera le foyer des enfants HFF.',
   },
   {
-    year: 'Today',
-    title: 'A hundred and thirty children',
+    year: 'Aujourd\'hui',
+    title: '130 enfants actifs',
     body:
-      'Three of them have come back as teachers. The same Wednesday and Saturday afternoons, ten years on.',
+      'Neuf programmes, des bénévoles et donateurs fidèles. Les murs et la toiture d\'Akanimamy sont terminés ; il reste à finir les sanitaires, la cuisine et les terrains.',
   },
 ];
 
@@ -109,59 +151,57 @@ export default function CommunityPage() {
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: 'Home', url: '/' },
-          { name: 'Community', url: '/community' },
+          { name: 'Accueil', url: '/' },
+          { name: 'Hope for the Future', url: '/community' },
         ]}
       />
       <Nav />
       <main id="main">
         <PageHero
           src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
-          alt="Hope for the Future school in Tanambao village, Ambalakely"
-          title={['Hope for the Future,', 'the school of Ambalakely.']}
+          alt="Hope for the Future, les enfants de Tanambao, Ambalakely"
+          title={['Hope for the Future,', 'l\'école d\'à côté.']}
         />
 
-        {/* INTRO — centered */}
+        {/* INTRO */}
         <section className="py-32 md:py-48 lg:py-56">
           <div className="mx-auto max-w-[700px] px-5 md:px-8">
             <ScrollReveal>
               <p className="lede-display">
-                A school for the children of our quartier. Ten years, started before
-                we opened the rooms.
+                Une école pour les enfants de notre quartier. Cent trente
+                enfants actifs, neuf programmes, et un nouveau foyer qui
+                s\'appelle Akanimamy.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <div className="mt-14 prose-editorial space-y-6">
                 <p>
-                  Hope for the Future is the small charity we started ten years
-                  ago in the quartier of Tanambao, in the village of Ambalakely.
-                  The village has around four thousand inhabitants and sits twelve
-                  kilometres north of Fianarantsoa, on a hill at the edge of the
-                  rice fields.
+                  Hope for the Future est le projet associatif que Mamy et
+                  Hasina ont lancé en 2014, dans le quartier de Tanambao à
+                  Ambalakely. Le village compte environ 4 000 habitants, à
+                  12 km au nord de Fianarantsoa.
                 </p>
                 <p>
-                  We had been working in tourism for years. We had seen children
-                  begging on the road in every region we travelled through. When
-                  we walked our own quartier in the middle of the day, we counted
-                  the same thing : children at home or in the streets, not in
-                  school. A short survey told us about a hundred and thirty
-                  children from Tanambao were rarely or never going to the public
-                  school.
+                  Au départ, ils ont fait une enquête simple : combien d\'enfants
+                  du quartier n\'allaient pas, ou très peu, à l\'école publique ?
+                  La réponse était une centaine et demie. À cette époque, Mamy
+                  et Hasina avaient déjà construit l\'hôtel. Ils savaient ce que
+                  l\'hôtel allait financer à côté.
                 </p>
                 <p>
-                  When we built the hotel four years later, we already knew what
-                  the hotel would pay for next door.
+                  Aujourd\'hui, 130 enfants suivent les activités. L\'hôtel
+                  reverse une part de chaque réservation à l\'association.
                 </p>
               </div>
             </ScrollReveal>
           </div>
         </section>
 
-        {/* NUMBERS — magazine fact sheet, vertical hairlines between cells */}
+        {/* NUMBERS */}
         <section className="py-24 md:py-32 hair-rule bg-[var(--color-bg-subtle)]">
           <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption text-center mb-16 md:mb-20">In numbers</div>
+              <div className="caption text-center mb-16 md:mb-20">En chiffres</div>
             </ScrollReveal>
             <ScrollReveal>
               <ul className="grid grid-cols-2 md:grid-cols-4 border-y border-[var(--color-border-subtle)] divide-x divide-[var(--color-border-subtle)]">
@@ -192,22 +232,22 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* TIMELINE — vertical, hairline rules */}
+        {/* TIMELINE */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule">
           <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption text-center mb-4">Timeline</div>
+              <div className="caption text-center mb-4">Repères</div>
               <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
-                Ten years in five moments.
+                De 2014 à Akanimamy.
               </h2>
             </ScrollReveal>
 
             <ul className="mt-20 md:mt-28 mx-auto max-w-[860px] border-t border-[var(--color-border-subtle)]">
               {timeline.map((t, i) => (
-                <ScrollReveal key={t.year} delay={i * 0.05}>
+                <ScrollReveal key={t.year} delay={i * 0.04}>
                   <li className="grid grid-cols-12 gap-6 py-10 md:py-14 border-b border-[var(--color-border-subtle)]">
                     <div className="col-span-3 md:col-span-2">
-                      <div className="font-mono text-[12px] tabular-nums text-[var(--color-text-muted)] tracking-[0.05em] uppercase">
+                      <div className="font-mono text-[12px] tabular-nums text-[var(--color-text-muted)] tracking-[0.05em]">
                         {t.year}
                       </div>
                     </div>
@@ -215,9 +255,7 @@ export default function CommunityPage() {
                       <h3 className="font-display font-light text-[var(--color-text)] text-[24px] md:text-[32px] leading-[1.05] tracking-[-0.025em]">
                         {t.title}
                       </h3>
-                      <p className="mt-4 prose-editorial text-[15px] md:text-[16px]">
-                        {t.body}
-                      </p>
+                      <p className="mt-4 prose-editorial">{t.body}</p>
                     </div>
                   </li>
                 </ScrollReveal>
@@ -226,20 +264,20 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* MISSIONS — bg-subtle alternance, 3 pillars */}
+        {/* PROGRAMS */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-bg-subtle)]">
           <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption text-center mb-4">What we do</div>
+              <div className="caption text-center mb-4">Ce qu\'on fait</div>
               <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
-                Three pillars.
+                Huit programmes, tout au long de l\'année.
               </h2>
             </ScrollReveal>
-            <ul className="mt-20 md:mt-28 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-              {missions.map((m, i) => {
-                const Icon = m.Icon;
+            <ul className="mt-20 md:mt-28 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12">
+              {programs.map((p, i) => {
+                const Icon = p.Icon;
                 return (
-                  <ScrollReveal key={m.title} delay={i * 0.05}>
+                  <ScrollReveal key={p.title} delay={i * 0.04}>
                     <li>
                       <Icon
                         size={28}
@@ -247,11 +285,11 @@ export default function CommunityPage() {
                         className="text-[var(--color-text-muted)] mb-6"
                         aria-hidden
                       />
-                      <h3 className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em]">
-                        {m.title}
+                      <h3 className="font-display font-light text-[var(--color-text)] text-[24px] md:text-[28px] leading-[1.1] tracking-[-0.025em]">
+                        {p.title}
                       </h3>
-                      <p className="mt-5 prose-editorial text-[15px] md:text-[16px]">
-                        {m.body}
+                      <p className="mt-4 prose-editorial text-[15px] md:text-[16px]">
+                        {p.body}
                       </p>
                     </li>
                   </ScrollReveal>
@@ -261,24 +299,68 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* IMAGE — full bleed */}
-        <section className="relative aspect-[16/9] md:aspect-[21/9] w-full bg-[var(--color-bg-muted)]">
-          <Image
-            src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
-            alt="Hope for the Future, children of Tanambao"
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
+        {/* AKANIMAMY DEEP DIVE */}
+        <section id="akanimamy" className="py-32 md:py-48 hair-rule">
+          <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
+            <ScrollReveal>
+              <div className="caption">Le foyer</div>
+              <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance max-w-[760px]">
+                Akanimamy, le nid douillet.
+              </h2>
+            </ScrollReveal>
+            <div className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+              <ScrollReveal className="lg:col-span-7">
+                <div className="relative aspect-[4/3] bg-[var(--color-bg-muted)] overflow-hidden">
+                  <Image
+                    src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
+                    alt="Le bâtiment Akanimamy en construction"
+                    fill
+                    sizes="(min-width: 1024px) 58vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              </ScrollReveal>
+              <ScrollReveal delay={0.05} className="lg:col-span-5">
+                <div className="prose-editorial">
+                  <p>
+                    <em className="not-italic font-display font-light text-[var(--color-text)]">
+                      Akany
+                    </em>{' '}
+                    veut dire foyer, nid.{' '}
+                    <em className="not-italic font-display font-light text-[var(--color-text)]">
+                      Mamy
+                    </em>{' '}
+                    veut dire doux. Akanimamy, c\'est un nid douillet — le foyer
+                    qui manquait aux enfants pour faire leurs devoirs au calme.
+                  </p>
+                  <p>
+                    Le terrain de 2 000 m² a été acquis en 2019, grâce aux dons
+                    d\'amis du projet. La première pierre a été posée le
+                    1er septembre 2020. Le bâtiment fait 152 m², avec une
+                    grande salle pour les activités, un coin bibliothèque (des
+                    livres reçus de clients norvégiens et d\'un collège
+                    français), un coin jeux de société, un bureau et un
+                    entrepôt.
+                  </p>
+                  <p>
+                    Les murs et la toiture sont terminés. À venir : les
+                    sanitaires, la cuisine, et les terrains de basket et de
+                    volley. À planter autour : arbres fruitiers, potager, du
+                    Ravintsara.
+                  </p>
+                </div>
+              </ScrollReveal>
+            </div>
+          </div>
         </section>
 
-        {/* PULL QUOTE — centered */}
+        {/* PULL QUOTE */}
         <section className="py-32 md:py-48 hair-rule">
           <div className="mx-auto max-w-[1000px] px-5 md:px-8 lg:px-12 text-center">
             <ScrollReveal>
-              <p className="pull-quote mx-auto max-w-[28ch]">
-                &ldquo;We knew the hotel would pay for the work next door before
-                we built the hotel.&rdquo;
+              <p className="pull-quote mx-auto max-w-[30ch]">
+                &ldquo;Nous savions ce que l\'hôtel allait financer à côté avant
+                même d\'ouvrir.&rdquo;
               </p>
               <div className="mt-12 inline-flex items-center gap-4">
                 <div className="w-12 border-t border-[var(--color-sand-12)]" />
@@ -290,54 +372,26 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* VISIT — bg-subtle alternance */}
+        {/* VISIT */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-bg-subtle)]">
           <div className="mx-auto max-w-[760px] px-5 md:px-8 text-center">
             <ScrollReveal>
-              <div className="caption mb-4">Visit</div>
+              <div className="caption mb-4">Visiter</div>
               <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance">
-                Guests are welcome to come along.
+                Les voyageurs sont les bienvenus.
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <div className="mt-12 prose-editorial space-y-6 text-left">
                 <p>
-                  Half-days on Tuesdays or Thursdays. We arrange a driver and one
-                  of the team to walk you through. There is no formal tour. You
-                  meet the teachers, you see the classroom, you have a tea. If
-                  you bring something to give, we ask you to give it directly to
-                  the school, not to the children.
+                  Les voyageurs qui le souhaitent peuvent passer un moment au
+                  projet pendant leur séjour. Pas de visite formelle : vous
+                  rencontrez l\'équipe, vous voyez la classe, vous prenez un
+                  thé. Si vous voulez apporter quelque chose, nous demandons
+                  de le donner directement à l\'association, pas aux enfants.
                 </p>
                 <p>
-                  Tell us at booking if you want this in your stay. There is no
-                  cost.
-                </p>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        {/* HOW A STAY SUPPORTS */}
-        <section className="py-32 md:py-48 lg:py-56 hair-rule">
-          <div className="mx-auto max-w-[760px] px-5 md:px-8 text-center">
-            <ScrollReveal>
-              <div className="caption mb-4">Your stay</div>
-              <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance">
-                Two percent of every stay.
-              </h2>
-            </ScrollReveal>
-            <ScrollReveal delay={0.05}>
-              <div className="mt-12 prose-editorial space-y-6 text-left">
-                <p>
-                  Two percent of every room booked at Hotel Ambalakely goes
-                  directly to Hope for the Future. It pays for the teachers, the
-                  materials, the meal at noon, and the small clinic that opens on
-                  Mondays.
-                </p>
-                <p>
-                  The rest comes from a few private donors and Hasina&rsquo;s
-                  Norwegian network. We publish a short audited summary every
-                  January, available on request at the desk.
+                  Indiquez-le simplement à la réservation. Il n\'y a aucun coût.
                 </p>
               </div>
             </ScrollReveal>
@@ -345,22 +399,22 @@ export default function CommunityPage() {
         </section>
 
         {/* CTA */}
-        <section className="py-32 md:py-48 lg:py-64 hair-rule bg-[var(--color-bg-subtle)]">
+        <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8 text-center">
             <ScrollReveal>
-              <div className="caption mb-4">Stay with us</div>
+              <div className="caption mb-4">Séjourner</div>
               <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance">
-                A night here is a week of school there.
+                Une nuit ici, du soutien là.
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="mt-12 inline-flex flex-wrap items-baseline gap-x-10 gap-y-6 justify-center">
-                <BookingButton>Check availability</BookingButton>
+                <BookingButton>Vérifier disponibilités</BookingButton>
                 <Link
                   href="/about"
                   className="group inline-flex items-center gap-3 font-body text-[15px] font-medium text-[var(--color-text)]"
                 >
-                  Read about the house
+                  Lire la maison
                   <ArrowRight
                     size={18}
                     className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
