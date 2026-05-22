@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import { withSentryConfig } from '@sentry/nextjs';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -30,4 +31,20 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// Sentry wrapper — uploads sourcemaps in prod, tunnels client errors via
+// /monitoring to bypass ad-blockers, silently no-ops if SENTRY_DSN is unset.
+export default withSentryConfig(nextConfig, {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  silent: !process.env.CI,
+  widenClientFileUpload: true,
+  // Route client requests through /monitoring so ad-blockers don't drop them
+  tunnelRoute: '/monitoring',
+  sourcemaps: {
+    deleteSourcemapsAfterUpload: true,
+  },
+  webpack: {
+    treeshake: { removeDebugLogging: true },
+    automaticVercelMonitors: true,
+  },
+});
