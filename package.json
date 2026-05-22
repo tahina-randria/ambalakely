@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "migrate:sanity": "tsx scripts/migrate-to-sanity.ts"
+    "migrate:sanity": "tsx scripts/migrate-to-sanity.ts",
+    "photos:upload": "tsx scripts/upload-photos.ts"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.7",
