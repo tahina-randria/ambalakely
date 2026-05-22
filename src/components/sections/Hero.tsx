@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowDown } from '@phosphor-icons/react/dist/ssr';
+import { PHOTOS } from '@/lib/data/photos';
 
 export function Hero() {
   const lines = [
@@ -19,8 +20,7 @@ export function Hero() {
         aria-hidden="true"
         className="absolute inset-0 -z-20 hero-bg-settle"
         style={{
-          backgroundImage:
-            "url('https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/e322c91a-f718-4508-8658-bcfe02d2e0f3/exterieur.jpg?format=2500w')",
+          backgroundImage: `url('${PHOTOS.hero.path}')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}

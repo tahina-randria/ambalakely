@@ -9,6 +9,7 @@ import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight, Clock, MapTrifold } from '@phosphor-icons/react/dist/ssr';
 import { fetchItineraries } from '@/sanity/lib/fetch';
+import { PHOTOS } from '@/lib/data/photos';
 
 export const metadata: Metadata = {
   title: 'Plan your trip',
@@ -21,9 +22,9 @@ export const metadata: Metadata = {
     url: '/plan-your-trip',
     images: [
       {
-        url: 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=1500w',
-        width: 1500,
-        height: 1200,
+        url: PHOTOS.planTrip.url,
+        width: 2560,
+        height: 1707,
         alt: 'View from Hotel Ambalakely on the RN7',
       },
     ],
@@ -43,7 +44,7 @@ export default async function PlanYourTripPage() {
       <Nav />
       <main id="main">
         <PageHero
-          src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w"
+          src={PHOTOS.planTrip.path}
           alt="Rice fields below Hotel Ambalakely on the RN7"
           title={['Plan your trip', 'on the RN7.']}
         />

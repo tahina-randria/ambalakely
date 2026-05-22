@@ -10,6 +10,7 @@ import { RoomComparison } from '@/components/molecules/RoomComparison';
 import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchCategories } from '@/sanity/lib/fetch';
+import { PHOTOS } from '@/lib/data/photos';
 
 export const metadata: Metadata = {
   title: 'Rooms',
@@ -22,9 +23,9 @@ export const metadata: Metadata = {
     url: '/rooms',
     images: [
       {
-        url: 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=1500w',
-        width: 1500,
-        height: 1200,
+        url: PHOTOS.rooms.url,
+        width: 2560,
+        height: 1707,
         alt: 'Supérieure room at Hotel Ambalakely',
       },
     ],

@@ -8,6 +8,7 @@ import { PageHero } from '@/components/molecules/PageHero';
 import { FaqSearch } from '@/components/molecules/FaqSearch';
 import type { FaqCategory } from '@/lib/data/faq';
 import { fetchFaq, fetchHotel } from '@/sanity/lib/fetch';
+import { PHOTOS } from '@/lib/data/photos';
 
 export const metadata: Metadata = {
   title: 'FAQ',
@@ -60,7 +61,7 @@ export default async function FaqPage() {
       <Nav />
       <main id="main">
         <PageHero
-          src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2500w"
+          src={PHOTOS.faq.path}
           alt="Hotel Ambalakely, Fianarantsoa Madagascar"
           title={['Frequently asked,', 'plainly answered.']}
         />

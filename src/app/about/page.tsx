@@ -10,6 +10,7 @@ import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchHotel } from '@/sanity/lib/fetch';
+import { PHOTOS } from '@/lib/data/photos';
 
 export const metadata: Metadata = {
   title: 'À propos',
@@ -22,9 +23,9 @@ export const metadata: Metadata = {
     url: '/about',
     images: [
       {
-        url: 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=1500w',
-        width: 1500,
-        height: 1200,
+        url: PHOTOS.about.url,
+        width: 2560,
+        height: 1707,
         alt: 'Hôtel Ambalakely, hautes terres Fianarantsoa Madagascar',
       },
     ],
@@ -71,7 +72,7 @@ export default async function AboutPage() {
       <Nav />
       <main id="main">
         <PageHero
-          src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w"
+          src={PHOTOS.about.path}
           alt="Mamy et Hasina, fondateurs de l\'Hôtel Ambalakely à Fianarantsoa, Madagascar"
           title={['Mamy et Hasina,', 'depuis 2018.']}
         />
@@ -123,7 +124,7 @@ export default async function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12">
             <div className="lg:col-span-7 relative aspect-[4/5] lg:aspect-auto lg:min-h-[80vh] bg-[var(--color-bg-muted)] overflow-hidden">
               <Image
-                src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w"
+                src={PHOTOS.about.path}
                 alt="Le jardin et l\'extérieur de l\'Hôtel Ambalakely"
                 fill
                 sizes="(min-width: 1024px) 58vw, 100vw"

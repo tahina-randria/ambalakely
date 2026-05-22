@@ -20,6 +20,7 @@ import {
 import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 import { fetchHotel } from '@/sanity/lib/fetch';
 import { formatMga } from '@/lib/utils/format';
+import { PHOTOS } from '@/lib/data/photos';
 
 export const metadata: Metadata = {
   title: 'Toko Telo, the restaurant',
@@ -32,10 +33,10 @@ export const metadata: Metadata = {
     url: '/dining',
     images: [
       {
-        url: 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=1500w',
-        width: 1500,
-        height: 1200,
-        alt: 'Toko Telo kitchen at Hotel Ambalakely',
+        url: PHOTOS.diningHero.url,
+        width: 2560,
+        height: 1707,
+        alt: 'Toko Telo dining room at Hotel Ambalakely',
       },
     ],
   },
@@ -89,7 +90,7 @@ export default async function DiningPage() {
       <Nav />
       <main id="main">
         <PageHero
-          src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2500w"
+          src={PHOTOS.diningHero.path}
           alt="Toko Telo, le restaurant de l'Hôtel Ambalakely à Fianarantsoa, Madagascar"
           title={['Toko Telo,', 'le restaurant.']}
         />
@@ -162,8 +163,8 @@ export default async function DiningPage() {
         {/* FULL-BLEED IMAGE */}
         <section className="relative aspect-[16/9] md:aspect-[21/9] w-full bg-[var(--color-bg-muted)]">
           <Image
-            src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/ec5defdf-5292-4f38-8190-87b5454bbbc2/confort.jpg?format=2500w"
-            alt="La salle à manger de Toko Telo, avec sa cheminée et ses murs en pierre"
+            src={PHOTOS.diningLounge.path}
+            alt="Le salon de Toko Telo, avec sa cheminée et ses murs en pierre"
             fill
             sizes="100vw"
             className="object-cover"
