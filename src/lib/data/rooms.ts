@@ -130,24 +130,6 @@ export const rooms: Room[] = [
   },
 ];
 
-export const journalPosts = [
-  {
-    id: 'koselig',
-    date: 'APRIL 2026',
-    title: 'Koselig in the highlands. What it means here.',
-  },
-  {
-    id: 'garden',
-    date: 'MARCH 2026',
-    title: 'What the garden gives in April.',
-  },
-  {
-    id: 'hope',
-    date: 'FEBRUARY 2026',
-    title: 'Ten years of Hope for the Future.',
-  },
-] as const;
-
 /**
  * Avis clients — verbatim depuis hotelambalakely.com (FR).
  * Aucun avis inventé : tous extraits du site Squarespace public.

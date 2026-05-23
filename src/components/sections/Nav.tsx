@@ -7,12 +7,12 @@ import { cn } from '@/lib/utils/cn';
 import { BookingDrawer } from '@/components/molecules/BookingDrawer';
 
 const links = [
-  { href: '/rooms', label: 'Rooms' },
-  { href: '/dining', label: 'Dining' },
-  { href: '/experiences', label: 'Experiences' },
-  { href: '/community', label: 'Community' },
+  { href: '/rooms', label: 'Chambres' },
+  { href: '/dining', label: 'Restaurant' },
+  { href: '/experiences', label: 'Excursions' },
+  { href: '/community', label: 'Communauté' },
   { href: '/journal', label: 'Journal' },
-  { href: '/about', label: 'About' },
+  { href: '/about', label: 'La maison' },
 ];
 
 export function Nav() {
@@ -86,15 +86,7 @@ export function Nav() {
           </ul>
 
           <div className="flex items-center gap-5">
-            <button
-              type="button"
-              className={cn(
-                'hidden md:inline-flex text-[12px] font-mono uppercase tracking-[0.08em] opacity-70 hover:opacity-100 transition-opacity duration-[var(--duration-fast)]',
-                scrolled ? 'text-[var(--color-text)]' : 'text-white',
-              )}
-            >
-              EN
-            </button>
+            {/* Lang switcher hidden until next-intl wired and /en/ routes exist. */}
             <button
               type="button"
               onClick={() => setDrawerOpen(true)}
@@ -105,7 +97,7 @@ export function Nav() {
                   : 'text-black bg-white hover:bg-white/90',
               )}
             >
-              Book
+              Réserver
             </button>
           </div>
         </div>

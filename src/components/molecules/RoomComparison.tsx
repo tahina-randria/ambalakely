@@ -18,7 +18,7 @@ export function RoomComparison() {
       <div className="sticky top-[72px] z-10 bg-[var(--color-bg)]/95 backdrop-blur-[8px] border-b border-[var(--color-border-subtle)]">
         <div className="grid grid-cols-12 gap-4 py-5">
           <div className="col-span-3 hidden md:block">
-            <div className="caption">Compare</div>
+            <div className="caption">Comparer</div>
           </div>
           {categories.map((cat) => (
             <div
@@ -75,14 +75,14 @@ export function RoomComparison() {
                         size={20}
                         weight="light"
                         className="text-[var(--color-text)]"
-                        aria-label="Included"
+                        aria-label="Inclus"
                       />
                     ) : (
                       <Minus
                         size={20}
                         weight="light"
                         className="text-[var(--color-sand-7)]"
-                        aria-label="Not included"
+                        aria-label="Non inclus"
                       />
                     )
                   ) : (
@@ -99,7 +99,7 @@ export function RoomComparison() {
         {/* Price row */}
         <div className="grid grid-cols-12 gap-4 py-7 md:py-9 items-baseline">
           <div className="col-span-12 md:col-span-3">
-            <span className="caption">From</span>
+            <span className="caption">À partir de</span>
           </div>
           {categories.map((cat) => (
             <div key={cat.slug} className="col-span-4 md:col-span-3 px-2 md:px-4">
@@ -107,7 +107,7 @@ export function RoomComparison() {
                 {formatMga(cat.priceMga)}
               </div>
               <div className="mt-1 caption text-[var(--color-text-muted)]">
-                Ariary · per night
+                Ariary · par nuit
               </div>
             </div>
           ))}
@@ -122,7 +122,7 @@ export function RoomComparison() {
                 href={`/rooms/${cat.slug}`}
                 className="group inline-flex items-center gap-2 font-body text-[14px] font-medium text-[var(--color-text)]"
               >
-                Read more
+                Lire la suite
                 <ArrowUpRight
                   size={14}
                   className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

@@ -13,7 +13,7 @@ export async function Journal() {
     <Section id="journal" divider>
       <Container>
         <ScrollReveal className="mb-16 md:mb-24">
-          <Kicker>Journal</Kicker>
+          <Kicker>Le journal</Kicker>
         </ScrollReveal>
 
         <ul className="border-t border-[var(--color-border-subtle)]">
@@ -47,7 +47,7 @@ export async function Journal() {
             href="/journal"
             className="group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]"
           >
-            Read the journal
+            Lire le journal
             <ArrowRight
               size={18}
               className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"

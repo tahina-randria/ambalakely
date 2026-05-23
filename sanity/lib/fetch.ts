@@ -185,14 +185,14 @@ const FAQ_CATEGORY_SLUG_MAP: Record<string, string> = {
 };
 
 const FAQ_CATEGORY_LABEL_MAP: Record<string, string> = {
-  booking: 'Booking and rates',
-  arrival: 'Arrival and transfers',
-  rooms: 'The rooms',
-  food: 'Food and restaurant',
-  nearby: 'What is nearby',
-  money: 'Payment and money',
-  health: 'Health and safety',
-  practical: 'Practical',
+  booking: 'Réservation et tarifs',
+  arrival: 'Arrivée et transferts',
+  rooms: 'Les chambres',
+  food: 'Restauration',
+  nearby: 'Aux alentours',
+  money: 'Paiement et argent',
+  health: 'Santé et sécurité',
+  practical: 'Pratique',
 };
 
 export const fetchFaq = cache(async (): Promise<FaqCategory[]> => {

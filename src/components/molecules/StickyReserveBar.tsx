@@ -48,7 +48,7 @@ export function StickyReserveBar({ name, priceMga }: Props) {
             </span>
             <span className="hidden md:inline-block w-1 h-1 rounded-full bg-[var(--color-sand-7)] shrink-0" />
             <span className="font-mono uppercase tracking-[0.1em] text-[11px] text-[var(--color-sand-6)] hidden md:inline-block">
-              From
+              À partir de
             </span>
             <span className="font-display font-light text-[14px] md:text-[16px] tabular-nums shrink-0">
               {formatMga(priceMga)} Ariary
@@ -59,7 +59,7 @@ export function StickyReserveBar({ name, priceMga }: Props) {
             onClick={open}
             className="group inline-flex items-center gap-2 text-[13px] md:text-[14px] font-medium shrink-0 hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-fast)]"
           >
-            Reserve
+            Réserver
             <ArrowRight
               size={14}
               className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"

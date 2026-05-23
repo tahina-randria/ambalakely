@@ -20,29 +20,29 @@ type ContactLink = { label: string; href: string; Icon: PhosphorIcon };
 
 const columns: NavColumn[] = [
   {
-    title: 'Stay',
+    title: 'Séjourner',
     links: [
-      { label: 'All ten rooms', href: '/rooms' },
+      { label: 'Les dix chambres', href: '/rooms' },
       { label: 'Supérieure', href: '/rooms/superieure' },
       { label: 'Confort', href: '/rooms/confort' },
       { label: 'Standard', href: '/rooms/standard' },
     ],
   },
   {
-    title: 'Discover',
+    title: 'Découvrir',
     links: [
-      { label: 'Dining', href: '/dining' },
-      { label: 'Experiences', href: '/experiences' },
-      { label: 'Plan your trip', href: '/plan-your-trip' },
+      { label: 'Restaurant', href: '/dining' },
+      { label: 'Excursions', href: '/experiences' },
+      { label: 'Préparer le voyage', href: '/plan-your-trip' },
       { label: 'Journal', href: '/journal' },
     ],
   },
   {
-    title: 'About',
+    title: 'La maison',
     links: [
-      { label: 'The house', href: '/about' },
-      { label: 'Mamy and Hasina', href: '/about#founders' },
-      { label: 'Community', href: '/community' },
+      { label: 'L’histoire', href: '/about' },
+      { label: 'Mamy et Hasina', href: '/about#founders' },
+      { label: 'Communauté', href: '/community' },
       { label: 'FAQ', href: '/faq' },
     ],
   },

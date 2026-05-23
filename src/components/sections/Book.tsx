@@ -15,30 +15,31 @@ export async function Book() {
       <Container>
         <div className="mx-auto max-w-[920px]">
           <ScrollReveal>
-            <div className="caption">Reserve</div>
+            <div className="caption">Réserver</div>
           </ScrollReveal>
 
           <ScrollReveal delay={0.05}>
             <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-              Tell us when.
+              Dites-nous quand.
             </h2>
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
             <p className="mt-10 prose-editorial max-w-[520px]">
-              Two ways to reach us. The drawer for dates and rooms. WhatsApp or
-              email if you prefer to write. We answer within the day.
+              Deux façons de nous joindre. Le formulaire pour les dates et les
+              chambres. WhatsApp ou e-mail si vous préférez écrire. Nous
+              répondons dans la journée.
             </p>
             <p className="mt-4 caption text-[var(--color-text-muted)]">
-              Free cancellation up to thirty days before arrival.
+              Annulation gratuite jusqu&apos;à trente jours avant l&apos;arrivée.
             </p>
           </ScrollReveal>
 
           <ScrollReveal delay={0.15}>
             <div className="mt-14 flex flex-wrap items-baseline gap-x-10 gap-y-6">
-              <BookingButton>Check availability</BookingButton>
+              <BookingButton>Voir les disponibilités</BookingButton>
               <a
-                href={`https://wa.me/${WA_DIGITS}?text=Hello%2C%20I%20would%20like%20to%20book%20a%20stay%20at%20Ambalakely.`}
+                href={`https://wa.me/${WA_DIGITS}?text=Bonjour%2C%20je%20souhaite%20r%C3%A9server%20un%20s%C3%A9jour%20%C3%A0%20Ambalakely.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[15px] underline-offset-4 hover:underline"

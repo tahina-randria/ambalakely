@@ -12,20 +12,20 @@ import { fetchExcursions } from '@/sanity/lib/fetch';
 import { PHOTOS } from '@/lib/data/photos';
 
 export const metadata: Metadata = {
-  title: 'Experiences',
+  title: 'Excursions',
   description:
-    'Ten things to do from Hôtel Ambalakely. Ranomafana lemurs, rice field walks, the kitchen, Sahambavy tea, Andringitra trek, Ambositra woodcarving, the school visit, and more.',
+    "Dix choses à faire depuis l'Hôtel Ambalakely. Lémuriens de Ranomafana, marche dans les rizières, cuisine, thé de Sahambavy, trek d'Andringitra, sculpture d'Ambositra, visite de l'école, et plus encore.",
   alternates: { canonical: '/experiences' },
   openGraph: {
-    title: 'Experiences · Hôtel Ambalakely',
-    description: 'Ten things to do, all arranged from the desk.',
+    title: 'Excursions · Hôtel Ambalakely',
+    description: "Dix choses à faire, toutes organisées depuis la maison.",
     url: '/experiences',
     images: [
       {
         url: PHOTOS.experiences.url,
         width: 2560,
         height: 1707,
-        alt: 'View from Hôtel Ambalakely on the RN7',
+        alt: "Vue depuis l'Hôtel Ambalakely sur la RN7",
       },
     ],
   },
@@ -37,16 +37,16 @@ export default async function ExperiencesPage() {
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: 'Home', url: '/' },
-          { name: 'Experiences', url: '/experiences' },
+          { name: 'Accueil', url: '/' },
+          { name: 'Excursions', url: '/experiences' },
         ]}
       />
       <Nav />
       <main id="main">
         <PageHero
           src={PHOTOS.experiences.path}
-          alt="View of the rice fields from Hôtel Ambalakely"
-          title={['Experiences', 'from Ambalakely.']}
+          alt="Vue des rizières depuis l’Hôtel Ambalakely"
+          title={['Excursions', 'depuis Ambalakely.']}
         />
 
         {/* INTRO */}
@@ -54,16 +54,18 @@ export default async function ExperiencesPage() {
           <div className="mx-auto max-w-[700px] px-5 md:px-8">
             <ScrollReveal>
               <p className="lede-display">
-                Ten things you can do from the hotel. All arranged from the desk.
+                Dix choses à faire depuis l&apos;hôtel. Toutes organisées
+                depuis la maison.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <p className="mt-12 prose-editorial">
-                Most guests do two or three of these. The rice field walk and a
-                visit to the school happen on foot from the hotel. Ranomafana,
-                Sahambavy, Andringitra, Ambositra, Tsaranoro need a driver. We
-                arrange the driver, the park guide, the picnic and the tea, in
-                any combination.
+                La plupart des hôtes en font deux ou trois. La marche dans les
+                rizières et la visite de l&apos;école se font à pied depuis
+                l&apos;hôtel. Ranomafana, Sahambavy, Andringitra, Ambositra,
+                Tsaranoro demandent un chauffeur. Nous organisons le
+                chauffeur, le guide du parc, le panier-repas et le thé, dans
+                la combinaison qui vous va.
               </p>
             </ScrollReveal>
           </div>
@@ -73,7 +75,7 @@ export default async function ExperiencesPage() {
         <section className="hair-rule py-16 md:py-20">
           <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption mb-10">At a glance</div>
+              <div className="caption mb-10">En un coup d’œil</div>
               <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-12">
                 {experiences.map((exp) => (
                   <li
@@ -162,12 +164,12 @@ export default async function ExperiencesPage() {
                   <ScrollReveal delay={0.1}>
                     <div className="mt-10 space-y-1">
                       <div className="spec-row">
-                        <div className="spec-row__label">Best</div>
+                        <div className="spec-row__label">Idéal</div>
                         <div className="spec-row__value">{exp.best}</div>
                       </div>
                       {exp.cost ? (
                         <div className="spec-row">
-                          <div className="spec-row__label">Cost</div>
+                          <div className="spec-row__label">Tarif</div>
                           <div className="spec-row__value">{exp.cost}</div>
                         </div>
                       ) : null}
@@ -188,21 +190,21 @@ export default async function ExperiencesPage() {
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">Plan it with us</div>
+              <div className="caption">Planifions ensemble</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-                Book the room. We arrange the days.
+                Réservez la chambre. Nous organisons les journées.
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
-                <BookingButton>Check availability</BookingButton>
+                <BookingButton>Voir les disponibilités</BookingButton>
                 <Link
                   href="/plan-your-trip"
                   className="group inline-flex items-center gap-3 font-display font-light text-[var(--color-text)] text-[24px] md:text-[28px] tracking-[-0.02em] leading-[1.05]"
                 >
-                  See sample itineraries
+                  Voir nos itinéraires
                   <ArrowRight
                     size={22}
                     className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"

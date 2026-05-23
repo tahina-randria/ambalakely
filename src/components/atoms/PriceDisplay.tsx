@@ -64,7 +64,7 @@ export function PriceDisplay({
           muted,
         )}
       >
-        From
+        À partir de
       </div>
       <div
         className={cn(
@@ -78,7 +78,7 @@ export function PriceDisplay({
       </div>
       {showSuffix ? (
         <div className={cn('mt-2 font-mono uppercase tracking-[0.1em]', s.eur, muted)}>
-          Per night
+          Par nuit
         </div>
       ) : null}
     </div>

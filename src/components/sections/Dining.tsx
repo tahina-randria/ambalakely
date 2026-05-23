@@ -14,9 +14,9 @@ if (typeof window !== 'undefined') {
 }
 
 const tonight = [
-  'Zébu Marengo, local herbs and Fianar wine',
-  'Kjøttkaker, rice field beans',
-  'Krumkake, house sorbet',
+  'Zébu Marengo, herbes du jardin et vin de Fianar',
+  'Kjøttkaker, haricots des rizières',
+  'Krumkake, sorbet maison',
 ];
 
 export function Dining() {
@@ -112,7 +112,7 @@ export function Dining() {
         >
           <Image
             src={PHOTOS.diningSection.path}
-            alt="Toko Telo dining room"
+            alt="Salle à manger du restaurant Toko Telo"
             fill
             sizes="100vw"
             className="object-cover"
@@ -132,20 +132,20 @@ export function Dining() {
             transform: 'translate3d(32px, 0, 0)',
           }}
         >
-          <Kicker>Dining</Kicker>
+          <Kicker>Restaurant</Kicker>
 
           <h2 className="mt-8 font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98]">
             Toko Telo.
           </h2>
 
           <p className="mt-6 text-[16px] leading-[1.55] text-[var(--color-text-muted)]">
-            Fifty seats. Produce from the Tantsaha, the local growers. Malagasy,
-            French and Norwegian plates share the menu.
+            Cinquante couverts. Produits des Tantsaha, les maraîchers d&apos;à
+            côté. Cuisine malgache, française et norvégienne au même menu.
           </p>
 
           <div className="mt-8 pt-6 border-t border-[var(--color-border-subtle)]">
             <div className="font-mono text-[13px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
-              This evening
+              Ce soir
             </div>
             <ul className="mt-4 flex flex-col gap-2">
               {tonight.map((dish) => (
@@ -163,7 +163,7 @@ export function Dining() {
             href="/dining"
             className="mt-10 inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)] group"
           >
-            Read about Toko Telo
+            Lire sur Toko Telo
             <ArrowRight
               size={16}
               className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"

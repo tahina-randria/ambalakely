@@ -14,11 +14,11 @@ import { fetchArticles } from '@/sanity/lib/fetch';
 export const metadata: Metadata = {
   title: 'Journal',
   description:
-    'Writing from Hôtel Ambalakely. Hasina and Mamy on the kitchen, the garden, the highlands and the people who pass through.',
+    "Le journal de l’Hôtel Ambalakely. Hasina et Mamy sur la cuisine, le jardin, les hautes terres et les gens qui passent.",
   alternates: { canonical: '/journal' },
   openGraph: {
     title: 'Journal · Hôtel Ambalakely',
-    description: 'Writing from Hasina and Mamy.',
+    description: "Écrits d’Hasina et Mamy.",
     url: '/journal',
   },
 };
@@ -32,7 +32,7 @@ export default async function JournalPage() {
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: 'Home', url: '/' },
+          { name: 'Accueil', url: '/' },
           { name: 'Journal', url: '/journal' },
         ]}
       />
@@ -40,8 +40,8 @@ export default async function JournalPage() {
       <main id="main">
         <PageHero
           src={heroSrc}
-          alt="From the Hôtel Ambalakely journal"
-          title={['Journal of', 'Hôtel Ambalakely.']}
+          alt="Le journal de l’Hôtel Ambalakely"
+          title={['Le journal de', 'l’Hôtel Ambalakely.']}
           hideCta
         />
 
@@ -50,8 +50,8 @@ export default async function JournalPage() {
           <div className="mx-auto max-w-[700px] px-5 md:px-8">
             <ScrollReveal>
               <p className="lede-display">
-                Writing from Hasina and Mamy. The kitchen, the garden, the people who
-                pass through.
+                Écrits d&apos;Hasina et Mamy. La cuisine, le jardin, les gens
+                qui passent.
               </p>
             </ScrollReveal>
           </div>
@@ -63,15 +63,15 @@ export default async function JournalPage() {
             <div className="mx-auto max-w-[700px] px-5 md:px-8 text-center">
               <ScrollReveal>
                 <div className="caption text-[var(--color-text-muted)]">
-                  Coming soon
+                  Bientôt
                 </div>
                 <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[36px] md:text-[48px] leading-[1.02] tracking-[-0.03em] balance">
-                  The first essays arrive this season.
+                  Les premiers textes arrivent cette saison.
                 </h2>
                 <p className="mt-8 prose-editorial">
-                  Hasina is writing. The kitchen, the garden, the highlands. A few
-                  paragraphs at a time, when the day allows it. Leave us your email
-                  and you will be the first to read.
+                  Hasina écrit. La cuisine, le jardin, les hautes terres.
+                  Quelques paragraphes à la fois, quand la journée le permet.
+                  Laissez-nous votre e-mail et vous serez les premiers à lire.
                 </p>
               </ScrollReveal>
               <ScrollReveal delay={0.1}>
@@ -113,7 +113,7 @@ export default async function JournalPage() {
                           </h2>
                           <p className="mt-6 prose-editorial">{article.excerpt}</p>
                           <div className="mt-8 inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]">
-                            Read the article
+                            Lire l&apos;article
                             <ArrowRight
                               size={18}
                               className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
@@ -127,8 +127,8 @@ export default async function JournalPage() {
               </ul>
               <ScrollReveal>
                 <p className="mt-16 caption text-[var(--color-text-muted)] max-w-[560px]">
-                  More writing arrives every season. Subscribe to the newsletter at the
-                  desk on arrival.
+                  De nouveaux textes chaque saison. Inscrivez-vous à la
+                  newsletter à la réception, à votre arrivée.
                 </p>
               </ScrollReveal>
             </div>

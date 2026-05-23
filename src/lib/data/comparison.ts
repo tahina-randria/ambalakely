@@ -1,11 +1,11 @@
 /**
- * Comparison matrix — same criteria across all 3 categories.
- * Used in /rooms overview as a quick-scan grid.
+ * Matrice de comparaison — mêmes critères pour les 3 catégories.
+ * Utilisée dans /rooms en tant que grille de lecture rapide.
  *
- * Value types:
- *  - string  → typographic value (e.g. "43 m²", "King")
- *  - true    → checkmark
- *  - false   → em-dash (not included)
+ * Types de valeurs :
+ *  - string  → valeur typographique (ex. "43 m²", "King")
+ *  - true    → coche
+ *  - false   → tiret (non inclus)
  */
 import type { FeatureIconName } from '@/components/atoms/FeatureIcon';
 
@@ -24,70 +24,70 @@ export type ComparisonRow = {
 export const comparison: ComparisonRow[] = [
   {
     icon: 'size',
-    label: 'Size',
+    label: 'Surface',
     values: { superieure: '43 m²', confort: '29 m²', standard: '21 m²' },
   },
   {
     icon: 'users',
-    label: 'Capacity',
-    values: { superieure: '1 to 4', confort: '1 to 3', standard: '1 to 2' },
+    label: 'Capacité',
+    values: { superieure: '1 à 4', confort: '1 à 3', standard: '1 à 2' },
   },
   {
     icon: 'bed',
-    label: 'Bed',
+    label: 'Lit',
     values: {
-      superieure: 'King-size voamboana',
-      confort: 'King + single katrafay',
-      standard: 'Double or twin',
+      superieure: 'King en palissandre',
+      confort: 'King + simple en katrafay',
+      standard: 'Double ou twin',
     },
   },
   {
     icon: 'view',
-    label: 'View',
+    label: 'Vue',
     values: {
-      superieure: 'Rice fields',
-      confort: 'Garden or upstairs',
-      standard: 'Garden',
+      superieure: 'Rizières',
+      confort: 'Jardin ou étage',
+      standard: 'Jardin',
     },
   },
   {
     icon: 'leaf',
-    label: 'Direct garden access',
+    label: 'Accès direct au jardin',
     values: { superieure: false, confort: true, standard: false },
   },
   {
     icon: 'house',
-    label: 'Upper terrace access',
+    label: 'Accès à la terrasse haute',
     values: { superieure: true, confort: false, standard: false },
   },
   {
     icon: 'desk',
-    label: 'Writing desk by the window',
+    label: 'Bureau sous la fenêtre',
     values: { superieure: false, confort: true, standard: false },
   },
   {
     icon: 'bed',
-    label: 'Extra single bed option',
+    label: 'Lit simple supplémentaire',
     values: { superieure: true, confort: true, standard: false },
   },
   {
     icon: 'bath',
-    label: 'Hot water all day',
+    label: 'Eau chaude toute la journée',
     values: { superieure: true, confort: true, standard: true },
   },
   {
     icon: 'moon',
-    label: 'Hot water bottles at night',
+    label: 'Bouillottes au coucher',
     values: { superieure: true, confort: true, standard: true },
   },
   {
     icon: 'wifi',
-    label: 'Free WiFi',
+    label: 'WiFi gratuit',
     values: { superieure: true, confort: true, standard: true },
   },
   {
     icon: 'bell',
-    label: 'Room service from seven',
+    label: 'Service en chambre dès sept heures',
     values: { superieure: true, confort: true, standard: true },
   },
 ];

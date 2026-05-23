@@ -20,7 +20,7 @@ export async function Reviews() {
           {/* Header */}
           <ScrollReveal className="mb-16 md:mb-24">
             <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] tracking-[-0.03em] balance max-w-[720px]">
-              What people say.
+              Ce que disent nos visiteurs.
             </h2>
             {HOTEL.rating.value && HOTEL.rating.count ? (
               <div className="mt-8 flex items-center gap-3">

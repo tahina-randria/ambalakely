@@ -15,7 +15,7 @@ export function Trust() {
       <div className="relative h-[80vh] md:h-[100vh] w-full overflow-hidden bg-[var(--color-sand-12)]">
         <Image
           src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
-          alt="Hope for the Future, school in Tanambao village"
+          alt="Hope for the Future, l'école du quartier Tanambao"
           fill
           sizes="100vw"
           className="object-cover"
@@ -27,20 +27,21 @@ export function Trust() {
 
         <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
           <div className="pt-16 md:pt-24">
-            <div className="caption text-white/75">Community</div>
+            <div className="caption text-white/75">Communauté</div>
           </div>
 
           <div className="mt-auto pb-14 md:pb-20 max-w-[920px]">
             <ScrollReveal>
               <h2 className="font-display font-light tracking-[-0.03em] text-white text-[44px] leading-[1.05] md:text-[56px] md:leading-[1.02] balance">
-                Two percent of every stay supports a school next door.
+                Deux pour cent de chaque séjour vont à l&apos;école d&apos;à
+                côté.
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <p className="mt-8 text-[16px] leading-[1.6] text-white/85 max-w-[560px]">
-                Hope for the Future opened in 2014. A hundred and thirty children
-                from Tanambao, the quartier of Ambalakely. Ten years of the same
-                Wednesday and Saturday afternoons.
+                Hope for the Future a ouvert en 2014. Cent trente enfants de
+                Tanambao, le quartier d&apos;Ambalakely. Dix ans des mêmes
+                mercredis et samedis après-midi.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
@@ -48,7 +49,7 @@ export function Trust() {
                 href="/community"
                 className="mt-10 group inline-flex items-center gap-2 font-body text-[15px] font-medium text-white"
               >
-                Read about Hope for the Future
+                Lire sur Hope for the Future
                 <ArrowRight
                   size={18}
                   className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"

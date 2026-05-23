@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || HOTEL.url),
     title: {
-      default: `${HOTEL.name} · Ten rooms in the highlands of Madagascar`,
+      default: `${HOTEL.name} · Dix chambres dans les hautes terres de Madagascar`,
       template: `%s · ${HOTEL.name}, Fianarantsoa`,
     },
     description: HOTEL.description,
@@ -40,12 +40,13 @@ export async function generateMetadata(): Promise<Metadata> {
     generator: 'Next.js',
     keywords: [
       'Hôtel Ambalakely',
-      'Fianarantsoa hotel',
-      'Madagascar hotel',
-      'RN7 hotel',
-      'Highlands Madagascar',
-      'Betsileo hotel',
-      'small hotel Madagascar',
+      'hôtel Fianarantsoa',
+      'hôtel Madagascar',
+      'hôtel RN7',
+      'hautes terres Madagascar',
+      'hôtel Betsileo',
+      'petit hôtel Madagascar',
+      'séjour Fianarantsoa',
     ],
     alternates: {
       canonical: '/',
@@ -55,7 +56,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: HOTEL.tagline,
       url: '/',
       siteName: HOTEL.name,
-      locale: 'en_US',
+      locale: 'fr_FR',
       type: 'website',
     },
     twitter: {
@@ -81,14 +82,14 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
+    <html lang="fr" className={`${geist.variable} ${geistMono.variable}`}>
       <head>
         <link rel="preconnect" href="https://images.squarespace-cdn.com" />
         <link rel="dns-prefetch" href="https://images.squarespace-cdn.com" />
         <HotelJsonLd />
       </head>
       <body>
-        <a href="#main" className="skip-link">Skip to content</a>
+        <a href="#main" className="skip-link">Aller au contenu</a>
         <ScrollProgress />
         <ConsentProvider>
           <SentryConsentSync />

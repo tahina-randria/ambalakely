@@ -126,7 +126,7 @@ export function BookingDrawer({ open, onClose }: Props) {
       <aside
         role="dialog"
         aria-modal="true"
-        aria-label="Reserve a stay"
+        aria-label="Réserver un séjour"
         className={cn(
           'absolute top-0 right-0 h-full w-full max-w-[480px] bg-[var(--color-sand-12)] text-[var(--color-sand-1)]',
           'transform transition-transform duration-[var(--duration-slow)] ease-[var(--ease-standard)]',
@@ -137,12 +137,12 @@ export function BookingDrawer({ open, onClose }: Props) {
         <div className="flex flex-col min-h-full">
           <div className="flex items-center justify-between px-6 md:px-8 h-[72px] border-b border-[var(--color-sand-10)]">
             <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-sand-6)]">
-              Reserve
+              Réserver
             </div>
             <button
               type="button"
               onClick={onClose}
-              aria-label="Close"
+              aria-label="Fermer"
               className="h-9 w-9 inline-flex items-center justify-center text-[var(--color-sand-1)] hover:text-[var(--color-sand-6)] transition-colors duration-[var(--duration-fast)]"
             >
               <X size={20} weight="regular" />
@@ -155,11 +155,11 @@ export function BookingDrawer({ open, onClose }: Props) {
             ) : (
               <>
                 <h2 className="font-display font-light tracking-[-0.03em] text-[32px] leading-[1.05] md:text-[40px] md:leading-[1.02] balance">
-                  Tell us when.
+                  Dites-nous quand.
                 </h2>
 
                 <form onSubmit={onSubmit} className="mt-10 flex flex-col gap-5">
-                  <Field label="Arrival">
+                  <Field label="Arrivée">
                     <input
                       type="date"
                       required
@@ -169,7 +169,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                     />
                   </Field>
 
-                  <Field label="Departure">
+                  <Field label="Départ">
                     <input
                       type="date"
                       required
@@ -179,7 +179,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                     />
                   </Field>
 
-                  <Field label="Guests">
+                  <Field label="Voyageurs">
                     <select
                       value={form.guests}
                       onChange={update('guests')}
@@ -187,13 +187,13 @@ export function BookingDrawer({ open, onClose }: Props) {
                     >
                       {[1, 2, 3, 4].map((n) => (
                         <option key={n} value={n}>
-                          {n} {n === 1 ? 'guest' : 'guests'}
+                          {n} {n === 1 ? 'voyageur' : 'voyageurs'}
                         </option>
                       ))}
-                      <option value="5">5 guests · group</option>
-                      <option value="6">6 guests · group</option>
-                      <option value="7">7 guests · group</option>
-                      <option value="8">8+ guests · group</option>
+                      <option value="5">5 voyageurs · groupe</option>
+                      <option value="6">6 voyageurs · groupe</option>
+                      <option value="7">7 voyageurs · groupe</option>
+                      <option value="8">8+ voyageurs · groupe</option>
                     </select>
                   </Field>
 
@@ -201,7 +201,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                     <GroupCTA guests={form.guests} />
                   ) : (
                     <>
-                      <Field label="Name">
+                      <Field label="Nom">
                         <input
                           type="text"
                           required
@@ -214,7 +214,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                         />
                       </Field>
 
-                      <Field label="Email">
+                      <Field label="E-mail">
                         <input
                           type="email"
                           required
@@ -226,7 +226,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                         />
                       </Field>
 
-                      <Field label="Phone (optional)">
+                      <Field label="Téléphone (optionnel)">
                         <input
                           type="tel"
                           maxLength={50}
@@ -237,13 +237,13 @@ export function BookingDrawer({ open, onClose }: Props) {
                         />
                       </Field>
 
-                      <Field label="Message (optional)">
+                      <Field label="Message (optionnel)">
                         <textarea
                           rows={3}
                           maxLength={2000}
                           value={form.message}
                           onChange={update('message')}
-                          placeholder="Anything we should know — preferences, occasions, questions."
+                          placeholder="Ce que nous devons savoir — préférences, occasions, questions."
                           className="input-dark w-full py-3 resize-none"
                         />
                       </Field>
@@ -267,11 +267,11 @@ export function BookingDrawer({ open, onClose }: Props) {
                         {status === 'submitting' ? (
                           <>
                             <CircleNotch size={16} weight="regular" className="animate-spin" />
-                            Sending
+                            Envoi…
                           </>
                         ) : (
                           <>
-                            Send request
+                            Envoyer la demande
                             <ArrowRight
                               size={16}
                               className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
@@ -289,8 +289,8 @@ export function BookingDrawer({ open, onClose }: Props) {
                         </p>
                       ) : (
                         <p className="text-[13px] leading-[1.5] text-[var(--color-sand-7)]">
-                          Up to {MAX_INDIVIDUAL} guests. Free cancellation up to 30
-                          days before arrival.
+                          Jusqu&apos;à {MAX_INDIVIDUAL} voyageurs. Annulation
+                          gratuite jusqu&apos;à 30 jours avant l&apos;arrivée.
                         </p>
                       )}
                     </>
@@ -302,7 +302,7 @@ export function BookingDrawer({ open, onClose }: Props) {
 
           <div className="px-6 md:px-8 py-8 border-t border-[var(--color-sand-10)]">
             <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-sand-7)] mb-4">
-              Or write directly
+              Ou écrivez-nous directement
             </div>
             <div className="flex flex-col gap-3">
               <a
@@ -351,13 +351,14 @@ function GroupCTA({ guests }: { guests: string }) {
           className="text-[var(--color-sand-1)] shrink-0 mt-1"
         />
         <p className="text-[15px] leading-[1.55] text-[var(--color-sand-5)]">
-          For groups, we pair rooms and tailor the stay. Write to us directly.
+          Pour les groupes, nous regroupons les chambres et adaptons le
+          séjour. Écrivez-nous directement.
         </p>
       </div>
 
       <div className="mt-6 flex flex-col gap-3">
         <a
-          href={`https://wa.me/${WA_DIGITS}?text=Group%20booking%20request%20for%20Ambalakely`}
+          href={`https://wa.me/${WA_DIGITS}?text=Demande%20de%20r%C3%A9servation%20de%20groupe%20%C3%A0%20Ambalakely`}
           target="_blank"
           rel="noopener noreferrer"
           className="group inline-flex items-center justify-center gap-3 h-12 px-6 bg-[var(--color-sand-1)] text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
@@ -370,11 +371,11 @@ function GroupCTA({ guests }: { guests: string }) {
           />
         </a>
         <a
-          href={`mailto:${HOTEL.email}?subject=Group%20booking%20(${guests}%20guests)`}
+          href={`mailto:${HOTEL.email}?subject=R%C3%A9servation%20groupe%20(${guests}%20voyageurs)`}
           className="group inline-flex items-center justify-center gap-3 h-12 px-6 border border-[var(--color-sand-7)] text-[var(--color-sand-1)] font-body text-[15px] font-medium transition-[color,border-color] duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:border-[var(--color-sand-1)]"
         >
           <Envelope size={18} weight="regular" />
-          Email us
+          Nous écrire
         </a>
       </div>
     </div>
@@ -385,19 +386,19 @@ function SuccessPanel({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex flex-col gap-6">
       <h2 className="font-display font-light tracking-[-0.03em] text-[32px] leading-[1.05] md:text-[40px] md:leading-[1.02] balance">
-        Request received.
+        Demande reçue.
       </h2>
       <p className="text-[15px] leading-[1.6] text-[var(--color-sand-5)] max-w-[380px]">
-        Thank you. Hasina or Mamy will reply within 24–48 hours with
-        availability and a personalised quote. A confirmation has been sent to
-        your inbox.
+        Merci. Hasina ou Mamy vous répondront sous 24 à 48 heures avec les
+        disponibilités et un devis personnalisé. Une confirmation a été
+        envoyée dans votre boîte de réception.
       </p>
       <button
         type="button"
         onClick={onClose}
         className="self-start group inline-flex items-center gap-3 h-12 px-6 border border-[var(--color-sand-7)] text-[var(--color-sand-1)] font-body text-[15px] font-medium transition-[color,border-color] duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:border-[var(--color-sand-1)]"
       >
-        Close
+        Fermer
       </button>
     </div>
   );

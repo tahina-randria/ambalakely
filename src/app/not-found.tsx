@@ -14,21 +14,21 @@ export default function NotFound() {
         <div className="mx-auto max-w-[920px] px-5 md:px-8">
           <div className="caption">404</div>
           <h1 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-            Off the path.
+            Hors des sentiers.
           </h1>
           <p className="mt-12 prose-editorial max-w-[480px]">
-            The page you were looking for may have moved or never existed. Below
-            are the well-trodden ways back.
+            La page que vous cherchiez a peut-être déménagé, ou n&apos;a
+            jamais existé. Voici les chemins habituels pour revenir.
           </p>
 
           <ul className="mt-16 border-t border-[var(--color-border-subtle)] max-w-[640px]">
             {[
-              { href: '/', label: 'Home' },
-              { href: '/rooms', label: 'The rooms' },
-              { href: '/dining', label: 'Toko Telo, the restaurant' },
-              { href: '/plan-your-trip', label: 'Plan your trip' },
-              { href: '/journal', label: 'The journal' },
-              { href: '/about', label: 'About Mamy and Hasina' },
+              { href: '/', label: 'Accueil' },
+              { href: '/rooms', label: 'Les chambres' },
+              { href: '/dining', label: 'Toko Telo, le restaurant' },
+              { href: '/plan-your-trip', label: 'Préparer le voyage' },
+              { href: '/journal', label: 'Le journal' },
+              { href: '/about', label: 'Mamy et Hasina' },
             ].map((link) => (
               <li
                 key={link.href}

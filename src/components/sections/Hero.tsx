@@ -9,9 +9,9 @@ const VIDEO_POSTER = '/videos/hero-poster.webp';
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const lines = [
-    'Hôtel Ambalakely.',
-    'Ten rooms in the highlands',
-    'of Madagascar.',
+    'Dix chambres sur la RN7,',
+    'à 12 km de Fianarantsoa,',
+    'dans les hautes terres.',
   ];
 
   useEffect(() => {
@@ -72,7 +72,7 @@ export function Hero() {
               onClick={openBooking}
               className="group inline-flex items-center gap-2 h-12 px-7 bg-white text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
             >
-              Check availability
+              Voir les disponibilités
               <ArrowDown
                 size={16}
                 className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-y-0.5"

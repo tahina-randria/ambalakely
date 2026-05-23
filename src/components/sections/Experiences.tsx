@@ -13,7 +13,8 @@ export async function Experiences() {
       <Container>
         <ScrollReveal className="mb-16 md:mb-24">
           <Heading variant="h2" className="max-w-[800px]">
-            Walk, weave, cook. What this land gives, when it gives it.
+            Marcher, tisser, cuisiner. Ce que cette terre donne, quand elle
+            le donne.
           </Heading>
         </ScrollReveal>
 
@@ -50,7 +51,7 @@ export async function Experiences() {
             href="/experiences"
             className="group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]"
           >
-            Read about all experiences
+            Voir toutes les excursions
             <ArrowRight
               size={18}
               className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"

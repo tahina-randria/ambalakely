@@ -77,15 +77,15 @@ export function FaqSearch({ faq }: { faq: FaqCategory[] }) {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search the FAQ..."
-              aria-label="Search the FAQ"
+              placeholder="Rechercher dans la FAQ..."
+              aria-label="Rechercher dans la FAQ"
               className="w-full h-12 pl-8 pr-10 bg-transparent border-0 border-b border-[var(--color-border)] focus:border-[var(--color-sand-12)] focus:outline-none font-display font-light text-[18px] md:text-[22px] tracking-[-0.01em] text-[var(--color-text)] placeholder-[var(--color-text-muted)] transition-colors"
             />
             {query ? (
               <button
                 type="button"
                 onClick={() => setQuery('')}
-                aria-label="Clear search"
+                aria-label="Effacer la recherche"
                 className="absolute right-0 top-1/2 -translate-y-1/2 h-8 w-8 inline-flex items-center justify-center text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
               >
                 <X size={16} weight="light" />
@@ -105,7 +105,7 @@ export function FaqSearch({ faq }: { faq: FaqCategory[] }) {
                   : 'border border-[var(--color-border)] text-[var(--color-text)] hover:border-[var(--color-sand-12)]',
               )}
             >
-              All
+              Tout
             </button>
             {faq.map((cat) => {
               const Icon = categoryIcon[cat.slug];
@@ -136,8 +136,8 @@ export function FaqSearch({ faq }: { faq: FaqCategory[] }) {
       {lowerQuery || activeCategory ? (
         <div className="py-6 caption text-[var(--color-text-muted)]">
           {totalMatches === 0
-            ? 'No matches. Try a different search or category.'
-            : `${totalMatches} ${totalMatches === 1 ? 'match' : 'matches'}`}
+            ? 'Aucun résultat. Essayez une autre recherche ou catégorie.'
+            : `${totalMatches} ${totalMatches === 1 ? 'résultat' : 'résultats'}`}
         </div>
       ) : null}
 
@@ -145,7 +145,7 @@ export function FaqSearch({ faq }: { faq: FaqCategory[] }) {
       {filtered.length === 0 ? (
         <div className="py-24 md:py-32">
           <p className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.2] tracking-[-0.025em] text-center max-w-[480px] mx-auto">
-            No matches. Write to us instead.
+            Aucun résultat. Écrivez-nous directement.
           </p>
         </div>
       ) : (

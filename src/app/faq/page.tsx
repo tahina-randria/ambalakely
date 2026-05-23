@@ -13,11 +13,11 @@ import { PHOTOS } from '@/lib/data/photos';
 export const metadata: Metadata = {
   title: 'FAQ',
   description:
-    'Practical answers about visiting Hôtel Ambalakely. Booking, transfers from Antananarivo, what to pack, the food, money, and the road.',
+    "Réponses pratiques pour votre séjour à l’Hôtel Ambalakely. Réservation, transferts depuis Antananarivo, ce qu’il faut prévoir, la table, le paiement et la route.",
   alternates: { canonical: '/faq' },
   openGraph: {
     title: 'FAQ · Hôtel Ambalakely',
-    description: 'Practical answers about your stay.',
+    description: 'Réponses pratiques pour votre séjour.',
     url: '/faq',
   },
 };
@@ -53,7 +53,7 @@ export default async function FaqPage() {
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: 'Home', url: '/' },
+          { name: 'Accueil', url: '/' },
           { name: 'FAQ', url: '/faq' },
         ]}
       />
@@ -62,8 +62,8 @@ export default async function FaqPage() {
       <main id="main">
         <PageHero
           src={PHOTOS.faq.path}
-          alt="Hôtel Ambalakely, Fianarantsoa Madagascar"
-          title={['Frequently asked,', 'plainly answered.']}
+          alt="Hôtel Ambalakely, Fianarantsoa, Madagascar"
+          title={['Questions fréquentes,', 'réponses simples.']}
         />
 
         {/* INTRO */}
@@ -71,19 +71,20 @@ export default async function FaqPage() {
           <div className="mx-auto max-w-[700px] px-5 md:px-8">
             <ScrollReveal>
               <p className="lede-display">
-                The questions we are asked most often, with real answers.
+                Les questions qu&apos;on nous pose le plus souvent, avec de
+                vraies réponses.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <p className="mt-12 prose-editorial">
-                If something is not here, write to us at{' '}
+                Si vous ne trouvez pas, écrivez-nous à{' '}
                 <a
                   href={`mailto:${HOTEL.email}`}
                   className="underline-offset-4 hover:underline"
                 >
                   {HOTEL.email}
                 </a>{' '}
-                and we will answer within the day. WhatsApp{' '}
+                et nous répondrons dans la journée. WhatsApp{' '}
                 <a
                   href={`https://wa.me/${HOTEL.whatsapp.replace(/[^0-9]/g, '')}`}
                   target="_blank"
@@ -92,7 +93,7 @@ export default async function FaqPage() {
                 >
                   {HOTEL.phone}
                 </a>{' '}
-                works too.
+                fonctionne aussi.
               </p>
             </ScrollReveal>
           </div>
@@ -110,12 +111,12 @@ export default async function FaqPage() {
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
               <h2 className="font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-                Write to us, or just book.
+                Écrivez-nous, ou réservez directement.
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
-                <BookingButton>Check availability</BookingButton>
+                <BookingButton>Voir les disponibilités</BookingButton>
                 <a
                   href={`mailto:${HOTEL.email}`}
                   className="text-[15px] underline-offset-4 hover:underline"

@@ -30,11 +30,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { category } = await params;
   const [cat, HOTEL] = await Promise.all([fetchCategoryBySlug(category), fetchHotel()]);
-  if (!cat) return { title: 'Room not found' };
+  if (!cat) return { title: 'Chambre introuvable' };
 
   return {
-    title: `${cat.name} room`,
-    description: `${cat.shortDescription} ${cat.size}, ${cat.capacity}. From ${cat.priceMga.toLocaleString('fr-FR')} Ariary per night.`,
+    title: `Chambre ${cat.name}`,
+    description: `${cat.shortDescription} ${cat.size}, ${cat.capacity}. À partir de ${cat.priceMga.toLocaleString('fr-FR')} Ariary la nuit.`,
     alternates: { canonical: `/rooms/${cat.slug}` },
     openGraph: {
       title: `${cat.name} · ${HOTEL.shortName}`,
@@ -51,7 +51,7 @@ async function HotelOfferJsonLd({ category }: { category: Category | undefined }
   const data = {
     '@context': 'https://schema.org',
     '@type': 'HotelRoom',
-    name: `${category.name} room`,
+    name: `Chambre ${category.name}`,
     description: category.longDescription,
     occupancy: {
       '@type': 'QuantitativeValue',
@@ -99,8 +99,8 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: 'Home', url: '/' },
-          { name: 'Rooms', url: '/rooms' },
+          { name: 'Accueil', url: '/' },
+          { name: 'Chambres', url: '/rooms' },
           { name: cat.name, url: `/rooms/${cat.slug}` },
         ]}
       />
@@ -110,8 +110,8 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
       <main id="main">
         <PageHero
           src={cat.heroImage}
-          alt={`${cat.name} room at Hôtel Ambalakely`}
-          title={[cat.name, 'room.']}
+          alt={`Chambre ${cat.name} à l’Hôtel Ambalakely`}
+          title={['Chambre', `${cat.name}.`]}
         />
 
         {/* ════════════════════════════════════════════════════════════
@@ -128,10 +128,10 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
             {/* Quick facts — magazine spec sheet, hairline rules */}
             <ScrollReveal delay={0.05}>
               <dl className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 border-y border-[var(--color-border-subtle)] divide-x divide-[var(--color-border-subtle)]">
-                <SpecItem Icon={Bed} label="Bed" value={cat.bedSetup} />
-                <SpecItem Icon={ArrowsOut} label="Size" value={cat.size} />
-                <SpecItem Icon={Users} label="Capacity" value={cat.capacity} />
-                <SpecItem Icon={Mountains} label="View" value={cat.view} />
+                <SpecItem Icon={Bed} label="Lit" value={cat.bedSetup} />
+                <SpecItem Icon={ArrowsOut} label="Taille" value={cat.size} />
+                <SpecItem Icon={Users} label="Capacité" value={cat.capacity} />
+                <SpecItem Icon={Mountains} label="Vue" value={cat.view} />
               </dl>
             </ScrollReveal>
 
@@ -143,11 +143,11 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
 
             <ScrollReveal delay={0.15}>
               <p className="mt-10 max-w-[700px] font-display font-light italic text-[var(--color-text-muted)] text-[17px] md:text-[19px] leading-[1.55]">
-                {cat.count} in the house. From{' '}
+                {cat.count} dans la maison. À partir de{' '}
                 <span className="not-italic tabular-nums text-[var(--color-text)]">
                   {formatMga(cat.priceMga)} Ariary
                 </span>{' '}
-                per night.
+                la nuit.
               </p>
             </ScrollReveal>
           </div>
@@ -158,8 +158,8 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         ════════════════════════════════════════════════════════════ */}
         <StickyScrubImage
           src={cat.gallery[1] ?? cat.heroImage}
-          alt={`${cat.name} interior, morning light`}
-          caption={`Plate · ${cat.name}`}
+          alt={`Intérieur de la chambre ${cat.name}, lumière du matin`}
+          caption={`Cliché · ${cat.name}`}
         />
 
         {/* ════════════════════════════════════════════════════════════
@@ -168,7 +168,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         <section className="py-32 md:py-48 lg:py-64">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption mb-12 md:mb-16">In every room</div>
+              <div className="caption mb-12 md:mb-16">Dans chaque chambre</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-20 border-t border-[var(--color-border-subtle)]">
@@ -211,7 +211,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         <section className="py-32 md:py-48 lg:py-64">
           <div className="mx-auto max-w-[760px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">A note from {cat.concierge.signed}</div>
+              <div className="caption">Un mot de {cat.concierge.signed}</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <p className="mt-10 font-display font-light italic text-[var(--color-text)] text-[26px] md:text-[36px] leading-[1.3] tracking-[-0.02em]">
@@ -235,20 +235,21 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">Reserve</div>
+              <div className="caption">Réserver</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-                A {cat.name.toLowerCase()} room, from{' '}
+                Une chambre {cat.name}, à partir de{' '}
                 <span className="tabular-nums">{formatMga(cat.priceMga)}</span>{' '}
                 Ariary.
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
-                <BookingButton>Check availability</BookingButton>
+                <BookingButton>Voir les disponibilités</BookingButton>
                 <p className="text-[14px] leading-[1.55] text-[var(--color-text-muted)] max-w-[400px]">
-                  Per night. Free cancellation up to thirty days before arrival.
+                  Par nuit. Annulation gratuite jusqu&apos;à trente jours avant
+                  l&apos;arrivée.
                 </p>
               </div>
             </ScrollReveal>
@@ -261,7 +262,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         <section className="py-32 md:py-48 lg:py-56 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">Or another room</div>
+              <div className="caption">Ou une autre chambre</div>
             </ScrollReveal>
             <ul className="mt-12">
               {others.map((o, i) => (
@@ -276,7 +277,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                         <div className="relative aspect-[4/3] overflow-hidden bg-[var(--color-bg-muted)]">
                           <Image
                             src={o.heroImage}
-                            alt={`${o.name} room`}
+                            alt={`Chambre ${o.name}`}
                             fill
                             sizes="(min-width: 768px) 25vw, 33vw"
                             className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-[1.04]"
@@ -300,7 +301,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                           {o.shortDescription}
                         </p>
                         <p className="mt-2 text-[14px] md:text-[15px] text-[var(--color-text-muted)]">
-                          From{' '}
+                          À partir de{' '}
                           <span className="tabular-nums text-[var(--color-text)]">
                             {formatMga(o.priceMga)} Ariary
                           </span>

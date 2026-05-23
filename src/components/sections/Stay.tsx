@@ -9,22 +9,22 @@ const categories = [
   {
     id: 'superieure',
     name: 'Supérieure',
-    count: 'Two rooms',
-    spec: '43 m², king voamboana, rice field view',
+    count: 'Deux chambres',
+    spec: '43 m², lit king en palissandre, vue sur les rizières',
     priceMga: 255000,
   },
   {
     id: 'confort',
     name: 'Confort',
-    count: 'Four rooms',
-    spec: '29 m², king and single, garden or upstairs',
+    count: 'Quatre chambres',
+    spec: '29 m², king et lit simple, jardin ou étage',
     priceMga: 226000,
   },
   {
     id: 'standard',
     name: 'Standard',
-    count: 'Four rooms',
-    spec: '21 m², double or twin, garden view',
+    count: 'Quatre chambres',
+    spec: '21 m², double ou twin, vue sur le jardin',
     priceMga: 182000,
   },
 ];
@@ -36,10 +36,10 @@ export function Stay() {
         <div className="mx-auto max-w-[920px]">
           {/* Editorial intro */}
           <ScrollReveal>
-            <div className="caption mb-8">Stay</div>
+            <div className="caption mb-8">Les chambres</div>
             <p className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[40px] leading-[1.2] tracking-[-0.025em] balance max-w-[680px]">
-              Same sand walls, same dark wood floors, same hot water bottles
-              at night. The difference is space, view and bed.
+              Mêmes murs sable, mêmes parquets en bois sombre, mêmes
+              bouillottes au soir. La différence : la taille, la vue, le lit.
             </p>
           </ScrollReveal>
 
@@ -64,7 +64,7 @@ export function Stay() {
                       </p>
                     </div>
                     <div className="col-span-8 md:col-span-4 text-left md:text-right font-display font-light text-[var(--color-text)] text-[20px] md:text-[24px] tracking-[-0.02em] tabular-nums">
-                      From {formatMga(cat.priceMga)} Ariary
+                      À partir de {formatMga(cat.priceMga)} Ariary
                     </div>
                     <div className="col-span-4 md:col-span-1 md:flex md:justify-end">
                       <ArrowRight
@@ -84,7 +84,7 @@ export function Stay() {
                 href="/rooms"
                 className="group inline-flex items-center gap-3 font-body text-[15px] font-medium text-[var(--color-text)]"
               >
-                Read about all ten rooms
+                Voir les dix chambres
                 <ArrowRight
                   size={18}
                   className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"

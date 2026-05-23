@@ -19,9 +19,9 @@ import { MapboxMap } from '@/components/molecules/MapboxMap';
 type Distance = { label: string; sub: string; meta: string; Icon: PhosphorIcon };
 
 const distances: Distance[] = [
-  { label: 'Antananarivo', sub: 'Capital · Ivato airport', meta: '8 h', Icon: Buildings },
-  { label: 'Antsirabe', sub: 'Thermal town', meta: '4 h', Icon: Drop },
-  { label: 'Ranomafana', sub: 'National park', meta: '1 h 20', Icon: Tree },
+  { label: 'Antananarivo', sub: 'Capitale · aéroport Ivato', meta: '8 h', Icon: Buildings },
+  { label: 'Antsirabe', sub: 'Ville thermale', meta: '4 h', Icon: Drop },
+  { label: 'Ranomafana', sub: 'Parc national', meta: '1 h 20', Icon: Tree },
   { label: 'Isalo', sub: 'Massif', meta: '5 h', Icon: Mountains },
 ];
 
@@ -34,10 +34,10 @@ export function Location() {
     <Section id="location" divider>
       <Container>
         <ScrollReveal className="mb-16 md:mb-24">
-          <Kicker>Location</Kicker>
+          <Kicker>Emplacement</Kicker>
           <div className="mt-6 flex flex-col md:flex-row md:items-end justify-between gap-8">
             <h2 className="font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[44px] leading-[1.05] md:text-[56px] md:leading-[1.02] max-w-[760px] balance">
-              On the Route Nationale 7, halfway between the capital and the south.
+              Sur la Route Nationale 7, à mi-chemin entre la capitale et le sud.
             </h2>
             <Link
               href="https://www.google.com/maps/place/Fianarantsoa,+Madagascar/@-21.4541,47.0862,12z"
@@ -45,7 +45,7 @@ export function Location() {
               rel="noreferrer"
               className="group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)] shrink-0"
             >
-              Open in Google Maps
+              Ouvrir dans Google Maps
               <ArrowUpRight
                 size={18}
                 className="transition-[color,transform] duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -69,7 +69,7 @@ export function Location() {
             {/* Distance list */}
             <div className="lg:col-span-4 flex flex-col">
               <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-6">
-                From Ambalakely
+                Depuis Ambalakely
               </div>
               <ul className="border-t border-[var(--color-border-subtle)]">
                 {distances.map((d) => {
@@ -117,14 +117,14 @@ export function Location() {
                 aria-hidden
               />
               <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-3">
-                By road from Antananarivo
+                Par la route depuis Antananarivo
               </div>
               <div className="font-display text-[22px] tracking-[-0.02em] text-[var(--color-text)]">
-                8 hours
+                8 heures
               </div>
               <p className="mt-3 text-[15px] leading-[1.55] text-[var(--color-text-muted)]">
-                Private transfer along the RN7. We arrange it from your arrival at
-                Ivato International.
+                Transfert privé sur la RN7. Nous l&apos;organisons depuis votre
+                arrivée à Ivato International.
               </p>
             </div>
             <div>
@@ -135,14 +135,14 @@ export function Location() {
                 aria-hidden
               />
               <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-3">
-                From Fianarantsoa centre
+                Depuis le centre de Fianarantsoa
               </div>
               <div className="font-display text-[22px] tracking-[-0.02em] text-[var(--color-text)]">
                 20 minutes
               </div>
               <p className="mt-3 text-[15px] leading-[1.55] text-[var(--color-text-muted)]">
-                Twelve kilometres north on a quiet road. The hotel sits on the
-                hill above the village.
+                Douze kilomètres au nord par une route tranquille.
+                L&apos;hôtel est sur la colline au-dessus du village.
               </p>
             </div>
             <div>
@@ -153,14 +153,14 @@ export function Location() {
                 aria-hidden
               />
               <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-3">
-                By air
+                Par avion
               </div>
               <div className="font-display text-[22px] tracking-[-0.02em] text-[var(--color-text)]">
-                TNR to WFI · 1 h 10
+                TNR &rarr; WFI · 1 h 10
               </div>
               <p className="mt-3 text-[15px] leading-[1.55] text-[var(--color-text-muted)]">
-                Domestic flights to Fianarantsoa airport from Antananarivo, then
-                25&#160;min by car.
+                Vols domestiques vers l&apos;aéroport de Fianarantsoa depuis
+                Antananarivo, puis 25&#160;min en voiture.
               </p>
             </div>
           </div>

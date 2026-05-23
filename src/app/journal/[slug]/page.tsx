@@ -92,7 +92,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: 'Home', url: '/' },
+          { name: 'Accueil', url: '/' },
           { name: 'Journal', url: '/journal' },
           { name: article.title, url: `/journal/${article.slug}` },
         ]}
@@ -115,7 +115,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
           <div className="mx-auto max-w-[680px] px-5 md:px-8">
             <ScrollReveal>
               <div className="caption text-[var(--color-text-muted)]">
-                From the journal
+                Depuis le journal
               </div>
               <p className="mt-6 font-display font-light text-[var(--color-text)] text-[22px] md:text-[26px] leading-[1.35] tracking-[-0.015em] balance">
                 {article.excerpt}
@@ -202,21 +202,21 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
         <section className="py-32 md:py-48 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">Stay with us</div>
+              <div className="caption">Venez nous voir</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-                Read the rest in person.
+                Lisez la suite en personne.
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
-                <BookingButton>Check availability</BookingButton>
+                <BookingButton>Voir les disponibilités</BookingButton>
                 <Link
                   href="/journal"
                   className="group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]"
                 >
-                  Back to the journal
+                  Retour au journal
                   <ArrowRight
                     size={18}
                     className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
@@ -234,7 +234,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
           <section className="py-32 md:py-48 hair-rule">
             <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
               <ScrollReveal>
-                <div className="caption">More writing</div>
+                <div className="caption">D’autres textes</div>
               </ScrollReveal>
               <ul className="mt-12">
                 {others.map((o) => (

@@ -52,7 +52,7 @@ export function NewsletterSignup({
           isDark ? 'text-[var(--color-sand-6)]' : 'text-[var(--color-text-muted)]',
         )}
       >
-        Quarterly letter
+        Lettre trimestrielle
       </div>
       <p
         className={cn(
@@ -60,8 +60,8 @@ export function NewsletterSignup({
           isDark ? 'text-[var(--color-sand-5)]' : 'text-[var(--color-text-muted)]',
         )}
       >
-        A short note from Hasina each season. The garden, the menu, the people who
-        passed through. No marketing, no offers.
+        Une note d&apos;Hasina chaque saison. Le jardin, le menu, les gens qui
+        sont passés. Pas de publicité, pas de promotions.
       </p>
 
       {status === 'done' ? (
@@ -71,7 +71,7 @@ export function NewsletterSignup({
             isDark ? 'text-[var(--color-sand-1)]' : 'text-[var(--color-text)]',
           )}
         >
-          Saved. Talk to you in a season.
+          C&apos;est noté. À la prochaine saison.
         </p>
       ) : (
         <div className="mt-2 flex items-center gap-3 max-w-[420px]">
@@ -80,8 +80,8 @@ export function NewsletterSignup({
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="your@email.com"
-            aria-label="Email for newsletter"
+            placeholder="votre@email.com"
+            aria-label="E-mail pour la newsletter"
             className={cn(
               'flex-1 h-12 px-4 bg-[var(--color-bg)] border border-solid text-[15px] focus:outline-none transition-colors',
               isDark
@@ -103,7 +103,7 @@ export function NewsletterSignup({
           <button
             type="submit"
             disabled={status === 'submitting'}
-            aria-label="Subscribe"
+            aria-label="S'abonner"
             className={cn(
               'h-12 w-12 inline-flex items-center justify-center transition-colors disabled:opacity-50',
               isDark
