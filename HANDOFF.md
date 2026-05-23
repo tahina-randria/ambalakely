@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-23 (Quick wins: PostHog wired, fake articles retired, cookies prefs link)
+Last updated: 2026-05-23 (Senior design audit + Top 5 actions all shipped to prod)
 
 ---
 
@@ -34,13 +34,18 @@ That's it. Claude reads HANDOFF.md and has everything.
 Vercel project : `tahinas-projects-0021cf78/ambalakely`. Auto-deploys on `main` push. CLI deploy: `npx vercel --prod --yes`.
 
 ### What's live on prod (2026-05-23 wrap)
+- **Full FR copy** — site entirely in French (HANDOFF rule 13). EN switcher hidden until `next-intl` wired. `lang="fr"`, `locale: fr_FR`. See section 20 for the audit-driven rewrite that triggered this.
+- **Hero refonte** — H1 + subtitle "La maison de Mamy et Hasina, ouverte en octobre 2018." + social proof line "★ Avis vérifiés sur Booking & TripAdvisor" à côté du CTA. Échelle typo tri-palier 44/56/68.
+- **Stay section avec thumbnails** — chaque catégorie a sa miniature 4:3 (heroImage Sanity/Squarespace), à gauche du nom + spec + prix.
+- **Reviews dense (3 max) + page `/avis`** — la home montre 3 quotes en grille 3-col + lien "Voir les 9 avis". Page dédiée `/avis` reprend l'éditorial original (pleine hauteur par quote).
+- **MobileBookingBar** — sticky bottom-bar "Réserver" sur mobile (md:hidden), gating consent (cachée tant que le cookie banner est visible).
 - **Hero video** : 6.6s HD loop (Squarespace original, balcon Betsileo), autoplay muted loop playsInline, poster webp fallback, respects `prefers-reduced-motion`.
 - **Branding** : leaf-mark logo (PNG, white on transparent) + "Hôtel Ambalakely" wordmark in Nav. Logo inverts (Tailwind `invert`) on scroll. Footer masthead retitled "Hôtel Ambalakely". Favicon + Apple touch icon (Next auto-discovery via `src/app/icon.png` + `apple-icon.png`).
 - **Sanity CMS** at `https://hotel-ambalakely.sanity.studio/` (cloud Studio; local `/studio` redirects there since the local Next bundle can't ship Sanity 5.26 due to `useEffectEvent`).
 - **Resend** booking + newsletter wired and **verified end-to-end** — 3 emails Delivered in test. Sending from `Hôtel Ambalakely <ambalakely@mita-studio.com>` with `replyTo: hello@hotelambalakely.com` (free-tier compromise; upgrade later for own domain).
 - **Cookie banner RGPD** — FR copy, gates PostHog + Sentry (analytics + errorTracking categories). Persists in localStorage `ambalakely.consent.v1`.
 - **Sentry** (EU, `mita-studio` org / `hotel-ambalakely` project) + **PostHog** (EU project id 180427, key wired in `.env.local` + Vercel). Both opt-in via cookie banner.
-- **Photos** : heroes on home + 6 page heroes use local `/photos/p**.webp` from `src/lib/data/photos.ts`. Galleries inside `data/categories.ts`, `data/rooms.ts`, `data/experiences.ts`, `data/articles.ts`, `data/itineraries.ts` still reference Squarespace CDN URLs (lower priority — heroes drive first impression).
+- **Photos** : heroes on home + 6 page heroes use local `/photos/p**.webp` from `src/lib/data/photos.ts`. Stay section et /rooms category cards utilisent les heroImage Squarespace via Next/image (remotePatterns OK). Galleries inside `data/categories.ts`, `data/rooms.ts`, `data/experiences.ts`, `data/articles.ts`, `data/itineraries.ts` still reference Squarespace CDN URLs (lower priority — heroes drive first impression).
 - **Trust + /community** still serve `HFF2.jpg` from Squarespace (no Hope-for-the-Future photo in the 47-WebP batch — waiting on Hasina).
 - **All `\'` JSX literals fixed** to `&apos;` on /community, /about, /dining (was rendering `s\'appelle` literally).
 
@@ -361,6 +366,13 @@ A simple way: build a temporary `/admin/photos` page that lists all 47 in a grid
 - ✅ Footer "Gérer les cookies" link → `useConsent().reset()` re-opens the banner.
 - ✅ PostHog EU project created (id 180427), `NEXT_PUBLIC_POSTHOG_KEY` set in `.env.local` + Vercel (Production + Preview). Tracking activates on prod after a user opts in via the cookie banner.
 
+**Top 5 design actions** — DONE on 2026-05-23 (see section 20 for the full audit + implementation log)
+- ✅ #1 Bascule complète du copy user-facing en FR (37 fichiers).
+- ✅ #2 Hero refonte (subtitle + social proof line).
+- ✅ #3 Densifier Reviews (3 max sur home + page `/avis` avec les 9 quotes).
+- ✅ #4 Thumbnails 4:3 dans Stay + fix `voamboana` → `palissandre`.
+- ✅ #5 MobileBookingBar sticky bottom-bar.
+
 **Tier 2 — Foundation (Betsileo culture moat)**
 - `/excursions` refactor with the 3 real Betsileo circuits (Antsolaitra, Vatolahy, Matsiatra) + Ranomafana, Sahambavy, Ambositra, Andringitra, Ambalavao, Antemoro, Fianarantsoa old town, train station. All verified in section 5. ~1–2 h.
 - `/fianarantsoa-region` NEW pillar page (2 500+ words, photo-rich) — Raindratsara legend, VALA etymology, Betsileo culture, the Lapa, Pierrot Men, Small Five, panorama + map. The SEO killer. ~3–4 h of writing.
@@ -617,6 +629,60 @@ This session ran after Round 1 and shipped four batches directly to `main` (no P
 
 ### Throwaway tools used
 - **`src/app/admin/photos`** (gone, deleted in commit `dfef95b`) — temporary admin grid that rendered the 47 WebP files with filenames + DSC numbers. Used once to identify which photo goes in which slot, then deleted. Easy to recreate from git history if a future photo batch arrives.
+
+## 20. Audit design senior + Top 5 actions (2026-05-23, soir)
+
+Le user a demandé un audit "Senior Product Designer" du site complet avec template strict (verdict, vibe-code tells, Mobbin benchmark, dimensions A→H, Top 5 prioritaires, copy FR rewrites). L'audit a tourné en autonome sur ~10h. Process et livraisons ci-dessous.
+
+### L'audit infra
+- **`audit/capture.mjs`** : script Playwright qui capture 12 pages × 2 viewports (desktop 1440×900 + mobile iPhone 14) full-page contre prod. Sortie dans `audit/screens/` (gitignoré, ~82 MB).
+- Lancé via `pnpm exec node audit/capture.mjs`. Tournée complète prend ~90 s.
+- Playwright 1.60 ajouté en devDependency, Chrome Headless Shell téléchargé séparément (~92 MB, hors node_modules).
+
+### L'audit livré (note globale 6/10)
+Identifié le **problème #1** : site schizophrène linguistiquement (home + /journal en EN, /rooms + /dining + /community en FR). Aucune identité linguistique. **Problème #2** : home interminable (11 sections × 1-2 viewports = 15-20 scrolls) sans conversion visible avant scroll 8, hero sans value prop (juste un fait géographique).
+
+L'audit complet en 8 sections est conservé dans la session — non re-collé ici pour rester court. Les 5 actions prioritaires sortantes ont toutes été livrées.
+
+### Top 5 livrés, dans l'ordre
+
+**#1 — FR pass complet** (commit `9c249f4`, 37 fichiers, +701/-600)
+- Toutes les sections home (Hero, Nav + EN switcher caché, Stay, Dining, Experiences, Story, Reviews, Trust, Journal, Book, Location, Footer).
+- Composants : BookingDrawer (form + success + group CTA + close), NewsletterSignup, FaqSearch, PriceDisplay, StickyReserveBar, RoomComparison, PageHero.
+- Pages : layout (lang/locale fr_FR, skip-link, métadonnées + keywords FR), /rooms, /rooms/[category], /journal, /journal/[slug], /experiences, /plan-your-trip, /faq, /not-found, /dining metadata, /community déjà FR.
+- Données : `faq.ts` intégralement réécrit (8 catégories, ~36 entrées), `experiences.ts` (10 excursions), `itineraries.ts` (3 plans), `comparison.ts` (12 critères, **fix voamboana → palissandre**). `journalPosts` retiré de `rooms.ts` (dead code stale EN).
+- `sanity/lib/fetch.ts` : `FAQ_CATEGORY_LABEL_MAP` en FR (Booking → Réservation, etc.).
+
+**#2 — Hero refonte** (commit `0b16d40`)
+- H1 maintenant tri-palier 44/56/68 (mobile/tablet/desktop) au lieu de 56 fixe.
+- Subtitle ajouté sous le H1 : « La maison de Mamy et Hasina, ouverte en octobre 2018. » (≈ 18-22 px, white/85, fade-up à `0.7s`).
+- Social proof inline à côté du CTA : icône Star (fill, white/90) + « Avis vérifiés sur Booking & TripAdvisor ». Pas de note inventée (HANDOFF rule 6 — `HOTEL.rating.value` reste `null`).
+
+**#3 — Reviews densifié + `/avis`** (commit `8c9788d`)
+- `Reviews.tsx` (home) : `slice(0, 3)` + grille 3 cols, chaque quote compacte (source label / quote / attribution / mini séparateur). Lien "Voir les 9 avis" → `/avis`.
+- `src/app/avis/page.tsx` créée. Reprend l'éditorial original pleine-hauteur (1 quote par viewport, hairline rules) mais sur sa propre route. PageHero + intro + CTA final.
+- Sitemap mis à jour (`/avis`, priority 0.7).
+
+**#4 — Stay thumbnails 4:3** (commit `1f70cd0`)
+- `Stay.tsx` devient async, fetch `categories` depuis Sanity/.ts (au lieu d'un tableau hardcodé local).
+- Chaque ligne : col-3 thumbnail (heroImage Squarespace, aspect 4:3, hover scale-1.04 sur 1400 ms) + col-5 caption/nom/spec (dérivée du `bedSetup`) + col-3 prix + col-1 flèche.
+- Sur mobile : tout empilé en col-12.
+
+**#5 — MobileBookingBar** (commit `4ece4ad`)
+- `src/components/molecules/MobileBookingBar.tsx` créé : sticky `fixed bottom-0 inset-x-0 z-40 h-14 bg-sand-12 text-sand-1 md:hidden`. Un seul bouton « Réserver » → dispatch `open-booking` event.
+- Gating consent : caché tant que `hasChosen === false` (sinon stacking avec CookieBanner).
+- Mounté dans `layout.tsx` après `<CookieBanner />` pour être présent partout.
+
+### Workflow autonome
+- Chaque Top 5 → typecheck (clean) + `rm -rf .next && pnpm build` (vert) + commit atomique + push vers main → Vercel auto-deploy.
+- Pas de PR : commits direct main (workflow normal du projet, Vercel autoredeploy à chaque push).
+- Recapture Playwright finale après le 5ᵉ push pour vérification visuelle.
+
+### Connu, non bloquant
+- /dining anime un scroll-pinned GSAP qui rend le texte invisible à mi-scroll. Audit a recommandé de simplifier (section D du Mobbin). **NON modifié** dans ce batch — sera fait dans une future session.
+- /community hero reste sombre car HFF2.jpg vient encore de Squarespace (en attente photo Hasina, cf. rule HFF).
+- Galleries des rooms/[category] utilisent encore Squarespace CDN — la home Stay est maintenant tangible, mais le mapping galleries → photos locaux reste pending.
+- EN switcher dans Nav : retiré (commenté `// Lang switcher hidden until next-intl wired`). Sera réactivé quand i18n landera (Tier 5).
 
 ## 19. Quick wins batch (2026-05-23, late)
 
