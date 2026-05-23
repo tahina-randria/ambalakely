@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-23 (Brand + video + content polish all shipped to prod)
+Last updated: 2026-05-23 (Quick wins: PostHog wired, fake articles retired, cookies prefs link)
 
 ---
 
@@ -39,7 +39,7 @@ Vercel project : `tahinas-projects-0021cf78/ambalakely`. Auto-deploys on `main` 
 - **Sanity CMS** at `https://hotel-ambalakely.sanity.studio/` (cloud Studio; local `/studio` redirects there since the local Next bundle can't ship Sanity 5.26 due to `useEffectEvent`).
 - **Resend** booking + newsletter wired and **verified end-to-end** — 3 emails Delivered in test. Sending from `Hôtel Ambalakely <ambalakely@mita-studio.com>` with `replyTo: hello@hotelambalakely.com` (free-tier compromise; upgrade later for own domain).
 - **Cookie banner RGPD** — FR copy, gates PostHog + Sentry (analytics + errorTracking categories). Persists in localStorage `ambalakely.consent.v1`.
-- **Sentry** (EU, `mita-studio` org / `hotel-ambalakely` project) + **PostHog** scaffold (key still TBD). Both opt-in via cookie banner.
+- **Sentry** (EU, `mita-studio` org / `hotel-ambalakely` project) + **PostHog** (EU project id 180427, key wired in `.env.local` + Vercel). Both opt-in via cookie banner.
 - **Photos** : heroes on home + 6 page heroes use local `/photos/p**.webp` from `src/lib/data/photos.ts`. Galleries inside `data/categories.ts`, `data/rooms.ts`, `data/experiences.ts`, `data/articles.ts`, `data/itineraries.ts` still reference Squarespace CDN URLs (lower priority — heroes drive first impression).
 - **Trust + /community** still serve `HFF2.jpg` from Squarespace (no Hope-for-the-Future photo in the 47-WebP batch — waiting on Hasina).
 - **All `\'` JSX literals fixed** to `&apos;` on /community, /about, /dining (was rendering `s\'appelle` literally).
@@ -356,10 +356,10 @@ A simple way: build a temporary `/admin/photos` page that lists all 47 in a grid
 
 ### Concrete pending work, ranked
 
-**Quick wins (15–30 min)**
-- Delete the 3 fake articles in `src/lib/data/articles.ts` (Hasina-voice essays previously invented). The Sanity `article` docs migrated from the same source are also fake — check `sanity.io/manage/project/zfb59l35` and delete or replace. `/journal` should be empty until Hasina writes, or seed with the 4 real Max William RAFALIARISON hiking pieces from Squarespace.
-- Footer link "Gérer les cookies" → calls `useConsent().reset()` to re-open the banner. ~10 min.
-- PostHog : create EU project at posthog.com, copy `NEXT_PUBLIC_POSTHOG_KEY` (and optionally `NEXT_PUBLIC_POSTHOG_HOST=https://eu.i.posthog.com`), add to `.env.local` + Vercel env vars. Analytics activates the next time someone opts in.
+**Quick wins (15–30 min)** — DONE on 2026-05-23 (see section 19)
+- ✅ Deleted the 3 fabricated articles from `data/articles.ts` and from Sanity (`pnpm tsx scripts/delete-fake-articles.ts`). `/journal` now renders an empty state with a newsletter CTA until Hasina writes — or until we import the 4 real Max William RAFALIARISON hiking pieces from Squarespace.
+- ✅ Footer "Gérer les cookies" link → `useConsent().reset()` re-opens the banner.
+- ✅ PostHog EU project created (id 180427), `NEXT_PUBLIC_POSTHOG_KEY` set in `.env.local` + Vercel (Production + Preview). Tracking activates on prod after a user opts in via the cookie banner.
 
 **Tier 2 — Foundation (Betsileo culture moat)**
 - `/excursions` refactor with the 3 real Betsileo circuits (Antsolaitra, Vatolahy, Matsiatra) + Ranomafana, Sahambavy, Ambositra, Andringitra, Ambalavao, Antemoro, Fianarantsoa old town, train station. All verified in section 5. ~1–2 h.
@@ -431,6 +431,10 @@ SENTRY_AUTH_TOKEN=...
 # Resend (mita-studio org, free tier — see section 16)
 RESEND_API_KEY=re_...
 RESEND_FROM_EMAIL=Hôtel Ambalakely <ambalakely@mita-studio.com>
+
+# PostHog (EU region — opt-in via cookie banner)
+NEXT_PUBLIC_POSTHOG_KEY=phc_...
+# NEXT_PUBLIC_POSTHOG_HOST=https://eu.i.posthog.com   # optional, default
 ```
 
 Copy `.env.local` directly from the other PC (it's gitignored). To regenerate the Sanity write token: https://www.sanity.io/manage/project/zfb59l35/api → Tokens → Add API token (Editor).
@@ -613,6 +617,27 @@ This session ran after Round 1 and shipped four batches directly to `main` (no P
 
 ### Throwaway tools used
 - **`src/app/admin/photos`** (gone, deleted in commit `dfef95b`) — temporary admin grid that rendered the 47 WebP files with filenames + DSC numbers. Used once to identify which photo goes in which slot, then deleted. Easy to recreate from git history if a future photo batch arrives.
+
+## 19. Quick wins batch (2026-05-23, late)
+
+Shipped after the brand/video session, directly to `main`:
+
+### Fake-article cleanup (commit `1490312`)
+- `src/lib/data/articles.ts` reduced to the `Article` type + an empty `articles` array. The 3 Hasina-voice essays (`ten-years-of-community`, `what-the-garden-gives-in-april`, `koselig-in-the-highlands`) were fabricated and violated cardinal rule 1.
+- `scripts/delete-fake-articles.ts` — idempotent script that lists every `*[_type=="article"]` doc in Sanity and deletes them via a single transaction. Safe to re-run; reports `Nothing to delete.` on a clean dataset. Sanity transaction id of the first deletion: `9ckVKSdpPgfYNPzd4VUzdm`.
+- `/journal` page now renders an empty state with a newsletter CTA (`PHOTOS.story` as the hero fallback so the PageHero doesn't crash on `articles[0].cover`).
+- `Journal.tsx` (homepage section) early-returns `null` if the article list is empty — the homepage rhythm survives the gap.
+- `/journal/[slug]` doesn't need changes: `generateStaticParams` returns `[]`, `fetchArticleBySlug` returns undefined, and `notFound()` handles any stale URLs.
+
+### Cookies prefs link (commit `df4a0e2`)
+- `src/components/atoms/CookiePrefsLink.tsx` — small client component that calls `useConsent().reset()`. The CookieBanner re-mounts on the next render because `hasChosen` flips back to `false`.
+- Wired into the footer "Bottom legal" row beside the RN7 coordinates.
+
+### PostHog EU
+- Project created at https://eu.posthog.com (project id 180427, region EU Cloud).
+- `NEXT_PUBLIC_POSTHOG_KEY=phc_xUy3tpo6oLpY7jdMuSwpNA6xB2RLV8fcKVeJbiZLPEuy` added to `.env.local` + Vercel (Production + Preview; Development not needed because `src/lib/analytics/posthog.ts` short-circuits when `NODE_ENV !== 'production'`).
+- `NEXT_PUBLIC_POSTHOG_HOST` left unset — code defaults to `https://eu.i.posthog.com`.
+- PostHog only initialises on the client after the user opts in via the cookie banner (`opt_in_capturing` + autocapture + `$pageview` via `usePathname`). On refusal, `opt_out_capturing` stops capture without unloading the SDK.
 
 ---
 
