@@ -67,16 +67,17 @@ export async function generateMetadata({
     generator: 'Next.js',
     keywords: t.raw('keywords') as string[],
     alternates: {
-      canonical: '/',
+      canonical: locale === routing.defaultLocale ? '/' : `/${locale}`,
       languages: {
         fr: '/',
         en: '/en',
-        no: '/no',
+        nb: '/no',
+        'x-default': '/',
       },
     },
     openGraph: {
       title: `${HOTEL.name} · Madagascar`,
-      description: HOTEL.tagline,
+      description: t('description'),
       url: '/',
       siteName: HOTEL.name,
       locale: OG_LOCALES[locale] ?? 'fr_FR',
@@ -85,7 +86,7 @@ export async function generateMetadata({
     twitter: {
       card: 'summary_large_image',
       title: `${HOTEL.name} · Madagascar`,
-      description: HOTEL.tagline,
+      description: t('description'),
     },
     robots: {
       index: true,

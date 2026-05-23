@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { fetchHotel, fetchArticles } from '@/sanity/lib/fetch';
+import { routing } from '@/i18n/routing';
 
 const ROOM_CATEGORIES: { slug: string; priority: number }[] = [
   { slug: 'superieure', priority: 0.9 },
@@ -8,38 +9,79 @@ const ROOM_CATEGORIES: { slug: string; priority: number }[] = [
 ];
 
 // Stable lastModified — only changes when content actually changes
-const LAST_UPDATE = new Date('2026-05-10');
+const LAST_UPDATE = new Date('2026-05-23');
+
+type SitemapEntry = MetadataRoute.Sitemap[number];
+
+/**
+ * Build one sitemap entry that lists every locale variant of a path.
+ *
+ * - FR (defaultLocale) lives at the bare path (e.g. /rooms) because
+ *   `localePrefix: 'as-needed'`. Other locales are prefixed (/en/rooms, /no/rooms).
+ * - `alternates.languages` carries hreflang for Google. `x-default` is FR.
+ * - `url` itself points to the FR canonical so each location appears once
+ *   in the index, but every alternate is reachable.
+ */
+function localizedEntry(
+  base: string,
+  path: string,
+  opts: { priority: number; changeFrequency: SitemapEntry['changeFrequency']; lastModified?: Date },
+): SitemapEntry {
+  const buildUrl = (locale: string) => {
+    const localePart = locale === routing.defaultLocale ? '' : `/${locale}`;
+    return `${base}${localePart}${path}`;
+  };
+
+  const languages: Record<string, string> = {
+    'x-default': buildUrl(routing.defaultLocale),
+  };
+  for (const loc of routing.locales) {
+    // Use nb (Norwegian Bokmål) for the standard hreflang on /no
+    const hreflang = loc === 'no' ? 'nb' : loc;
+    languages[hreflang] = buildUrl(loc);
+  }
+
+  return {
+    url: buildUrl(routing.defaultLocale),
+    lastModified: opts.lastModified ?? LAST_UPDATE,
+    changeFrequency: opts.changeFrequency,
+    priority: opts.priority,
+    alternates: { languages },
+  };
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [HOTEL, articles] = await Promise.all([fetchHotel(), fetchArticles()]);
   const BASE = process.env.NEXT_PUBLIC_SITE_URL || HOTEL.url;
 
-  const staticPages: MetadataRoute.Sitemap = [
-    { url: `${BASE}/`, lastModified: LAST_UPDATE, changeFrequency: 'weekly', priority: 1 },
-    { url: `${BASE}/rooms`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.95 },
-    { url: `${BASE}/dining`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.85 },
-    { url: `${BASE}/experiences`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.85 },
-    { url: `${BASE}/plan-your-trip`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.85 },
-    { url: `${BASE}/community`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/journal`, lastModified: LAST_UPDATE, changeFrequency: 'weekly', priority: 0.75 },
-    { url: `${BASE}/avis`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE}/about`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE}/faq`, lastModified: LAST_UPDATE, changeFrequency: 'monthly', priority: 0.65 },
+  const staticPaths: { path: string; priority: number; changeFrequency: SitemapEntry['changeFrequency'] }[] = [
+    { path: '/', priority: 1, changeFrequency: 'weekly' },
+    { path: '/rooms', priority: 0.95, changeFrequency: 'monthly' },
+    { path: '/dining', priority: 0.85, changeFrequency: 'monthly' },
+    { path: '/experiences', priority: 0.85, changeFrequency: 'monthly' },
+    { path: '/plan-your-trip', priority: 0.85, changeFrequency: 'monthly' },
+    { path: '/community', priority: 0.8, changeFrequency: 'monthly' },
+    { path: '/journal', priority: 0.75, changeFrequency: 'weekly' },
+    { path: '/avis', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/about', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/faq', priority: 0.65, changeFrequency: 'monthly' },
   ];
 
-  const roomPages: MetadataRoute.Sitemap = ROOM_CATEGORIES.map(({ slug, priority }) => ({
-    url: `${BASE}/rooms/${slug}`,
-    lastModified: LAST_UPDATE,
-    changeFrequency: 'monthly',
-    priority,
-  }));
+  const staticPages: MetadataRoute.Sitemap = staticPaths.map((p) =>
+    localizedEntry(BASE, p.path, { priority: p.priority, changeFrequency: p.changeFrequency }),
+  );
 
-  const articlePages: MetadataRoute.Sitemap = articles.map((a) => ({
-    url: `${BASE}/journal/${a.slug}`,
-    lastModified: new Date(a.datePublished),
-    changeFrequency: 'yearly',
-    priority: 0.6,
-  }));
+  const roomPages: MetadataRoute.Sitemap = ROOM_CATEGORIES.map(({ slug, priority }) =>
+    localizedEntry(BASE, `/rooms/${slug}`, { priority, changeFrequency: 'monthly' }),
+  );
+
+  const articlePages: MetadataRoute.Sitemap = articles.map((a) =>
+    localizedEntry(BASE, `/journal/${a.slug}`, {
+      priority: 0.6,
+      changeFrequency: 'yearly',
+      lastModified: new Date(a.datePublished),
+    }),
+  );
 
   return [...staticPages, ...roomPages, ...articlePages];
 }
