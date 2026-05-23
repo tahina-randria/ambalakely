@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-22 (Sanity CMS setup on PC 2)
+Last updated: 2026-05-23 (Round 1 + photos shipped to prod)
 
 ---
 
@@ -295,11 +295,12 @@ A simple way: build a temporary `/admin/photos` page that lists all 47 in a grid
 
 ## 9. What's pending (priority order)
 
-### Tier 1 — Truth (1 task remaining)
-- **T1.7 — Map 47 real photos to components**
-  - Identify which photo shows what
-  - Replace Squarespace CDN URLs in Hero, Story, room categories, Dining, Community, Trust
-  - Use `next/image` with responsive sizes
+### Tier 1 — Truth (done for main UI, gallery wiring still pending)
+- ✅ **T1.7 — Map 47 real photos to components** (2026-05-23, PR #3 merged)
+  - Mapping in `src/lib/data/photos.ts` (semantic slot → file, both `path` and `url` for JSON-LD/OG).
+  - Wired: home `Hero` (p23), `Story` (p22), `Dining` section (p41), `/about` / `/experiences` heroes (p23), `/plan-your-trip` (p05), `/rooms` OG (p45), `/dining` hero + lounge (p41 + p44), `/faq` (p32), `hotel.ts` images.hero (absolute p23).
+  - ⚠️ Pending: galleries inside `data/categories.ts`, `data/rooms.ts`, `data/experiences.ts`, `data/articles.ts`, `data/itineraries.ts` still reference Squarespace URLs — needs photo-by-photo mapping to specific room categories / excursions / articles. Lower priority since heroes drive first impressions.
+  - ⚠️ HFF (Hope for the Future) photos absent from the 47-WebP set, so `Trust` section + `/community` heroes keep `HFF2.jpg` on Squarespace until Hasina sends a new batch.
 
 ### Tier 2 — Foundation pages
 - **`/fianarantsoa-region` pillar (NEW page)** : the destination authority page, 2 500+ words, photo-rich. Content: Raindratsara legend, VALA etymology, Betsileo culture (NE house orientation, sacred brick-making), the Lapa, Pierrot Men, Madagascar's Small Five, panorama + map. SEO killer.
