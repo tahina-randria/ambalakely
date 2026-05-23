@@ -74,9 +74,6 @@ export async function generateMetadata(): Promise<Metadata> {
         'max-video-preview': -1,
       },
     },
-    icons: {
-      icon: '/favicon.ico',
-    },
   };
 }
 
