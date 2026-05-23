@@ -1,14 +1,26 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { ArrowDown } from '@phosphor-icons/react/dist/ssr';
-import { PHOTOS } from '@/lib/data/photos';
+
+const VIDEO_SRC = '/videos/hero.mp4';
+const VIDEO_POSTER = '/videos/hero-poster.webp';
 
 export function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const lines = [
     'Hotel Ambalakely.',
     'Ten rooms in the highlands',
     'of Madagascar.',
   ];
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.pause();
+    }
+  }, []);
 
   const openBooking = () => {
     window.dispatchEvent(new Event('open-booking'));
@@ -16,15 +28,19 @@ export function Hero() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden text-white isolate">
-      <div
+      <video
+        ref={videoRef}
         aria-hidden="true"
-        className="absolute inset-0 -z-20 hero-bg-settle"
-        style={{
-          backgroundImage: `url('${PHOTOS.hero.path}')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster={VIDEO_POSTER}
+        className="absolute inset-0 -z-20 h-full w-full object-cover hero-bg-settle"
+      >
+        <source src={VIDEO_SRC} type="video/mp4" />
+      </video>
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-10 bg-gradient-to-b from-black/35 via-black/10 to-black/60"
