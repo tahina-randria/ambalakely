@@ -7,6 +7,7 @@ import {
 } from '@phosphor-icons/react/dist/ssr';
 import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 import { Container } from '@/components/atoms/Container';
+import { CookiePrefsLink } from '@/components/atoms/CookiePrefsLink';
 import { NewsletterSignup } from '@/components/molecules/NewsletterSignup';
 import { fetchHotel } from '@/sanity/lib/fetch';
 
@@ -128,7 +129,10 @@ export async function Footer() {
           {/* Bottom legal */}
           <div className="mt-20 pt-8 border-t border-[var(--color-border-subtle)] flex flex-col md:flex-row md:items-center md:justify-between gap-4 font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
             <div>© 2026 Hôtel Ambalakely · Fianarantsoa, Madagascar</div>
-            <div>RN7 · 21°27′15″S 47°05′10″E</div>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+              <CookiePrefsLink />
+              <span>RN7 · 21°27′15″S 47°05′10″E</span>
+            </div>
           </div>
         </div>
       </Container>
