@@ -1,261 +1,261 @@
 {
   "Site": {
-    "defaultTitleSuffix": "Dix chambres dans les hautes terres de Madagascar",
-    "description": "Un petit hôtel de dix chambres dans les hautes terres de Fianarantsoa, Madagascar. Sur la RN7, à 12 km de la ville, fondé en 2018 par Mamy et Hasina.",
+    "defaultTitleSuffix": "Ti rom i Madagaskars høyland",
+    "description": "Et lite hotell med ti rom i Fianarantsoas høyland, Madagaskar. Langs RN7, 12 km fra byen, åpnet i 2018 av Mamy og Hasina.",
     "keywords": [
       "Hôtel Ambalakely",
-      "hôtel Fianarantsoa",
-      "hôtel Madagascar",
-      "hôtel RN7",
-      "hautes terres Madagascar",
-      "hôtel Betsileo",
-      "petit hôtel Madagascar",
-      "séjour Fianarantsoa"
+      "Fianarantsoa hotell",
+      "Madagaskar hotell",
+      "RN7 hotell",
+      "Madagaskars høyland",
+      "Betsileo-land",
+      "lite hotell Madagaskar",
+      "opphold Fianarantsoa"
     ]
   },
 
   "Common": {
-    "skipToContent": "Aller au contenu",
-    "checkAvailability": "Voir les disponibilités",
-    "reserve": "Réserver",
-    "book": "Réserver",
-    "close": "Fermer",
-    "from": "À partir de",
-    "perNight": "Par nuit",
+    "skipToContent": "Hopp til innhold",
+    "checkAvailability": "Se tilgjengelighet",
+    "reserve": "Bestill",
+    "book": "Bestill",
+    "close": "Lukk",
+    "from": "Fra",
+    "perNight": "Per natt",
     "ariary": "Ariary",
-    "viewAll": "Voir tout",
-    "readMore": "Lire la suite",
-    "freeCancellation30": "Annulation gratuite jusqu'à trente jours avant l'arrivée.",
-    "yes": "Oui",
-    "no": "Non",
-    "or": "Ou"
+    "viewAll": "Se alt",
+    "readMore": "Les mer",
+    "freeCancellation30": "Gratis avbestilling inntil tretti dager før ankomst.",
+    "yes": "Ja",
+    "no": "Nei",
+    "or": "Eller"
   },
 
   "Nav": {
-    "rooms": "Chambres",
+    "rooms": "Rom",
     "dining": "Restaurant",
-    "experiences": "Excursions",
-    "community": "Communauté",
+    "experiences": "Opplevelser",
+    "community": "Felleskap",
     "journal": "Journal",
-    "about": "La maison",
-    "book": "Réserver",
-    "homeAriaLabel": "Hôtel Ambalakely — accueil",
-    "switchLanguage": "Langue"
+    "about": "Huset",
+    "book": "Bestill",
+    "homeAriaLabel": "Hôtel Ambalakely — hjem",
+    "switchLanguage": "Språk"
   },
 
   "Footer": {
-    "newsletterKicker": "Lettre trimestrielle",
-    "newsletterBody": "Une note d'Hasina chaque saison. Le jardin, le menu, les gens qui sont passés. Pas de publicité, pas de promotions.",
-    "newsletterPlaceholder": "votre@email.com",
-    "newsletterAriaInput": "E-mail pour la newsletter",
-    "newsletterAriaSubmit": "S'abonner",
-    "newsletterDone": "C'est noté. À la prochaine saison.",
-    "newsletterError": "Inscription impossible.",
-    "columnStay": "Séjourner",
-    "columnDiscover": "Découvrir",
-    "columnAbout": "La maison",
-    "columnContact": "Contact",
-    "linkAllRooms": "Les dix chambres",
+    "newsletterKicker": "Brev hver sesong",
+    "newsletterBody": "Et brev fra Hasina hver sesong. Hagen, menyen, menneskene som var innom. Ingen reklame, ingen kampanjer.",
+    "newsletterPlaceholder": "din@epost.no",
+    "newsletterAriaInput": "E-post for nyhetsbrevet",
+    "newsletterAriaSubmit": "Meld deg på",
+    "newsletterDone": "Notert. Vi sees neste sesong.",
+    "newsletterError": "Påmelding mislyktes.",
+    "columnStay": "Bo",
+    "columnDiscover": "Oppdag",
+    "columnAbout": "Huset",
+    "columnContact": "Kontakt",
+    "linkAllRooms": "Alle ti rom",
     "linkSuperieure": "Supérieure",
     "linkConfort": "Confort",
     "linkStandard": "Standard",
     "linkDining": "Restaurant",
-    "linkExperiences": "Excursions",
-    "linkPlanTrip": "Préparer le voyage",
+    "linkExperiences": "Opplevelser",
+    "linkPlanTrip": "Planlegg reisen",
     "linkJournal": "Journal",
-    "linkAboutHouse": "L'histoire",
-    "linkFounders": "Mamy et Hasina",
-    "linkCommunity": "Communauté",
+    "linkAboutHouse": "Historien",
+    "linkFounders": "Mamy og Hasina",
+    "linkCommunity": "Felleskap",
     "linkFaq": "FAQ",
-    "legalCopyright": "© 2026 Hôtel Ambalakely · Fianarantsoa, Madagascar",
-    "cookiesManage": "Gérer les cookies"
+    "legalCopyright": "© 2026 Hôtel Ambalakely · Fianarantsoa, Madagaskar",
+    "cookiesManage": "Administrer cookies"
   },
 
   "Hero": {
     "lines": [
-      "Dix chambres sur la RN7,",
-      "à 12 km de Fianarantsoa,",
-      "dans les hautes terres."
+      "Ti rom langs RN7,",
+      "12 km fra Fianarantsoa,",
+      "i Madagaskars høyland."
     ],
-    "subtitle": "La maison de Mamy et Hasina, ouverte en octobre 2018.",
-    "socialProof": "Avis vérifiés sur Booking & TripAdvisor"
+    "subtitle": "Mamy og Hasinas hus, åpnet i oktober 2018.",
+    "socialProof": "Verifiserte anmeldelser på Booking & TripAdvisor"
   },
 
   "Stay": {
-    "kicker": "Les chambres",
-    "intro": "Mêmes murs sable, mêmes parquets en bois sombre, mêmes bouillottes au soir. La différence : la taille, la vue, le lit.",
-    "viewAll": "Voir les dix chambres"
+    "kicker": "Rommene",
+    "intro": "Samme sandfargede vegger, samme mørke tregulv, samme varmeflasker om kvelden. Forskjellen: størrelsen, utsikten, sengen.",
+    "viewAll": "Se alle ti rom"
   },
 
   "Dining": {
     "kicker": "Restaurant",
     "name": "Toko Telo.",
-    "intro": "Cinquante couverts. Produits des Tantsaha, les maraîchers d'à côté. Cuisine malgache, française et norvégienne au même menu.",
-    "tonightLabel": "Ce soir",
+    "intro": "Femti kuverter. Råvarer fra Tantsaha, grønnsaksdyrkerne i nabolaget. Madagassisk, fransk og norsk mat på samme meny.",
+    "tonightLabel": "I kveld",
     "dishes": [
-      "Zébu Marengo, herbes du jardin et vin de Fianar",
-      "Kjøttkaker, haricots des rizières",
-      "Krumkake, sorbet maison"
+      "Zebu Marengo, urter fra hagen og vin fra Fianar",
+      "Kjøttkaker, bønner fra rismarkene",
+      "Krumkake, husets sorbet"
     ],
-    "readMore": "Lire sur Toko Telo",
-    "imageAlt": "Salle à manger du restaurant Toko Telo"
+    "readMore": "Les om Toko Telo",
+    "imageAlt": "Spisesalen i Toko Telo"
   },
 
   "Experiences": {
-    "kicker": "Excursions",
-    "h2": "Marcher, tisser, cuisiner. Ce que cette terre donne, quand elle le donne.",
-    "viewAll": "Voir toutes les excursions"
+    "kicker": "Opplevelser",
+    "h2": "Å gå, å veve, å lage mat. Det denne jorden gir, når den gir det.",
+    "viewAll": "Se alle opplevelser"
   },
 
   "Story": {
-    "h2": "Dix chambres, depuis 2018.",
-    "bodyLead": "Mamy a acheté la colline en 2015 et planté les premiers arbres. Hasina a rapporté de Norvège l'idée du ",
+    "h2": "Ti rom, siden 2018.",
+    "bodyLead": "Mamy kjøpte åsen i 2015 og plantet de første trærne. Hasina tok med hjem fra Norge ideen om ",
     "bodyKoseligEm": "koselig",
-    "bodyTrail": ", une attention aux petites choses chaudes du quotidien. La maison a ouvert en octobre 2018. Hasina tient le menu et l'accueil. Mamy s'occupe du jardin.",
-    "quote": "L'hôtel est autant la maison de famille que le lieu des invités.",
+    "bodyTrail": ", en oppmerksomhet på de små, varme tingene i hverdagen. Huset åpnet i oktober 2018. Hasina holder menyen og tar imot gjestene. Mamy steller hagen.",
+    "quote": "Hotellet er like mye familiens hjem som et sted for gjester.",
     "quoteSigned": "Hasina",
-    "readMore": "Lire sur Mamy et Hasina",
-    "imageAlt": "Bâtiment principal de l'Hôtel Ambalakely, Fianarantsoa"
+    "readMore": "Les om Mamy og Hasina",
+    "imageAlt": "Hovedbygningen på Hôtel Ambalakely, Fianarantsoa"
   },
 
   "Reviews": {
-    "h2": "Ce que disent nos visiteurs.",
-    "ratingNoNumber": "Avis vérifiés sur {sources}",
-    "ratingWithNumber": "{value} sur 5 — {count} avis sur {sources}",
-    "viewAll": "Voir les {count} avis"
+    "h2": "Det gjestene våre sier.",
+    "ratingNoNumber": "Verifiserte anmeldelser på {sources}",
+    "ratingWithNumber": "{value} av 5 — {count} anmeldelser på {sources}",
+    "viewAll": "Se alle {count} anmeldelser"
   },
 
   "Trust": {
-    "kicker": "Communauté",
-    "h2": "Deux pour cent de chaque séjour vont à l'école d'à côté.",
-    "body": "Hope for the Future a ouvert en 2014. Cent trente enfants de Tanambao, le quartier d'Ambalakely. Dix ans des mêmes mercredis et samedis après-midi.",
-    "readMore": "Lire sur Hope for the Future",
-    "imageAlt": "Hope for the Future, l'école du quartier Tanambao"
+    "kicker": "Felleskap",
+    "h2": "To prosent av hvert opphold går til skolen ved siden av.",
+    "body": "Hope for the Future åpnet i 2014. Hundre og tretti barn fra Tanambao, nabolaget rundt Ambalakely. Ti år med de samme onsdag- og lørdagsettermiddagene.",
+    "readMore": "Les om Hope for the Future",
+    "imageAlt": "Hope for the Future, skolen i Tanambao-nabolaget"
   },
 
   "Location": {
-    "kicker": "Emplacement",
-    "h2": "Sur la Route Nationale 7, à mi-chemin entre la capitale et le sud.",
-    "openInMaps": "Ouvrir dans Google Maps",
-    "fromAmbalakely": "Depuis Ambalakely",
+    "kicker": "Beliggenhet",
+    "h2": "Ved Route Nationale 7, halvveis mellom hovedstaden og sør.",
+    "openInMaps": "Åpne i Google Maps",
+    "fromAmbalakely": "Fra Ambalakely",
     "antananarivo": "Antananarivo",
-    "antananarivoSub": "Capitale · aéroport Ivato",
+    "antananarivoSub": "Hovedstaden · Ivato flyplass",
     "antsirabe": "Antsirabe",
-    "antsirabeSub": "Ville thermale",
+    "antsirabeSub": "Kurby",
     "ranomafana": "Ranomafana",
-    "ranomafanaSub": "Parc national",
+    "ranomafanaSub": "Nasjonalpark",
     "isalo": "Isalo",
-    "isaloSub": "Massif",
-    "byRoadKicker": "Par la route depuis Antananarivo",
-    "byRoadValue": "8 heures",
-    "byRoadBody": "Transfert privé sur la RN7. Nous l'organisons depuis votre arrivée à Ivato International.",
-    "fromCentreKicker": "Depuis le centre de Fianarantsoa",
-    "fromCentreValue": "20 minutes",
-    "fromCentreBody": "Douze kilomètres au nord par une route tranquille. L'hôtel est sur la colline au-dessus du village.",
-    "byAirKicker": "Par avion",
-    "byAirValue": "TNR → WFI · 1 h 10",
-    "byAirBody": "Vols domestiques vers l'aéroport de Fianarantsoa depuis Antananarivo, puis 25 min en voiture."
+    "isaloSub": "Sandsteinsmassiv",
+    "byRoadKicker": "På vei fra Antananarivo",
+    "byRoadValue": "8 timer",
+    "byRoadBody": "Privat transport langs RN7. Vi organiserer det fra ankomst på Ivato International.",
+    "fromCentreKicker": "Fra sentrum av Fianarantsoa",
+    "fromCentreValue": "20 minutter",
+    "fromCentreBody": "Tolv kilometer nordover på en rolig vei. Hotellet ligger på åsen over landsbyen.",
+    "byAirKicker": "Med fly",
+    "byAirValue": "TNR → WFI · 1 t 10",
+    "byAirBody": "Innenlandsfly til Fianarantsoa lufthavn fra Antananarivo, deretter 25 minutter med bil."
   },
 
   "Journal": {
-    "kicker": "Le journal",
-    "viewAll": "Lire le journal",
+    "kicker": "Journalen",
+    "viewAll": "Les journalen",
     "metaTitle": "Journal",
-    "metaDescription": "Le journal de l'Hôtel Ambalakely. Hasina et Mamy sur la cuisine, le jardin, les hautes terres et les gens qui passent.",
+    "metaDescription": "Journalen til Hôtel Ambalakely. Hasina og Mamy om kjøkkenet, hagen, høylandet og menneskene som passerer.",
     "ogTitle": "Journal · Hôtel Ambalakely",
-    "ogDescription": "Écrits d'Hasina et Mamy.",
-    "heroTitle": ["Le journal de", "l'Hôtel Ambalakely."],
-    "heroAlt": "Le journal de l'Hôtel Ambalakely",
-    "introLead": "Écrits d'Hasina et Mamy. La cuisine, le jardin, les gens qui passent.",
-    "emptyKicker": "Bientôt",
-    "emptyH2": "Les premiers textes arrivent cette saison.",
-    "emptyBody": "Hasina écrit. La cuisine, le jardin, les hautes terres. Quelques paragraphes à la fois, quand la journée le permet. Laissez-nous votre e-mail et vous serez les premiers à lire.",
-    "moreEverySeason": "De nouveaux textes chaque saison. Inscrivez-vous à la newsletter à la réception, à votre arrivée.",
-    "readArticle": "Lire l'article",
-    "fromJournal": "Depuis le journal",
-    "ctaKicker": "Venez nous voir",
-    "ctaH2": "Lisez la suite en personne.",
-    "backToJournal": "Retour au journal",
-    "moreWriting": "D'autres textes"
+    "ogDescription": "Tekster av Hasina og Mamy.",
+    "heroTitle": ["Journalen til", "Hôtel Ambalakely."],
+    "heroAlt": "Journalen til Hôtel Ambalakely",
+    "introLead": "Tekster av Hasina og Mamy. Kjøkkenet, hagen, menneskene som passerer.",
+    "emptyKicker": "Snart",
+    "emptyH2": "De første tekstene kommer denne sesongen.",
+    "emptyBody": "Hasina skriver. Kjøkkenet, hagen, høylandet. Noen avsnitt om gangen, når dagen tillater det. La oss få e-postadressen din, så blir du den første som leser.",
+    "moreEverySeason": "Nye tekster hver sesong. Meld deg på nyhetsbrevet i resepsjonen når du ankommer.",
+    "readArticle": "Les artikkelen",
+    "fromJournal": "Fra journalen",
+    "ctaKicker": "Kom og besøk oss",
+    "ctaH2": "Les resten på stedet.",
+    "backToJournal": "Tilbake til journalen",
+    "moreWriting": "Flere tekster"
   },
 
   "Book": {
-    "kicker": "Réserver",
-    "h2": "Dites-nous quand.",
-    "body": "Deux façons de nous joindre. Le formulaire pour les dates et les chambres. WhatsApp ou e-mail si vous préférez écrire. Nous répondons dans la journée.",
-    "freeCancellation": "Annulation gratuite jusqu'à trente jours avant l'arrivée.",
+    "kicker": "Bestill",
+    "h2": "Si fra om når.",
+    "body": "To måter å nå oss på. Skjemaet for datoer og rom. WhatsApp eller e-post hvis du heller vil skrive. Vi svarer samme dag.",
+    "freeCancellation": "Gratis avbestilling inntil tretti dager før ankomst.",
     "whatsappLabel": "WhatsApp Hasina",
-    "whatsappMessage": "Bonjour, je souhaite réserver un séjour à Ambalakely."
+    "whatsappMessage": "Hei, jeg ønsker å bestille et opphold på Ambalakely."
   },
 
   "BookingDrawer": {
-    "ariaLabel": "Réserver un séjour",
-    "kicker": "Réserver",
-    "h2": "Dites-nous quand.",
-    "arrival": "Arrivée",
-    "departure": "Départ",
-    "guests": "Voyageurs",
-    "guestOne": "{n} voyageur",
-    "guestMany": "{n} voyageurs",
-    "guestGroup": "{n}{plus, select, true {+} other {}} voyageurs · groupe",
-    "name": "Nom",
-    "email": "E-mail",
-    "phone": "Téléphone (optionnel)",
-    "message": "Message (optionnel)",
-    "messagePlaceholder": "Ce que nous devons savoir — préférences, occasions, questions.",
-    "sending": "Envoi…",
-    "send": "Envoyer la demande",
-    "footer": "Jusqu'à {max} voyageurs. Annulation gratuite jusqu'à 30 jours avant l'arrivée.",
-    "writeUs": "Ou écrivez-nous directement",
-    "groupCTA": "Pour les groupes, nous regroupons les chambres et adaptons le séjour. Écrivez-nous directement.",
+    "ariaLabel": "Bestill et opphold",
+    "kicker": "Bestill",
+    "h2": "Si fra om når.",
+    "arrival": "Ankomst",
+    "departure": "Avreise",
+    "guests": "Gjester",
+    "guestOne": "{n} gjest",
+    "guestMany": "{n} gjester",
+    "guestGroup": "{n}{plus, select, true {+} other {}} gjester · gruppe",
+    "name": "Navn",
+    "email": "E-post",
+    "phone": "Telefon (valgfritt)",
+    "message": "Melding (valgfritt)",
+    "messagePlaceholder": "Det vi bør vite — preferanser, anledninger, spørsmål.",
+    "sending": "Sender…",
+    "send": "Send forespørsel",
+    "footer": "Inntil {max} gjester. Gratis avbestilling inntil 30 dager før ankomst.",
+    "writeUs": "Eller skriv direkte til oss",
+    "groupCTA": "For grupper kombinerer vi rommene og tilpasser oppholdet. Skriv direkte til oss.",
     "groupWhatsapp": "WhatsApp Hasina",
-    "groupEmail": "Nous écrire",
-    "groupWhatsappText": "Demande de réservation de groupe à Ambalakely",
-    "groupEmailSubject": "Réservation groupe ({guests} voyageurs)",
-    "successH2": "Demande reçue.",
-    "successBody": "Merci. Hasina ou Mamy vous répondront sous 24 à 48 heures avec les disponibilités et un devis personnalisé. Une confirmation a été envoyée dans votre boîte de réception.",
-    "successClose": "Fermer"
+    "groupEmail": "Skriv til oss",
+    "groupWhatsappText": "Gruppeforespørsel for Ambalakely",
+    "groupEmailSubject": "Gruppeforespørsel ({guests} gjester)",
+    "successH2": "Forespørsel mottatt.",
+    "successBody": "Takk. Hasina eller Mamy svarer innen 24 til 48 timer med tilgjengelighet og et tilpasset tilbud. En bekreftelse er sendt til innboksen din.",
+    "successClose": "Lukk"
   },
 
   "MobileBar": {
-    "label": "Réserver"
+    "label": "Bestill"
   },
 
   "StickyReserve": {
-    "from": "À partir de",
-    "reserve": "Réserver"
+    "from": "Fra",
+    "reserve": "Bestill"
   },
 
   "PageHero": {
-    "checkAvailability": "Voir les disponibilités"
+    "checkAvailability": "Se tilgjengelighet"
   },
 
   "Faq": {
-    "search": "Rechercher dans la FAQ...",
-    "searchAria": "Rechercher dans la FAQ",
-    "clearAria": "Effacer la recherche",
-    "all": "Tout",
-    "noMatchesShort": "Aucun résultat. Essayez une autre recherche ou catégorie.",
-    "noMatchesLong": "Aucun résultat. Écrivez-nous directement.",
-    "matchesOne": "{n} résultat",
-    "matchesMany": "{n} résultats",
-    "questionsOne": "{n} question",
-    "questionsMany": "{n} questions"
+    "search": "Søk i FAQ...",
+    "searchAria": "Søk i FAQ",
+    "clearAria": "Tøm søk",
+    "all": "Alle",
+    "noMatchesShort": "Ingen treff. Prøv et annet søk eller kategori.",
+    "noMatchesLong": "Ingen treff. Skriv direkte til oss.",
+    "matchesOne": "{n} treff",
+    "matchesMany": "{n} treff",
+    "questionsOne": "{n} spørsmål",
+    "questionsMany": "{n} spørsmål"
   },
 
   "Cookie": {
     "title": "Cookies",
-    "body": "Nous utilisons des outils de mesure d'audience anonyme et de suivi d'erreurs pour améliorer le site. Aucune publicité, aucun partage avec des tiers commerciaux.",
-    "acceptAll": "Tout accepter",
-    "refuse": "Refuser",
-    "customize": "Personnaliser",
-    "save": "Enregistrer ma sélection",
-    "closeAria": "Refuser et fermer",
-    "categoryAnalytics": "Mesure d'audience",
-    "categoryAnalyticsDesc": "PostHog. Pages visitées, clics, parcours anonymisé.",
-    "categoryErrors": "Suivi d'erreurs",
-    "categoryErrorsDesc": "Sentry. Erreurs JavaScript et incidents techniques.",
-    "categoriesLegend": "Catégories de cookies",
-    "manage": "Gérer les cookies"
+    "body": "Vi bruker anonyme målingsverktøy og feilsporing for å forbedre nettsiden. Ingen reklame, ingen deling med kommersielle tredjeparter.",
+    "acceptAll": "Godta alle",
+    "refuse": "Avslå",
+    "customize": "Tilpass",
+    "save": "Lagre mitt valg",
+    "closeAria": "Avslå og lukk",
+    "categoryAnalytics": "Besøksstatistikk",
+    "categoryAnalyticsDesc": "PostHog. Besøkte sider, klikk, anonymisert reise.",
+    "categoryErrors": "Feilsporing",
+    "categoryErrorsDesc": "Sentry. JavaScript-feil og tekniske hendelser.",
+    "categoriesLegend": "Cookie-kategorier",
+    "manage": "Administrer cookies"
   }
 }

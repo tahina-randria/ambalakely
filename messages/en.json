@@ -1,261 +1,261 @@
 {
   "Site": {
-    "defaultTitleSuffix": "Dix chambres dans les hautes terres de Madagascar",
-    "description": "Un petit hôtel de dix chambres dans les hautes terres de Fianarantsoa, Madagascar. Sur la RN7, à 12 km de la ville, fondé en 2018 par Mamy et Hasina.",
+    "defaultTitleSuffix": "Ten rooms in the highlands of Madagascar",
+    "description": "A small ten-room hotel in the highlands of Fianarantsoa, Madagascar. On the RN7, 12 km from town, opened in 2018 by Mamy and Hasina.",
     "keywords": [
       "Hôtel Ambalakely",
-      "hôtel Fianarantsoa",
-      "hôtel Madagascar",
-      "hôtel RN7",
-      "hautes terres Madagascar",
-      "hôtel Betsileo",
-      "petit hôtel Madagascar",
-      "séjour Fianarantsoa"
+      "Fianarantsoa hotel",
+      "Madagascar hotel",
+      "RN7 hotel",
+      "Madagascar highlands",
+      "Betsileo country",
+      "small hotel Madagascar",
+      "Fianarantsoa stay"
     ]
   },
 
   "Common": {
-    "skipToContent": "Aller au contenu",
-    "checkAvailability": "Voir les disponibilités",
-    "reserve": "Réserver",
-    "book": "Réserver",
-    "close": "Fermer",
-    "from": "À partir de",
-    "perNight": "Par nuit",
+    "skipToContent": "Skip to content",
+    "checkAvailability": "Check availability",
+    "reserve": "Book",
+    "book": "Book",
+    "close": "Close",
+    "from": "From",
+    "perNight": "Per night",
     "ariary": "Ariary",
-    "viewAll": "Voir tout",
-    "readMore": "Lire la suite",
-    "freeCancellation30": "Annulation gratuite jusqu'à trente jours avant l'arrivée.",
-    "yes": "Oui",
-    "no": "Non",
-    "or": "Ou"
+    "viewAll": "View all",
+    "readMore": "Read more",
+    "freeCancellation30": "Free cancellation up to thirty days before arrival.",
+    "yes": "Yes",
+    "no": "No",
+    "or": "Or"
   },
 
   "Nav": {
-    "rooms": "Chambres",
-    "dining": "Restaurant",
-    "experiences": "Excursions",
-    "community": "Communauté",
+    "rooms": "Rooms",
+    "dining": "Dining",
+    "experiences": "Experiences",
+    "community": "Community",
     "journal": "Journal",
-    "about": "La maison",
-    "book": "Réserver",
-    "homeAriaLabel": "Hôtel Ambalakely — accueil",
-    "switchLanguage": "Langue"
+    "about": "The house",
+    "book": "Book",
+    "homeAriaLabel": "Hôtel Ambalakely — home",
+    "switchLanguage": "Language"
   },
 
   "Footer": {
-    "newsletterKicker": "Lettre trimestrielle",
-    "newsletterBody": "Une note d'Hasina chaque saison. Le jardin, le menu, les gens qui sont passés. Pas de publicité, pas de promotions.",
-    "newsletterPlaceholder": "votre@email.com",
-    "newsletterAriaInput": "E-mail pour la newsletter",
-    "newsletterAriaSubmit": "S'abonner",
-    "newsletterDone": "C'est noté. À la prochaine saison.",
-    "newsletterError": "Inscription impossible.",
-    "columnStay": "Séjourner",
-    "columnDiscover": "Découvrir",
-    "columnAbout": "La maison",
+    "newsletterKicker": "Quarterly letter",
+    "newsletterBody": "A note from Hasina each season. The garden, the menu, the people who passed through. No advertising, no promotions.",
+    "newsletterPlaceholder": "your@email.com",
+    "newsletterAriaInput": "Newsletter email",
+    "newsletterAriaSubmit": "Subscribe",
+    "newsletterDone": "Noted. Until next season.",
+    "newsletterError": "Subscription failed.",
+    "columnStay": "Stay",
+    "columnDiscover": "Discover",
+    "columnAbout": "The house",
     "columnContact": "Contact",
-    "linkAllRooms": "Les dix chambres",
+    "linkAllRooms": "All ten rooms",
     "linkSuperieure": "Supérieure",
     "linkConfort": "Confort",
     "linkStandard": "Standard",
-    "linkDining": "Restaurant",
-    "linkExperiences": "Excursions",
-    "linkPlanTrip": "Préparer le voyage",
+    "linkDining": "Dining",
+    "linkExperiences": "Experiences",
+    "linkPlanTrip": "Plan your trip",
     "linkJournal": "Journal",
-    "linkAboutHouse": "L'histoire",
-    "linkFounders": "Mamy et Hasina",
-    "linkCommunity": "Communauté",
+    "linkAboutHouse": "The story",
+    "linkFounders": "Mamy and Hasina",
+    "linkCommunity": "Community",
     "linkFaq": "FAQ",
     "legalCopyright": "© 2026 Hôtel Ambalakely · Fianarantsoa, Madagascar",
-    "cookiesManage": "Gérer les cookies"
+    "cookiesManage": "Manage cookies"
   },
 
   "Hero": {
     "lines": [
-      "Dix chambres sur la RN7,",
-      "à 12 km de Fianarantsoa,",
-      "dans les hautes terres."
+      "Ten rooms on the RN7,",
+      "12 km from Fianarantsoa,",
+      "in the Madagascar highlands."
     ],
-    "subtitle": "La maison de Mamy et Hasina, ouverte en octobre 2018.",
-    "socialProof": "Avis vérifiés sur Booking & TripAdvisor"
+    "subtitle": "The home of Mamy and Hasina, opened in October 2018.",
+    "socialProof": "Verified reviews on Booking & TripAdvisor"
   },
 
   "Stay": {
-    "kicker": "Les chambres",
-    "intro": "Mêmes murs sable, mêmes parquets en bois sombre, mêmes bouillottes au soir. La différence : la taille, la vue, le lit.",
-    "viewAll": "Voir les dix chambres"
+    "kicker": "The rooms",
+    "intro": "The same sand walls, the same dark wood floors, the same hot water bottles at night. What changes: the size, the view, the bed.",
+    "viewAll": "View all ten rooms"
   },
 
   "Dining": {
-    "kicker": "Restaurant",
+    "kicker": "Dining",
     "name": "Toko Telo.",
-    "intro": "Cinquante couverts. Produits des Tantsaha, les maraîchers d'à côté. Cuisine malgache, française et norvégienne au même menu.",
-    "tonightLabel": "Ce soir",
+    "intro": "Fifty covers. Produce from the Tantsaha, the market gardeners next door. Malagasy, French and Norwegian cooking on one menu.",
+    "tonightLabel": "Tonight",
     "dishes": [
-      "Zébu Marengo, herbes du jardin et vin de Fianar",
-      "Kjøttkaker, haricots des rizières",
-      "Krumkake, sorbet maison"
+      "Zebu Marengo, garden herbs and Fianar wine",
+      "Kjøttkaker, rice-paddy beans",
+      "Krumkake, house sorbet"
     ],
-    "readMore": "Lire sur Toko Telo",
-    "imageAlt": "Salle à manger du restaurant Toko Telo"
+    "readMore": "Read about Toko Telo",
+    "imageAlt": "Toko Telo dining room"
   },
 
   "Experiences": {
-    "kicker": "Excursions",
-    "h2": "Marcher, tisser, cuisiner. Ce que cette terre donne, quand elle le donne.",
-    "viewAll": "Voir toutes les excursions"
+    "kicker": "Experiences",
+    "h2": "To walk, to weave, to cook. What this land gives, when it gives it.",
+    "viewAll": "View all experiences"
   },
 
   "Story": {
-    "h2": "Dix chambres, depuis 2018.",
-    "bodyLead": "Mamy a acheté la colline en 2015 et planté les premiers arbres. Hasina a rapporté de Norvège l'idée du ",
+    "h2": "Ten rooms, since 2018.",
+    "bodyLead": "Mamy bought the hill in 2015 and planted the first trees. Hasina brought back from Norway the idea of ",
     "bodyKoseligEm": "koselig",
-    "bodyTrail": ", une attention aux petites choses chaudes du quotidien. La maison a ouvert en octobre 2018. Hasina tient le menu et l'accueil. Mamy s'occupe du jardin.",
-    "quote": "L'hôtel est autant la maison de famille que le lieu des invités.",
+    "bodyTrail": ", an attention to the small warm things of the everyday. The house opened in October 2018. Hasina runs the menu and the welcome. Mamy looks after the garden.",
+    "quote": "The hotel is as much our family home as it is a place for guests.",
     "quoteSigned": "Hasina",
-    "readMore": "Lire sur Mamy et Hasina",
-    "imageAlt": "Bâtiment principal de l'Hôtel Ambalakely, Fianarantsoa"
+    "readMore": "Read about Mamy and Hasina",
+    "imageAlt": "Main building of Hôtel Ambalakely, Fianarantsoa"
   },
 
   "Reviews": {
-    "h2": "Ce que disent nos visiteurs.",
-    "ratingNoNumber": "Avis vérifiés sur {sources}",
-    "ratingWithNumber": "{value} sur 5 — {count} avis sur {sources}",
-    "viewAll": "Voir les {count} avis"
+    "h2": "What our guests say.",
+    "ratingNoNumber": "Verified reviews on {sources}",
+    "ratingWithNumber": "{value} out of 5 — {count} reviews on {sources}",
+    "viewAll": "View all {count} reviews"
   },
 
   "Trust": {
-    "kicker": "Communauté",
-    "h2": "Deux pour cent de chaque séjour vont à l'école d'à côté.",
-    "body": "Hope for the Future a ouvert en 2014. Cent trente enfants de Tanambao, le quartier d'Ambalakely. Dix ans des mêmes mercredis et samedis après-midi.",
-    "readMore": "Lire sur Hope for the Future",
-    "imageAlt": "Hope for the Future, l'école du quartier Tanambao"
+    "kicker": "Community",
+    "h2": "Two percent of every stay goes to the school next door.",
+    "body": "Hope for the Future opened in 2014. One hundred and thirty children from Tanambao, the Ambalakely neighbourhood. Ten years of the same Wednesday and Saturday afternoons.",
+    "readMore": "Read about Hope for the Future",
+    "imageAlt": "Hope for the Future, the school of the Tanambao neighbourhood"
   },
 
   "Location": {
-    "kicker": "Emplacement",
-    "h2": "Sur la Route Nationale 7, à mi-chemin entre la capitale et le sud.",
-    "openInMaps": "Ouvrir dans Google Maps",
-    "fromAmbalakely": "Depuis Ambalakely",
+    "kicker": "Location",
+    "h2": "On Route Nationale 7, halfway between the capital and the south.",
+    "openInMaps": "Open in Google Maps",
+    "fromAmbalakely": "From Ambalakely",
     "antananarivo": "Antananarivo",
-    "antananarivoSub": "Capitale · aéroport Ivato",
+    "antananarivoSub": "Capital · Ivato airport",
     "antsirabe": "Antsirabe",
-    "antsirabeSub": "Ville thermale",
+    "antsirabeSub": "Spa town",
     "ranomafana": "Ranomafana",
-    "ranomafanaSub": "Parc national",
+    "ranomafanaSub": "National park",
     "isalo": "Isalo",
-    "isaloSub": "Massif",
-    "byRoadKicker": "Par la route depuis Antananarivo",
-    "byRoadValue": "8 heures",
-    "byRoadBody": "Transfert privé sur la RN7. Nous l'organisons depuis votre arrivée à Ivato International.",
-    "fromCentreKicker": "Depuis le centre de Fianarantsoa",
+    "isaloSub": "Sandstone massif",
+    "byRoadKicker": "By road from Antananarivo",
+    "byRoadValue": "8 hours",
+    "byRoadBody": "Private transfer along the RN7. We arrange it from your arrival at Ivato International.",
+    "fromCentreKicker": "From the centre of Fianarantsoa",
     "fromCentreValue": "20 minutes",
-    "fromCentreBody": "Douze kilomètres au nord par une route tranquille. L'hôtel est sur la colline au-dessus du village.",
-    "byAirKicker": "Par avion",
+    "fromCentreBody": "Twelve kilometres north along a quiet road. The hotel sits on the hill above the village.",
+    "byAirKicker": "By air",
     "byAirValue": "TNR → WFI · 1 h 10",
-    "byAirBody": "Vols domestiques vers l'aéroport de Fianarantsoa depuis Antananarivo, puis 25 min en voiture."
+    "byAirBody": "Domestic flights to Fianarantsoa airport from Antananarivo, then a 25-minute drive."
   },
 
   "Journal": {
-    "kicker": "Le journal",
-    "viewAll": "Lire le journal",
+    "kicker": "The journal",
+    "viewAll": "Read the journal",
     "metaTitle": "Journal",
-    "metaDescription": "Le journal de l'Hôtel Ambalakely. Hasina et Mamy sur la cuisine, le jardin, les hautes terres et les gens qui passent.",
+    "metaDescription": "The journal of Hôtel Ambalakely. Hasina and Mamy on cooking, the garden, the highlands and the people who pass through.",
     "ogTitle": "Journal · Hôtel Ambalakely",
-    "ogDescription": "Écrits d'Hasina et Mamy.",
-    "heroTitle": ["Le journal de", "l'Hôtel Ambalakely."],
-    "heroAlt": "Le journal de l'Hôtel Ambalakely",
-    "introLead": "Écrits d'Hasina et Mamy. La cuisine, le jardin, les gens qui passent.",
-    "emptyKicker": "Bientôt",
-    "emptyH2": "Les premiers textes arrivent cette saison.",
-    "emptyBody": "Hasina écrit. La cuisine, le jardin, les hautes terres. Quelques paragraphes à la fois, quand la journée le permet. Laissez-nous votre e-mail et vous serez les premiers à lire.",
-    "moreEverySeason": "De nouveaux textes chaque saison. Inscrivez-vous à la newsletter à la réception, à votre arrivée.",
-    "readArticle": "Lire l'article",
-    "fromJournal": "Depuis le journal",
-    "ctaKicker": "Venez nous voir",
-    "ctaH2": "Lisez la suite en personne.",
-    "backToJournal": "Retour au journal",
-    "moreWriting": "D'autres textes"
+    "ogDescription": "Writings by Hasina and Mamy.",
+    "heroTitle": ["The journal of", "Hôtel Ambalakely."],
+    "heroAlt": "The journal of Hôtel Ambalakely",
+    "introLead": "Writings by Hasina and Mamy. The kitchen, the garden, the people who pass through.",
+    "emptyKicker": "Soon",
+    "emptyH2": "The first pieces will arrive this season.",
+    "emptyBody": "Hasina is writing. The kitchen, the garden, the highlands. A few paragraphs at a time, when the day allows. Leave us your email and you'll be the first to read.",
+    "moreEverySeason": "New writing each season. Sign up for the newsletter at reception when you arrive.",
+    "readArticle": "Read the article",
+    "fromJournal": "From the journal",
+    "ctaKicker": "Come see us",
+    "ctaH2": "Read the rest in person.",
+    "backToJournal": "Back to the journal",
+    "moreWriting": "More writing"
   },
 
   "Book": {
-    "kicker": "Réserver",
-    "h2": "Dites-nous quand.",
-    "body": "Deux façons de nous joindre. Le formulaire pour les dates et les chambres. WhatsApp ou e-mail si vous préférez écrire. Nous répondons dans la journée.",
-    "freeCancellation": "Annulation gratuite jusqu'à trente jours avant l'arrivée.",
+    "kicker": "Book",
+    "h2": "Tell us when.",
+    "body": "Two ways to reach us. The form for dates and rooms. WhatsApp or email if you'd rather write. We reply within the day.",
+    "freeCancellation": "Free cancellation up to thirty days before arrival.",
     "whatsappLabel": "WhatsApp Hasina",
-    "whatsappMessage": "Bonjour, je souhaite réserver un séjour à Ambalakely."
+    "whatsappMessage": "Hello, I'd like to book a stay at Ambalakely."
   },
 
   "BookingDrawer": {
-    "ariaLabel": "Réserver un séjour",
-    "kicker": "Réserver",
-    "h2": "Dites-nous quand.",
-    "arrival": "Arrivée",
-    "departure": "Départ",
-    "guests": "Voyageurs",
-    "guestOne": "{n} voyageur",
-    "guestMany": "{n} voyageurs",
-    "guestGroup": "{n}{plus, select, true {+} other {}} voyageurs · groupe",
-    "name": "Nom",
-    "email": "E-mail",
-    "phone": "Téléphone (optionnel)",
-    "message": "Message (optionnel)",
-    "messagePlaceholder": "Ce que nous devons savoir — préférences, occasions, questions.",
-    "sending": "Envoi…",
-    "send": "Envoyer la demande",
-    "footer": "Jusqu'à {max} voyageurs. Annulation gratuite jusqu'à 30 jours avant l'arrivée.",
-    "writeUs": "Ou écrivez-nous directement",
-    "groupCTA": "Pour les groupes, nous regroupons les chambres et adaptons le séjour. Écrivez-nous directement.",
+    "ariaLabel": "Book a stay",
+    "kicker": "Book",
+    "h2": "Tell us when.",
+    "arrival": "Arrival",
+    "departure": "Departure",
+    "guests": "Guests",
+    "guestOne": "{n} guest",
+    "guestMany": "{n} guests",
+    "guestGroup": "{n}{plus, select, true {+} other {}} guests · group",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone (optional)",
+    "message": "Message (optional)",
+    "messagePlaceholder": "Anything we should know — preferences, occasions, questions.",
+    "sending": "Sending…",
+    "send": "Send request",
+    "footer": "Up to {max} guests. Free cancellation up to 30 days before arrival.",
+    "writeUs": "Or write to us directly",
+    "groupCTA": "For groups, we combine rooms and tailor the stay. Write to us directly.",
     "groupWhatsapp": "WhatsApp Hasina",
-    "groupEmail": "Nous écrire",
-    "groupWhatsappText": "Demande de réservation de groupe à Ambalakely",
-    "groupEmailSubject": "Réservation groupe ({guests} voyageurs)",
-    "successH2": "Demande reçue.",
-    "successBody": "Merci. Hasina ou Mamy vous répondront sous 24 à 48 heures avec les disponibilités et un devis personnalisé. Une confirmation a été envoyée dans votre boîte de réception.",
-    "successClose": "Fermer"
+    "groupEmail": "Email us",
+    "groupWhatsappText": "Group booking request for Ambalakely",
+    "groupEmailSubject": "Group booking ({guests} guests)",
+    "successH2": "Request received.",
+    "successBody": "Thank you. Hasina or Mamy will reply within 24 to 48 hours with availability and a tailored quote. A confirmation has been sent to your inbox.",
+    "successClose": "Close"
   },
 
   "MobileBar": {
-    "label": "Réserver"
+    "label": "Book"
   },
 
   "StickyReserve": {
-    "from": "À partir de",
-    "reserve": "Réserver"
+    "from": "From",
+    "reserve": "Book"
   },
 
   "PageHero": {
-    "checkAvailability": "Voir les disponibilités"
+    "checkAvailability": "Check availability"
   },
 
   "Faq": {
-    "search": "Rechercher dans la FAQ...",
-    "searchAria": "Rechercher dans la FAQ",
-    "clearAria": "Effacer la recherche",
-    "all": "Tout",
-    "noMatchesShort": "Aucun résultat. Essayez une autre recherche ou catégorie.",
-    "noMatchesLong": "Aucun résultat. Écrivez-nous directement.",
-    "matchesOne": "{n} résultat",
-    "matchesMany": "{n} résultats",
+    "search": "Search the FAQ...",
+    "searchAria": "Search the FAQ",
+    "clearAria": "Clear search",
+    "all": "All",
+    "noMatchesShort": "No results. Try a different search or category.",
+    "noMatchesLong": "No results. Write to us directly.",
+    "matchesOne": "{n} result",
+    "matchesMany": "{n} results",
     "questionsOne": "{n} question",
     "questionsMany": "{n} questions"
   },
 
   "Cookie": {
     "title": "Cookies",
-    "body": "Nous utilisons des outils de mesure d'audience anonyme et de suivi d'erreurs pour améliorer le site. Aucune publicité, aucun partage avec des tiers commerciaux.",
-    "acceptAll": "Tout accepter",
-    "refuse": "Refuser",
-    "customize": "Personnaliser",
-    "save": "Enregistrer ma sélection",
-    "closeAria": "Refuser et fermer",
-    "categoryAnalytics": "Mesure d'audience",
-    "categoryAnalyticsDesc": "PostHog. Pages visitées, clics, parcours anonymisé.",
-    "categoryErrors": "Suivi d'erreurs",
-    "categoryErrorsDesc": "Sentry. Erreurs JavaScript et incidents techniques.",
-    "categoriesLegend": "Catégories de cookies",
-    "manage": "Gérer les cookies"
+    "body": "We use anonymous audience measurement and error tracking to improve the site. No advertising, no sharing with commercial third parties.",
+    "acceptAll": "Accept all",
+    "refuse": "Decline",
+    "customize": "Customise",
+    "save": "Save my selection",
+    "closeAria": "Decline and close",
+    "categoryAnalytics": "Audience measurement",
+    "categoryAnalyticsDesc": "PostHog. Pages visited, clicks, anonymised journey.",
+    "categoryErrors": "Error tracking",
+    "categoryErrorsDesc": "Sentry. JavaScript errors and technical incidents.",
+    "categoriesLegend": "Cookie categories",
+    "manage": "Manage cookies"
   }
 }
