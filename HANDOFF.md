@@ -707,6 +707,71 @@ Shipped after the brand/video session, directly to `main`:
 
 ---
 
+## 21. i18n FR / EN / NO (2026-05-23, late night)
+
+Lot 2 — site multilingue. Cible : FR (par défaut, marché malgache + francophone), EN (international), NO (Bokmål, clientèle TGH norvégienne héritée du lien Norvège de Hasina).
+
+### Infra
+- **next-intl 3.26.3** App Router. `defineRouting` (`fr`, `en`, `no`, default `fr`, `localePrefix: 'as-needed'` → FR sans préfixe).
+- `src/i18n/routing.ts` — routing + `AppLocale` type.
+- `src/i18n/navigation.ts` — exporte `Link`, `redirect`, `usePathname`, `useRouter`, `getPathname` via `createNavigation(routing)`. **Toujours** importer `Link` depuis `@/i18n/navigation`, jamais `next/link`.
+- `src/i18n/request.ts` — `getRequestConfig` charge `messages/${locale}.json`. Utilise `routing.locales.includes(locale)` car `hasLocale` n'est pas exporté en 3.26.3.
+- `src/middleware.ts` — `createMiddleware(routing)` avec matcher excluant `api|_next|_vercel|studio|*.ext`.
+- `next.config.ts` — wrap avec `withNextIntl` puis `withSentryConfig`.
+
+### Structure
+- `src/app/layout.tsx` réduit à un passthrough `return children`.
+- `src/app/[locale]/layout.tsx` possède `<html lang={locale}>`, `NextIntlClientProvider`, providers (ConsentProvider, SentryConsentSync, PostHogProvider, SmoothScrollProvider), `generateStaticParams()` retourne `routing.locales`, `generateMetadata` avec `OG_LOCALES` map (`fr_FR`/`en_US`/`nb_NO`), hreflang alternates, `setRequestLocale(locale)`.
+- Toutes les pages déplacées sous `src/app/[locale]/` : `about`, `avis`, `community`, `dining`, `experiences`, `faq`, `journal`, `journal/[slug]`, `plan-your-trip`, `rooms`, `rooms/[category]`, `page.tsx`, `template.tsx`, `not-found.tsx`. **Restent** à `src/app/` : `api/`, `sitemap.ts`, `robots.ts`, `opengraph-image.tsx`, `icon.png`, `apple-icon.png`, `global-error.tsx`, `studio/`.
+
+### Bundles (`messages/fr.json` / `en.json` / `no.json`)
+Namespaces : `Site`, `Common`, `Nav`, `Footer`, `Hero`, `Stay`, `Dining`, `Experiences` (sections home), `Story`, `Reviews`, `Trust`, `Location`, `Journal`, `Book`, `BookingDrawer`, `MobileBar`, `StickyReserve`, `PageHero`, `Faq`, `Cookie`, puis pages dédiées : `About`, `DiningPage`, `RoomsPage`, `ExperiencesPage`, `PlanTrip`, `Community`, `FaqPage`, `AvisPage`, `RoomCategory`, `NotFound`, `ArticlePage`.
+
+ICU plurals utilisés : `Reviews.viewAll` (`{count}`), `BookingDrawer.guestOne`/`guestMany`/`guestGroup` (`{n}, {plus, select, true {+} other {}}`), `Faq.matchesOne`/`matchesMany`/`questionsOne`/`questionsMany`. Pour NO, singulier=pluriel pour `treff` et `spørsmål` (gardes les deux clés avec la même valeur pour cohérence).
+
+NO en Bokmål idiomatique. Garde `koselig` comme mot d'origine (mot signature de la page Story). TGH = Trans Groupe Hasina ; voix calquée sur la tagline TGH "Ny tur, ny horisont, ny inspirasjon".
+
+### Composants migrés (commit `41e380a`)
+Tous les composants client/server à `useTranslations` ou `getTranslations` :
+- Sections home : `Nav.tsx`, `Hero.tsx`, `Footer.tsx`, `Stay.tsx`, `Dining.tsx`, `Story.tsx`, `Reviews.tsx`, `Trust.tsx`, `Journal.tsx`, `Book.tsx`, `Experiences.tsx`, `Location.tsx`.
+- Molecules : `BookingDrawer.tsx` (avec GroupCTA et SuccessPanel), `MobileBookingBar.tsx`, `StickyReserveBar.tsx`, `PageHero.tsx`, `CookiePrefsLink.tsx`, `NewsletterSignup.tsx`, `CookieBanner.tsx`, `FaqSearch.tsx`.
+
+Pattern serveur :
+```tsx
+const t = await getTranslations('Namespace');
+// dans le JSX : t('key'), t.raw('listKey') as string[], t('plural', { count })
+```
+
+Pattern client :
+```tsx
+const t = useTranslations('Namespace');
+const tCommon = useTranslations('Common');
+```
+
+### Pages migrées (commit `11a9a1c`)
+Toutes les pages sous `[locale]` :
+- Pattern : `async function Page({ params }: { params: Promise<{ locale: string }> })`, `setRequestLocale(locale)`, `getTranslations('PageNamespace')`.
+- `generateMetadata` utilise `getTranslations({ locale, namespace })`.
+- Sanity reste source de vérité pour contenu CMS (catégories de chambres, excursions, FAQ, itinéraires, articles, avis) — pas traduit côté bundle.
+
+### LangSwitcher
+- `src/components/atoms/LanguageSwitcher.tsx` — trio inline `FR · EN · NO` dans la Nav. Utilise `Link` next-intl avec `locale` prop + `usePathname()` de `@/i18n/navigation` pour préserver le chemin courant lors du switch.
+- Caché sous `sm:` (640px). Couleur s'adapte au scroll (`scrolled` prop).
+
+### Build
+- `rm -rf .next` obligatoire avant build/typecheck après tout déplacement de fichier (Next cache les types stale).
+- Vert sur les 3 locales : `/fr/`, `/en/`, `/no/` toutes routes prérendues (12 pages × 3 locales + 3 catégories chambres × 3 locales).
+- Vercel auto-deploy sur push main.
+
+### Pièges
+- `next-intl` 3.26.3 n'exporte pas `hasLocale` → faire `routing.locales.includes(locale)` manuellement.
+- ICU `select` ne tolère pas les espaces inutiles dans la syntaxe : `{plus, select, true {+} other {}}` (pas de retour à la ligne).
+- Sanity fetches en parallèle des traductions : `const [data, t] = await Promise.all([fetchX(), getTranslations('Y')])`.
+
+— previous Claude, 2026-05-23 late night
+
+---
+
 ## End of HANDOFF
 
 Read this whole file before changing anything. When in doubt, ask the user. When the user is not available, check `docs/`. Make commits small and atomic. Push often. Don't break the truth rules.
