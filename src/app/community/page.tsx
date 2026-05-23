@@ -170,7 +170,7 @@ export default function CommunityPage() {
               <p className="lede-display">
                 Une école pour les enfants de notre quartier. Cent trente
                 enfants actifs, neuf programmes, et un nouveau foyer qui
-                s\'appelle Akanimamy.
+                s&apos;appelle Akanimamy.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
@@ -182,15 +182,17 @@ export default function CommunityPage() {
                   12 km au nord de Fianarantsoa.
                 </p>
                 <p>
-                  Au départ, ils ont fait une enquête simple : combien d\'enfants
-                  du quartier n\'allaient pas, ou très peu, à l\'école publique ?
-                  La réponse était une centaine et demie. À cette époque, Mamy
-                  et Hasina avaient déjà construit l\'hôtel. Ils savaient ce que
-                  l\'hôtel allait financer à côté.
+                  Au départ, ils ont fait une enquête simple : combien
+                  d&apos;enfants du quartier n&apos;allaient pas, ou très peu,
+                  à l&apos;école publique ? La réponse était une centaine et
+                  demie. À cette époque, Mamy et Hasina avaient déjà construit
+                  l&apos;hôtel. Ils savaient ce que l&apos;hôtel allait
+                  financer à côté.
                 </p>
                 <p>
-                  Aujourd\'hui, 130 enfants suivent les activités. L\'hôtel
-                  reverse une part de chaque réservation à l\'association.
+                  Aujourd&apos;hui, 130 enfants suivent les activités.
+                  L&apos;hôtel reverse une part de chaque réservation à
+                  l&apos;association.
                 </p>
               </div>
             </ScrollReveal>
@@ -268,9 +270,9 @@ export default function CommunityPage() {
         <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-bg-subtle)]">
           <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption text-center mb-4">Ce qu\'on fait</div>
+              <div className="caption text-center mb-4">Ce qu&apos;on fait</div>
               <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
-                Huit programmes, tout au long de l\'année.
+                Huit programmes, tout au long de l&apos;année.
               </h2>
             </ScrollReveal>
             <ul className="mt-20 md:mt-28 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12">
@@ -330,15 +332,16 @@ export default function CommunityPage() {
                     <em className="not-italic font-display font-light text-[var(--color-text)]">
                       Mamy
                     </em>{' '}
-                    veut dire doux. Akanimamy, c\'est un nid douillet — le foyer
-                    qui manquait aux enfants pour faire leurs devoirs au calme.
+                    veut dire doux. Akanimamy, c&apos;est un nid douillet — le
+                    foyer qui manquait aux enfants pour faire leurs devoirs au
+                    calme.
                   </p>
                   <p>
                     Le terrain de 2 000 m² a été acquis en 2019, grâce aux dons
-                    d\'amis du projet. La première pierre a été posée le
+                    d&apos;amis du projet. La première pierre a été posée le
                     1er septembre 2020. Le bâtiment fait 152 m², avec une
                     grande salle pour les activités, un coin bibliothèque (des
-                    livres reçus de clients norvégiens et d\'un collège
+                    livres reçus de clients norvégiens et d&apos;un collège
                     français), un coin jeux de société, un bureau et un
                     entrepôt.
                   </p>
@@ -359,8 +362,8 @@ export default function CommunityPage() {
           <div className="mx-auto max-w-[1000px] px-5 md:px-8 lg:px-12 text-center">
             <ScrollReveal>
               <p className="pull-quote mx-auto max-w-[30ch]">
-                &ldquo;Nous savions ce que l\'hôtel allait financer à côté avant
-                même d\'ouvrir.&rdquo;
+                &ldquo;Nous savions ce que l&apos;hôtel allait financer à côté
+                avant même d&apos;ouvrir.&rdquo;
               </p>
               <div className="mt-12 inline-flex items-center gap-4">
                 <div className="w-12 border-t border-[var(--color-sand-12)]" />
@@ -386,12 +389,14 @@ export default function CommunityPage() {
                 <p>
                   Les voyageurs qui le souhaitent peuvent passer un moment au
                   projet pendant leur séjour. Pas de visite formelle : vous
-                  rencontrez l\'équipe, vous voyez la classe, vous prenez un
-                  thé. Si vous voulez apporter quelque chose, nous demandons
-                  de le donner directement à l\'association, pas aux enfants.
+                  rencontrez l&apos;équipe, vous voyez la classe, vous prenez
+                  un thé. Si vous voulez apporter quelque chose, nous demandons
+                  de le donner directement à l&apos;association, pas aux
+                  enfants.
                 </p>
                 <p>
-                  Indiquez-le simplement à la réservation. Il n\'y a aucun coût.
+                  Indiquez-le simplement à la réservation. Il n&apos;y a aucun
+                  coût.
                 </p>
               </div>
             </ScrollReveal>

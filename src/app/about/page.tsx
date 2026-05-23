@@ -73,7 +73,7 @@ export default async function AboutPage() {
       <main id="main">
         <PageHero
           src={PHOTOS.about.path}
-          alt="Mamy et Hasina, fondateurs de l\'Hôtel Ambalakely à Fianarantsoa, Madagascar"
+          alt="Mamy et Hasina, fondateurs de l'Hôtel Ambalakely à Fianarantsoa, Madagascar"
           title={['Mamy et Hasina,', 'depuis 2018.']}
         />
 
@@ -96,21 +96,22 @@ export default async function AboutPage() {
                 <ScrollReveal delay={0.05}>
                   <div className="mt-12 prose-editorial">
                     <p>
-                      Mamy et Hasina ont ouvert l\'Hôtel Ambalakely en octobre
-                      2018, sur un terrain auparavant agricole. Dix chambres,
-                      une cuisine, un jardin, une petite équipe. Le concept de
-                      la maison : <em className="not-italic font-display font-light">Eny ambanivohitra</em>,
+                      Mamy et Hasina ont ouvert l&apos;Hôtel Ambalakely en
+                      octobre 2018, sur un terrain auparavant agricole. Dix
+                      chambres, une cuisine, un jardin, une petite équipe. Le
+                      concept de la maison : <em className="not-italic font-display font-light">Eny ambanivohitra</em>,
                       à la campagne, dans la tradition Betsileo.
                     </p>
                     <p>
-                      Avant l\'hôtel, ils dirigeaient déjà l\'agence de voyage{' '}
+                      Avant l&apos;hôtel, ils dirigeaient déjà l&apos;agence de
+                      voyage{' '}
                       <strong className="font-display font-light text-[var(--color-text)]">
                         Trans Groupe Hasina
                       </strong>{' '}
-                      depuis quinze ans. L\'agence existe toujours et continue
-                      d\'organiser des séjours dans toute Madagascar. L\'hôtel
-                      est devenu la base naturelle des voyageurs TGH dans la
-                      région des hautes terres.
+                      depuis quinze ans. L&apos;agence existe toujours et
+                      continue d&apos;organiser des séjours dans toute
+                      Madagascar. L&apos;hôtel est devenu la base naturelle des
+                      voyageurs TGH dans la région des hautes terres.
                     </p>
                   </div>
                 </ScrollReveal>
@@ -125,7 +126,7 @@ export default async function AboutPage() {
             <div className="lg:col-span-7 relative aspect-[4/5] lg:aspect-auto lg:min-h-[80vh] bg-[var(--color-bg-muted)] overflow-hidden">
               <Image
                 src={PHOTOS.about.path}
-                alt="Le jardin et l\'extérieur de l\'Hôtel Ambalakely"
+                alt="Le jardin et l'extérieur de l'Hôtel Ambalakely"
                 fill
                 sizes="(min-width: 1024px) 58vw, 100vw"
                 className="object-cover"
@@ -144,25 +145,25 @@ export default async function AboutPage() {
                     <strong className="font-display font-light text-[var(--color-text)]">
                       Hasina
                     </strong>{' '}
-                    a étudié à l\'Université de Stavanger, en Norvège, où elle
-                    a passé cinq ans. Elle parle norvégien et a tissé un long
-                    lien avec ce pays. Elle dirige la maison, écrit le menu
-                    et accueille.
+                    a étudié à l&apos;Université de Stavanger, en Norvège, où
+                    elle a passé cinq ans. Elle parle norvégien et a tissé un
+                    long lien avec ce pays. Elle dirige la maison, écrit le
+                    menu et accueille.
                   </p>
                   <p>
                     <strong className="font-display font-light text-[var(--color-text)]">
                       Mamy
                     </strong>{' '}
-                    est un grand connaisseur de Madagascar, du nord au sud.
-                    Son réseau et sa connaissance du terrain ont façonné
-                    l\'agence TGH. Il s\'occupe du jardin, des transferts et
-                    de la logistique.
+                    est un grand connaisseur de Madagascar, du nord au sud. Son
+                    réseau et sa connaissance du terrain ont façonné
+                    l&apos;agence TGH. Il s&apos;occupe du jardin, des
+                    transferts et de la logistique.
                   </p>
                   <p>
                     Ensemble depuis vingt ans dans le tourisme, ils travaillent
-                    autour d\'un tourisme responsable et durable, avec respect
-                    pour la culture et l\'environnement, et en soutien aux
-                    communautés locales.
+                    autour d&apos;un tourisme responsable et durable, avec
+                    respect pour la culture et l&apos;environnement, et en
+                    soutien aux communautés locales.
                   </p>
                 </div>
               </ScrollReveal>
@@ -178,7 +179,7 @@ export default async function AboutPage() {
                 <ScrollReveal>
                   <div className="caption">Repères</div>
                   <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em] max-w-[260px]">
-                    Vingt ans de tourisme, sept ans d\'hôtel.
+                    Vingt ans de tourisme, sept ans d&apos;hôtel.
                   </h2>
                 </ScrollReveal>
               </div>
@@ -225,18 +226,19 @@ export default async function AboutPage() {
                 <ScrollReveal delay={0.05}>
                   <div className="mt-10 prose-editorial">
                     <p>
-                      Trans Groupe Hasina (TGH) est l\'agence de voyage que Mamy
-                      et Hasina ont fondée à Fianarantsoa, dans les hautes terres
-                      Betsileo. Elle organise des séjours dans toute Madagascar :
-                      RN7 vers le sud, Tsingy de l\'ouest, parcs de l\'est, plages
-                      du nord.
+                      Trans Groupe Hasina (TGH) est l&apos;agence de voyage que
+                      Mamy et Hasina ont fondée à Fianarantsoa, dans les hautes
+                      terres Betsileo. Elle organise des séjours dans toute
+                      Madagascar : RN7 vers le sud, Tsingy de l&apos;ouest,
+                      parcs de l&apos;est, plages du nord.
                     </p>
                     <p>
-                      L\'hôtel Ambalakely est devenu la base naturelle des
+                      L&apos;hôtel Ambalakely est devenu la base naturelle des
                       voyageurs TGH dans la région. Les deux entités partagent
                       la même équipe, la même philosophie de tourisme
                       responsable, et un long lien avec la Norvège — Hasina
-                      étant la seule guide francophone-norvégienne de la région.
+                      étant la seule guide francophone-norvégienne de la
+                      région.
                     </p>
                   </div>
                 </ScrollReveal>
@@ -252,8 +254,8 @@ export default async function AboutPage() {
               <div className="lg:col-start-3 lg:col-span-9">
                 <ScrollReveal>
                   <p className="pull-quote max-w-[26ch]">
-                    &ldquo;L\'hôtel est notre maison de famille autant qu\'un
-                    lieu pour les voyageurs.&rdquo;
+                    &ldquo;L&apos;hôtel est notre maison de famille autant
+                    qu&apos;un lieu pour les voyageurs.&rdquo;
                   </p>
                   <div className="mt-10 flex items-center gap-4">
                     <div className="w-10 border-t border-[var(--color-sand-12)]" />
@@ -281,8 +283,8 @@ export default async function AboutPage() {
                 <div className="mt-10 prose-editorial max-w-[460px]">
                   <p>
                     Une école pour les enfants de Tanambao, le quartier de
-                    l\'Hôtel Ambalakely. Cent trente enfants. Commencée avant
-                    l\'hôtel, vit toujours grâce à lui.
+                    l&apos;Hôtel Ambalakely. Cent trente enfants. Commencée
+                    avant l&apos;hôtel, vit toujours grâce à lui.
                   </p>
                   <p>
                     Une part de chaque réservation soutient le projet.
@@ -305,7 +307,7 @@ export default async function AboutPage() {
             <div className="lg:col-span-7 lg:order-2 relative aspect-[4/5] lg:aspect-auto lg:min-h-[70vh] bg-[var(--color-bg-muted)] overflow-hidden">
               <Image
                 src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
-                alt="Hope for the Future, l\'école de Tanambao"
+                alt="Hope for the Future, l'école de Tanambao"
                 fill
                 sizes="(min-width: 1024px) 58vw, 100vw"
                 className="object-cover"

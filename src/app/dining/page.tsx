@@ -114,16 +114,17 @@ export default async function DiningPage() {
                 <ScrollReveal delay={0.05}>
                   <div className="mt-12 prose-editorial">
                     <p>
-                      Le concept de la maison : Eny ambanivohitra, à la campagne.
-                      L\'essentiel de ce qui arrive sur la table vient du jardin
-                      derrière la cuisine, des rizières en contrebas, et des
-                      producteurs locaux (les Tantsaha) à quelques kilomètres.
+                      Le concept de la maison : Eny ambanivohitra, à la
+                      campagne. L&apos;essentiel de ce qui arrive sur la table
+                      vient du jardin derrière la cuisine, des rizières en
+                      contrebas, et des producteurs locaux (les Tantsaha) à
+                      quelques kilomètres.
                     </p>
                     <p>
-                      Le menu se choisit en un, deux ou trois services. À l\'étage,
-                      la terrasse fait pizzeria toute la journée, ouvert de 10 h
-                      à 21 h 30. Trois plats signature reviennent souvent : Zébu
-                      Marengo, Kjøttkaker, Krumkake.
+                      Le menu se choisit en un, deux ou trois services. À
+                      l&apos;étage, la terrasse fait pizzeria toute la journée,
+                      ouvert de 10 h à 21 h 30. Trois plats signature
+                      reviennent souvent : Zébu Marengo, Kjøttkaker, Krumkake.
                     </p>
                   </div>
                 </ScrollReveal>
@@ -272,7 +273,7 @@ export default async function DiningPage() {
               <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
                 <BookingButton>Réserver</BookingButton>
                 <p className="text-[14px] leading-[1.55] text-[var(--color-text-muted)] max-w-[400px]">
-                  24 h à l\'avance minimum. Allergies, à signaler la veille.
+                  24 h à l&apos;avance minimum. Allergies, à signaler la veille.
                 </p>
               </div>
             </ScrollReveal>
