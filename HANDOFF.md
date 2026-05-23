@@ -2,15 +2,15 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-23 (Round 1 + photos shipped to prod)
+Last updated: 2026-05-23 (Brand + video + content polish all shipped to prod)
 
 ---
 
-## 0. The prompt to paste into Claude Code on the other PC
+## 0. The prompt to paste into Claude Code in the next session
 
-Copy-paste this block as the first message to Claude Code in the new repo:
+Copy-paste this block as the first message:
 
-> I'm continuing work on Hôtel Ambalakely (a real boutique hotel in Madagascar). The full context, architecture decisions, real verified facts, and todo list are in HANDOFF.md at the project root. Read HANDOFF.md first, then look at the current task list. The site is deployed at https://ambalakely.vercel.app. I will continue on this PC in parallel to my other machine — be careful with git conflicts. Reference documents are in docs/ (original PDF, Word, PPT from Mamy + Hasina).
+> I'm continuing work on Hôtel Ambalakely, a real 10-room boutique hotel in Fianarantsoa, Madagascar. Read HANDOFF.md at the project root first — it's the single source of truth: architecture, verified facts, what shipped, what's pending, the 15 cardinal rules. The site is live at https://ambalakely.vercel.app with Sanity CMS + Resend booking + RGPD consent + hero video + brand assets all deployed. `.env.local` already has every secret. Active branch is `main`; Vercel auto-deploys on push. Before any work, check `git log --oneline -10` to see the latest commits, then ask me what to pick up next from section 9 of HANDOFF.md. Reference docs from Mamy + Hasina are in `docs/`.
 
 That's it. Claude reads HANDOFF.md and has everything.
 
@@ -25,13 +25,24 @@ That's it. Claude reads HANDOFF.md and has everything.
 
 ## 2. Current state of deployment
 
-- **Prod URL** : `https://ambalakely.vercel.app`
+- **Prod URL** : `https://ambalakely.vercel.app` (live, fully wired)
 - **Domain custom** (`hotelambalakely.com`) : NOT migrated yet. Still pointing to Squarespace.
-- **Branch** : `feat/dining-hero-polish` (working branch, not yet merged to main)
-- **Last commit** : the "truth pass" replacing all invented facts with verified data
-- **Build status** : green, all TypeScript checks pass
+- **Active branch** : `main` (all features merged). Local dev branches go off `main`.
+- **Latest commit on main** : `d6b88c3` — brand rename to Hôtel Ambalakely + logo wired in Nav.
+- **Build status** : green, TypeScript clean, Vercel auto-deploys main pushes.
 
-Vercel project : `tahinas-projects-0021cf78/ambalakely`. Use `npx vercel --prod --yes` to deploy, then `npx vercel alias <new-url> ambalakely.vercel.app` to alias.
+Vercel project : `tahinas-projects-0021cf78/ambalakely`. Auto-deploys on `main` push. CLI deploy: `npx vercel --prod --yes`.
+
+### What's live on prod (2026-05-23 wrap)
+- **Hero video** : 6.6s HD loop (Squarespace original, balcon Betsileo), autoplay muted loop playsInline, poster webp fallback, respects `prefers-reduced-motion`.
+- **Branding** : leaf-mark logo (PNG, white on transparent) + "Hôtel Ambalakely" wordmark in Nav. Logo inverts (Tailwind `invert`) on scroll. Footer masthead retitled "Hôtel Ambalakely". Favicon + Apple touch icon (Next auto-discovery via `src/app/icon.png` + `apple-icon.png`).
+- **Sanity CMS** at `https://hotel-ambalakely.sanity.studio/` (cloud Studio; local `/studio` redirects there since the local Next bundle can't ship Sanity 5.26 due to `useEffectEvent`).
+- **Resend** booking + newsletter wired and **verified end-to-end** — 3 emails Delivered in test. Sending from `Hôtel Ambalakely <ambalakely@mita-studio.com>` with `replyTo: hello@hotelambalakely.com` (free-tier compromise; upgrade later for own domain).
+- **Cookie banner RGPD** — FR copy, gates PostHog + Sentry (analytics + errorTracking categories). Persists in localStorage `ambalakely.consent.v1`.
+- **Sentry** (EU, `mita-studio` org / `hotel-ambalakely` project) + **PostHog** scaffold (key still TBD). Both opt-in via cookie banner.
+- **Photos** : heroes on home + 6 page heroes use local `/photos/p**.webp` from `src/lib/data/photos.ts`. Galleries inside `data/categories.ts`, `data/rooms.ts`, `data/experiences.ts`, `data/articles.ts`, `data/itineraries.ts` still reference Squarespace CDN URLs (lower priority — heroes drive first impression).
+- **Trust + /community** still serve `HFF2.jpg` from Squarespace (no Hope-for-the-Future photo in the 47-WebP batch — waiting on Hasina).
+- **All `\'` JSX literals fixed** to `&apos;` on /community, /about, /dining (was rendering `s\'appelle` literally).
 
 ## 3. The cardinal rules (NEVER break these)
 
@@ -337,9 +348,38 @@ A simple way: build a temporary `/admin/photos` page that lists all 47 in a grid
 - **301 redirects** from old Squarespace URLs.
 - **Backlinks outreach** : Géo, Lonely Planet, Le Routard, Condé Nast Traveler, Norwegian travel mags via Hasina's network, Tourism Board Madagascar.
 
-### Functional missing (also pending)
-- **Booking system** : `BookingDrawer.tsx` is a static form. No API route exists. Needs Resend integration with POST `/api/booking-request` sending an email to `hello@hotelambalakely.com`.
-- **Newsletter** : `NewsletterSignup.tsx` has a fake `setTimeout(600ms)`. Needs Resend audiences integration.
+### Functional missing — DONE 2026-05-22/23 (see sections 16, 17, 18)
+- ✅ **Booking + newsletter** via Resend, fully tested end-to-end.
+- ✅ **Cookie banner RGPD** gating PostHog + Sentry.
+- ✅ **Hero video** restored from Squarespace.
+- ✅ **Logo + favicon + brand rename** to Hôtel Ambalakely.
+
+### Concrete pending work, ranked
+
+**Quick wins (15–30 min)**
+- Delete the 3 fake articles in `src/lib/data/articles.ts` (Hasina-voice essays previously invented). The Sanity `article` docs migrated from the same source are also fake — check `sanity.io/manage/project/zfb59l35` and delete or replace. `/journal` should be empty until Hasina writes, or seed with the 4 real Max William RAFALIARISON hiking pieces from Squarespace.
+- Footer link "Gérer les cookies" → calls `useConsent().reset()` to re-open the banner. ~10 min.
+- PostHog : create EU project at posthog.com, copy `NEXT_PUBLIC_POSTHOG_KEY` (and optionally `NEXT_PUBLIC_POSTHOG_HOST=https://eu.i.posthog.com`), add to `.env.local` + Vercel env vars. Analytics activates the next time someone opts in.
+
+**Tier 2 — Foundation (Betsileo culture moat)**
+- `/excursions` refactor with the 3 real Betsileo circuits (Antsolaitra, Vatolahy, Matsiatra) + Ranomafana, Sahambavy, Ambositra, Andringitra, Ambalavao, Antemoro, Fianarantsoa old town, train station. All verified in section 5. ~1–2 h.
+- `/fianarantsoa-region` NEW pillar page (2 500+ words, photo-rich) — Raindratsara legend, VALA etymology, Betsileo culture, the Lapa, Pierrot Men, Small Five, panorama + map. The SEO killer. ~3–4 h of writing.
+
+**Tier 3 — Content moat (the slow flywheel)**
+- 5 cornerstone journal articles (listed below).
+- Google Business Profile + Search Console + sitemap submission.
+
+**Tier 5 — i18n FR/EN**
+- `next-intl` already installed. Today the site mixes French and English freely (Hero/Nav in EN, /community + /about + /dining in FR). The plan: FR as primary route `/...`, EN at `/en/...`, hreflang set.
+
+**Tier 6 — Domain migration**
+- Move `hotelambalakely.com` DNS away from Squarespace to Vercel. After migration the Resend `RESEND_FROM_EMAIL` can flip to `hello@hotelambalakely.com` directly (still needs Pro plan or own Resend workspace).
+
+**Gallery photo mapping (still on the list)**
+- `data/categories.ts`, `data/rooms.ts`, `data/experiences.ts`, `data/articles.ts`, `data/itineraries.ts` still reference Squarespace CDN. Each one needs a human pass to pick the right `p**.webp` per room / excursion / article. Can be done with `/admin/photos` rebuilt temporarily (see git history `dfef95b` for the throwaway page that helped the first round).
+
+**HFF photos**
+- Trust section + `/community` hero still use Squarespace HFF2.jpg. Ask Hasina for 5–10 Hope-for-the-Future photos to optimise into `/public/photos`, then map.
 
 ## 10. Commands
 
@@ -550,10 +590,34 @@ If unset, the routes return 503 (no crash). The build does not require them.
 - Footer link "Gérer les cookies" calling `useConsent().reset()` so users can change their mind.
 - Translate the banner copy when `next-intl` lands.
 
+## 18. Brand + content polish (2026-05-23)
+
+This session ran after Round 1 and shipped four batches directly to `main` (no PR; Vercel auto-deploys main):
+
+### Hero video (commit `2a9780b`)
+- **`public/videos/hero.mp4`** — 6.6s, 1080p h264, 2.0 MB. Pulled from the Squarespace HLS playlist (`https://video.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/3d5d96da-d268-4990-b856-47e88e4b4199/playlist.m3u8`) with `yt-dlp -f best`. ffmpeg refused the inline HLS (no extension on segment URLs); yt-dlp handled it cleanly.
+- **`public/videos/hero-poster.webp`** — 112 KB still extracted at t=1s via `ffmpeg -ss 00:00:01 -vframes 1`. Used as `poster` for fast first paint + reduced-motion fallback.
+- **`src/components/sections/Hero.tsx`** — swapped the background-image div for `<video autoPlay muted loop playsInline preload="auto" poster=...>` with a `useRef` + `matchMedia('(prefers-reduced-motion)')` guard that pauses for users who opt out of motion.
+
+### Brand assets (commits `ee6a6b7`, `d6b88c3`)
+- **Logo** : the Squarespace `logo-white.png` is a 1000×1000 leaf-mark (branche à 5 feuilles, ravinala-style) on transparent background. Downloaded via `?format=2500w` with explicit `Accept: image/png` (Squarespace auto-converts to WebP without the header). Saved to `public/brand/logo-white.png`.
+- **Favicon** : `src/app/icon.png` (100×100, Next auto-discovery → `/favicon.ico` + `<link rel="icon">`). `src/app/apple-icon.png` (180×180, ffmpeg lanczos upscaled).
+- **Backup** : `public/brand/favicon-dark.png` saved for a future light/dark icon split.
+- **Nav** : the `Ambalakely` text wordmark is replaced by `<Image>` logo (36px, `invert` on scroll via Tailwind) + the "Hôtel Ambalakely" wordmark (hidden below `sm:` to keep mobile nav compact).
+- **Footer masthead** : "Hôtel Ambalakely" with type scale retuned 48/88/120 so the longer name still feels editorial.
+- **`Hotel Ambalakely` → `Hôtel Ambalakely`** : global `sed` across 14 files (components, pages, metadata, alt, JSON-LD, OG, data). `HOTEL.name` in `hotel.ts` was already accented; this commit fixes inline literals that bypassed it.
+
+### Bug fixes (commit `8419f71`)
+- The JSX text content on `/community`, `/about`, `/dining` rendered literal `\'` characters because backslash escapes don't apply inside JSX text (between tags) or double-quoted JSX attributes — only in JS string literals. Fix: `\'` → `&apos;` in JSX text/attributes. JS string literals in metadata arrays and data constants keep `\'` (the JS engine processes the escape before React sees the string).
+- About 30 occurrences fixed across the three files.
+
+### Throwaway tools used
+- **`src/app/admin/photos`** (gone, deleted in commit `dfef95b`) — temporary admin grid that rendered the 47 WebP files with filenames + DSC numbers. Used once to identify which photo goes in which slot, then deleted. Easy to recreate from git history if a future photo batch arrives.
+
 ---
 
 ## End of HANDOFF
 
 Read this whole file before changing anything. When in doubt, ask the user. When the user is not available, check `docs/`. Make commits small and atomic. Push often. Don't break the truth rules.
 
-— previous Claude, 2026-05-22
+— previous Claude, 2026-05-23
