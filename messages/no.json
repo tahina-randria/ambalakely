@@ -214,7 +214,24 @@
     "groupEmailSubject": "Gruppeforespørsel ({guests} gjester)",
     "successH2": "Forespørsel mottatt.",
     "successBody": "Takk. Hasina eller Mamy svarer innen 24 til 48 timer med tilgjengelighet og et tilpasset tilbud. En bekreftelse er sendt til innboksen din.",
-    "successClose": "Lukk"
+    "successClose": "Lukk",
+    "step": "Trinn",
+    "of": "av",
+    "stepStay": "Opphold",
+    "stepContact": "Dine opplysninger",
+    "roomType": "Romkategori",
+    "roomTypeAny": "Hvilket som helst",
+    "datesLabel": "Dine datoer",
+    "datesHint": "Klikk for å velge ankomst og avreise",
+    "nights": "{count, plural, one {# natt} other {# netter}}",
+    "calendarPrev": "Forrige måned",
+    "calendarNext": "Neste måned",
+    "continue": "Fortsett",
+    "back": "Tilbake",
+    "firstName": "Fornavn",
+    "lastName": "Etternavn",
+    "phoneLabel": "Telefon",
+    "summarize": "Sammendrag"
   },
 
   "MobileBar": {

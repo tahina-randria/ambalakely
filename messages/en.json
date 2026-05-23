@@ -214,7 +214,24 @@
     "groupEmailSubject": "Group booking ({guests} guests)",
     "successH2": "Request received.",
     "successBody": "Thank you. Hasina or Mamy will reply within 24 to 48 hours with availability and a tailored quote. A confirmation has been sent to your inbox.",
-    "successClose": "Close"
+    "successClose": "Close",
+    "step": "Step",
+    "of": "of",
+    "stepStay": "Stay",
+    "stepContact": "Your details",
+    "roomType": "Room type",
+    "roomTypeAny": "Any room",
+    "datesLabel": "Your dates",
+    "datesHint": "Click to select arrival and departure",
+    "nights": "{count, plural, one {# night} other {# nights}}",
+    "calendarPrev": "Previous month",
+    "calendarNext": "Next month",
+    "continue": "Continue",
+    "back": "Back",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phoneLabel": "Phone",
+    "summarize": "Summary"
   },
 
   "MobileBar": {

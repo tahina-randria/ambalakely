@@ -10,6 +10,7 @@ const BookingSchema = z.object({
   arrival: z.iso.date(),
   departure: z.iso.date(),
   guests: z.coerce.number().int().min(1).max(20),
+  roomType: z.enum(['any', 'superieure', 'confort', 'standard']).optional(),
   name: z.string().trim().min(2).max(100),
   email: z.email().max(200),
   phone: z.string().trim().max(50).optional().or(z.literal('')),
@@ -73,10 +74,18 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const roomTypeLabels: Record<string, string> = {
+    any: 'Indifférent',
+    superieure: 'Supérieure',
+    confort: 'Confort',
+    standard: 'Standard',
+  };
+
   const normalized = {
     arrival: data.arrival,
     departure: data.departure,
     guests: data.guests,
+    roomType: data.roomType ? roomTypeLabels[data.roomType] : undefined,
     name: data.name,
     email: data.email,
     phone: data.phone || undefined,
@@ -89,7 +98,7 @@ export async function POST(req: NextRequest) {
         from: FROM_EMAIL,
         to: HOTEL_INBOX,
         replyTo: normalized.email,
-        subject: `Demande de réservation — ${normalized.name} · ${normalized.guests} pers.`,
+        subject: `Demande de réservation — ${normalized.name} · ${normalized.guests} pers.${normalized.roomType ? ` · ${normalized.roomType}` : ''}`,
         react: BookingRequest(normalized),
       }),
       resend.emails.send({

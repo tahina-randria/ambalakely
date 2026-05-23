@@ -5,6 +5,7 @@ export type BookingRequestData = {
   arrival: string;
   departure: string;
   guests: number;
+  roomType?: string;
   name: string;
   email: string;
   phone?: string;
@@ -49,6 +50,7 @@ export function BookingRequest({
   arrival,
   departure,
   guests,
+  roomType,
   name,
   email,
   phone,
@@ -74,6 +76,13 @@ export function BookingRequest({
 
         <Text style={label}>Voyageurs</Text>
         <Text style={value}>{guests}</Text>
+
+        {roomType ? (
+          <>
+            <Text style={label}>Type de chambre</Text>
+            <Text style={value}>{roomType}</Text>
+          </>
+        ) : null}
 
         <Text style={label}>Contact</Text>
         <Text style={row}>{name}</Text>

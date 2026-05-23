@@ -214,7 +214,24 @@
     "groupEmailSubject": "Réservation groupe ({guests} voyageurs)",
     "successH2": "Demande reçue.",
     "successBody": "Merci. Hasina ou Mamy vous répondront sous 24 à 48 heures avec les disponibilités et un devis personnalisé. Une confirmation a été envoyée dans votre boîte de réception.",
-    "successClose": "Fermer"
+    "successClose": "Fermer",
+    "step": "Étape",
+    "of": "sur",
+    "stepStay": "Séjour",
+    "stepContact": "Vos coordonnées",
+    "roomType": "Type de chambre",
+    "roomTypeAny": "Indifférent",
+    "datesLabel": "Vos dates",
+    "datesHint": "Cliquez pour sélectionner l'arrivée et le départ",
+    "nights": "{count, plural, one {# nuit} other {# nuits}}",
+    "calendarPrev": "Mois précédent",
+    "calendarNext": "Mois suivant",
+    "continue": "Continuer",
+    "back": "Retour",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "phoneLabel": "Téléphone",
+    "summarize": "Récapitulatif"
   },
 
   "MobileBar": {
