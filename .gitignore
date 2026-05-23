@@ -36,5 +36,6 @@ next-env.d.ts
 # source documents (PDF/docx/pptx + HD photo originals, ~150 MB, local only)
 docs/
 
-# design audit screenshots — local-only output of audit/capture.mjs
+# design audit screenshots — local-only output of audit/capture*.mjs
 audit/screens/
+audit/screens-i18n/
