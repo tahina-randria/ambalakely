@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { Nav } from '@/components/sections/Nav';
@@ -12,69 +13,57 @@ import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchHotel } from '@/sanity/lib/fetch';
 import { PHOTOS } from '@/lib/data/photos';
 
-export const metadata: Metadata = {
-  title: 'À propos',
-  description:
-    'Mamy et Hasina ont ouvert l\'Hôtel Ambalakely en 2018, sur la RN7 à 12 km au nord de Fianarantsoa. Ils dirigent aussi Trans Groupe Hasina, agence de voyage depuis vingt ans.',
-  alternates: { canonical: '/about' },
-  openGraph: {
-    title: 'À propos · Hôtel Ambalakely',
-    description: 'Mamy et Hasina, depuis 2018.',
-    url: '/about',
-    images: [
-      {
-        url: PHOTOS.about.url,
-        width: 2560,
-        height: 1707,
-        alt: 'Hôtel Ambalakely, hautes terres Fianarantsoa Madagascar',
-      },
-    ],
-  },
-};
+type LocaleParam = { params: Promise<{ locale: string }> };
 
-/**
- * Étapes clés — seulement les faits vérifiés (ouverture 2018 + agence TGH).
- * Les autres dates (2002, 2003, 2005, 2013, 2014, 2015) mentionnées sur le
- * Squarespace ne sont pas datées avec précision : on les omet plutôt que
- * d\'inventer.
- */
-const milestones = [
-  {
-    year: '~2005',
-    title: 'Trans Groupe Hasina',
-    body:
-      'Mamy et Hasina fondent leur agence de voyage à Fianarantsoa, dans les hautes terres Betsileo. Vingt ans plus tard, l\'agence opère dans toute Madagascar.',
-  },
-  {
-    year: '2018',
-    title: 'Ouverture de l\'hôtel',
-    body:
-      'L\'Hôtel Ambalakely ouvre en octobre, sur un terrain anciennement agricole nommé Vonimboahirana, à 12 km au nord de Fianarantsoa. Dix chambres, une cuisine, un jardin.',
-  },
-  {
-    year: 'Aujourd\'hui',
-    title: 'Une équipe de quartier',
-    body:
-      'L\'hôtel et l\'agence emploient des habitants du quartier de Tanambao. Une partie de chaque nuit soutient Hope for the Future, l\'école voisine ouverte en 2014.',
-  },
-];
+export async function generateMetadata({ params }: LocaleParam): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'About' });
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+    alternates: { canonical: '/about' },
+    openGraph: {
+      title: t('ogTitle'),
+      description: t('ogDescription'),
+      url: '/about',
+      images: [
+        {
+          url: PHOTOS.about.url,
+          width: 2560,
+          height: 1707,
+          alt: t('imageAlt'),
+        },
+      ],
+    },
+  };
+}
 
-export default async function AboutPage() {
-  const HOTEL = await fetchHotel();
+export default async function AboutPage({ params }: LocaleParam) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const [HOTEL, t] = await Promise.all([fetchHotel(), getTranslations('About')]);
+
+  const heroTitle = t.raw('heroTitle') as string[];
+  const milestones = [
+    { year: t('milestones.tghYear'), title: t('milestones.tghTitle'), body: t('milestones.tghBody') },
+    { year: t('milestones.openYear'), title: t('milestones.openTitle'), body: t('milestones.openBody') },
+    { year: t('milestones.todayYear'), title: t('milestones.todayTitle'), body: t('milestones.todayBody') },
+  ];
+
   return (
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: 'Accueil', url: '/' },
-          { name: 'À propos', url: '/about' },
+          { name: t('breadcrumbHome'), url: '/' },
+          { name: t('breadcrumbAbout'), url: '/about' },
         ]}
       />
       <Nav />
       <main id="main">
         <PageHero
           src={PHOTOS.about.path}
-          alt="Mamy et Hasina, fondateurs de l'Hôtel Ambalakely à Fianarantsoa, Madagascar"
-          title={['Mamy et Hasina,', 'depuis 2018.']}
+          alt={t('heroAlt')}
+          title={heroTitle}
         />
 
         {/* INTRO */}
@@ -83,35 +72,26 @@ export default async function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
               <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
                 <ScrollReveal>
-                  <div className="caption">Depuis 2018</div>
+                  <div className="caption">{t('introKicker')}</div>
                 </ScrollReveal>
               </div>
               <div className="lg:col-span-9 max-w-[760px]">
                 <ScrollReveal>
-                  <p className="lede max-w-[34ch]">
-                    Un hôtel qui ressemble à une maison, sur une colline à
-                    douze kilomètres au nord de Fianarantsoa.
-                  </p>
+                  <p className="lede max-w-[34ch]">{t('introLede')}</p>
                 </ScrollReveal>
                 <ScrollReveal delay={0.05}>
                   <div className="mt-12 prose-editorial">
                     <p>
-                      Mamy et Hasina ont ouvert l&apos;Hôtel Ambalakely en
-                      octobre 2018, sur un terrain auparavant agricole. Dix
-                      chambres, une cuisine, un jardin, une petite équipe. Le
-                      concept de la maison : <em className="not-italic font-display font-light">Eny ambanivohitra</em>,
-                      à la campagne, dans la tradition Betsileo.
+                      {t('introP1Lead')}
+                      <em className="not-italic font-display font-light">{t('introP1Em')}</em>
+                      {t('introP1Trail')}
                     </p>
                     <p>
-                      Avant l&apos;hôtel, ils dirigeaient déjà l&apos;agence de
-                      voyage{' '}
+                      {t('introP2Lead')}
                       <strong className="font-display font-light text-[var(--color-text)]">
-                        Trans Groupe Hasina
-                      </strong>{' '}
-                      depuis quinze ans. L&apos;agence existe toujours et
-                      continue d&apos;organiser des séjours dans toute
-                      Madagascar. L&apos;hôtel est devenu la base naturelle des
-                      voyageurs TGH dans la région des hautes terres.
+                        {t('introP2Strong')}
+                      </strong>
+                      {t('introP2Trail')}
                     </p>
                   </div>
                 </ScrollReveal>
@@ -126,7 +106,7 @@ export default async function AboutPage() {
             <div className="lg:col-span-7 relative aspect-[4/5] lg:aspect-auto lg:min-h-[80vh] bg-[var(--color-bg-muted)] overflow-hidden">
               <Image
                 src={PHOTOS.about.path}
-                alt="Le jardin et l'extérieur de l'Hôtel Ambalakely"
+                alt={t('foundersImageAlt')}
                 fill
                 sizes="(min-width: 1024px) 58vw, 100vw"
                 className="object-cover"
@@ -134,37 +114,26 @@ export default async function AboutPage() {
             </div>
             <div className="lg:col-span-5 px-5 md:px-12 lg:px-16 py-20 md:py-32 flex flex-col justify-center">
               <ScrollReveal>
-                <div className="caption">Les fondateurs</div>
+                <div className="caption">{t('foundersKicker')}</div>
                 <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[36px] md:text-[52px] leading-[1.02] tracking-[-0.03em] max-w-[420px]">
-                  Deux personnes, une maison.
+                  {t('foundersH2')}
                 </h2>
               </ScrollReveal>
               <ScrollReveal delay={0.05}>
                 <div className="mt-10 prose-editorial max-w-[460px]">
                   <p>
                     <strong className="font-display font-light text-[var(--color-text)]">
-                      Hasina
-                    </strong>{' '}
-                    a étudié à l&apos;Université de Stavanger, en Norvège, où
-                    elle a passé cinq ans. Elle parle norvégien et a tissé un
-                    long lien avec ce pays. Elle dirige la maison, écrit le
-                    menu et accueille.
+                      {t('foundersHasinaLead')}
+                    </strong>
+                    {t('foundersHasinaBody')}
                   </p>
                   <p>
                     <strong className="font-display font-light text-[var(--color-text)]">
-                      Mamy
-                    </strong>{' '}
-                    est un grand connaisseur de Madagascar, du nord au sud. Son
-                    réseau et sa connaissance du terrain ont façonné
-                    l&apos;agence TGH. Il s&apos;occupe du jardin, des
-                    transferts et de la logistique.
+                      {t('foundersMamyLead')}
+                    </strong>
+                    {t('foundersMamyBody')}
                   </p>
-                  <p>
-                    Ensemble depuis vingt ans dans le tourisme, ils travaillent
-                    autour d&apos;un tourisme responsable et durable, avec
-                    respect pour la culture et l&apos;environnement, et en
-                    soutien aux communautés locales.
-                  </p>
+                  <p>{t('foundersTogether')}</p>
                 </div>
               </ScrollReveal>
             </div>
@@ -177,9 +146,9 @@ export default async function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
               <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
                 <ScrollReveal>
-                  <div className="caption">Repères</div>
+                  <div className="caption">{t('timelineKicker')}</div>
                   <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em] max-w-[260px]">
-                    Vingt ans de tourisme, sept ans d&apos;hôtel.
+                    {t('timelineH2')}
                   </h2>
                 </ScrollReveal>
               </div>
@@ -214,32 +183,19 @@ export default async function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
               <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
                 <ScrollReveal>
-                  <div className="caption">Agence sœur</div>
+                  <div className="caption">{t('tghKicker')}</div>
                 </ScrollReveal>
               </div>
               <div className="lg:col-span-9 max-w-[760px]">
                 <ScrollReveal>
                   <h2 className="font-display font-light text-[var(--color-text)] text-[36px] md:text-[52px] leading-[1.02] tracking-[-0.03em] max-w-[640px]">
-                    Trans Groupe Hasina, depuis vingt ans.
+                    {t('tghH2')}
                   </h2>
                 </ScrollReveal>
                 <ScrollReveal delay={0.05}>
                   <div className="mt-10 prose-editorial">
-                    <p>
-                      Trans Groupe Hasina (TGH) est l&apos;agence de voyage que
-                      Mamy et Hasina ont fondée à Fianarantsoa, dans les hautes
-                      terres Betsileo. Elle organise des séjours dans toute
-                      Madagascar : RN7 vers le sud, Tsingy de l&apos;ouest,
-                      parcs de l&apos;est, plages du nord.
-                    </p>
-                    <p>
-                      L&apos;hôtel Ambalakely est devenu la base naturelle des
-                      voyageurs TGH dans la région. Les deux entités partagent
-                      la même équipe, la même philosophie de tourisme
-                      responsable, et un long lien avec la Norvège — Hasina
-                      étant la seule guide francophone-norvégienne de la
-                      région.
-                    </p>
+                    <p>{t('tghP1')}</p>
+                    <p>{t('tghP2')}</p>
                   </div>
                 </ScrollReveal>
               </div>
@@ -253,14 +209,11 @@ export default async function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12">
               <div className="lg:col-start-3 lg:col-span-9">
                 <ScrollReveal>
-                  <p className="pull-quote max-w-[26ch]">
-                    &ldquo;L&apos;hôtel est notre maison de famille autant
-                    qu&apos;un lieu pour les voyageurs.&rdquo;
-                  </p>
+                  <p className="pull-quote max-w-[26ch]">&ldquo;{t('pullQuote')}&rdquo;</p>
                   <div className="mt-10 flex items-center gap-4">
                     <div className="w-10 border-t border-[var(--color-sand-12)]" />
                     <div className="font-display text-[16px] tracking-[-0.005em] text-[var(--color-text)]">
-                      Hasina
+                      {t('pullQuoteSigned')}
                     </div>
                   </div>
                 </ScrollReveal>
@@ -274,21 +227,15 @@ export default async function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12">
             <div className="lg:col-span-5 px-5 md:px-12 lg:px-16 py-20 md:py-32 lg:order-1 flex flex-col justify-center">
               <ScrollReveal>
-                <div className="caption">Hope for the Future</div>
+                <div className="caption">{t('hopeKicker')}</div>
                 <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[36px] md:text-[52px] leading-[1.02] tracking-[-0.03em] max-w-[420px]">
-                  Le travail à côté.
+                  {t('hopeH2')}
                 </h2>
               </ScrollReveal>
               <ScrollReveal delay={0.05}>
                 <div className="mt-10 prose-editorial max-w-[460px]">
-                  <p>
-                    Une école pour les enfants de Tanambao, le quartier de
-                    l&apos;Hôtel Ambalakely. Cent trente enfants. Commencée
-                    avant l&apos;hôtel, vit toujours grâce à lui.
-                  </p>
-                  <p>
-                    Une part de chaque réservation soutient le projet.
-                  </p>
+                  <p>{t('hopeP1')}</p>
+                  <p>{t('hopeP2')}</p>
                 </div>
               </ScrollReveal>
               <ScrollReveal delay={0.1}>
@@ -296,7 +243,7 @@ export default async function AboutPage() {
                   href="/community"
                   className="mt-12 group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]"
                 >
-                  Lire Hope for the Future
+                  {t('hopeCTA')}
                   <ArrowRight
                     size={18}
                     className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
@@ -307,7 +254,7 @@ export default async function AboutPage() {
             <div className="lg:col-span-7 lg:order-2 relative aspect-[4/5] lg:aspect-auto lg:min-h-[70vh] bg-[var(--color-bg-muted)] overflow-hidden">
               <Image
                 src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
-                alt="Hope for the Future, l'école de Tanambao"
+                alt={t('hopeImageAlt')}
                 fill
                 sizes="(min-width: 1024px) 58vw, 100vw"
                 className="object-cover"
@@ -320,16 +267,16 @@ export default async function AboutPage() {
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">Séjourner</div>
+              <div className="caption">{t('bookKicker')}</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-                Deux nuits ou plus. Le jardin donne mieux à ceux qui restent.
+                {t('bookH2')}
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
-                <BookingButton>Vérifier disponibilités</BookingButton>
+                <BookingButton>{t('bookCheck')}</BookingButton>
                 <a
                   href={`mailto:${HOTEL.email}`}
                   className="text-[15px] underline-offset-4 hover:underline"
@@ -349,7 +296,7 @@ export default async function AboutPage() {
                 href="/rooms"
                 className="group inline-flex items-baseline gap-6 font-display font-light text-[var(--color-text)] text-[36px] md:text-[48px] tracking-[-0.03em] leading-[1.02]"
               >
-                <span>Les chambres</span>
+                <span>{t('continueLabel')}</span>
                 <ArrowRight
                   size={32}
                   className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-2 self-center"

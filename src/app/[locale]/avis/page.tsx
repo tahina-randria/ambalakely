@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Nav } from '@/components/sections/Nav';
 import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
@@ -9,34 +10,48 @@ import { Star } from '@phosphor-icons/react/dist/ssr';
 import { PHOTOS } from '@/lib/data/photos';
 import { fetchHotel, fetchReviews } from '@/sanity/lib/fetch';
 
-export const metadata: Metadata = {
-  title: 'Avis',
-  description:
-    "Tous les avis vérifiés de nos visiteurs sur Booking, TripAdvisor et Google. Hôtel Ambalakely, dix chambres à Fianarantsoa, Madagascar.",
-  alternates: { canonical: '/avis' },
-  openGraph: {
-    title: 'Avis · Hôtel Ambalakely',
-    description: 'Avis vérifiés sur Booking, TripAdvisor et Google.',
-    url: '/avis',
-  },
-};
+type LocaleParam = { params: Promise<{ locale: string }> };
 
-export default async function AvisPage() {
-  const [HOTEL, reviews] = await Promise.all([fetchHotel(), fetchReviews()]);
+export async function generateMetadata({ params }: LocaleParam): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'AvisPage' });
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+    alternates: { canonical: '/avis' },
+    openGraph: {
+      title: t('ogTitle'),
+      description: t('ogDescription'),
+      url: '/avis',
+    },
+  };
+}
+
+export default async function AvisPage({ params }: LocaleParam) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const [HOTEL, reviews, t] = await Promise.all([
+    fetchHotel(),
+    fetchReviews(),
+    getTranslations('AvisPage'),
+  ]);
+
+  const heroTitle = t.raw('heroTitle') as string[];
+
   return (
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: 'Accueil', url: '/' },
-          { name: 'Avis', url: '/avis' },
+          { name: t('breadcrumbHome'), url: '/' },
+          { name: t('breadcrumbAvis'), url: '/avis' },
         ]}
       />
       <Nav />
       <main id="main">
         <PageHero
           src={PHOTOS.story.path}
-          alt="Hôtel Ambalakely, jardin et façade principale"
-          title={['Ce que disent', 'nos visiteurs.']}
+          alt={t('heroAlt')}
+          title={heroTitle}
           hideCta
         />
 
@@ -44,10 +59,7 @@ export default async function AvisPage() {
         <section className="py-32 md:py-48 lg:py-56">
           <div className="mx-auto max-w-[700px] px-5 md:px-8">
             <ScrollReveal>
-              <p className="lede-display">
-                {reviews.length} avis vérifiés, repris mot pour mot depuis
-                Booking, TripAdvisor et Google.
-              </p>
+              <p className="lede-display">{t('intro', { count: reviews.length })}</p>
             </ScrollReveal>
             {HOTEL.rating.value && HOTEL.rating.count ? (
               <ScrollReveal delay={0.05}>
@@ -63,8 +75,11 @@ export default async function AvisPage() {
                     ))}
                   </div>
                   <div className="caption text-[var(--color-text-muted)]">
-                    {HOTEL.rating.value} sur 5 — {HOTEL.rating.count} avis sur{' '}
-                    {HOTEL.rating.sources.join(' et ')}
+                    {t('ratingLine', {
+                      value: HOTEL.rating.value,
+                      count: HOTEL.rating.count,
+                      sources: HOTEL.rating.sources.join(' / '),
+                    })}
                   </div>
                 </div>
               </ScrollReveal>
@@ -109,16 +124,16 @@ export default async function AvisPage() {
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">Réserver</div>
+              <div className="caption">{t('ctaKicker')}</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-                Venez vérifier par vous-même.
+                {t('ctaH2')}
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
-                <BookingButton>Voir les disponibilités</BookingButton>
+                <BookingButton>{t('ctaCheck')}</BookingButton>
               </div>
             </ScrollReveal>
           </div>

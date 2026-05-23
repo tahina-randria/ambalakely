@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { notFound } from 'next/navigation';
 import { Nav } from '@/components/sections/Nav';
@@ -12,7 +13,7 @@ import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import type { Article } from '@/lib/data/articles';
 import { fetchArticles, fetchArticleBySlug, fetchHotel } from '@/sanity/lib/fetch';
 
-type Params = { slug: string };
+type Params = { locale: string; slug: string };
 
 export async function generateStaticParams() {
   const articles = await fetchArticles();
@@ -24,9 +25,12 @@ export async function generateMetadata({
 }: {
   params: Promise<Params>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const article = await fetchArticleBySlug(slug);
-  if (!article) return { title: 'Article not found' };
+  if (!article) {
+    const t = await getTranslations({ locale, namespace: 'ArticlePage' });
+    return { title: t('metaTitleFallback') };
+  }
 
   return {
     title: article.title,
@@ -55,19 +59,9 @@ async function ArticleJsonLd({ article }: { article: Article | undefined }) {
     image: article.cover,
     datePublished: article.datePublished,
     dateModified: article.datePublished,
-    author: {
-      '@type': 'Person',
-      name: article.author,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: HOTEL.name,
-      url: HOTEL.url,
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${HOTEL.url}/journal/${article.slug}`,
-    },
+    author: { '@type': 'Person', name: article.author },
+    publisher: { '@type': 'Organization', name: HOTEL.name, url: HOTEL.url },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${HOTEL.url}/journal/${article.slug}` },
   };
   return (
     <script
@@ -78,8 +72,12 @@ async function ArticleJsonLd({ article }: { article: Article | undefined }) {
 }
 
 export default async function ArticlePage({ params }: { params: Promise<Params> }) {
-  const { slug } = await params;
-  const article = await fetchArticleBySlug(slug);
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
+  const [article, t] = await Promise.all([
+    fetchArticleBySlug(slug),
+    getTranslations('ArticlePage'),
+  ]);
   if (!article) notFound();
 
   const allArticles = await fetchArticles();
@@ -92,8 +90,8 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: 'Accueil', url: '/' },
-          { name: 'Journal', url: '/journal' },
+          { name: t('breadcrumbHome'), url: '/' },
+          { name: t('breadcrumbJournal'), url: '/journal' },
           { name: article.title, url: `/journal/${article.slug}` },
         ]}
       />
@@ -107,16 +105,11 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
           hideCta
         />
 
-        {/* ════════════════════════════════════════════════════════════
-            BYLINE + EXCERPT + ARTICLE BODY (first half)
-            Substack-tight rhythm : kicker, excerpt, meta row, hr, body
-        ════════════════════════════════════════════════════════════ */}
+        {/* BYLINE + EXCERPT + ARTICLE BODY (first half) */}
         <section className="pt-20 md:pt-28 lg:pt-32 pb-20 md:pb-32">
           <div className="mx-auto max-w-[680px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption text-[var(--color-text-muted)]">
-                Depuis le journal
-              </div>
+              <div className="caption text-[var(--color-text-muted)]">{t('fromJournal')}</div>
               <p className="mt-6 font-display font-light text-[var(--color-text)] text-[22px] md:text-[26px] leading-[1.35] tracking-[-0.015em] balance">
                 {article.excerpt}
               </p>
@@ -145,9 +138,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════════
-            PULL QUOTE
-        ════════════════════════════════════════════════════════════ */}
+        {/* PULL QUOTE */}
         {article.pullQuote ? (
           <section className="py-20 md:py-32 hair-rule">
             <div className="mx-auto max-w-[1000px] px-5 md:px-8 lg:px-12">
@@ -158,9 +149,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
           </section>
         ) : null}
 
-        {/* ════════════════════════════════════════════════════════════
-            INLINE IMAGE — full bleed, atmospheric break
-        ════════════════════════════════════════════════════════════ */}
+        {/* INLINE IMAGE */}
         {article.inlineImage ? (
           <section className="relative aspect-[16/9] md:aspect-[21/9] w-full bg-[var(--color-bg-muted)]">
             <Image
@@ -173,9 +162,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
           </section>
         ) : null}
 
-        {/* ════════════════════════════════════════════════════════════
-            ARTICLE BODY — second half
-        ════════════════════════════════════════════════════════════ */}
+        {/* ARTICLE BODY — second half */}
         <section className={`${article.pullQuote ? 'pt-20 md:pt-32 hair-rule' : ''} pb-32 md:pb-48`}>
           <div className="mx-auto max-w-[680px] px-5 md:px-8">
             <ScrollReveal>
@@ -196,27 +183,25 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════════
-            BOOKING CTA
-        ════════════════════════════════════════════════════════════ */}
+        {/* BOOKING CTA */}
         <section className="py-32 md:py-48 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">Venez nous voir</div>
+              <div className="caption">{t('ctaKicker')}</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-                Lisez la suite en personne.
+                {t('ctaH2')}
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
-                <BookingButton>Voir les disponibilités</BookingButton>
+                <BookingButton>{t('ctaCheck')}</BookingButton>
                 <Link
                   href="/journal"
                   className="group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]"
                 >
-                  Retour au journal
+                  {t('ctaBackToJournal')}
                   <ArrowRight
                     size={18}
                     className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
@@ -227,14 +212,12 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════════
-            OTHER ARTICLES
-        ════════════════════════════════════════════════════════════ */}
+        {/* OTHER ARTICLES */}
         {others.length > 0 ? (
           <section className="py-32 md:py-48 hair-rule">
             <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
               <ScrollReveal>
-                <div className="caption">D’autres textes</div>
+                <div className="caption">{t('moreWriting')}</div>
               </ScrollReveal>
               <ul className="mt-12">
                 {others.map((o) => (

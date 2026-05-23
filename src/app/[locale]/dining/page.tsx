@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Container } from '@/components/atoms/Container';
 import { Nav } from '@/components/sections/Nav';
 import { Footer } from '@/components/sections/Footer';
@@ -22,68 +23,69 @@ import { fetchHotel } from '@/sanity/lib/fetch';
 import { formatMga } from '@/lib/utils/format';
 import { PHOTOS } from '@/lib/data/photos';
 
-export const metadata: Metadata = {
-  title: 'Toko Telo, the restaurant',
-  description:
-    'Toko Telo, le restaurant de l\'Hôtel Ambalakely. Cinquante couverts, cuisine de la campagne malgache avec touches scandinaves. Petit déjeuner, déjeuner et dîner sur place, pizza sur la terrasse à l\'étage.',
-  alternates: { canonical: '/dining' },
-  openGraph: {
-    title: 'Toko Telo · Hôtel Ambalakely',
-    description: 'Une petite cuisine entre Madagascar et la Norvège.',
-    url: '/dining',
-    images: [
-      {
-        url: PHOTOS.diningHero.url,
-        width: 2560,
-        height: 1707,
-        alt: 'Toko Telo dining room at Hôtel Ambalakely',
-      },
-    ],
-  },
-};
+type LocaleParam = { params: Promise<{ locale: string }> };
 
-/**
- * Tarifs réels — extraits du PDF Tarifs Publics 2026.
- * Pas de menu détaillé pour l'instant : on attend que Hasina valide
- * la sélection de plats à mettre en ligne.
- */
-const meals = [
-  { label: 'Petit déjeuner Malagasy', priceMga: 25000 },
-  { label: 'Petit déjeuner complet', priceMga: 38000 },
-  { label: 'Déjeuner ou dîner — 1 service', priceMga: 40000 },
-  { label: 'Déjeuner ou dîner — 2 services', priceMga: 59000 },
-  { label: 'Déjeuner ou dîner — 3 services', priceMga: 72000 },
-  { label: 'Panier pique-nique', priceMga: 50000 },
-];
+export async function generateMetadata({ params }: LocaleParam): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'DiningPage' });
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+    alternates: { canonical: '/dining' },
+    openGraph: {
+      title: t('ogTitle'),
+      description: t('ogDescription'),
+      url: '/dining',
+      images: [
+        {
+          url: PHOTOS.diningHero.url,
+          width: 2560,
+          height: 1707,
+          alt: t('imageAlt'),
+        },
+      ],
+    },
+  };
+}
 
-const mealExtras = [
-  'Enfant de 5 à 12 ans : 50 % du tarif',
-  'Enfant de moins de 5 ans : offert',
-];
+export default async function DiningPage({ params }: LocaleParam) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const [HOTEL, t] = await Promise.all([fetchHotel(), getTranslations('DiningPage')]);
 
-const facts: { label: string; value: string; Icon: PhosphorIcon }[] = [
-  { label: 'Couverts', value: 'Cinquante', Icon: Users },
-  { label: 'Service', value: 'À la carte, 1 à 3 services', Icon: ForkKnife },
-  { label: 'Ouvert à', value: 'Résidents et visiteurs', Icon: Door },
-  { label: 'Réservation', value: '24 h à l\'avance', Icon: Clock },
-];
+  const heroTitle = t.raw('heroTitle') as string[];
 
-export default async function DiningPage() {
-  const HOTEL = await fetchHotel();
-  // Horaires réels du restaurant — document Kirsten.
+  const meals = [
+    { label: t('mealBreakfastMalagasy'), priceMga: 25000 },
+    { label: t('mealBreakfastFull'), priceMga: 38000 },
+    { label: t('meal1Course'), priceMga: 40000 },
+    { label: t('meal2Course'), priceMga: 59000 },
+    { label: t('meal3Course'), priceMga: 72000 },
+    { label: t('mealPicnic'), priceMga: 50000 },
+  ];
+
+  const mealExtras = [t('extraChild'), t('extraChildFree')];
+
+  const facts: { label: string; value: string; Icon: PhosphorIcon }[] = [
+    { label: t('factCovers'), value: t('factCoversValue'), Icon: Users },
+    { label: t('factService'), value: t('factServiceValue'), Icon: ForkKnife },
+    { label: t('factOpenTo'), value: t('factOpenToValue'), Icon: Door },
+    { label: t('factReservation'), value: t('factReservationValue'), Icon: Clock },
+  ];
+
   const hours: { label: string; value: string; Icon: PhosphorIcon }[] = [
-    { label: 'Petit déjeuner', value: HOTEL.hours.breakfast, Icon: Sun },
-    { label: 'Déjeuner', value: HOTEL.hours.lunch, Icon: SunHorizon },
-    { label: 'Dîner', value: HOTEL.hours.dinner, Icon: Moon },
-    { label: 'Terrasse pizza', value: HOTEL.hours.pizzaTerrace, Icon: Pizza },
+    { label: t('hourBreakfast'), value: HOTEL.hours.breakfast, Icon: Sun },
+    { label: t('hourLunch'), value: HOTEL.hours.lunch, Icon: SunHorizon },
+    { label: t('hourDinner'), value: HOTEL.hours.dinner, Icon: Moon },
+    { label: t('hourPizzaTerrace'), value: HOTEL.hours.pizzaTerrace, Icon: Pizza },
   ];
 
   return (
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: 'Accueil', url: '/' },
-          { name: 'Toko Telo', url: '/dining' },
+          { name: t('breadcrumbHome'), url: '/' },
+          { name: t('breadcrumbDining'), url: '/dining' },
         ]}
       />
       <RestaurantJsonLd />
@@ -91,8 +93,8 @@ export default async function DiningPage() {
       <main id="main">
         <PageHero
           src={PHOTOS.diningHero.path}
-          alt="Toko Telo, le restaurant de l'Hôtel Ambalakely à Fianarantsoa, Madagascar"
-          title={['Toko Telo,', 'le restaurant.']}
+          alt={t('heroAlt')}
+          title={heroTitle}
         />
 
         {/* INTRO + KEY FACTS */}
@@ -101,31 +103,17 @@ export default async function DiningPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
               <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
                 <ScrollReveal>
-                  <div className="caption">La cuisine</div>
+                  <div className="caption">{t('introKicker')}</div>
                 </ScrollReveal>
               </div>
               <div className="lg:col-span-9">
                 <ScrollReveal>
-                  <p className="lede max-w-[34ch]">
-                    Une petite cuisine entre Madagascar et la Norvège. Cinquante
-                    couverts, ouverte aux résidents et aux visiteurs de la journée.
-                  </p>
+                  <p className="lede max-w-[34ch]">{t('introLede')}</p>
                 </ScrollReveal>
                 <ScrollReveal delay={0.05}>
                   <div className="mt-12 prose-editorial">
-                    <p>
-                      Le concept de la maison : Eny ambanivohitra, à la
-                      campagne. L&apos;essentiel de ce qui arrive sur la table
-                      vient du jardin derrière la cuisine, des rizières en
-                      contrebas, et des producteurs locaux (les Tantsaha) à
-                      quelques kilomètres.
-                    </p>
-                    <p>
-                      Le menu se choisit en un, deux ou trois services. À
-                      l&apos;étage, la terrasse fait pizzeria toute la journée,
-                      ouvert de 10 h à 21 h 30. Trois plats signature
-                      reviennent souvent : Zébu Marengo, Kjøttkaker, Krumkake.
-                    </p>
+                    <p>{t('introP1')}</p>
+                    <p>{t('introP2')}</p>
                   </div>
                 </ScrollReveal>
 
@@ -165,7 +153,7 @@ export default async function DiningPage() {
         <section className="relative aspect-[16/9] md:aspect-[21/9] w-full bg-[var(--color-bg-muted)]">
           <Image
             src={PHOTOS.diningLounge.path}
-            alt="Le salon de Toko Telo, avec sa cheminée et ses murs en pierre"
+            alt={t('loungeAlt')}
             fill
             sizes="100vw"
             className="object-cover"
@@ -174,12 +162,9 @@ export default async function DiningPage() {
             aria-hidden
             className="absolute bottom-5 right-5 md:bottom-7 md:right-7 caption text-white/85 mix-blend-difference"
           >
-            La salle à manger
+            {t('loungeCaption')}
           </div>
         </section>
-
-        {/* Section "plats signature" retirée pour l'instant —
-            à activer quand Hasina aura validé la sélection. */}
 
         {/* HOURS + PRICING */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-bg-subtle)]">
@@ -187,9 +172,9 @@ export default async function DiningPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
               <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
                 <ScrollReveal>
-                  <div className="caption">Horaires et tarifs</div>
+                  <div className="caption">{t('hoursKicker')}</div>
                   <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em] max-w-[260px]">
-                    Du matin tôt au soir.
+                    {t('hoursH2')}
                   </h2>
                 </ScrollReveal>
               </div>
@@ -197,7 +182,7 @@ export default async function DiningPage() {
                 {/* Hours */}
                 <ScrollReveal>
                   <div>
-                    <div className="caption mb-8">Horaires</div>
+                    <div className="caption mb-8">{t('hoursLabel')}</div>
                     <ul className="border-t border-[var(--color-border-subtle)]">
                       {hours.map((h) => {
                         const Icon = h.Icon;
@@ -230,7 +215,7 @@ export default async function DiningPage() {
                 {/* Pricing */}
                 <ScrollReveal delay={0.05}>
                   <div>
-                    <div className="caption mb-8">Tarifs (Ariary)</div>
+                    <div className="caption mb-8">{t('pricingLabel')}</div>
                     <ul className="border-t border-[var(--color-border-subtle)]">
                       {meals.map((m) => (
                         <li
@@ -262,18 +247,18 @@ export default async function DiningPage() {
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">Réserver une table</div>
+              <div className="caption">{t('ctaKicker')}</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-                Visiteurs bienvenus.
+                {t('ctaH2')}
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
-                <BookingButton>Réserver</BookingButton>
+                <BookingButton>{t('ctaButton')}</BookingButton>
                 <p className="text-[14px] leading-[1.55] text-[var(--color-text-muted)] max-w-[400px]">
-                  24 h à l&apos;avance minimum. Allergies, à signaler la veille.
+                  {t('ctaNote')}
                 </p>
               </div>
             </ScrollReveal>

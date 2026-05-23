@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { notFound } from 'next/navigation';
 import { Nav } from '@/components/sections/Nav';
@@ -16,7 +17,7 @@ import type { Category } from '@/lib/data/categories';
 import { fetchCategories, fetchCategoryBySlug, fetchHotel } from '@/sanity/lib/fetch';
 import { formatMga } from '@/lib/utils/format';
 
-type Params = { category: string };
+type Params = { locale: string; category: string };
 
 export async function generateStaticParams() {
   const categories = await fetchCategories();
@@ -28,13 +29,19 @@ export async function generateMetadata({
 }: {
   params: Promise<Params>;
 }): Promise<Metadata> {
-  const { category } = await params;
+  const { locale, category } = await params;
+  const t = await getTranslations({ locale, namespace: 'RoomCategory' });
   const [cat, HOTEL] = await Promise.all([fetchCategoryBySlug(category), fetchHotel()]);
-  if (!cat) return { title: 'Chambre introuvable' };
+  if (!cat) return { title: t('notFoundTitle') };
 
   return {
-    title: `Chambre ${cat.name}`,
-    description: `${cat.shortDescription} ${cat.size}, ${cat.capacity}. À partir de ${cat.priceMga.toLocaleString('fr-FR')} Ariary la nuit.`,
+    title: t('metaTitle', { name: cat.name }),
+    description: t('metaDescription', {
+      shortDescription: cat.shortDescription,
+      size: cat.size,
+      capacity: cat.capacity,
+      price: cat.priceMga.toLocaleString(locale === 'fr' ? 'fr-FR' : locale === 'no' ? 'nb-NO' : 'en-US'),
+    }),
     alternates: { canonical: `/rooms/${cat.slug}` },
     openGraph: {
       title: `${cat.name} · ${HOTEL.shortName}`,
@@ -51,7 +58,7 @@ async function HotelOfferJsonLd({ category }: { category: Category | undefined }
   const data = {
     '@context': 'https://schema.org',
     '@type': 'HotelRoom',
-    name: `Chambre ${category.name}`,
+    name: `${category.name}`,
     description: category.longDescription,
     occupancy: {
       '@type': 'QuantitativeValue',
@@ -86,10 +93,12 @@ async function HotelOfferJsonLd({ category }: { category: Category | undefined }
 }
 
 export default async function RoomCategoryPage({ params }: { params: Promise<Params> }) {
-  const { category } = await params;
-  const [cat, allCategories] = await Promise.all([
+  const { locale, category } = await params;
+  setRequestLocale(locale);
+  const [cat, allCategories, t] = await Promise.all([
     fetchCategoryBySlug(category),
     fetchCategories(),
+    getTranslations('RoomCategory'),
   ]);
   if (!cat) notFound();
 
@@ -99,8 +108,8 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: 'Accueil', url: '/' },
-          { name: 'Chambres', url: '/rooms' },
+          { name: t('breadcrumbHome'), url: '/' },
+          { name: t('breadcrumbRooms'), url: '/rooms' },
           { name: cat.name, url: `/rooms/${cat.slug}` },
         ]}
       />
@@ -110,28 +119,23 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
       <main id="main">
         <PageHero
           src={cat.heroImage}
-          alt={`Chambre ${cat.name} à l’Hôtel Ambalakely`}
-          title={['Chambre', `${cat.name}.`]}
+          alt={t('heroAlt', { name: cat.name })}
+          title={[t('heroTitle1'), `${cat.name}.`]}
         />
 
-        {/* ════════════════════════════════════════════════════════════
-            EDITORIAL OPENING — lede + key facts spec sheet + long prose
-        ════════════════════════════════════════════════════════════ */}
+        {/* EDITORIAL OPENING */}
         <section className="py-32 md:py-48 lg:py-64">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <p className="lede-display max-w-[700px]">
-                {cat.shortDescription}
-              </p>
+              <p className="lede-display max-w-[700px]">{cat.shortDescription}</p>
             </ScrollReveal>
 
-            {/* Quick facts — magazine spec sheet, hairline rules */}
             <ScrollReveal delay={0.05}>
               <dl className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 border-y border-[var(--color-border-subtle)] divide-x divide-[var(--color-border-subtle)]">
-                <SpecItem Icon={Bed} label="Lit" value={cat.bedSetup} />
-                <SpecItem Icon={ArrowsOut} label="Taille" value={cat.size} />
-                <SpecItem Icon={Users} label="Capacité" value={cat.capacity} />
-                <SpecItem Icon={Mountains} label="Vue" value={cat.view} />
+                <SpecItem Icon={Bed} label={t('specBed')} value={cat.bedSetup} />
+                <SpecItem Icon={ArrowsOut} label={t('specSize')} value={cat.size} />
+                <SpecItem Icon={Users} label={t('specCapacity')} value={cat.capacity} />
+                <SpecItem Icon={Mountains} label={t('specView')} value={cat.view} />
               </dl>
             </ScrollReveal>
 
@@ -143,32 +147,28 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
 
             <ScrollReveal delay={0.15}>
               <p className="mt-10 max-w-[700px] font-display font-light italic text-[var(--color-text-muted)] text-[17px] md:text-[19px] leading-[1.55]">
-                {cat.count} dans la maison. À partir de{' '}
+                {t('countLine', { count: cat.count })}{' '}
                 <span className="not-italic tabular-nums text-[var(--color-text)]">
                   {formatMga(cat.priceMga)} Ariary
                 </span>{' '}
-                la nuit.
+                {t('perNight')}.
               </p>
             </ScrollReveal>
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════════
-            STICKY SCRUB MOMENT — image full-bleed → contained as you scroll
-        ════════════════════════════════════════════════════════════ */}
+        {/* STICKY SCRUB MOMENT */}
         <StickyScrubImage
           src={cat.gallery[1] ?? cat.heroImage}
-          alt={`Intérieur de la chambre ${cat.name}, lumière du matin`}
-          caption={`Cliché · ${cat.name}`}
+          alt={t('scrubAlt', { name: cat.name })}
+          caption={t('scrubCaption', { name: cat.name })}
         />
 
-        {/* ════════════════════════════════════════════════════════════
-            FEATURES — clean two-column list with Phosphor icons
-        ════════════════════════════════════════════════════════════ */}
+        {/* FEATURES */}
         <section className="py-32 md:py-48 lg:py-64">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption mb-12 md:mb-16">Dans chaque chambre</div>
+              <div className="caption mb-12 md:mb-16">{t('inRoomKicker')}</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-20 border-t border-[var(--color-border-subtle)]">
@@ -192,9 +192,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════════
-            FULL-BLEED PHOTO 02
-        ════════════════════════════════════════════════════════════ */}
+        {/* FULL-BLEED PHOTO 02 */}
         <section className="relative h-[80vh] md:h-[100vh] w-full bg-[var(--color-bg-muted)]">
           <Image
             src={cat.gallery[2] ?? cat.gallery[1] ?? cat.heroImage}
@@ -205,13 +203,11 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
           />
         </section>
 
-        {/* ════════════════════════════════════════════════════════════
-            CONCIERGE NOTE — single column, signed
-        ════════════════════════════════════════════════════════════ */}
+        {/* CONCIERGE NOTE */}
         <section className="py-32 md:py-48 lg:py-64">
           <div className="mx-auto max-w-[760px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">Un mot de {cat.concierge.signed}</div>
+              <div className="caption">{t('conciergeKicker', { signed: cat.concierge.signed })}</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <p className="mt-10 font-display font-light italic text-[var(--color-text)] text-[26px] md:text-[36px] leading-[1.3] tracking-[-0.02em]">
@@ -229,40 +225,35 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════════
-            RESERVE — inline minimal, no dark panel
-        ════════════════════════════════════════════════════════════ */}
+        {/* RESERVE */}
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">Réserver</div>
+              <div className="caption">{t('reserveKicker')}</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-                Une chambre {cat.name}, à partir de{' '}
+                {t('reserveH2', { name: cat.name })}{' '}
                 <span className="tabular-nums">{formatMga(cat.priceMga)}</span>{' '}
-                Ariary.
+                {t('reservePerNight')}
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
-                <BookingButton>Voir les disponibilités</BookingButton>
+                <BookingButton>{t('reserveCheck')}</BookingButton>
                 <p className="text-[14px] leading-[1.55] text-[var(--color-text-muted)] max-w-[400px]">
-                  Par nuit. Annulation gratuite jusqu&apos;à trente jours avant
-                  l&apos;arrivée.
+                  {t('reserveNote')}
                 </p>
               </div>
             </ScrollReveal>
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════════
-            CONTINUE — inline links, no cards
-        ════════════════════════════════════════════════════════════ */}
+        {/* CONTINUE */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">Ou une autre chambre</div>
+              <div className="caption">{t('othersKicker')}</div>
             </ScrollReveal>
             <ul className="mt-12">
               {others.map((o, i) => (
@@ -272,12 +263,11 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                       href={`/rooms/${o.slug}`}
                       className="group block py-8 md:py-10 grid grid-cols-12 gap-6 items-center"
                     >
-                      {/* Thumbnail */}
                       <div className="col-span-4 md:col-span-3">
                         <div className="relative aspect-[4/3] overflow-hidden bg-[var(--color-bg-muted)]">
                           <Image
                             src={o.heroImage}
-                            alt={`Chambre ${o.name}`}
+                            alt={t('othersAlt', { name: o.name })}
                             fill
                             sizes="(min-width: 768px) 25vw, 33vw"
                             className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-[1.04]"
@@ -285,14 +275,12 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                         </div>
                       </div>
 
-                      {/* Caption number */}
                       <div className="hidden md:block md:col-span-1">
                         <div className="caption text-[var(--color-text-muted)]">
                           {o.number}
                         </div>
                       </div>
 
-                      {/* Name + short description + price */}
                       <div className="col-span-8 md:col-span-7">
                         <h3 className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[40px] leading-[1.05] tracking-[-0.03em] group-hover:translate-x-2 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
                           {o.name}
@@ -301,14 +289,13 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                           {o.shortDescription}
                         </p>
                         <p className="mt-2 text-[14px] md:text-[15px] text-[var(--color-text-muted)]">
-                          À partir de{' '}
+                          {t('othersFrom')}{' '}
                           <span className="tabular-nums text-[var(--color-text)]">
                             {formatMga(o.priceMga)} Ariary
                           </span>
                         </p>
                       </div>
 
-                      {/* Arrow */}
                       <div className="hidden md:flex md:col-span-1 md:justify-end">
                         <ArrowRight
                           size={24}
@@ -328,10 +315,6 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
   );
 }
 
-/**
- * SpecItem — one cell of the key-facts spec sheet.
- * Icon + label small caps on top, value as display type below.
- */
 function SpecItem({
   Icon,
   label,

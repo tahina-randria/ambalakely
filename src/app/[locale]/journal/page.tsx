@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { Nav } from '@/components/sections/Nav';
 import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
@@ -11,37 +12,46 @@ import { NewsletterSignup } from '@/components/molecules/NewsletterSignup';
 import { PHOTOS } from '@/lib/data/photos';
 import { fetchArticles } from '@/sanity/lib/fetch';
 
-export const metadata: Metadata = {
-  title: 'Journal',
-  description:
-    "Le journal de l’Hôtel Ambalakely. Hasina et Mamy sur la cuisine, le jardin, les hautes terres et les gens qui passent.",
-  alternates: { canonical: '/journal' },
-  openGraph: {
-    title: 'Journal · Hôtel Ambalakely',
-    description: "Écrits d’Hasina et Mamy.",
-    url: '/journal',
-  },
-};
+type LocaleParam = { params: Promise<{ locale: string }> };
 
-export default async function JournalPage() {
-  const articles = await fetchArticles();
+export async function generateMetadata({ params }: LocaleParam): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Journal' });
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+    alternates: { canonical: '/journal' },
+    openGraph: {
+      title: t('ogTitle'),
+      description: t('ogDescription'),
+      url: '/journal',
+    },
+  };
+}
+
+export default async function JournalPage({ params }: LocaleParam) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const [articles, t] = await Promise.all([fetchArticles(), getTranslations('Journal')]);
+
   const heroSrc = articles[0]?.cover ?? PHOTOS.story.path;
   const isEmpty = articles.length === 0;
+  const heroTitle = t.raw('heroTitle') as string[];
 
   return (
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: 'Accueil', url: '/' },
-          { name: 'Journal', url: '/journal' },
+          { name: t('metaTitle'), url: '/' },
+          { name: t('metaTitle'), url: '/journal' },
         ]}
       />
       <Nav />
       <main id="main">
         <PageHero
           src={heroSrc}
-          alt="Le journal de l’Hôtel Ambalakely"
-          title={['Le journal de', 'l’Hôtel Ambalakely.']}
+          alt={t('heroAlt')}
+          title={heroTitle}
           hideCta
         />
 
@@ -49,30 +59,22 @@ export default async function JournalPage() {
         <section className="py-32 md:py-48 lg:py-56">
           <div className="mx-auto max-w-[700px] px-5 md:px-8">
             <ScrollReveal>
-              <p className="lede-display">
-                Écrits d&apos;Hasina et Mamy. La cuisine, le jardin, les gens
-                qui passent.
-              </p>
+              <p className="lede-display">{t('introLead')}</p>
             </ScrollReveal>
           </div>
         </section>
 
         {isEmpty ? (
-          /* Empty state — the journal hasn't shipped yet */
           <section className="hair-rule py-32 md:py-48">
             <div className="mx-auto max-w-[700px] px-5 md:px-8 text-center">
               <ScrollReveal>
                 <div className="caption text-[var(--color-text-muted)]">
-                  Bientôt
+                  {t('emptyKicker')}
                 </div>
                 <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[36px] md:text-[48px] leading-[1.02] tracking-[-0.03em] balance">
-                  Les premiers textes arrivent cette saison.
+                  {t('emptyH2')}
                 </h2>
-                <p className="mt-8 prose-editorial">
-                  Hasina écrit. La cuisine, le jardin, les hautes terres.
-                  Quelques paragraphes à la fois, quand la journée le permet.
-                  Laissez-nous votre e-mail et vous serez les premiers à lire.
-                </p>
+                <p className="mt-8 prose-editorial">{t('emptyBody')}</p>
               </ScrollReveal>
               <ScrollReveal delay={0.1}>
                 <div className="mt-12 max-w-[460px] mx-auto text-left">
@@ -82,7 +84,6 @@ export default async function JournalPage() {
             </div>
           </section>
         ) : (
-          /* Articles list */
           <section className="hair-rule py-24 md:py-32">
             <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
               <ul>
@@ -113,7 +114,7 @@ export default async function JournalPage() {
                           </h2>
                           <p className="mt-6 prose-editorial">{article.excerpt}</p>
                           <div className="mt-8 inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]">
-                            Lire l&apos;article
+                            {t('readArticle')}
                             <ArrowRight
                               size={18}
                               className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
@@ -127,8 +128,7 @@ export default async function JournalPage() {
               </ul>
               <ScrollReveal>
                 <p className="mt-16 caption text-[var(--color-text-muted)] max-w-[560px]">
-                  De nouveaux textes chaque saison. Inscrivez-vous à la
-                  newsletter à la réception, à votre arrivée.
+                  {t('moreEverySeason')}
                 </p>
               </ScrollReveal>
             </div>

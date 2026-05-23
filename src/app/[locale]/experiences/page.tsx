@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { Nav } from '@/components/sections/Nav';
 import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
@@ -11,62 +12,65 @@ import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchExcursions } from '@/sanity/lib/fetch';
 import { PHOTOS } from '@/lib/data/photos';
 
-export const metadata: Metadata = {
-  title: 'Excursions',
-  description:
-    "Dix choses à faire depuis l'Hôtel Ambalakely. Lémuriens de Ranomafana, marche dans les rizières, cuisine, thé de Sahambavy, trek d'Andringitra, sculpture d'Ambositra, visite de l'école, et plus encore.",
-  alternates: { canonical: '/experiences' },
-  openGraph: {
-    title: 'Excursions · Hôtel Ambalakely',
-    description: "Dix choses à faire, toutes organisées depuis la maison.",
-    url: '/experiences',
-    images: [
-      {
-        url: PHOTOS.experiences.url,
-        width: 2560,
-        height: 1707,
-        alt: "Vue depuis l'Hôtel Ambalakely sur la RN7",
-      },
-    ],
-  },
-};
+type LocaleParam = { params: Promise<{ locale: string }> };
 
-export default async function ExperiencesPage() {
-  const experiences = await fetchExcursions();
+export async function generateMetadata({ params }: LocaleParam): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'ExperiencesPage' });
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+    alternates: { canonical: '/experiences' },
+    openGraph: {
+      title: t('ogTitle'),
+      description: t('ogDescription'),
+      url: '/experiences',
+      images: [
+        {
+          url: PHOTOS.experiences.url,
+          width: 2560,
+          height: 1707,
+          alt: t('imageAlt'),
+        },
+      ],
+    },
+  };
+}
+
+export default async function ExperiencesPage({ params }: LocaleParam) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const [experiences, t] = await Promise.all([
+    fetchExcursions(),
+    getTranslations('ExperiencesPage'),
+  ]);
+
+  const heroTitle = t.raw('heroTitle') as string[];
+
   return (
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: 'Accueil', url: '/' },
-          { name: 'Excursions', url: '/experiences' },
+          { name: t('breadcrumbHome'), url: '/' },
+          { name: t('breadcrumbExperiences'), url: '/experiences' },
         ]}
       />
       <Nav />
       <main id="main">
         <PageHero
           src={PHOTOS.experiences.path}
-          alt="Vue des rizières depuis l’Hôtel Ambalakely"
-          title={['Excursions', 'depuis Ambalakely.']}
+          alt={t('heroAlt')}
+          title={heroTitle}
         />
 
         {/* INTRO */}
         <section className="py-32 md:py-48 lg:py-56">
           <div className="mx-auto max-w-[700px] px-5 md:px-8">
             <ScrollReveal>
-              <p className="lede-display">
-                Dix choses à faire depuis l&apos;hôtel. Toutes organisées
-                depuis la maison.
-              </p>
+              <p className="lede-display">{t('introLede')}</p>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
-              <p className="mt-12 prose-editorial">
-                La plupart des hôtes en font deux ou trois. La marche dans les
-                rizières et la visite de l&apos;école se font à pied depuis
-                l&apos;hôtel. Ranomafana, Sahambavy, Andringitra, Ambositra,
-                Tsaranoro demandent un chauffeur. Nous organisons le
-                chauffeur, le guide du parc, le panier-repas et le thé, dans
-                la combinaison qui vous va.
-              </p>
+              <p className="mt-12 prose-editorial">{t('introP1')}</p>
             </ScrollReveal>
           </div>
         </section>
@@ -75,7 +79,7 @@ export default async function ExperiencesPage() {
         <section className="hair-rule py-16 md:py-20">
           <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption mb-10">En un coup d’œil</div>
+              <div className="caption mb-10">{t('quickNavKicker')}</div>
               <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-12">
                 {experiences.map((exp) => (
                   <li
@@ -105,7 +109,7 @@ export default async function ExperiencesPage() {
           </div>
         </section>
 
-        {/* EXPERIENCE CHAPTERS — image left/right alternating, magazine */}
+        {/* EXPERIENCE CHAPTERS */}
         {experiences.map((exp, i) => (
           <section
             key={exp.slug}
@@ -115,7 +119,6 @@ export default async function ExperiencesPage() {
             }`}
           >
             <div className="mx-auto max-w-[1280px] px-5 md:px-8 lg:px-12">
-              {/* Chapter header — full width */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mb-12 md:mb-16">
                 <div className="lg:col-span-3">
                   <ScrollReveal>
@@ -134,7 +137,6 @@ export default async function ExperiencesPage() {
                 </div>
               </div>
 
-              {/* Body — alternating image / prose */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
                 <ScrollReveal
                   className={`lg:col-span-7 ${i % 2 === 1 ? 'lg:order-2' : ''}`}
@@ -160,23 +162,21 @@ export default async function ExperiencesPage() {
                     <p className="prose-editorial">{exp.body}</p>
                   </ScrollReveal>
 
-                  {/* Practical specs */}
                   <ScrollReveal delay={0.1}>
                     <div className="mt-10 space-y-1">
                       <div className="spec-row">
-                        <div className="spec-row__label">Idéal</div>
+                        <div className="spec-row__label">{t('specBest')}</div>
                         <div className="spec-row__value">{exp.best}</div>
                       </div>
                       {exp.cost ? (
                         <div className="spec-row">
-                          <div className="spec-row__label">Tarif</div>
+                          <div className="spec-row__label">{t('specCost')}</div>
                           <div className="spec-row__value">{exp.cost}</div>
                         </div>
                       ) : null}
                     </div>
                   </ScrollReveal>
 
-                  {/* Personalised CTA */}
                   <ScrollReveal delay={0.15}>
                     <BookingButton className="mt-10">{exp.ctaLabel}</BookingButton>
                   </ScrollReveal>
@@ -190,21 +190,21 @@ export default async function ExperiencesPage() {
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption">Planifions ensemble</div>
+              <div className="caption">{t('ctaKicker')}</div>
             </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-                Réservez la chambre. Nous organisons les journées.
+                {t('ctaH2')}
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-6">
-                <BookingButton>Voir les disponibilités</BookingButton>
+                <BookingButton>{t('ctaCheck')}</BookingButton>
                 <Link
                   href="/plan-your-trip"
                   className="group inline-flex items-center gap-3 font-display font-light text-[var(--color-text)] text-[24px] md:text-[28px] tracking-[-0.02em] leading-[1.05]"
                 >
-                  Voir nos itinéraires
+                  {t('ctaItineraries')}
                   <ArrowRight
                     size={22}
                     className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
