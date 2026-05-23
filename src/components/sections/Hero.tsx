@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { ArrowDown } from '@phosphor-icons/react/dist/ssr';
+import { ArrowDown, Star } from '@phosphor-icons/react/dist/ssr';
 
 const VIDEO_SRC = '/videos/hero.mp4';
 const VIDEO_POSTER = '/videos/hero-poster.webp';
@@ -49,7 +49,7 @@ export function Hero() {
       <div className="relative h-full w-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
         <div className="mt-auto pb-14 md:pb-20 max-w-[920px]">
           {/* H1 — multi-line, SEO-rich */}
-          <h1 className="font-display font-light tracking-[-0.03em] text-white text-[56px] leading-[1] balance">
+          <h1 className="font-display font-light tracking-[-0.03em] text-white text-[44px] leading-[1.02] sm:text-[56px] sm:leading-[1] md:text-[68px] md:leading-[0.98] balance">
             {lines.map((line, i) => (
               <span key={i} className="block overflow-hidden">
                 <span
@@ -62,9 +62,17 @@ export function Hero() {
             ))}
           </h1>
 
-          {/* CTA */}
+          {/* Subtitle */}
           <div
-            className="hero-fade-up mt-10 md:mt-14"
+            className="hero-fade-up mt-6 md:mt-8 max-w-[640px] font-display font-light text-white/85 text-[18px] md:text-[22px] leading-[1.4] tracking-[-0.01em] balance"
+            style={{ ['--fade-delay' as string]: '0.7s' }}
+          >
+            La maison de Mamy et Hasina, ouverte en octobre 2018.
+          </div>
+
+          {/* CTA + social proof */}
+          <div
+            className="hero-fade-up mt-10 md:mt-12 flex flex-wrap items-center gap-x-6 gap-y-4"
             style={{ ['--fade-delay' as string]: '0.95s' }}
           >
             <button
@@ -78,6 +86,10 @@ export function Hero() {
                 className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-y-0.5"
               />
             </button>
+            <div className="flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.08em] text-white/80">
+              <Star size={14} weight="fill" aria-hidden className="text-white/90" />
+              <span>Avis vérifiés sur Booking &amp; TripAdvisor</span>
+            </div>
           </div>
         </div>
       </div>
