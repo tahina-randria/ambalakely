@@ -11,7 +11,6 @@ import { BookingButton } from '@/components/atoms/BookingButton';
 import { FeatureIcon } from '@/components/atoms/FeatureIcon';
 import { PageHero } from '@/components/molecules/PageHero';
 import { StickyReserveBar } from '@/components/molecules/StickyReserveBar';
-import { StickyScrubImage } from '@/components/molecules/StickyScrubImage';
 import { ArrowRight, Bed, ArrowsOut, Users, Mountains } from '@phosphor-icons/react/dist/ssr';
 import type { Category } from '@/lib/data/categories';
 import { fetchCategories, fetchCategoryBySlug, fetchHotel } from '@/sanity/lib/fetch';
@@ -157,12 +156,22 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
           </div>
         </section>
 
-        {/* STICKY SCRUB MOMENT */}
-        <StickyScrubImage
-          src={cat.gallery[1] ?? cat.heroImage}
-          alt={t('scrubAlt', { name: cat.name })}
-          caption={t('scrubCaption', { name: cat.name })}
-        />
+        {/* FULL-BLEED IMAGE — simple, no GSAP scrub (Mobbin / Aman pattern) */}
+        <section className="relative aspect-[16/9] md:aspect-[21/9] w-full bg-[var(--color-bg-muted)]">
+          <Image
+            src={cat.gallery[1] ?? cat.heroImage}
+            alt={t('scrubAlt', { name: cat.name })}
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div
+            aria-hidden
+            className="absolute bottom-5 right-5 md:bottom-7 md:right-7 caption text-white/85 mix-blend-difference"
+          >
+            {t('scrubCaption', { name: cat.name })}
+          </div>
+        </section>
 
         {/* FEATURES */}
         <section className="py-32 md:py-48 lg:py-64">
