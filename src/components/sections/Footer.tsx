@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import {
   Phone,
   WhatsappLogo,
@@ -6,51 +5,51 @@ import {
   InstagramLogo,
 } from '@phosphor-icons/react/dist/ssr';
 import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
+import { getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { CookiePrefsLink } from '@/components/atoms/CookiePrefsLink';
 import { NewsletterSignup } from '@/components/molecules/NewsletterSignup';
 import { fetchHotel } from '@/sanity/lib/fetch';
 
-type NavColumn = {
-  title: string;
-  links: { label: string; href: string }[];
-};
-
 type ContactLink = { label: string; href: string; Icon: PhosphorIcon };
 
-const columns: NavColumn[] = [
-  {
-    title: 'Séjourner',
-    links: [
-      { label: 'Les dix chambres', href: '/rooms' },
-      { label: 'Supérieure', href: '/rooms/superieure' },
-      { label: 'Confort', href: '/rooms/confort' },
-      { label: 'Standard', href: '/rooms/standard' },
-    ],
-  },
-  {
-    title: 'Découvrir',
-    links: [
-      { label: 'Restaurant', href: '/dining' },
-      { label: 'Excursions', href: '/experiences' },
-      { label: 'Préparer le voyage', href: '/plan-your-trip' },
-      { label: 'Journal', href: '/journal' },
-    ],
-  },
-  {
-    title: 'La maison',
-    links: [
-      { label: 'L’histoire', href: '/about' },
-      { label: 'Mamy et Hasina', href: '/about#founders' },
-      { label: 'Communauté', href: '/community' },
-      { label: 'FAQ', href: '/faq' },
-    ],
-  },
-];
-
 export async function Footer() {
-  const HOTEL = await fetchHotel();
+  const [HOTEL, t] = await Promise.all([
+    fetchHotel(),
+    getTranslations('Footer'),
+  ]);
   const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');
+
+  const columns = [
+    {
+      title: t('columnStay'),
+      links: [
+        { label: t('linkAllRooms'), href: '/rooms' },
+        { label: t('linkSuperieure'), href: '/rooms/superieure' },
+        { label: t('linkConfort'), href: '/rooms/confort' },
+        { label: t('linkStandard'), href: '/rooms/standard' },
+      ],
+    },
+    {
+      title: t('columnDiscover'),
+      links: [
+        { label: t('linkDining'), href: '/dining' },
+        { label: t('linkExperiences'), href: '/experiences' },
+        { label: t('linkPlanTrip'), href: '/plan-your-trip' },
+        { label: t('linkJournal'), href: '/journal' },
+      ],
+    },
+    {
+      title: t('columnAbout'),
+      links: [
+        { label: t('linkAboutHouse'), href: '/about' },
+        { label: t('linkFounders'), href: '/about#founders' },
+        { label: t('linkCommunity'), href: '/community' },
+        { label: t('linkFaq'), href: '/faq' },
+      ],
+    },
+  ];
 
   const contactLinks: ContactLink[] = [
     { label: HOTEL.phone, href: `tel:${HOTEL.whatsapp}`, Icon: Phone },
@@ -62,6 +61,8 @@ export async function Footer() {
       Icon: InstagramLogo,
     },
   ];
+
+  const contactTitle = t('columnContact');
 
   return (
     <footer className="border-t border-[var(--color-border-subtle)] bg-[var(--color-bg-subtle)]">
@@ -102,7 +103,7 @@ export async function Footer() {
             {/* Contact — with phosphor icons for fast scan */}
             <div>
               <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-5">
-                Contact
+                {contactTitle}
               </div>
               <ul className="space-y-3">
                 {contactLinks.map(({ label, href, Icon }) => (
@@ -128,7 +129,7 @@ export async function Footer() {
 
           {/* Bottom legal */}
           <div className="mt-20 pt-8 border-t border-[var(--color-border-subtle)] flex flex-col md:flex-row md:items-center md:justify-between gap-4 font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
-            <div>© 2026 Hôtel Ambalakely · Fianarantsoa, Madagascar</div>
+            <div>{t('legalCopyright')}</div>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
               <CookiePrefsLink />
               <span>RN7 · 21°27′15″S 47°05′10″E</span>

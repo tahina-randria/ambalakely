@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { Check, Minus, ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import { FeatureIcon } from '@/components/atoms/FeatureIcon';
 import { comparison } from '@/lib/data/comparison';

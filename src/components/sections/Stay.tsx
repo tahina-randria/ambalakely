@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
@@ -15,7 +16,11 @@ import { fetchCategories } from '@/sanity/lib/fetch';
  * Data : Sanity (categories) with fallback to data/categories.ts.
  */
 export async function Stay() {
-  const categories = await fetchCategories();
+  const [categories, t, tCommon] = await Promise.all([
+    fetchCategories(),
+    getTranslations('Stay'),
+    getTranslations('Common'),
+  ]);
 
   return (
     <Section id="stay" divider>
@@ -23,10 +28,9 @@ export async function Stay() {
         <div className="mx-auto max-w-[1100px]">
           {/* Editorial intro */}
           <ScrollReveal>
-            <div className="caption mb-8">Les chambres</div>
+            <div className="caption mb-8">{t('kicker')}</div>
             <p className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[40px] leading-[1.2] tracking-[-0.025em] balance max-w-[680px]">
-              Mêmes murs sable, mêmes parquets en bois sombre, mêmes
-              bouillottes au soir. La différence : la taille, la vue, le lit.
+              {t('intro')}
             </p>
           </ScrollReveal>
 
@@ -67,12 +71,12 @@ export async function Stay() {
 
                     {/* Price + arrow */}
                     <div className="col-span-8 md:col-span-3 text-left md:text-right font-display font-light text-[var(--color-text)] text-[18px] md:text-[22px] tracking-[-0.02em] tabular-nums">
-                      À partir de
+                      {tCommon('from')}
                       <br className="hidden md:block" />{' '}
                       <span className="font-medium">
                         {formatMga(cat.priceMga)}
                       </span>{' '}
-                      Ariary
+                      {tCommon('ariary')}
                     </div>
                     <div className="col-span-4 md:col-span-1 md:flex md:justify-end">
                       <ArrowRight
@@ -92,7 +96,7 @@ export async function Stay() {
                 href="/rooms"
                 className="group inline-flex items-center gap-3 font-body text-[15px] font-medium text-[var(--color-text)]"
               >
-                Voir les dix chambres
+                {t('viewAll')}
                 <ArrowRight
                   size={18}
                   className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"

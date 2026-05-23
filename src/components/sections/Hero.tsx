@@ -1,18 +1,17 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { ArrowDown, Star } from '@phosphor-icons/react/dist/ssr';
 
 const VIDEO_SRC = '/videos/hero.mp4';
 const VIDEO_POSTER = '/videos/hero-poster.webp';
 
 export function Hero() {
+  const t = useTranslations('Hero');
+  const tCommon = useTranslations('Common');
   const videoRef = useRef<HTMLVideoElement>(null);
-  const lines = [
-    'Dix chambres sur la RN7,',
-    'à 12 km de Fianarantsoa,',
-    'dans les hautes terres.',
-  ];
+  const lines = t.raw('lines') as string[];
 
   useEffect(() => {
     const video = videoRef.current;
@@ -67,7 +66,7 @@ export function Hero() {
             className="hero-fade-up mt-6 md:mt-8 max-w-[640px] font-display font-light text-white/85 text-[18px] md:text-[22px] leading-[1.4] tracking-[-0.01em] balance"
             style={{ ['--fade-delay' as string]: '0.7s' }}
           >
-            La maison de Mamy et Hasina, ouverte en octobre 2018.
+            {t('subtitle')}
           </div>
 
           {/* CTA + social proof */}
@@ -80,7 +79,7 @@ export function Hero() {
               onClick={openBooking}
               className="group inline-flex items-center gap-2 h-12 px-7 bg-white text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
             >
-              Voir les disponibilités
+              {tCommon('checkAvailability')}
               <ArrowDown
                 size={16}
                 className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-y-0.5"
@@ -88,7 +87,7 @@ export function Hero() {
             </button>
             <div className="flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.08em] text-white/80">
               <Star size={14} weight="fill" aria-hidden className="text-white/90" />
-              <span>Avis vérifiés sur Booking &amp; TripAdvisor</span>
+              <span>{t('socialProof')}</span>
             </div>
           </div>
         </div>

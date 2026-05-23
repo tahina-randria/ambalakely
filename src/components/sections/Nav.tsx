@@ -1,21 +1,24 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils/cn';
 import { BookingDrawer } from '@/components/molecules/BookingDrawer';
+import { LanguageSwitcher } from '@/components/atoms/LanguageSwitcher';
 
-const links = [
-  { href: '/rooms', label: 'Chambres' },
-  { href: '/dining', label: 'Restaurant' },
-  { href: '/experiences', label: 'Excursions' },
-  { href: '/community', label: 'Communauté' },
-  { href: '/journal', label: 'Journal' },
-  { href: '/about', label: 'La maison' },
-];
+const linkKeys = [
+  { href: '/rooms', key: 'rooms' },
+  { href: '/dining', key: 'dining' },
+  { href: '/experiences', key: 'experiences' },
+  { href: '/community', key: 'community' },
+  { href: '/journal', key: 'journal' },
+  { href: '/about', key: 'about' },
+] as const;
 
 export function Nav() {
+  const t = useTranslations('Nav');
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -49,7 +52,7 @@ export function Nav() {
         >
           <Link
             href="/"
-            aria-label="Hôtel Ambalakely — accueil"
+            aria-label={t('homeAriaLabel')}
             className={cn(
               'flex items-center gap-3 font-display font-normal text-[18px] tracking-[-0.01em]',
               scrolled ? 'text-[var(--color-text)]' : 'text-white',
@@ -70,7 +73,7 @@ export function Nav() {
           </Link>
 
           <ul className="hidden md:flex items-center gap-8">
-            {links.map((l) => (
+            {linkKeys.map((l) => (
               <li key={l.href}>
                 <Link
                   href={l.href}
@@ -79,14 +82,14 @@ export function Nav() {
                     scrolled ? 'text-[var(--color-text)]' : 'text-white',
                   )}
                 >
-                  {l.label}
+                  {t(l.key)}
                 </Link>
               </li>
             ))}
           </ul>
 
-          <div className="flex items-center gap-5">
-            {/* Lang switcher hidden until next-intl wired and /en/ routes exist. */}
+          <div className="flex items-center gap-4 md:gap-5">
+            <LanguageSwitcher scrolled={scrolled} />
             <button
               type="button"
               onClick={() => setDrawerOpen(true)}
@@ -97,7 +100,7 @@ export function Nav() {
                   : 'text-black bg-white hover:bg-white/90',
               )}
             >
-              Réserver
+              {t('book')}
             </button>
           </div>
         </div>

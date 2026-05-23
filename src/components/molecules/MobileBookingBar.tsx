@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { useConsent } from '@/lib/consent';
 
@@ -12,6 +13,7 @@ import { useConsent } from '@/lib/consent';
  */
 export function MobileBookingBar() {
   const { hasChosen } = useConsent();
+  const t = useTranslations('MobileBar');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export function MobileBookingBar() {
         onClick={open}
         className="group flex w-full items-center justify-center gap-2 h-14 font-body text-[15px] font-medium tracking-[-0.005em]"
       >
-        Réserver
+        {t('label')}
         <ArrowRight
           size={16}
           weight="regular"

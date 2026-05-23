@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils/cn';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'accent';

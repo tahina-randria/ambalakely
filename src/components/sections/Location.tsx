@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import {
   ArrowUpRight,
   Buildings,
@@ -9,48 +8,47 @@ import {
   House,
   AirplaneTakeoff,
 } from '@phosphor-icons/react/dist/ssr';
-import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
+import { getTranslations } from 'next-intl/server';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { Kicker } from '@/components/atoms/Kicker';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { MapboxMap } from '@/components/molecules/MapboxMap';
 
-type Distance = { label: string; sub: string; meta: string; Icon: PhosphorIcon };
-
-const distances: Distance[] = [
-  { label: 'Antananarivo', sub: 'Capitale · aéroport Ivato', meta: '8 h', Icon: Buildings },
-  { label: 'Antsirabe', sub: 'Ville thermale', meta: '4 h', Icon: Drop },
-  { label: 'Ranomafana', sub: 'Parc national', meta: '1 h 20', Icon: Tree },
-  { label: 'Isalo', sub: 'Massif', meta: '5 h', Icon: Mountains },
-];
-
 const RoadIcon = Car;
 const LocalIcon = House;
 const AirIcon = AirplaneTakeoff;
 
-export function Location() {
+export async function Location() {
+  const t = await getTranslations('Location');
+
+  const distances = [
+    { label: t('antananarivo'), sub: t('antananarivoSub'), meta: '8 h', Icon: Buildings },
+    { label: t('antsirabe'), sub: t('antsirabeSub'), meta: '4 h', Icon: Drop },
+    { label: t('ranomafana'), sub: t('ranomafanaSub'), meta: '1 h 20', Icon: Tree },
+    { label: t('isalo'), sub: t('isaloSub'), meta: '5 h', Icon: Mountains },
+  ];
   return (
     <Section id="location" divider>
       <Container>
         <ScrollReveal className="mb-16 md:mb-24">
-          <Kicker>Emplacement</Kicker>
+          <Kicker>{t('kicker')}</Kicker>
           <div className="mt-6 flex flex-col md:flex-row md:items-end justify-between gap-8">
             <h2 className="font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[44px] leading-[1.05] md:text-[56px] md:leading-[1.02] max-w-[760px] balance">
-              Sur la Route Nationale 7, à mi-chemin entre la capitale et le sud.
+              {t('h2')}
             </h2>
-            <Link
+            <a
               href="https://www.google.com/maps/place/Fianarantsoa,+Madagascar/@-21.4541,47.0862,12z"
               target="_blank"
               rel="noreferrer"
               className="group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)] shrink-0"
             >
-              Ouvrir dans Google Maps
+              {t('openInMaps')}
               <ArrowUpRight
                 size={18}
                 className="transition-[color,transform] duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
-            </Link>
+            </a>
           </div>
         </ScrollReveal>
 
@@ -69,7 +67,7 @@ export function Location() {
             {/* Distance list */}
             <div className="lg:col-span-4 flex flex-col">
               <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-6">
-                Depuis Ambalakely
+                {t('fromAmbalakely')}
               </div>
               <ul className="border-t border-[var(--color-border-subtle)]">
                 {distances.map((d) => {
@@ -117,14 +115,13 @@ export function Location() {
                 aria-hidden
               />
               <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-3">
-                Par la route depuis Antananarivo
+                {t('byRoadKicker')}
               </div>
               <div className="font-display text-[22px] tracking-[-0.02em] text-[var(--color-text)]">
-                8 heures
+                {t('byRoadValue')}
               </div>
               <p className="mt-3 text-[15px] leading-[1.55] text-[var(--color-text-muted)]">
-                Transfert privé sur la RN7. Nous l&apos;organisons depuis votre
-                arrivée à Ivato International.
+                {t('byRoadBody')}
               </p>
             </div>
             <div>
@@ -135,14 +132,13 @@ export function Location() {
                 aria-hidden
               />
               <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-3">
-                Depuis le centre de Fianarantsoa
+                {t('fromCentreKicker')}
               </div>
               <div className="font-display text-[22px] tracking-[-0.02em] text-[var(--color-text)]">
-                20 minutes
+                {t('fromCentreValue')}
               </div>
               <p className="mt-3 text-[15px] leading-[1.55] text-[var(--color-text-muted)]">
-                Douze kilomètres au nord par une route tranquille.
-                L&apos;hôtel est sur la colline au-dessus du village.
+                {t('fromCentreBody')}
               </p>
             </div>
             <div>
@@ -153,14 +149,13 @@ export function Location() {
                 aria-hidden
               />
               <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-3">
-                Par avion
+                {t('byAirKicker')}
               </div>
               <div className="font-display text-[22px] tracking-[-0.02em] text-[var(--color-text)]">
-                TNR &rarr; WFI · 1 h 10
+                {t('byAirValue')}
               </div>
               <p className="mt-3 text-[15px] leading-[1.55] text-[var(--color-text-muted)]">
-                Vols domestiques vers l&apos;aéroport de Fianarantsoa depuis
-                Antananarivo, puis 25&#160;min en voiture.
+                {t('byAirBody')}
               </p>
             </div>
           </div>

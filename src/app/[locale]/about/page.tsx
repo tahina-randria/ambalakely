@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { Nav } from '@/components/sections/Nav';
 import { Footer } from '@/components/sections/Footer';

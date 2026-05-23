@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { Kicker } from '@/components/atoms/Kicker';
@@ -7,13 +8,16 @@ import { ArrowRight, ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchArticles } from '@/sanity/lib/fetch';
 
 export async function Journal() {
-  const articles = await fetchArticles();
+  const [articles, t] = await Promise.all([
+    fetchArticles(),
+    getTranslations('Journal'),
+  ]);
   if (articles.length === 0) return null;
   return (
     <Section id="journal" divider>
       <Container>
         <ScrollReveal className="mb-16 md:mb-24">
-          <Kicker>Le journal</Kicker>
+          <Kicker>{t('kicker')}</Kicker>
         </ScrollReveal>
 
         <ul className="border-t border-[var(--color-border-subtle)]">
@@ -47,7 +51,7 @@ export async function Journal() {
             href="/journal"
             className="group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]"
           >
-            Lire le journal
+            {t('viewAll')}
             <ArrowRight
               size={18}
               className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"

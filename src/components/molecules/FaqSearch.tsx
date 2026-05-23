@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import {
   MagnifyingGlass,
@@ -37,6 +38,7 @@ const categoryIcon: Record<string, PhosphorIcon> = {
  * - Live filter as you type, matches across question + answer text
  */
 export function FaqSearch({ faq }: { faq: FaqCategory[] }) {
+  const t = useTranslations('Faq');
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
@@ -77,15 +79,15 @@ export function FaqSearch({ faq }: { faq: FaqCategory[] }) {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Rechercher dans la FAQ..."
-              aria-label="Rechercher dans la FAQ"
+              placeholder={t('search')}
+              aria-label={t('searchAria')}
               className="w-full h-12 pl-8 pr-10 bg-transparent border-0 border-b border-[var(--color-border)] focus:border-[var(--color-sand-12)] focus:outline-none font-display font-light text-[18px] md:text-[22px] tracking-[-0.01em] text-[var(--color-text)] placeholder-[var(--color-text-muted)] transition-colors"
             />
             {query ? (
               <button
                 type="button"
                 onClick={() => setQuery('')}
-                aria-label="Effacer la recherche"
+                aria-label={t('clearAria')}
                 className="absolute right-0 top-1/2 -translate-y-1/2 h-8 w-8 inline-flex items-center justify-center text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
               >
                 <X size={16} weight="light" />
@@ -105,7 +107,7 @@ export function FaqSearch({ faq }: { faq: FaqCategory[] }) {
                   : 'border border-[var(--color-border)] text-[var(--color-text)] hover:border-[var(--color-sand-12)]',
               )}
             >
-              Tout
+              {t('all')}
             </button>
             {faq.map((cat) => {
               const Icon = categoryIcon[cat.slug];
@@ -136,8 +138,10 @@ export function FaqSearch({ faq }: { faq: FaqCategory[] }) {
       {lowerQuery || activeCategory ? (
         <div className="py-6 caption text-[var(--color-text-muted)]">
           {totalMatches === 0
-            ? 'Aucun résultat. Essayez une autre recherche ou catégorie.'
-            : `${totalMatches} ${totalMatches === 1 ? 'résultat' : 'résultats'}`}
+            ? t('noMatchesShort')
+            : totalMatches === 1
+              ? t('matchesOne', { n: totalMatches })
+              : t('matchesMany', { n: totalMatches })}
         </div>
       ) : null}
 
@@ -145,7 +149,7 @@ export function FaqSearch({ faq }: { faq: FaqCategory[] }) {
       {filtered.length === 0 ? (
         <div className="py-24 md:py-32">
           <p className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.2] tracking-[-0.025em] text-center max-w-[480px] mx-auto">
-            Aucun résultat. Écrivez-nous directement.
+            {t('noMatchesLong')}
           </p>
         </div>
       ) : (
@@ -160,8 +164,9 @@ export function FaqSearch({ faq }: { faq: FaqCategory[] }) {
                 <ScrollReveal>
                   <div className="caption">{cat.label}</div>
                   <div className="mt-4 font-display font-light text-[var(--color-text-muted)] text-[15px]">
-                    {cat.entries.length}{' '}
-                    {cat.entries.length === 1 ? 'question' : 'questions'}
+                    {cat.entries.length === 1
+                      ? t('questionsOne', { n: cat.entries.length })
+                      : t('questionsMany', { n: cat.entries.length })}
                   </div>
                 </ScrollReveal>
               </div>

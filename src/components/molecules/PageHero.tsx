@@ -2,6 +2,7 @@
 
 import { useRef, useLayoutEffect, type ReactNode } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowDown } from '@phosphor-icons/react/dist/ssr';
@@ -43,6 +44,7 @@ export function PageHero({
   hideCta = false,
   className,
 }: Props) {
+  const tCommon = useTranslations('Common');
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
@@ -133,7 +135,7 @@ export function PageHero({
                   onClick={openBooking}
                   className="group inline-flex items-center gap-2 h-12 px-7 bg-white text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
                 >
-                  Check availability
+                  {tCommon('checkAvailability')}
                   <ArrowDown
                     size={16}
                     className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-y-0.5"

@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { Heading } from '@/components/atoms/Heading';
@@ -7,14 +8,16 @@ import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchExcursions } from '@/sanity/lib/fetch';
 
 export async function Experiences() {
-  const experiences = await fetchExcursions();
+  const [experiences, t] = await Promise.all([
+    fetchExcursions(),
+    getTranslations('Experiences'),
+  ]);
   return (
     <Section id="experiences" divider>
       <Container>
         <ScrollReveal className="mb-16 md:mb-24">
           <Heading variant="h2" className="max-w-[800px]">
-            Marcher, tisser, cuisiner. Ce que cette terre donne, quand elle
-            le donne.
+            {t('h2')}
           </Heading>
         </ScrollReveal>
 
@@ -51,7 +54,7 @@ export async function Experiences() {
             href="/experiences"
             className="group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]"
           >
-            Voir toutes les excursions
+            {t('viewAll')}
             <ArrowRight
               size={18}
               className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"

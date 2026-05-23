@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useConsent } from '@/lib/consent';
 
 /**
@@ -9,13 +10,14 @@ import { useConsent } from '@/lib/consent';
  */
 export function CookiePrefsLink() {
   const { reset } = useConsent();
+  const t = useTranslations('Footer');
   return (
     <button
       type="button"
       onClick={reset}
       className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] underline-offset-4 hover:text-[var(--color-text)] hover:underline transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]"
     >
-      Gérer les cookies
+      {t('cookiesManage')}
     </button>
   );
 }

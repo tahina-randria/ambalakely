@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { cn } from '@/lib/utils/cn';
 import { formatMga } from '@/lib/utils/format';
@@ -18,6 +19,8 @@ type Props = {
  * Slides down from -100% with cubic-bezier ease.
  */
 export function StickyReserveBar({ name, priceMga }: Props) {
+  const t = useTranslations('StickyReserve');
+  const tCommon = useTranslations('Common');
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -48,10 +51,10 @@ export function StickyReserveBar({ name, priceMga }: Props) {
             </span>
             <span className="hidden md:inline-block w-1 h-1 rounded-full bg-[var(--color-sand-7)] shrink-0" />
             <span className="font-mono uppercase tracking-[0.1em] text-[11px] text-[var(--color-sand-6)] hidden md:inline-block">
-              À partir de
+              {t('from')}
             </span>
             <span className="font-display font-light text-[14px] md:text-[16px] tabular-nums shrink-0">
-              {formatMga(priceMga)} Ariary
+              {formatMga(priceMga)} {tCommon('ariary')}
             </span>
           </div>
           <button
@@ -59,7 +62,7 @@ export function StickyReserveBar({ name, priceMga }: Props) {
             onClick={open}
             className="group inline-flex items-center gap-2 text-[13px] md:text-[14px] font-medium shrink-0 hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-fast)]"
           >
-            Réserver
+            {t('reserve')}
             <ArrowRight
               size={14}
               className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"

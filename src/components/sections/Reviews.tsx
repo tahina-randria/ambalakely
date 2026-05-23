@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
@@ -13,8 +14,13 @@ import { fetchHotel, fetchReviews } from '@/sanity/lib/fetch';
  * Data: Sanity (with .ts fallback via fetchReviews/fetchHotel).
  */
 export async function Reviews() {
-  const [HOTEL, allReviews] = await Promise.all([fetchHotel(), fetchReviews()]);
+  const [HOTEL, allReviews, t] = await Promise.all([
+    fetchHotel(),
+    fetchReviews(),
+    getTranslations('Reviews'),
+  ]);
   const reviews = allReviews.slice(0, 3);
+  const sourcesStr = HOTEL.rating.sources.join(' & ');
   return (
     <Section id="reviews" divider>
       <Container>
@@ -22,7 +28,7 @@ export async function Reviews() {
           {/* Header */}
           <ScrollReveal className="mb-12 md:mb-16">
             <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] tracking-[-0.03em] balance max-w-[720px]">
-              Ce que disent nos visiteurs.
+              {t('h2')}
             </h2>
             {HOTEL.rating.value && HOTEL.rating.count ? (
               <div className="mt-8 flex items-center gap-3">
@@ -37,13 +43,16 @@ export async function Reviews() {
                   ))}
                 </div>
                 <div className="caption text-[var(--color-text-muted)]">
-                  {HOTEL.rating.value} sur 5 — {HOTEL.rating.count} avis sur{' '}
-                  {HOTEL.rating.sources.join(' et ')}
+                  {t('ratingWithNumber', {
+                    value: HOTEL.rating.value,
+                    count: HOTEL.rating.count,
+                    sources: sourcesStr,
+                  })}
                 </div>
               </div>
             ) : (
               <div className="mt-8 caption text-[var(--color-text-muted)]">
-                Avis vérifiés sur {HOTEL.rating.sources.join(' et ')}
+                {t('ratingNoNumber', { sources: sourcesStr })}
               </div>
             )}
           </ScrollReveal>
@@ -83,7 +92,7 @@ export async function Reviews() {
               href="/avis"
               className="group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]"
             >
-              Voir les {allReviews.length} avis
+              {t('viewAll', { count: allReviews.length })}
               <ArrowRight
                 size={18}
                 className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"

@@ -2,7 +2,8 @@
 
 import { useRef, useLayoutEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Kicker } from '@/components/atoms/Kicker';
@@ -13,13 +14,9 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const tonight = [
-  'Zébu Marengo, herbes du jardin et vin de Fianar',
-  'Kjøttkaker, haricots des rizières',
-  'Krumkake, sorbet maison',
-];
-
 export function Dining() {
+  const t = useTranslations('Dining');
+  const tonight = t.raw('dishes') as string[];
   const sectionRef = useRef<HTMLElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
@@ -112,7 +109,7 @@ export function Dining() {
         >
           <Image
             src={PHOTOS.diningSection.path}
-            alt="Salle à manger du restaurant Toko Telo"
+            alt={t('imageAlt')}
             fill
             sizes="100vw"
             className="object-cover"
@@ -132,20 +129,19 @@ export function Dining() {
             transform: 'translate3d(32px, 0, 0)',
           }}
         >
-          <Kicker>Restaurant</Kicker>
+          <Kicker>{t('kicker')}</Kicker>
 
           <h2 className="mt-8 font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98]">
-            Toko Telo.
+            {t('name')}
           </h2>
 
           <p className="mt-6 text-[16px] leading-[1.55] text-[var(--color-text-muted)]">
-            Cinquante couverts. Produits des Tantsaha, les maraîchers d&apos;à
-            côté. Cuisine malgache, française et norvégienne au même menu.
+            {t('intro')}
           </p>
 
           <div className="mt-8 pt-6 border-t border-[var(--color-border-subtle)]">
             <div className="font-mono text-[13px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
-              Ce soir
+              {t('tonightLabel')}
             </div>
             <ul className="mt-4 flex flex-col gap-2">
               {tonight.map((dish) => (
@@ -163,7 +159,7 @@ export function Dining() {
             href="/dining"
             className="mt-10 inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)] group"
           >
-            Lire sur Toko Telo
+            {t('readMore')}
             <ArrowRight
               size={16}
               className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
