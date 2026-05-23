@@ -65,24 +65,24 @@ export async function Footer() {
   const contactTitle = t('columnContact');
 
   return (
-    <footer className="border-t border-[var(--color-border-subtle)] bg-[var(--color-bg-subtle)]">
+    <footer className="bg-[var(--color-sand-12)] text-[var(--color-sand-1)]">
       <Container>
         <div className="py-24 md:py-32">
           {/* Masthead */}
-          <div className="font-display font-light tracking-[-0.04em] text-[var(--color-text)] text-[48px] leading-[1] md:text-[88px] lg:text-[120px]">
+          <div className="font-display font-light tracking-[-0.04em] text-[var(--color-sand-1)] text-[48px] leading-[1] md:text-[88px] lg:text-[120px]">
             Hôtel Ambalakely
           </div>
 
           {/* Newsletter signup — growth lever */}
           <div className="mt-12 md:mt-16 max-w-[480px]">
-            <NewsletterSignup />
+            <NewsletterSignup variant="dark" />
           </div>
 
           {/* Columns */}
           <div className="mt-20 md:mt-28 grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
             {columns.map((col) => (
               <div key={col.title}>
-                <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-5">
+                <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-sand-6)] mb-5">
                   {col.title}
                 </div>
                 <ul className="space-y-3">
@@ -90,7 +90,7 @@ export async function Footer() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-[15px] text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]"
+                        className="text-[15px] text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]"
                       >
                         {link.label}
                       </Link>
@@ -102,7 +102,7 @@ export async function Footer() {
 
             {/* Contact — with phosphor icons for fast scan */}
             <div>
-              <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-5">
+              <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-sand-6)] mb-5">
                 {contactTitle}
               </div>
               <ul className="space-y-3">
@@ -112,12 +112,12 @@ export async function Footer() {
                       href={href}
                       target={href.startsWith('http') ? '_blank' : undefined}
                       rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="group inline-flex items-center gap-2.5 text-[15px] text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]"
+                      className="group inline-flex items-center gap-2.5 text-[15px] text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]"
                     >
                       <Icon
                         size={16}
                         weight="regular"
-                        className="text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors shrink-0"
+                        className="text-[var(--color-sand-6)] group-hover:text-[var(--color-sand-1)] transition-colors shrink-0"
                       />
                       <span>{label}</span>
                     </Link>
@@ -128,7 +128,7 @@ export async function Footer() {
           </div>
 
           {/* Bottom legal */}
-          <div className="mt-20 pt-8 border-t border-[var(--color-border-subtle)] flex flex-col md:flex-row md:items-center md:justify-between gap-4 font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
+          <div className="mt-20 pt-8 border-t border-[var(--color-sand-10)] flex flex-col md:flex-row md:items-center md:justify-between gap-4 font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-sand-6)]">
             <div>{t('legalCopyright')}</div>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
               <CookiePrefsLink />

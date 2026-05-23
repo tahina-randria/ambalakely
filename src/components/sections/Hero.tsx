@@ -26,7 +26,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative h-screen w-full overflow-hidden text-white isolate">
+    <section className="relative h-[100svh] md:h-screen w-full overflow-hidden text-white isolate">
       <video
         ref={videoRef}
         aria-hidden="true"
@@ -36,7 +36,7 @@ export function Hero() {
         playsInline
         preload="auto"
         poster={VIDEO_POSTER}
-        className="absolute inset-0 -z-20 h-full w-full object-cover hero-bg-settle"
+        className="absolute inset-0 -z-20 h-full w-full object-cover object-[50%_30%] md:object-center hero-bg-settle"
       >
         <source src={VIDEO_SRC} type="video/mp4" />
       </video>

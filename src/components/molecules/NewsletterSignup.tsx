@@ -84,10 +84,10 @@ export function NewsletterSignup({
             placeholder={t('newsletterPlaceholder')}
             aria-label={t('newsletterAriaInput')}
             className={cn(
-              'flex-1 h-12 px-4 bg-[var(--color-bg)] border border-solid text-[15px] focus:outline-none transition-colors',
+              'flex-1 h-12 px-4 border border-solid text-[15px] focus:outline-none transition-colors',
               isDark
-                ? 'border-[var(--color-sand-7)] text-[var(--color-sand-1)] placeholder-[var(--color-sand-7)] focus:border-[var(--color-sand-1)]'
-                : 'border-[var(--color-sand-12)] text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:border-[var(--color-sand-12)]',
+                ? 'bg-transparent border-[var(--color-sand-7)] text-[var(--color-sand-1)] placeholder-[var(--color-sand-7)] focus:border-[var(--color-sand-1)]'
+                : 'bg-[var(--color-bg)] border-[var(--color-sand-12)] text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:border-[var(--color-sand-12)]',
             )}
           />
           {/* Honeypot — hidden field that bots fill, humans don't see */}
