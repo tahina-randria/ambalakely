@@ -8,6 +8,7 @@ import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
+import { StickyTocRail } from '@/components/molecules/StickyTocRail';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchExcursions } from '@/sanity/lib/fetch';
 import { PHOTOS } from '@/lib/data/photos';
@@ -47,6 +48,12 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
 
   const heroTitle = t.raw('heroTitle') as string[];
 
+  const tocItems = experiences.map((exp) => ({
+    id: exp.slug,
+    number: exp.number,
+    label: exp.name,
+  }));
+
   return (
     <>
       <BreadcrumbJsonLd
@@ -56,6 +63,7 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
         ]}
       />
       <Nav />
+      <StickyTocRail items={tocItems} />
       <main id="main">
         <PageHero
           src={PHOTOS.experiences.path}

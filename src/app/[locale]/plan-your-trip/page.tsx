@@ -8,6 +8,7 @@ import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
+import { StickyTocRail } from '@/components/molecules/StickyTocRail';
 import { ArrowRight, Clock, MapTrifold } from '@phosphor-icons/react/dist/ssr';
 import { fetchItineraries } from '@/sanity/lib/fetch';
 import { PHOTOS } from '@/lib/data/photos';
@@ -47,6 +48,12 @@ export default async function PlanYourTripPage({ params }: LocaleParam) {
 
   const heroTitle = t.raw('heroTitle') as string[];
 
+  const tocItems = itineraries.map((it, i) => ({
+    id: it.slug,
+    number: String(i + 1).padStart(2, '0'),
+    label: it.title,
+  }));
+
   return (
     <>
       <BreadcrumbJsonLd
@@ -56,6 +63,7 @@ export default async function PlanYourTripPage({ params }: LocaleParam) {
         ]}
       />
       <Nav />
+      <StickyTocRail items={tocItems} />
       <main id="main">
         <PageHero
           src={PHOTOS.planTrip.path}

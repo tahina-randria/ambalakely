@@ -772,6 +772,27 @@ Toutes les pages sous `[locale]` :
 
 ---
 
+## 22. SEO multilingue + Mobbin TOC rail (2026-05-23, post-i18n)
+
+Polish session juste après Lot 2 :
+
+### SEO multilingue (commit `95c8e4f`)
+- `src/app/sitemap.ts` — chaque URL × 3 locales avec `<xhtml:link rel="alternate" hreflang="...">`. Norvégien sort en `nb` (Bokmål standard), `x-default` pointe sur FR. Helper `localizedEntry()` centralise le pattern. Vérifié : 52 occurrences `hreflang` dans `sitemap.xml`.
+- `src/app/[locale]/layout.tsx` — fix leak meta : `og:description` + `twitter:description` utilisaient `HOTEL.tagline` (FR hardcodé), maintenant `t('description')`. `canonical` aussi par locale (`/` pour FR, `/en` pour EN, `/no` pour NO). Languages map utilise `nb` au lieu de `no` pour respecter ISO standard.
+
+### Smoke test multilingue (commit `???`, à venir)
+- `audit/capture-i18n.mjs` — script Playwright dédié, 24 shots (4 pages × 3 locales × 2 viewports) contre prod. Résultat : layouts identiques FR/EN/NO, traductions appliquées partout, aucun text overflow.
+
+### Mobbin sticky TOC rail (commit `???`, à venir)
+- `src/components/molecules/StickyTocRail.tsx` — nouveau composant. Rail vertical fixé à droite (right-6 xl:right-10), visible sur `lg+` uniquement. Liste les sections par numéro dans des dots carrés. Le dot actif suit le scroll via `IntersectionObserver` (rootMargin `-40% 0px -40% 0px` pour cibler le centre du viewport). Label hover-révélé en font-mono.
+- Wiré dans `/experiences` (10 excursions) et `/plan-your-trip` (3 itinéraires).
+- Pattern emprunté à Aman/Six Senses sur les pages itinéraire. Sur mobile, le quick-nav grid existant fait office de TOC.
+- Pas de scroll listener — uniquement IntersectionObserver, donc lightweight.
+
+— previous Claude, 2026-05-23 post-i18n
+
+---
+
 ## End of HANDOFF
 
 Read this whole file before changing anything. When in doubt, ask the user. When the user is not available, check `docs/`. Make commits small and atomic. Push often. Don't break the truth rules.
