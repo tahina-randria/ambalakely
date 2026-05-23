@@ -1,39 +1,26 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { formatMga } from '@/lib/utils/format';
+import { fetchCategories } from '@/sanity/lib/fetch';
 
-const categories = [
-  {
-    id: 'superieure',
-    name: 'Supérieure',
-    count: 'Deux chambres',
-    spec: '43 m², lit king en palissandre, vue sur les rizières',
-    priceMga: 255000,
-  },
-  {
-    id: 'confort',
-    name: 'Confort',
-    count: 'Quatre chambres',
-    spec: '29 m², king et lit simple, jardin ou étage',
-    priceMga: 226000,
-  },
-  {
-    id: 'standard',
-    name: 'Standard',
-    count: 'Quatre chambres',
-    spec: '21 m², double ou twin, vue sur le jardin',
-    priceMga: 182000,
-  },
-];
+/**
+ * Homepage "Stay" section.
+ * 3 categories with a thumbnail, count, name, spec line and price.
+ * Pattern : Pasaia / Casa Bonay — editorial list, image left, prose right.
+ *
+ * Data : Sanity (categories) with fallback to data/categories.ts.
+ */
+export async function Stay() {
+  const categories = await fetchCategories();
 
-export function Stay() {
   return (
     <Section id="stay" divider>
       <Container>
-        <div className="mx-auto max-w-[920px]">
+        <div className="mx-auto max-w-[1100px]">
           {/* Editorial intro */}
           <ScrollReveal>
             <div className="caption mb-8">Les chambres</div>
@@ -43,28 +30,49 @@ export function Stay() {
             </p>
           </ScrollReveal>
 
-          {/* Inline category links — aligned to same column, hairline rule above */}
+          {/* Category list — thumbnail + text + price */}
           <ul className="mt-20 md:mt-28 border-t border-[var(--color-border-subtle)]">
             {categories.map((cat) => (
-              <ScrollReveal key={cat.id}>
+              <ScrollReveal key={cat.slug}>
                 <li className="border-b border-[var(--color-border-subtle)]">
                   <Link
-                    href={`/rooms/${cat.id}`}
-                    className="group block py-10 md:py-14 grid grid-cols-12 gap-6 items-baseline"
+                    href={`/rooms/${cat.slug}`}
+                    className="group block py-8 md:py-12 grid grid-cols-12 gap-5 md:gap-8 items-center"
                   >
-                    <div className="col-span-12 md:col-span-7">
+                    {/* Thumbnail */}
+                    <div className="col-span-12 md:col-span-3">
+                      <div className="relative aspect-[4/3] overflow-hidden bg-[var(--color-bg-muted)]">
+                        <Image
+                          src={cat.heroImage}
+                          alt={`Chambre ${cat.name}`}
+                          fill
+                          sizes="(min-width: 768px) 25vw, 100vw"
+                          className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-[1.04]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Caption + name + spec */}
+                    <div className="col-span-12 md:col-span-5">
                       <div className="caption text-[var(--color-text-muted)] mb-3">
                         {cat.count}
                       </div>
-                      <h3 className="font-display font-light text-[var(--color-text)] text-[36px] md:text-[48px] leading-[1] tracking-[-0.03em] group-hover:translate-x-2 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
+                      <h3 className="font-display font-light text-[var(--color-text)] text-[32px] md:text-[44px] leading-[1] tracking-[-0.03em] group-hover:translate-x-1.5 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
                         {cat.name}
                       </h3>
-                      <p className="mt-4 text-[15px] leading-[1.55] text-[var(--color-text-muted)] max-w-[480px]">
-                        {cat.spec}
+                      <p className="mt-3 text-[14px] md:text-[15px] leading-[1.55] text-[var(--color-text-muted)] max-w-[420px]">
+                        {cat.size}, {cat.bedSetup.split('.')[0]}.
                       </p>
                     </div>
-                    <div className="col-span-8 md:col-span-4 text-left md:text-right font-display font-light text-[var(--color-text)] text-[20px] md:text-[24px] tracking-[-0.02em] tabular-nums">
-                      À partir de {formatMga(cat.priceMga)} Ariary
+
+                    {/* Price + arrow */}
+                    <div className="col-span-8 md:col-span-3 text-left md:text-right font-display font-light text-[var(--color-text)] text-[18px] md:text-[22px] tracking-[-0.02em] tabular-nums">
+                      À partir de
+                      <br className="hidden md:block" />{' '}
+                      <span className="font-medium">
+                        {formatMga(cat.priceMga)}
+                      </span>{' '}
+                      Ariary
                     </div>
                     <div className="col-span-4 md:col-span-1 md:flex md:justify-end">
                       <ArrowRight
