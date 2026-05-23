@@ -67,8 +67,8 @@ export async function Footer() {
       <Container>
         <div className="py-24 md:py-32">
           {/* Masthead */}
-          <div className="font-display font-light tracking-[-0.04em] text-[var(--color-text)] text-[64px] leading-[1] md:text-[120px] lg:text-[168px]">
-            Ambalakely
+          <div className="font-display font-light tracking-[-0.04em] text-[var(--color-text)] text-[48px] leading-[1] md:text-[88px] lg:text-[120px]">
+            Hôtel Ambalakely
           </div>
 
           {/* Newsletter signup — growth lever */}
@@ -127,7 +127,7 @@ export async function Footer() {
 
           {/* Bottom legal */}
           <div className="mt-20 pt-8 border-t border-[var(--color-border-subtle)] flex flex-col md:flex-row md:items-center md:justify-between gap-4 font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
-            <div>© 2026 Hotel Ambalakely · Fianarantsoa, Madagascar</div>
+            <div>© 2026 Hôtel Ambalakely · Fianarantsoa, Madagascar</div>
             <div>RN7 · 21°27′15″S 47°05′10″E</div>
           </div>
         </div>

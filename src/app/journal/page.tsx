@@ -12,10 +12,10 @@ import { fetchArticles } from '@/sanity/lib/fetch';
 export const metadata: Metadata = {
   title: 'Journal',
   description:
-    'Writing from Hotel Ambalakely. Hasina and Mamy on the kitchen, the garden, the highlands and the people who pass through.',
+    'Writing from Hôtel Ambalakely. Hasina and Mamy on the kitchen, the garden, the highlands and the people who pass through.',
   alternates: { canonical: '/journal' },
   openGraph: {
-    title: 'Journal · Hotel Ambalakely',
+    title: 'Journal · Hôtel Ambalakely',
     description: 'Writing from Hasina and Mamy.',
     url: '/journal',
   },
@@ -35,8 +35,8 @@ export default async function JournalPage() {
       <main id="main">
         <PageHero
           src={articles[0].cover}
-          alt="From the Hotel Ambalakely journal"
-          title={['Journal of', 'Hotel Ambalakely.']}
+          alt="From the Hôtel Ambalakely journal"
+          title={['Journal of', 'Hôtel Ambalakely.']}
           hideCta
         />
 

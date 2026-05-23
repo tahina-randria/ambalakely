@@ -36,7 +36,7 @@ export const metadata: Metadata = {
         url: PHOTOS.diningHero.url,
         width: 2560,
         height: 1707,
-        alt: 'Toko Telo dining room at Hotel Ambalakely',
+        alt: 'Toko Telo dining room at Hôtel Ambalakely',
       },
     ],
   },

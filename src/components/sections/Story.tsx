@@ -15,7 +15,7 @@ export function Story() {
           <ScrollReveal className="lg:col-span-7 relative aspect-[4/5] lg:aspect-auto bg-[var(--color-bg-muted)] overflow-hidden">
             <Image
               src={PHOTOS.story.path}
-              alt="Hotel Ambalakely main building, Fianarantsoa"
+              alt="Hôtel Ambalakely main building, Fianarantsoa"
               fill
               sizes="(min-width: 1024px) 58vw, 100vw"
               className="object-cover"

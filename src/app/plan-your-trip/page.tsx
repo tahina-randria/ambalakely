@@ -14,10 +14,10 @@ import { PHOTOS } from '@/lib/data/photos';
 export const metadata: Metadata = {
   title: 'Plan your trip',
   description:
-    'Three itineraries for travelling the RN7 with Hotel Ambalakely as a base. Three, five and seven-day plans for Madagascar.',
+    'Three itineraries for travelling the RN7 with Hôtel Ambalakely as a base. Three, five and seven-day plans for Madagascar.',
   alternates: { canonical: '/plan-your-trip' },
   openGraph: {
-    title: 'Plan your trip · Hotel Ambalakely',
+    title: 'Plan your trip · Hôtel Ambalakely',
     description: 'Three itineraries for the RN7. With Ambalakely as the base.',
     url: '/plan-your-trip',
     images: [
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
         url: PHOTOS.planTrip.url,
         width: 2560,
         height: 1707,
-        alt: 'View from Hotel Ambalakely on the RN7',
+        alt: 'View from Hôtel Ambalakely on the RN7',
       },
     ],
   },
@@ -45,7 +45,7 @@ export default async function PlanYourTripPage() {
       <main id="main">
         <PageHero
           src={PHOTOS.planTrip.path}
-          alt="Rice fields below Hotel Ambalakely on the RN7"
+          alt="Rice fields below Hôtel Ambalakely on the RN7"
           title={['Plan your trip', 'on the RN7.']}
         />
 

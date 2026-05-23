@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils/cn';
 import { BookingDrawer } from '@/components/molecules/BookingDrawer';
@@ -48,12 +49,24 @@ export function Nav() {
         >
           <Link
             href="/"
+            aria-label="Hôtel Ambalakely — accueil"
             className={cn(
-              'font-display font-normal text-[18px] tracking-[-0.01em]',
+              'flex items-center gap-3 font-display font-normal text-[18px] tracking-[-0.01em]',
               scrolled ? 'text-[var(--color-text)]' : 'text-white',
             )}
           >
-            Ambalakely
+            <Image
+              src="/brand/logo-white.png"
+              alt=""
+              width={40}
+              height={40}
+              priority
+              className={cn(
+                'h-9 w-9 transition-[filter] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
+                scrolled && 'invert',
+              )}
+            />
+            <span className="hidden sm:inline">Hôtel Ambalakely</span>
           </Link>
 
           <ul className="hidden md:flex items-center gap-8">

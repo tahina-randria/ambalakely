@@ -38,7 +38,7 @@ export default function Image() {
             color: '#7A7468',
           }}
         >
-          <span>Hotel Ambalakely</span>
+          <span>Hôtel Ambalakely</span>
           <span>Est. 2018</span>
         </div>
 

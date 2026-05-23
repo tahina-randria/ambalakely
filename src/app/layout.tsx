@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [{ name: HOTEL.legalName, url: HOTEL.url }],
     generator: 'Next.js',
     keywords: [
-      'Hotel Ambalakely',
+      'Hôtel Ambalakely',
       'Fianarantsoa hotel',
       'Madagascar hotel',
       'RN7 hotel',

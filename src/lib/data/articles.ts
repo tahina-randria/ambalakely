@@ -69,7 +69,7 @@ export const articles: Article[] = [
       'I do not write the menu the night before. I write it the morning of, after I have walked the garden.',
     inlineImage: {
       src: `${SQ}/d200532b-8f27-4564-9f43-9339dc083af5/DSC_0421.jpg?format=2500w`,
-      alt: 'The kitchen at Hotel Ambalakely',
+      alt: 'The kitchen at Hôtel Ambalakely',
     },
     body: [
       'I do not write the menu the night before. I write it the morning of, after I have walked the garden. There is a chair under the pomelo tree where I sit with a coffee for ten minutes before I look at anything. The walk takes another twenty.',
@@ -98,7 +98,7 @@ export const articles: Article[] = [
       'You make a place koselig the way you make a soup. Quietly, with what is around, with attention to the cold outside the window.',
     inlineImage: {
       src: `${SQ}/45ae0b2c-fced-45b6-8666-9212614d1e9b/hotel+ambalakely_DSC6388+%5BSUP%5D.jpg?format=2500w`,
-      alt: 'A Supérieure room at Hotel Ambalakely',
+      alt: 'A Supérieure room at Hôtel Ambalakely',
     },
     body: [
       'My Norwegian godmother lived in a small wooden house in the hills above Oslo. There was always a fire in the room you sat in, never in the rooms you did not. There were always more woollen blankets than chairs. The light was always low in the evening, and someone always got up to put on the kettle without asking.',

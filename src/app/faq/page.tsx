@@ -13,10 +13,10 @@ import { PHOTOS } from '@/lib/data/photos';
 export const metadata: Metadata = {
   title: 'FAQ',
   description:
-    'Practical answers about visiting Hotel Ambalakely. Booking, transfers from Antananarivo, what to pack, the food, money, and the road.',
+    'Practical answers about visiting Hôtel Ambalakely. Booking, transfers from Antananarivo, what to pack, the food, money, and the road.',
   alternates: { canonical: '/faq' },
   openGraph: {
-    title: 'FAQ · Hotel Ambalakely',
+    title: 'FAQ · Hôtel Ambalakely',
     description: 'Practical answers about your stay.',
     url: '/faq',
   },
@@ -62,7 +62,7 @@ export default async function FaqPage() {
       <main id="main">
         <PageHero
           src={PHOTOS.faq.path}
-          alt="Hotel Ambalakely, Fianarantsoa Madagascar"
+          alt="Hôtel Ambalakely, Fianarantsoa Madagascar"
           title={['Frequently asked,', 'plainly answered.']}
         />
 

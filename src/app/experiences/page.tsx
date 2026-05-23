@@ -14,10 +14,10 @@ import { PHOTOS } from '@/lib/data/photos';
 export const metadata: Metadata = {
   title: 'Experiences',
   description:
-    'Ten things to do from Hotel Ambalakely. Ranomafana lemurs, rice field walks, the kitchen, Sahambavy tea, Andringitra trek, Ambositra woodcarving, the school visit, and more.',
+    'Ten things to do from Hôtel Ambalakely. Ranomafana lemurs, rice field walks, the kitchen, Sahambavy tea, Andringitra trek, Ambositra woodcarving, the school visit, and more.',
   alternates: { canonical: '/experiences' },
   openGraph: {
-    title: 'Experiences · Hotel Ambalakely',
+    title: 'Experiences · Hôtel Ambalakely',
     description: 'Ten things to do, all arranged from the desk.',
     url: '/experiences',
     images: [
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
         url: PHOTOS.experiences.url,
         width: 2560,
         height: 1707,
-        alt: 'View from Hotel Ambalakely on the RN7',
+        alt: 'View from Hôtel Ambalakely on the RN7',
       },
     ],
   },
@@ -45,7 +45,7 @@ export default async function ExperiencesPage() {
       <main id="main">
         <PageHero
           src={PHOTOS.experiences.path}
-          alt="View of the rice fields from Hotel Ambalakely"
+          alt="View of the rice fields from Hôtel Ambalakely"
           title={['Experiences', 'from Ambalakely.']}
         />
 
@@ -140,7 +140,7 @@ export default async function ExperiencesPage() {
                   <div className="relative aspect-[4/3] lg:aspect-[5/4] overflow-hidden bg-[var(--color-bg-muted)]">
                     <Image
                       src={exp.image}
-                      alt={`${exp.name} — Hotel Ambalakely`}
+                      alt={`${exp.name} — Hôtel Ambalakely`}
                       fill
                       sizes="(min-width: 1024px) 58vw, 100vw"
                       className="object-cover"

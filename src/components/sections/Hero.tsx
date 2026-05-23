@@ -9,7 +9,7 @@ const VIDEO_POSTER = '/videos/hero-poster.webp';
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const lines = [
-    'Hotel Ambalakely.',
+    'Hôtel Ambalakely.',
     'Ten rooms in the highlands',
     'of Madagascar.',
   ];

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     'Ten rooms across three categories. Supérieure, Confort, Standard. Rates from 182 000 Ariary per night.',
   alternates: { canonical: '/rooms' },
   openGraph: {
-    title: 'Rooms · Hotel Ambalakely',
+    title: 'Rooms · Hôtel Ambalakely',
     description: 'Ten rooms across three categories. Supérieure, Confort, Standard.',
     url: '/rooms',
     images: [
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
         url: PHOTOS.rooms.url,
         width: 2560,
         height: 1707,
-        alt: 'Supérieure room at Hotel Ambalakely',
+        alt: 'Supérieure room at Hôtel Ambalakely',
       },
     ],
   },
