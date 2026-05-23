@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { ArrowDown, Star } from '@phosphor-icons/react/dist/ssr';
 
@@ -27,6 +28,18 @@ export function Hero() {
 
   return (
     <section className="relative h-[100svh] md:h-screen w-full overflow-hidden text-white isolate">
+      {/* Mobile : poster image only — saves 2 MB of video on cellular and
+          keeps the cropping intentional (Aman pattern). */}
+      <Image
+        src={VIDEO_POSTER}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="md:hidden -z-20 object-cover object-[50%_30%] hero-bg-settle"
+      />
+
+      {/* Desktop : autoplay loop video. Aspect 16:9 fits well at md+ widths. */}
       <video
         ref={videoRef}
         aria-hidden="true"
@@ -36,7 +49,7 @@ export function Hero() {
         playsInline
         preload="auto"
         poster={VIDEO_POSTER}
-        className="absolute inset-0 -z-20 h-full w-full object-cover object-[50%_30%] md:object-center hero-bg-settle"
+        className="hidden md:block absolute inset-0 -z-20 h-full w-full object-cover object-center hero-bg-settle"
       >
         <source src={VIDEO_SRC} type="video/mp4" />
       </video>
