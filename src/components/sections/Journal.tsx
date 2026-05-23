@@ -8,6 +8,7 @@ import { fetchArticles } from '@/sanity/lib/fetch';
 
 export async function Journal() {
   const articles = await fetchArticles();
+  if (articles.length === 0) return null;
   return (
     <Section id="journal" divider>
       <Container>

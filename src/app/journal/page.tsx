@@ -7,6 +7,8 @@ import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import { NewsletterSignup } from '@/components/molecules/NewsletterSignup';
+import { PHOTOS } from '@/lib/data/photos';
 import { fetchArticles } from '@/sanity/lib/fetch';
 
 export const metadata: Metadata = {
@@ -23,6 +25,9 @@ export const metadata: Metadata = {
 
 export default async function JournalPage() {
   const articles = await fetchArticles();
+  const heroSrc = articles[0]?.cover ?? PHOTOS.story.path;
+  const isEmpty = articles.length === 0;
+
   return (
     <>
       <BreadcrumbJsonLd
@@ -34,7 +39,7 @@ export default async function JournalPage() {
       <Nav />
       <main id="main">
         <PageHero
-          src={articles[0].cover}
+          src={heroSrc}
           alt="From the Hôtel Ambalakely journal"
           title={['Journal of', 'Hôtel Ambalakely.']}
           hideCta
@@ -52,57 +57,83 @@ export default async function JournalPage() {
           </div>
         </section>
 
-        {/* Articles list */}
-        <section className="hair-rule py-24 md:py-32">
-          <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
-            <ul>
-              {articles.map((article, i) => (
-                <ScrollReveal key={article.slug} delay={i * 0.05}>
-                  <li className="border-b border-[var(--color-border-subtle)]">
-                    <Link
-                      href={`/journal/${article.slug}`}
-                      className="group block py-12 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16"
-                    >
-                      <div className="lg:col-span-5">
-                        <div className="relative aspect-[4/5] overflow-hidden bg-[var(--color-bg-muted)]">
-                          <Image
-                            src={article.cover}
-                            alt={article.title}
-                            fill
-                            sizes="(min-width: 1024px) 42vw, 100vw"
-                            className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-[1.03]"
-                          />
+        {isEmpty ? (
+          /* Empty state — the journal hasn't shipped yet */
+          <section className="hair-rule py-32 md:py-48">
+            <div className="mx-auto max-w-[700px] px-5 md:px-8 text-center">
+              <ScrollReveal>
+                <div className="caption text-[var(--color-text-muted)]">
+                  Coming soon
+                </div>
+                <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[36px] md:text-[48px] leading-[1.02] tracking-[-0.03em] balance">
+                  The first essays arrive this season.
+                </h2>
+                <p className="mt-8 prose-editorial">
+                  Hasina is writing. The kitchen, the garden, the highlands. A few
+                  paragraphs at a time, when the day allows it. Leave us your email
+                  and you will be the first to read.
+                </p>
+              </ScrollReveal>
+              <ScrollReveal delay={0.1}>
+                <div className="mt-12 max-w-[460px] mx-auto text-left">
+                  <NewsletterSignup />
+                </div>
+              </ScrollReveal>
+            </div>
+          </section>
+        ) : (
+          /* Articles list */
+          <section className="hair-rule py-24 md:py-32">
+            <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
+              <ul>
+                {articles.map((article, i) => (
+                  <ScrollReveal key={article.slug} delay={i * 0.05}>
+                    <li className="border-b border-[var(--color-border-subtle)]">
+                      <Link
+                        href={`/journal/${article.slug}`}
+                        className="group block py-12 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16"
+                      >
+                        <div className="lg:col-span-5">
+                          <div className="relative aspect-[4/5] overflow-hidden bg-[var(--color-bg-muted)]">
+                            <Image
+                              src={article.cover}
+                              alt={article.title}
+                              fill
+                              sizes="(min-width: 1024px) 42vw, 100vw"
+                              className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-[1.03]"
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div className="lg:col-span-7 flex flex-col justify-center">
-                        <div className="caption text-[var(--color-text-muted)]">
-                          {article.date} · {article.author}
+                        <div className="lg:col-span-7 flex flex-col justify-center">
+                          <div className="caption text-[var(--color-text-muted)]">
+                            {article.date} · {article.author}
+                          </div>
+                          <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[36px] md:text-[48px] leading-[1.02] tracking-[-0.03em] balance group-hover:translate-x-1 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
+                            {article.title}
+                          </h2>
+                          <p className="mt-6 prose-editorial">{article.excerpt}</p>
+                          <div className="mt-8 inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]">
+                            Read the article
+                            <ArrowRight
+                              size={18}
+                              className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
+                            />
+                          </div>
                         </div>
-                        <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[36px] md:text-[48px] leading-[1.02] tracking-[-0.03em] balance group-hover:translate-x-1 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
-                          {article.title}
-                        </h2>
-                        <p className="mt-6 prose-editorial">{article.excerpt}</p>
-                        <div className="mt-8 inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]">
-                          Read the article
-                          <ArrowRight
-                            size={18}
-                            className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
-                          />
-                        </div>
-                      </div>
-                    </Link>
-                  </li>
-                </ScrollReveal>
-              ))}
-            </ul>
-            <ScrollReveal>
-              <p className="mt-16 caption text-[var(--color-text-muted)] max-w-[560px]">
-                More writing arrives every season. Subscribe to the newsletter at the
-                desk on arrival.
-              </p>
-            </ScrollReveal>
-          </div>
-        </section>
+                      </Link>
+                    </li>
+                  </ScrollReveal>
+                ))}
+              </ul>
+              <ScrollReveal>
+                <p className="mt-16 caption text-[var(--color-text-muted)] max-w-[560px]">
+                  More writing arrives every season. Subscribe to the newsletter at the
+                  desk on arrival.
+                </p>
+              </ScrollReveal>
+            </div>
+          </section>
+        )}
       </main>
       <Footer />
     </>
