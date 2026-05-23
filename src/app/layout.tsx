@@ -9,6 +9,7 @@ import { PostHogProvider } from '@/components/atoms/PostHogProvider';
 import { SentryConsentSync } from '@/components/atoms/SentryConsentSync';
 import { ConsentProvider } from '@/lib/consent';
 import { CookieBanner } from '@/components/molecules/CookieBanner';
+import { MobileBookingBar } from '@/components/molecules/MobileBookingBar';
 import { fetchHotel } from '@/sanity/lib/fetch';
 import '@/styles/globals.css';
 
@@ -97,6 +98,7 @@ export default function RootLayout({
             <SmoothScrollProvider>{children}</SmoothScrollProvider>
           </PostHogProvider>
           <CookieBanner />
+          <MobileBookingBar />
         </ConsentProvider>
         <Analytics />
         <SpeedInsights />
