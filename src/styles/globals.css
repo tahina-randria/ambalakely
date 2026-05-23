@@ -751,21 +751,45 @@ input[type="date"].input-dark::-webkit-datetime-edit-day-field:focus {
   color: var(--color-sand-1);
 }
 
+/* Selected dates — fall through to range_start/end if range mode */
+.rdp-root-dark .is-selected .rdp-day_button,
 .rdp-root-dark .rdp-selected .rdp-day_button {
   background: var(--color-sand-1);
   color: var(--color-sand-12);
   font-weight: 400;
 }
 
+/* Range start and end — solid accent */
+.rdp-root-dark .is-range-start .rdp-day_button,
+.rdp-root-dark .is-range-end .rdp-day_button,
 .rdp-root-dark .rdp-range_start .rdp-day_button,
 .rdp-root-dark .rdp-range_end .rdp-day_button {
   background: var(--color-sand-1);
   color: var(--color-sand-12);
 }
 
+/* Range middle — softer band linking start and end */
+.rdp-root-dark .is-range-middle .rdp-day_button,
 .rdp-root-dark .rdp-range_middle .rdp-day_button {
   background: var(--color-sand-10);
   color: var(--color-sand-1);
+  border-radius: 0;
+}
+
+/* Whole day cell background when in range — covers gaps between buttons */
+.rdp-root-dark .is-range-middle,
+.rdp-root-dark .rdp-range_middle {
+  background: var(--color-sand-10);
+}
+
+.rdp-root-dark .is-range-start,
+.rdp-root-dark .rdp-range_start {
+  background: linear-gradient(to right, transparent 50%, var(--color-sand-10) 50%);
+}
+
+.rdp-root-dark .is-range-end,
+.rdp-root-dark .rdp-range_end {
+  background: linear-gradient(to right, var(--color-sand-10) 50%, transparent 50%);
 }
 
 .rdp-root-dark .rdp-day_button:disabled,
@@ -794,13 +818,32 @@ input[type="date"].input-dark::-webkit-datetime-edit-day-field:focus {
 }
 
 /* ════════════════════════════════════════════════════════════════════
-   react-international-phone — dark theme tweaks
+   react-international-phone — dark theme + flag-less variant
    ════════════════════════════════════════════════════════════════════ */
 
 .react-international-phone-input-container {
   width: 100%;
 }
 
+/* Hide the flag emoji from the trigger button — the dial code carries
+   the country identity in our editorial layout. */
+.phone-country-button .react-international-phone-flag-emoji,
+.phone-country-button .react-international-phone-country-selector-button__flag-emoji {
+  display: none !important;
+}
+
+/* Tighten the trigger to fit just the chevron */
+.phone-country-button {
+  min-width: 48px;
+  padding: 0 0.5rem !important;
+  gap: 0.25rem !important;
+}
+
+.phone-country-button .react-international-phone-country-selector-button__button-content {
+  gap: 0.25rem !important;
+}
+
+/* In the dropdown list keep the flags — they help discovery */
 .react-international-phone-input-container .react-international-phone-country-selector-dropdown {
   background: var(--color-sand-12) !important;
   border-color: var(--color-sand-10) !important;

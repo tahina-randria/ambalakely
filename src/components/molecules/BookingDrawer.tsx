@@ -63,7 +63,8 @@ export function BookingDrawer({ open, onClose }: Props) {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [roomDropdownOpen, setRoomDropdownOpen] = useState(false);
 
-  const isGroup = Number(form.guests) >= 5;
+  // Group flow triggered only for "11+" (we ship up to 10 individual slots).
+  const isGroup = Number(form.guests) >= 11;
   const nightCount = useMemo(() => {
     if (!form.range?.from || !form.range?.to) return 0;
     return differenceInCalendarDays(form.range.to, form.range.from);
@@ -294,6 +295,12 @@ export function BookingDrawer({ open, onClose }: Props) {
                           classNames={{
                             root: 'rdp-root-dark',
                           }}
+                          modifiersClassNames={{
+                            range_start: 'is-range-start',
+                            range_middle: 'is-range-middle',
+                            range_end: 'is-range-end',
+                            selected: 'is-selected',
+                          }}
                           labels={{
                             labelPrevious: () => t('calendarPrev'),
                             labelNext: () => t('calendarNext'),
@@ -305,22 +312,19 @@ export function BookingDrawer({ open, onClose }: Props) {
                       </p>
                     </div>
 
-                    {/* Guests */}
+                    {/* Guests — 1 to 10. Group CTA only kicks in beyond, via inline hint. */}
                     <Field label={t('guests')}>
                       <select
                         value={form.guests}
                         onChange={(e) => setForm((f) => ({ ...f, guests: e.target.value }))}
                         className="input-dark w-full"
                       >
-                        {[1, 2, 3, 4].map((n) => (
+                        {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
                           <option key={n} value={n}>
                             {n === 1 ? t('guestOne', { n }) : t('guestMany', { n })}
                           </option>
                         ))}
-                        <option value="5">{t('guestGroup', { n: 5, plus: 'false' })}</option>
-                        <option value="6">{t('guestGroup', { n: 6, plus: 'false' })}</option>
-                        <option value="7">{t('guestGroup', { n: 7, plus: 'false' })}</option>
-                        <option value="8">{t('guestGroup', { n: 8, plus: 'true' })}</option>
+                        <option value="11">{t('guestGroup', { n: 10, plus: 'true' })}</option>
                       </select>
                     </Field>
 
@@ -387,9 +391,10 @@ export function BookingDrawer({ open, onClose }: Props) {
                         defaultCountry={locale === 'no' ? 'no' : locale === 'en' ? 'us' : 'fr'}
                         value={form.phone}
                         onChange={(phone) => setForm((f) => ({ ...f, phone }))}
+                        forceDialCode
                         inputClassName="!w-full !h-12 !bg-transparent !border !border-[var(--color-sand-10)] !text-[var(--color-sand-1)] !text-[15px] !rounded-none focus:!border-[var(--color-sand-1)]"
                         countrySelectorStyleProps={{
-                          buttonClassName: '!h-12 !bg-transparent !border !border-[var(--color-sand-10)] !rounded-none hover:!bg-[var(--color-sand-11)]',
+                          buttonClassName: 'phone-country-button !h-12 !bg-transparent !border !border-[var(--color-sand-10)] !rounded-none hover:!bg-[var(--color-sand-11)]',
                           dropdownStyleProps: {
                             className: '!bg-[var(--color-sand-12)] !text-[var(--color-sand-1)] !border-[var(--color-sand-10)]',
                           },
