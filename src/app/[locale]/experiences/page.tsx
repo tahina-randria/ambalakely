@@ -83,31 +83,29 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
           </div>
         </section>
 
-        {/* QUICK NAV */}
+        {/* QUICK NAV — card-style, hover-fill, no decorative numbers */}
         <section className="hair-rule py-16 md:py-20">
           <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption mb-10">{t('quickNavKicker')}</div>
-              <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-12">
+              <div className="caption mb-8 md:mb-10">{t('quickNavKicker')}</div>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                 {experiences.map((exp) => (
-                  <li
-                    key={exp.slug}
-                    className="border-t border-[var(--color-border-subtle)] py-5"
-                  >
+                  <li key={exp.slug}>
                     <Link
                       href={`#${exp.slug}`}
-                      className="group flex items-baseline justify-between gap-4"
+                      className="group block h-full p-5 md:p-6 border border-[var(--color-border-subtle)] hover:border-[var(--color-text)] hover:bg-[var(--color-bg-subtle)] transition-[border-color,background-color] duration-[var(--duration-base)] ease-[var(--ease-standard)]"
                     >
-                      <div>
-                        <div className="caption text-[var(--color-text-muted)]">
-                          {exp.number}
-                        </div>
-                        <div className="mt-2 font-display font-light text-[var(--color-text)] text-[20px] md:text-[24px] tracking-[-0.02em] leading-[1.15] group-hover:translate-x-1 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
-                          {exp.name}
-                        </div>
+                      <div className="flex items-start justify-between gap-3 mb-3">
+                        <span className="caption text-[var(--color-text-muted)]">
+                          {exp.duration}
+                        </span>
+                        <ArrowRight
+                          size={16}
+                          className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-[color,transform] duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
+                        />
                       </div>
-                      <div className="caption text-[var(--color-text-muted)] shrink-0">
-                        {exp.duration}
+                      <div className="font-display font-light text-[var(--color-text)] text-[20px] md:text-[22px] tracking-[-0.02em] leading-[1.2]">
+                        {exp.name}
                       </div>
                     </Link>
                   </li>
@@ -130,8 +128,7 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mb-12 md:mb-16">
                 <div className="lg:col-span-3">
                   <ScrollReveal>
-                    <div className="caption">{exp.number}</div>
-                    <div className="mt-3 caption text-[var(--color-text-muted)]">
+                    <div className="caption text-[var(--color-text-muted)]">
                       {exp.duration}
                     </div>
                   </ScrollReveal>

@@ -36,29 +36,34 @@ export function CookieBanner() {
       aria-label={t('manage')}
       className="fixed inset-x-0 bottom-0 z-[150] pointer-events-none"
     >
-      <div className="mx-auto max-w-[680px] px-4 pb-4 md:pb-6 pointer-events-auto">
+      <div className="mx-auto max-w-[680px] px-3 pb-3 md:px-4 md:pb-6 pointer-events-auto">
         <div className="bg-[var(--color-sand-12)] text-[var(--color-sand-1)] border border-[var(--color-sand-10)] shadow-2xl">
-          <div className="px-5 md:px-7 py-5 md:py-6">
-            <div className="flex items-start justify-between gap-4">
-              <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-sand-7)]">
+          <div className="px-4 md:px-7 py-3.5 md:py-6">
+            {/* Header — title + close. Title hidden on mobile when not expanded to save space. */}
+            <div className={cn('flex items-start justify-between gap-3', expanded ? 'mb-3' : 'mb-0 md:mb-0')}>
+              <div className={cn(
+                'font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-sand-7)]',
+                expanded ? 'block' : 'hidden md:block',
+              )}>
                 {t('title')}
               </div>
               <button
                 type="button"
                 onClick={refuse}
                 aria-label={t('closeAria')}
-                className="text-[var(--color-sand-7)] hover:text-[var(--color-sand-1)] transition-colors duration-[var(--duration-fast)]"
+                className="ml-auto -mr-1 p-1 text-[var(--color-sand-7)] hover:text-[var(--color-sand-1)] transition-colors duration-[var(--duration-fast)]"
               >
                 <X size={16} weight="regular" />
               </button>
             </div>
 
-            <p className="mt-3 text-[14px] leading-[1.55] text-[var(--color-sand-3)] max-w-[520px]">
+            {/* Body — shorter line height + smaller on mobile */}
+            <p className="mt-1 md:mt-3 text-[13px] md:text-[14px] leading-[1.5] md:leading-[1.55] text-[var(--color-sand-3)] max-w-[520px]">
               {t('body')}
             </p>
 
             {expanded ? (
-              <fieldset className="mt-5 flex flex-col gap-3 border-t border-[var(--color-sand-10)] pt-5">
+              <fieldset className="mt-4 md:mt-5 flex flex-col gap-3 border-t border-[var(--color-sand-10)] pt-4 md:pt-5">
                 <legend className="sr-only">{t('categoriesLegend')}</legend>
                 <CategoryRow
                   id="cookie-analytics"
@@ -77,18 +82,19 @@ export function CookieBanner() {
               </fieldset>
             ) : null}
 
-            <div className="mt-5 flex flex-wrap items-center gap-3">
+            {/* Actions — buttons full-width on mobile to fit, inline on desktop */}
+            <div className="mt-3.5 md:mt-5 flex flex-wrap items-center gap-2 md:gap-3">
               <button
                 type="button"
                 onClick={() => accept()}
-                className="h-10 px-5 bg-[var(--color-sand-1)] text-[var(--color-sand-12)] font-body text-[14px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
+                className="h-9 md:h-10 px-4 md:px-5 bg-[var(--color-sand-1)] text-[var(--color-sand-12)] font-body text-[13px] md:text-[14px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
               >
                 {t('acceptAll')}
               </button>
               <button
                 type="button"
                 onClick={refuse}
-                className="h-10 px-5 border border-[var(--color-sand-7)] text-[var(--color-sand-1)] font-body text-[14px] font-medium transition-[color,border-color] duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:border-[var(--color-sand-1)]"
+                className="h-9 md:h-10 px-4 md:px-5 border border-[var(--color-sand-7)] text-[var(--color-sand-1)] font-body text-[13px] md:text-[14px] font-medium transition-[color,border-color] duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:border-[var(--color-sand-1)]"
               >
                 {t('refuse')}
               </button>
@@ -96,7 +102,7 @@ export function CookieBanner() {
                 <button
                   type="button"
                   onClick={onSave}
-                  className="h-10 px-5 text-[var(--color-sand-1)] font-body text-[14px] font-medium underline-offset-4 hover:underline transition-colors duration-[var(--duration-base)]"
+                  className="h-9 md:h-10 px-3 md:px-5 text-[var(--color-sand-1)] font-body text-[13px] md:text-[14px] font-medium underline-offset-4 hover:underline transition-colors duration-[var(--duration-base)]"
                 >
                   {t('save')}
                 </button>
@@ -105,7 +111,7 @@ export function CookieBanner() {
                   type="button"
                   onClick={() => setExpanded(true)}
                   className={cn(
-                    'h-10 px-2 text-[var(--color-sand-5)] font-body text-[14px]',
+                    'h-9 md:h-10 px-1 md:px-2 text-[var(--color-sand-5)] font-body text-[13px] md:text-[14px]',
                     'underline-offset-4 hover:underline hover:text-[var(--color-sand-1)]',
                     'transition-colors duration-[var(--duration-base)]',
                   )}

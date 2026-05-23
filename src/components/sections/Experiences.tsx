@@ -28,17 +28,12 @@ export async function Experiences() {
                 href={`/experiences#${exp.slug}`}
                 className="group flex items-center justify-between py-6 md:py-8 border-b border-[var(--color-border-subtle)] last:border-b-0 hover:border-[var(--color-sand-12)] transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]"
               >
-                <div className="flex items-baseline gap-6 md:gap-8">
-                  <span className="font-mono text-[14px] text-[var(--color-text-muted)]">
-                    {exp.number}
-                  </span>
-                  <div>
-                    <div className="font-display text-[22px] md:text-[26px] tracking-[-0.02em] text-[var(--color-text)]">
-                      {exp.name}
-                    </div>
-                    <div className="mt-1 text-[15px] text-[var(--color-text-muted)]">
-                      {exp.tagline}
-                    </div>
+                <div>
+                  <div className="font-display text-[22px] md:text-[26px] tracking-[-0.02em] text-[var(--color-text)]">
+                    {exp.name}
+                  </div>
+                  <div className="mt-1 text-[15px] text-[var(--color-text-muted)]">
+                    {exp.tagline}
                   </div>
                 </div>
                 <div className="font-mono text-[14px] text-[var(--color-text-muted)] shrink-0">

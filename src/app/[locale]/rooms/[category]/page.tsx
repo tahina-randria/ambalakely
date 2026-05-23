@@ -275,13 +275,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                         </div>
                       </div>
 
-                      <div className="hidden md:block md:col-span-1">
-                        <div className="caption text-[var(--color-text-muted)]">
-                          {o.number}
-                        </div>
-                      </div>
-
-                      <div className="col-span-8 md:col-span-7">
+                      <div className="col-span-8 md:col-span-8">
                         <h3 className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[40px] leading-[1.05] tracking-[-0.03em] group-hover:translate-x-2 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
                           {o.name}
                         </h3>

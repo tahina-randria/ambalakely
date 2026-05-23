@@ -115,9 +115,7 @@ export default async function RoomsPage({ params }: LocaleParam) {
               />
               <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
                 <div className="pt-[100px] md:pt-[128px]">
-                  <div className="caption text-white/75">
-                    {t('chapter')} {cat.number} · {cat.count}
-                  </div>
+                  <div className="caption text-white/75">{cat.count}</div>
                 </div>
                 <div className="mt-auto pb-14 md:pb-20">
                   <h2 className="font-display font-light tracking-[-0.03em] text-white text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] balance">

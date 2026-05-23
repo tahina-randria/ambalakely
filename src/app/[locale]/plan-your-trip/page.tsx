@@ -86,26 +86,32 @@ export default async function PlanYourTripPage({ params }: LocaleParam) {
           </div>
         </section>
 
-        {/* QUICK NAV */}
+        {/* QUICK NAV — card-style picks for the three itineraries */}
         <section className="hair-rule py-16 md:py-20">
           <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption mb-10">{t('quickNavKicker')}</div>
-              <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+              <div className="caption mb-8 md:mb-10">{t('quickNavKicker')}</div>
+              <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
                 {itineraries.map((it) => (
                   <li key={it.slug}>
                     <Link
                       href={`#${it.slug}`}
-                      className="group block py-6 border-t border-[var(--color-border-subtle)]"
+                      className="group block h-full p-6 md:p-7 border border-[var(--color-border-subtle)] hover:border-[var(--color-text)] hover:bg-[var(--color-bg-subtle)] transition-[border-color,background-color] duration-[var(--duration-base)] ease-[var(--ease-standard)]"
                     >
-                      <div className="inline-flex items-center gap-2 caption text-[var(--color-text-muted)]">
-                        <Clock size={13} weight="regular" aria-hidden />
-                        {it.duration}
+                      <div className="flex items-center justify-between gap-3 mb-4">
+                        <span className="inline-flex items-center gap-2 caption text-[var(--color-text-muted)]">
+                          <Clock size={13} weight="regular" aria-hidden />
+                          {it.duration}
+                        </span>
+                        <ArrowRight
+                          size={16}
+                          className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-[color,transform] duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
+                        />
                       </div>
-                      <div className="mt-3 font-display font-light text-[var(--color-text)] text-[24px] md:text-[28px] tracking-[-0.02em] leading-[1.15] group-hover:translate-x-1 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
+                      <div className="font-display font-light text-[var(--color-text)] text-[24px] md:text-[28px] tracking-[-0.02em] leading-[1.15]">
                         {it.title}
                       </div>
-                      <div className="mt-2 inline-flex items-center gap-2 caption text-[var(--color-text-muted)]">
+                      <div className="mt-3 inline-flex items-center gap-2 caption text-[var(--color-text-muted)]">
                         <MapTrifold size={13} weight="regular" aria-hidden />
                         {it.totalKm}
                       </div>
