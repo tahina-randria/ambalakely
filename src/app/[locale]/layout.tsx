@@ -11,6 +11,7 @@ import { ScrollProgress } from '@/components/atoms/ScrollProgress';
 import { HotelJsonLd } from '@/components/atoms/JsonLd';
 import { PostHogProvider } from '@/components/atoms/PostHogProvider';
 import { SentryConsentSync } from '@/components/atoms/SentryConsentSync';
+import { AxeReport } from '@/components/atoms/AxeReport';
 import { ConsentProvider } from '@/lib/consent';
 import { CookieBanner } from '@/components/molecules/CookieBanner';
 import { MobileBookingBar } from '@/components/molecules/MobileBookingBar';
@@ -137,6 +138,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <ConsentProvider>
             <SentryConsentSync />
+            <AxeReport />
             <PostHogProvider>
               <SmoothScrollProvider>{children}</SmoothScrollProvider>
             </PostHogProvider>
