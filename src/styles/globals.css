@@ -394,6 +394,18 @@ video {
   color: var(--color-text-muted);
 }
 
+/* Editorial pass — any element marked as a "kicker" (font-mono + uppercase
+   together) is converted to italic Fraunces sentence-case. This kills the
+   dev-tool / AI-slop visual signature site-wide without touching markup.
+   font-mono alone (for tabular nums) is preserved. */
+.font-mono.uppercase {
+  font-family: var(--font-display) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+
 /* Spec row — typographic fact listing, NOT a checklist or 4-col grid */
 .spec-row {
   display: grid;
