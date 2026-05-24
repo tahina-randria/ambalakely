@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react';
-import { createPortal } from 'react-dom';
 import { useLocale, useTranslations } from 'next-intl';
 import { DayPicker, type DateRange } from 'react-day-picker';
 import 'react-day-picker/style.css';
@@ -12,7 +11,6 @@ import { differenceInCalendarDays, format } from 'date-fns';
 import {
   ArrowLeft,
   ArrowRight,
-  X,
   WhatsappLogo,
   Envelope,
   Users,
@@ -22,6 +20,7 @@ import {
   Minus,
   Plus,
 } from '@phosphor-icons/react/dist/ssr';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils/cn';
 import { HOTEL } from '@/lib/data/hotel';
 
@@ -58,13 +57,13 @@ export function BookingDrawer({ open, onClose }: Props) {
   const locale = useLocale() as 'fr' | 'en' | 'no';
   const dateLocale = DATE_LOCALES[locale] ?? frLocale;
 
-  const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState<Step>(1);
   const [form, setForm] = useState(INITIAL_FORM);
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [roomDropdownOpen, setRoomDropdownOpen] = useState(false);
-  // Match Airbnb/Expedia pattern : 2 months side-by-side on md+, 1 on mobile.
+
+  // Airbnb/Expedia pattern : 2 months side-by-side on md+, 1 on mobile.
   const [twoMonths, setTwoMonths] = useState(false);
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -84,31 +83,15 @@ export function BookingDrawer({ open, onClose }: Props) {
 
   const canContinue = !!(form.range?.from && form.range?.to);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
-    return () => {
-      window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
-    };
-  }, [open, onClose]);
-
+  // Reset form when drawer closes — Sheet animation handles its own timing
   useEffect(() => {
     if (!open) {
-      // Defer reset until the drawer is animated out (300ms slide)
       const timer = setTimeout(() => {
         setStatus('idle');
         setErrorMsg(null);
         setForm(INITIAL_FORM);
         setStep(1);
+        setRoomDropdownOpen(false);
       }, 350);
       return () => clearTimeout(timer);
     }
@@ -145,8 +128,6 @@ export function BookingDrawer({ open, onClose }: Props) {
     }
   };
 
-  if (!mounted) return null;
-
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const roomTypeLabel = ROOM_TYPES.find((r) => r.slug === form.roomType)?.label[locale] ?? '';
@@ -157,33 +138,16 @@ export function BookingDrawer({ open, onClose }: Props) {
       ? format(form.range.from, 'd MMM', { locale: dateLocale })
       : t('datesHint');
 
-  return createPortal(
-    <div
-      aria-hidden={!open}
-      className={cn(
-        'fixed inset-0 z-[200] transition-[visibility]',
-        open ? 'visible' : 'invisible delay-300',
-      )}
-    >
-      <button
-        type="button"
-        aria-label="Close booking"
-        onClick={onClose}
-        className={cn(
-          'absolute inset-0 bg-[rgba(12,10,9,0.5)] backdrop-blur-[2px] transition-opacity duration-[var(--duration-slow)] ease-[var(--ease-standard)]',
-          open ? 'opacity-100' : 'opacity-0',
-        )}
-      />
-
-      <aside
-        role="dialog"
-        aria-modal="true"
+  return (
+    <Sheet open={open} onOpenChange={(o) => !o && onClose()}>
+      <SheetContent
+        side="right"
         aria-label={t('ariaLabel')}
+        showCloseButton={false}
         className={cn(
-          'absolute top-0 right-0 h-full w-full max-w-[480px] md:max-w-[640px] bg-[var(--color-sand-12)] text-[var(--color-sand-1)]',
-          'transform transition-transform duration-[var(--duration-slow)] ease-[var(--ease-standard)]',
-          'overflow-y-auto',
-          open ? 'translate-x-0' : 'translate-x-full',
+          'w-full max-w-[480px] md:max-w-[640px] sm:max-w-none',
+          '!bg-[var(--color-sand-12)] text-[var(--color-sand-1)] border-l border-[var(--color-sand-10)]',
+          'p-0 gap-0 overflow-y-auto',
         )}
       >
         <div className="flex flex-col min-h-full">
@@ -212,7 +176,7 @@ export function BookingDrawer({ open, onClose }: Props) {
               aria-label={t('successClose')}
               className="h-9 w-9 inline-flex items-center justify-center text-[var(--color-sand-1)] hover:text-[var(--color-sand-6)] transition-colors duration-[var(--duration-fast)]"
             >
-              <X size={20} weight="regular" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
             </button>
           </div>
 
@@ -222,10 +186,9 @@ export function BookingDrawer({ open, onClose }: Props) {
               <SuccessPanel onClose={onClose} />
             ) : (
               <form onSubmit={onSubmit} className="flex flex-col gap-6">
-                {/* ════ STEP 1 ════ */}
                 {step === 1 ? (
                   <>
-                    {/* Room type — big custom dropdown */}
+                    {/* Room type — custom dropdown (Combobox migration kept for a follow-up pass) */}
                     <div className="relative">
                       <label className="block font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-sand-6)] mb-3">
                         {t('roomType')}
@@ -304,9 +267,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                           weekStartsOn={1}
                           numberOfMonths={twoMonths ? 2 : 1}
                           showOutsideDays={false}
-                          classNames={{
-                            root: 'rdp-root-dark',
-                          }}
+                          classNames={{ root: 'rdp-root-dark' }}
                           modifiersClassNames={{
                             range_start: 'is-range-start',
                             range_middle: 'is-range-middle',
@@ -324,7 +285,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                       </p>
                     </div>
 
-                    {/* Guests — stepper. Airbnb / Six Senses / Aman pattern. */}
+                    {/* Guests — stepper */}
                     <Field label={t('guests')}>
                       <GuestStepper
                         value={Number(form.guests)}
@@ -355,7 +316,6 @@ export function BookingDrawer({ open, onClose }: Props) {
                     )}
                   </>
                 ) : (
-                  /* ════ STEP 2 ════ */
                   <>
                     {/* Summary card */}
                     <div className="bg-[var(--color-sand-11)] border border-[var(--color-sand-10)] px-4 py-3.5">
@@ -507,9 +467,8 @@ export function BookingDrawer({ open, onClose }: Props) {
             </div>
           </div>
         </div>
-      </aside>
-    </div>,
-    document.body,
+      </SheetContent>
+    </Sheet>
   );
 }
 
@@ -524,19 +483,8 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
   );
 }
 
-/**
- * GuestStepper — +/- counter matching the Airbnb / Six Senses pattern.
- * Disabled boundaries (min reached → minus disabled, max → plus disabled).
- * Shows "10+" via the labelMax prop when at the cap.
- */
 function GuestStepper({
-  value,
-  onChange,
-  min,
-  max,
-  labelOne,
-  labelMany,
-  labelMax,
+  value, onChange, min, max, labelOne, labelMany, labelMax,
 }: {
   value: number;
   onChange: (n: number) => void;
