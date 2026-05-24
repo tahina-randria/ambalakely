@@ -26,9 +26,8 @@ export async function Stay() {
     <Section id="stay" divider>
       <Container>
         <div className="mx-auto max-w-[1100px]">
-          {/* Editorial intro */}
+          {/* Editorial intro — single editorial line, no kicker. */}
           <ScrollReveal>
-            <div className="caption mb-8">{t('kicker')}</div>
             <p className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[40px] leading-[1.2] tracking-[-0.025em] balance max-w-[680px]">
               {t('intro')}
             </p>
@@ -56,11 +55,8 @@ export async function Stay() {
                       </div>
                     </div>
 
-                    {/* Caption + name + spec */}
+                    {/* Name + spec — no count caption (redundant with viewAll link). */}
                     <div className="col-span-12 md:col-span-5">
-                      <div className="caption text-[var(--color-text-muted)] mb-3">
-                        {cat.count}
-                      </div>
                       <h3 className="font-display font-light text-[var(--color-text)] text-[32px] md:text-[44px] leading-[1] tracking-[-0.03em] group-hover:translate-x-1.5 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)]">
                         {cat.name}
                       </h3>
@@ -69,14 +65,10 @@ export async function Stay() {
                       </p>
                     </div>
 
-                    {/* Price + arrow */}
+                    {/* Price — Aman pattern : one inline figure, no “from / br”. */}
                     <div className="col-span-8 md:col-span-3 text-left md:text-right font-display font-light text-[var(--color-text)] text-[18px] md:text-[22px] tracking-[-0.02em] tabular-nums">
-                      {tCommon('from')}
-                      <br className="hidden md:block" />{' '}
-                      <span className="font-medium">
-                        {formatMga(cat.priceMga)}
-                      </span>{' '}
-                      {tCommon('ariary')}
+                      <span className="font-medium">{formatMga(cat.priceMga)}</span>{' '}
+                      <span className="text-[var(--color-text-muted)]">{tCommon('ariary')}</span>
                     </div>
                     <div className="col-span-4 md:col-span-1 md:flex md:justify-end">
                       <ArrowRight

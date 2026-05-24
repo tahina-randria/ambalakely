@@ -23,11 +23,7 @@ export async function Book() {
       <Container>
         <div className="mx-auto max-w-[920px]">
           <ScrollReveal>
-            <div className="caption">{t('kicker')}</div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.05}>
-            <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
+            <h2 className="font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
               {t('h2')}
             </h2>
           </ScrollReveal>

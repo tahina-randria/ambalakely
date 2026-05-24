@@ -28,10 +28,6 @@ export async function Trust() {
         />
 
         <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
-          <div className="pt-16 md:pt-24">
-            <div className="caption text-white/75">{t('kicker')}</div>
-          </div>
-
           <div className="mt-auto pb-14 md:pb-20 max-w-[920px]">
             <ScrollReveal>
               <h2 className="font-display font-light tracking-[-0.03em] text-white text-[44px] leading-[1.05] md:text-[56px] md:leading-[1.02] balance">

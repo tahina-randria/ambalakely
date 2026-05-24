@@ -2,7 +2,6 @@ import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
-import { Kicker } from '@/components/atoms/Kicker';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { ArrowRight, ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchArticles } from '@/sanity/lib/fetch';
@@ -16,8 +15,10 @@ export async function Journal() {
   return (
     <Section id="journal" divider>
       <Container>
-        <ScrollReveal className="mb-16 md:mb-24">
-          <Kicker>{t('kicker')}</Kicker>
+        <ScrollReveal className="mb-12 md:mb-16">
+          <h2 className="font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98]">
+            {t('kicker')}
+          </h2>
         </ScrollReveal>
 
         <ul className="border-t border-[var(--color-border-subtle)]">

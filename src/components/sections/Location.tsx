@@ -11,7 +11,6 @@ import {
 import { getTranslations } from 'next-intl/server';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
-import { Kicker } from '@/components/atoms/Kicker';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { MapboxMap } from '@/components/molecules/MapboxMap';
 
@@ -32,8 +31,7 @@ export async function Location() {
     <Section id="location" divider>
       <Container>
         <ScrollReveal className="mb-16 md:mb-24">
-          <Kicker>{t('kicker')}</Kicker>
-          <div className="mt-6 flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
             <h2 className="font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[44px] leading-[1.05] md:text-[56px] md:leading-[1.02] max-w-[760px] balance">
               {t('h2')}
             </h2>

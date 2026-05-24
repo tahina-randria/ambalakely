@@ -3,7 +3,7 @@ import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
-import { ArrowRight, Star } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchHotel, fetchReviews } from '@/sanity/lib/fetch';
 
 /**
@@ -31,24 +31,12 @@ export async function Reviews() {
               {t('h2')}
             </h2>
             {HOTEL.rating.value && HOTEL.rating.count ? (
-              <div className="mt-8 flex items-center gap-3">
-                <div className="flex gap-0.5">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      size={14}
-                      weight="fill"
-                      className="text-[var(--color-text)]"
-                    />
-                  ))}
-                </div>
-                <div className="caption text-[var(--color-text-muted)]">
-                  {t('ratingWithNumber', {
-                    value: HOTEL.rating.value,
-                    count: HOTEL.rating.count,
-                    sources: sourcesStr,
-                  })}
-                </div>
+              <div className="mt-8 caption text-[var(--color-text-muted)]">
+                {t('ratingWithNumber', {
+                  value: HOTEL.rating.value,
+                  count: HOTEL.rating.count,
+                  sources: sourcesStr,
+                })}
               </div>
             ) : (
               <div className="mt-8 caption text-[var(--color-text-muted)]">

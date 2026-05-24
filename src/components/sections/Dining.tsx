@@ -6,7 +6,6 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Kicker } from '@/components/atoms/Kicker';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { PHOTOS } from '@/lib/data/photos';
 
@@ -129,9 +128,7 @@ export function Dining() {
             transform: 'translate3d(32px, 0, 0)',
           }}
         >
-          <Kicker>{t('kicker')}</Kicker>
-
-          <h2 className="mt-8 font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98]">
+          <h2 className="font-display font-light tracking-[-0.03em] text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98]">
             {t('name')}
           </h2>
 
