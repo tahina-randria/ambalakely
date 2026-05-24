@@ -19,6 +19,8 @@ import {
   CircleNotch,
   CaretDown,
   Check,
+  Minus,
+  Plus,
 } from '@phosphor-icons/react/dist/ssr';
 import { cn } from '@/lib/utils/cn';
 import { HOTEL } from '@/lib/data/hotel';
@@ -62,6 +64,16 @@ export function BookingDrawer({ open, onClose }: Props) {
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [roomDropdownOpen, setRoomDropdownOpen] = useState(false);
+  // Match Airbnb/Expedia pattern : 2 months side-by-side on md+, 1 on mobile.
+  const [twoMonths, setTwoMonths] = useState(false);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mq = window.matchMedia('(min-width: 768px)');
+    const sync = () => setTwoMonths(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
 
   // Group flow triggered only for "11+" (we ship up to 10 individual slots).
   const isGroup = Number(form.guests) >= 11;
@@ -168,7 +180,7 @@ export function BookingDrawer({ open, onClose }: Props) {
         aria-modal="true"
         aria-label={t('ariaLabel')}
         className={cn(
-          'absolute top-0 right-0 h-full w-full max-w-[480px] bg-[var(--color-sand-12)] text-[var(--color-sand-1)]',
+          'absolute top-0 right-0 h-full w-full max-w-[480px] md:max-w-[640px] bg-[var(--color-sand-12)] text-[var(--color-sand-1)]',
           'transform transition-transform duration-[var(--duration-slow)] ease-[var(--ease-standard)]',
           'overflow-y-auto',
           open ? 'translate-x-0' : 'translate-x-full',
@@ -282,7 +294,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                           {nightCount > 0 ? t('nights', { count: nightCount }) : ''}
                         </span>
                       </div>
-                      <div className="border border-[var(--color-sand-10)] p-3">
+                      <div className="border border-[var(--color-sand-10)] p-3 md:p-4">
                         <DayPicker
                           mode="range"
                           selected={form.range}
@@ -290,8 +302,8 @@ export function BookingDrawer({ open, onClose }: Props) {
                           disabled={{ before: today }}
                           locale={dateLocale}
                           weekStartsOn={1}
-                          numberOfMonths={1}
-                          showOutsideDays
+                          numberOfMonths={twoMonths ? 2 : 1}
+                          showOutsideDays={false}
                           classNames={{
                             root: 'rdp-root-dark',
                           }}
@@ -312,20 +324,17 @@ export function BookingDrawer({ open, onClose }: Props) {
                       </p>
                     </div>
 
-                    {/* Guests — 1 to 10. Group CTA only kicks in beyond, via inline hint. */}
+                    {/* Guests — stepper. Airbnb / Six Senses / Aman pattern. */}
                     <Field label={t('guests')}>
-                      <select
-                        value={form.guests}
-                        onChange={(e) => setForm((f) => ({ ...f, guests: e.target.value }))}
-                        className="input-dark w-full"
-                      >
-                        {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
-                          <option key={n} value={n}>
-                            {n === 1 ? t('guestOne', { n }) : t('guestMany', { n })}
-                          </option>
-                        ))}
-                        <option value="11">{t('guestGroup', { n: 10, plus: 'true' })}</option>
-                      </select>
+                      <GuestStepper
+                        value={Number(form.guests)}
+                        onChange={(n) => setForm((f) => ({ ...f, guests: String(n) }))}
+                        min={1}
+                        max={10}
+                        labelOne={t('guestOne', { n: 1 })}
+                        labelMany={(n) => t('guestMany', { n })}
+                        labelMax={t('guestGroup', { n: 10, plus: 'true' })}
+                      />
                     </Field>
 
                     {isGroup ? (
@@ -512,6 +521,60 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
       </span>
       {children}
     </label>
+  );
+}
+
+/**
+ * GuestStepper — +/- counter matching the Airbnb / Six Senses pattern.
+ * Disabled boundaries (min reached → minus disabled, max → plus disabled).
+ * Shows "10+" via the labelMax prop when at the cap.
+ */
+function GuestStepper({
+  value,
+  onChange,
+  min,
+  max,
+  labelOne,
+  labelMany,
+  labelMax,
+}: {
+  value: number;
+  onChange: (n: number) => void;
+  min: number;
+  max: number;
+  labelOne: string;
+  labelMany: (n: number) => string;
+  labelMax: string;
+}) {
+  const atMin = value <= min;
+  const atMax = value >= max;
+  const display = atMax ? labelMax : value === 1 ? labelOne : labelMany(value);
+  return (
+    <div className="flex items-center justify-between gap-3 h-12 px-4 border border-[var(--color-sand-10)]">
+      <span className="font-display font-light text-[16px] tracking-[-0.005em] tabular-nums">
+        {display}
+      </span>
+      <div className="flex items-center gap-1">
+        <button
+          type="button"
+          onClick={() => onChange(Math.max(min, value - 1))}
+          disabled={atMin}
+          aria-label="−"
+          className="h-9 w-9 inline-flex items-center justify-center border border-[var(--color-sand-7)] text-[var(--color-sand-1)] hover:border-[var(--color-sand-1)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors duration-[var(--duration-fast)]"
+        >
+          <Minus size={14} weight="regular" />
+        </button>
+        <button
+          type="button"
+          onClick={() => onChange(Math.min(max, value + 1))}
+          disabled={atMax}
+          aria-label="+"
+          className="h-9 w-9 inline-flex items-center justify-center border border-[var(--color-sand-7)] text-[var(--color-sand-1)] hover:border-[var(--color-sand-1)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors duration-[var(--duration-fast)]"
+        >
+          <Plus size={14} weight="regular" />
+        </button>
+      </div>
+    </div>
   );
 }
 

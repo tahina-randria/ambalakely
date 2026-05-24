@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Fraunces } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale, getTranslations } from 'next-intl/server';
@@ -22,14 +22,19 @@ const geist = Geist({
   subsets: ['latin'],
   variable: '--font-geist',
   display: 'swap',
-  weight: ['300', '400', '500'],
+  weight: ['400', '500'],
 });
 
-const geistMono = Geist_Mono({
+/**
+ * Fraunces — modern editorial serif with an opsz axis. Used for display
+ * (h1/h2 and any other title surfaces). Boutique-hotel signature.
+ */
+const fraunces = Fraunces({
   subsets: ['latin'],
-  variable: '--font-geist-mono',
+  variable: '--font-fraunces',
   display: 'swap',
-  weight: ['400', '500'],
+  style: ['normal', 'italic'],
+  axes: ['opsz', 'SOFT'],
 });
 
 /**
@@ -118,7 +123,7 @@ export default async function LocaleLayout({
   const tCommon = await getTranslations({ locale: typedLocale, namespace: 'Common' });
 
   return (
-    <html lang={typedLocale} className={`${geist.variable} ${geistMono.variable}`}>
+    <html lang={typedLocale} className={`${geist.variable} ${fraunces.variable}`}>
       <head>
         <link rel="preconnect" href="https://images.squarespace-cdn.com" />
         <link rel="dns-prefetch" href="https://images.squarespace-cdn.com" />

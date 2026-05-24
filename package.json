@@ -12,6 +12,7 @@
     "photos:upload": "tsx scripts/upload-photos.ts"
   },
   "dependencies": {
+    "@base-ui/react": "^1.5.0",
     "@phosphor-icons/react": "^2.1.7",
     "@react-email/components": "^1.0.12",
     "@sanity/client": "^7.22.0",
@@ -20,10 +21,13 @@
     "@sentry/nextjs": "^10.53.1",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
     "date-fns": "^4.2.1",
     "gsap": "^3.13.0",
     "lenis": "^1.1.20",
+    "lucide-react": "^1.16.0",
     "mapbox-gl": "^3.23.0",
     "motion": "^11.15.0",
     "next": "^15.1.6",
@@ -31,6 +35,7 @@
     "next-sanity": "^12.4.5",
     "posthog-js": "^1.374.3",
     "posthog-node": "^5.34.8",
+    "radix-ui": "^1.4.3",
     "react": "^19.0.0",
     "react-day-picker": "^10.0.1",
     "react-dom": "^19.0.0",
@@ -53,6 +58,7 @@
     "eslint-config-next": "^15.1.6",
     "playwright": "^1.60.0",
     "postcss": "^8.5.1",
+    "shadcn": "^4.8.0",
     "tailwindcss": "^4.0.0",
     "tsx": "^4.22.3",
     "typescript": "^5.7.3"

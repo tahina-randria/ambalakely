@@ -41,10 +41,47 @@
   --color-accent-hover:   var(--color-ore-10);
   --color-focus:          var(--color-ore-8);
 
+  /* ---- shadcn/ui tokens (light-only) — mapped to our sand palette ---- */
+  --color-background:         var(--color-sand-1);
+  --color-foreground:         var(--color-sand-12);
+  --color-card:               var(--color-sand-1);
+  --color-card-foreground:    var(--color-sand-12);
+  --color-popover:            var(--color-sand-1);
+  --color-popover-foreground: var(--color-sand-12);
+  --color-primary:            var(--color-sand-12);
+  --color-primary-foreground: var(--color-sand-1);
+  --color-secondary:          var(--color-sand-3);
+  --color-secondary-foreground: var(--color-sand-12);
+  --color-muted:              var(--color-sand-3);
+  --color-muted-foreground:   var(--color-sand-10);
+  --color-accent-bg:          var(--color-sand-3);
+  --color-accent-foreground:  var(--color-sand-12);
+  --color-destructive:        #b91c1c;
+  --color-destructive-foreground: var(--color-sand-1);
+  --color-input:              var(--color-sand-6);
+  --color-ring:               var(--color-sand-12);
+  --color-sidebar:            var(--color-sand-1);
+  --color-sidebar-foreground: var(--color-sand-12);
+  --color-sidebar-primary:    var(--color-sand-12);
+  --color-sidebar-primary-foreground: var(--color-sand-1);
+  --color-sidebar-accent:     var(--color-sand-3);
+  --color-sidebar-accent-foreground: var(--color-sand-12);
+  --color-sidebar-border:     var(--color-sand-6);
+  --color-sidebar-ring:       var(--color-sand-12);
+  /* shadcn uses --color-border in addition to --color-border-subtle etc. */
+  --color-border-shadcn:      var(--color-sand-6);
+
+  /* radius scale shadcn expects */
+  --radius: 2px;
+  --radius-lg: 4px;
+  --radius-xl: 8px;
+
   /* ---- fonts ---- */
-  --font-display: var(--font-geist), system-ui, sans-serif;
-  --font-body:    var(--font-geist), system-ui, sans-serif;
-  --font-mono:    var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: var(--font-fraunces), "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  --font-body:    var(--font-geist), system-ui, -apple-system, sans-serif;
+  /* Mono kept as a system fallback for tabular data and timestamps in tables.
+     Decorative captions (.caption) have been retired site-wide. */
+  --font-mono:    ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
 
   /* ---- radii: max 4px except avatars/pills ---- */
   --radius-sm: 2px;
@@ -344,12 +381,16 @@ video {
   }
 }
 
-/* Caption — small mono uppercase, used for image captions and overlays */
+/* Caption — editorial label. Italic Fraunces, sentence-case, no longer
+   the small mono-uppercase voice. Pairs with the new serif display. */
 .caption {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--color-text-muted);
 }
 
