@@ -164,7 +164,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                   <ArrowLeft size={18} weight="regular" />
                 </button>
               ) : null}
-              <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-sand-6)]">
+              <div className="font-display italic font-light text-[13px] tracking-[0] text-[var(--color-sand-6)]">
                 {status === 'success'
                   ? t('successH2')
                   : `${t('step')} ${step} ${t('of')} 2 · ${step === 1 ? t('stepStay') : t('stepContact')}`}
@@ -190,7 +190,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                   <>
                     {/* Room type — custom dropdown (Combobox migration kept for a follow-up pass) */}
                     <div className="relative">
-                      <label className="block font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-sand-6)] mb-3">
+                      <label className="block font-display italic font-light text-[13px] tracking-[0] text-[var(--color-sand-6)] mb-3">
                         {t('roomType')}
                       </label>
                       <button
@@ -250,7 +250,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                     {/* Calendar */}
                     <div>
                       <div className="flex items-baseline justify-between mb-3">
-                        <label className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-sand-6)]">
+                        <label className="font-display italic font-light text-[13px] tracking-[0] text-[var(--color-sand-6)]">
                           {t('datesLabel')}
                         </label>
                         <span className="font-display font-light text-[14px] text-[var(--color-sand-5)] tabular-nums">
@@ -319,7 +319,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                   <>
                     {/* Summary card */}
                     <div className="bg-[var(--color-sand-11)] border border-[var(--color-sand-10)] px-4 py-3.5">
-                      <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[var(--color-sand-6)] mb-1.5">
+                      <div className="font-display italic font-light text-[12px] tracking-[0] text-[var(--color-sand-6)] mb-1.5">
                         {t('summarize')}
                       </div>
                       <div className="font-display font-light text-[15px] leading-[1.4] tracking-[-0.005em]">
@@ -444,7 +444,7 @@ export function BookingDrawer({ open, onClose }: Props) {
 
           {/* FOOTER — direct contact */}
           <div className="px-6 md:px-8 py-8 border-t border-[var(--color-sand-10)]">
-            <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-sand-7)] mb-4">
+            <div className="font-display italic font-light text-[13px] tracking-[0] text-[var(--color-sand-7)] mb-4">
               {t('writeUs')}
             </div>
             <div className="flex flex-col gap-3">
@@ -475,7 +475,7 @@ export function BookingDrawer({ open, onClose }: Props) {
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <label className="flex flex-col gap-2">
-      <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-sand-6)]">
+      <span className="font-display italic font-light text-[13px] tracking-[0] text-[var(--color-sand-6)]">
         {label}
       </span>
       {children}
