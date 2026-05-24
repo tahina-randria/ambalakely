@@ -146,7 +146,7 @@ export function BookingDrawer({ open, onClose }: Props) {
         showCloseButton={false}
         className={cn(
           'w-full max-w-[480px] md:max-w-[640px] sm:max-w-none',
-          '!bg-[var(--color-sand-12)] text-[var(--color-sand-1)] border-l border-[var(--color-sand-10)]',
+          'bg-[var(--color-sand-12)]! text-[var(--color-sand-1)] border-l border-[var(--color-sand-10)]',
           'p-0 gap-0 overflow-y-auto',
         )}
       >
