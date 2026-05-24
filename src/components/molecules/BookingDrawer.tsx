@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react';
+// (no twoMonths breakpoint anymore — single month always fits the drawer
+// in the viewport without forcing the user to scroll for "Continuer")
 import { useLocale, useTranslations } from 'next-intl';
 import { DayPicker, type DateRange } from 'react-day-picker';
 import 'react-day-picker/style.css';
@@ -62,17 +64,6 @@ export function BookingDrawer({ open, onClose }: Props) {
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [roomDropdownOpen, setRoomDropdownOpen] = useState(false);
-
-  // Airbnb/Expedia pattern : 2 months side-by-side on md+, 1 on mobile.
-  const [twoMonths, setTwoMonths] = useState(false);
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const mq = window.matchMedia('(min-width: 768px)');
-    const sync = () => setTwoMonths(mq.matches);
-    sync();
-    mq.addEventListener('change', sync);
-    return () => mq.removeEventListener('change', sync);
-  }, []);
 
   // Group flow triggered only for "11+" (we ship up to 10 individual slots).
   const isGroup = Number(form.guests) >= 11;
@@ -181,11 +172,11 @@ export function BookingDrawer({ open, onClose }: Props) {
           </div>
 
           {/* BODY */}
-          <div className="flex-1 px-6 md:px-8 py-8">
+          <div className="flex-1 px-6 md:px-8 py-6">
             {status === 'success' ? (
               <SuccessPanel onClose={onClose} />
             ) : (
-              <form onSubmit={onSubmit} className="flex flex-col gap-6">
+              <form onSubmit={onSubmit} className="flex flex-col gap-5">
                 {step === 1 ? (
                   <>
                     {/* Room type — custom dropdown (Combobox migration kept for a follow-up pass) */}
@@ -265,7 +256,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                           disabled={{ before: today }}
                           locale={dateLocale}
                           weekStartsOn={1}
-                          numberOfMonths={twoMonths ? 2 : 1}
+                          numberOfMonths={1}
                           showOutsideDays={false}
                           classNames={{ root: 'rdp-root-dark' }}
                           modifiersClassNames={{
@@ -280,9 +271,6 @@ export function BookingDrawer({ open, onClose }: Props) {
                           }}
                         />
                       </div>
-                      <p className="mt-2 text-[12px] text-[var(--color-sand-7)]">
-                        {dateRangeSummary}
-                      </p>
                     </div>
 
                     {/* Guests — stepper */}
@@ -442,29 +430,27 @@ export function BookingDrawer({ open, onClose }: Props) {
             )}
           </div>
 
-          {/* FOOTER — direct contact */}
-          <div className="px-6 md:px-8 py-8 border-t border-[var(--color-sand-10)]">
-            <div className="font-display italic font-light text-[13px] tracking-[0] text-[var(--color-sand-7)] mb-4">
+          {/* FOOTER — direct contact, single inline row to free vertical space */}
+          <div className="px-6 md:px-8 py-4 border-t border-[var(--color-sand-10)] flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-[var(--color-sand-5)]">
+            <span className="font-display italic font-light text-[var(--color-sand-7)]">
               {t('writeUs')}
-            </div>
-            <div className="flex flex-col gap-3">
-              <a
-                href={`https://wa.me/${WA_DIGITS}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 text-[15px] text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)]"
-              >
-                <WhatsappLogo size={18} weight="regular" />
-                <span>{HOTEL.phone}</span>
-              </a>
-              <a
-                href={`mailto:${HOTEL.email}`}
-                className="inline-flex items-center gap-3 text-[15px] text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)]"
-              >
-                <Envelope size={18} weight="regular" />
-                <span>{HOTEL.email}</span>
-              </a>
-            </div>
+            </span>
+            <a
+              href={`https://wa.me/${WA_DIGITS}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)]"
+            >
+              <WhatsappLogo size={14} weight="regular" />
+              <span>{HOTEL.phone}</span>
+            </a>
+            <a
+              href={`mailto:${HOTEL.email}`}
+              className="inline-flex items-center gap-1.5 text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)]"
+            >
+              <Envelope size={14} weight="regular" />
+              <span>{HOTEL.email}</span>
+            </a>
           </div>
         </div>
       </SheetContent>

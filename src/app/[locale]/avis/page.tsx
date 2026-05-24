@@ -6,7 +6,6 @@ import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
-import { Star } from '@phosphor-icons/react/dist/ssr';
 import { PHOTOS } from '@/lib/data/photos';
 import { fetchHotel, fetchReviews } from '@/sanity/lib/fetch';
 
@@ -63,24 +62,12 @@ export default async function AvisPage({ params }: LocaleParam) {
             </ScrollReveal>
             {HOTEL.rating.value && HOTEL.rating.count ? (
               <ScrollReveal delay={0.05}>
-                <div className="mt-8 flex items-center gap-3">
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
-                        key={i}
-                        size={14}
-                        weight="fill"
-                        className="text-[var(--color-text)]"
-                      />
-                    ))}
-                  </div>
-                  <div className="caption text-[var(--color-text-muted)]">
-                    {t('ratingLine', {
-                      value: HOTEL.rating.value,
-                      count: HOTEL.rating.count,
-                      sources: HOTEL.rating.sources.join(' / '),
-                    })}
-                  </div>
+                <div className="mt-8 caption text-[var(--color-text-muted)]">
+                  {t('ratingLine', {
+                    value: HOTEL.rating.value,
+                    count: HOTEL.rating.count,
+                    sources: HOTEL.rating.sources.join(' / '),
+                  })}
                 </div>
               </ScrollReveal>
             ) : null}

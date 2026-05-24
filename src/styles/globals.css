@@ -763,8 +763,8 @@ input[type="date"].input-dark::-webkit-datetime-edit-day-field:focus {
   --rdp-day_button-width: 36px;
   --rdp-day_button-height: 36px;
   --rdp-selected-border: 1px solid var(--color-sand-1);
-  --rdp-disabled-opacity: 0.25;
-  --rdp-outside-opacity: 0.35;
+  --rdp-disabled-opacity: 0.4;
+  --rdp-outside-opacity: 0.4;
   --rdp-today-color: var(--color-sand-1);
   --rdp-weekday-opacity: 0.7;
   --rdp-weekday-padding: 0.5rem 0;
@@ -878,10 +878,11 @@ input[type="date"].input-dark::-webkit-datetime-edit-day-field:focus {
   width: 100%;
 }
 
-/* Hide the flag emoji from the trigger button — the dial code carries
-   the country identity in our editorial layout. */
-.phone-country-button .react-international-phone-flag-emoji,
-.phone-country-button .react-international-phone-country-selector-button__flag-emoji {
+/* Hide ALL flag emojis (trigger button + dropdown list). The dial code
+   carries the country identity — flags are visual noise in an editorial
+   layout. User directive: "retire les drapeaux". */
+.react-international-phone-flag-emoji,
+.react-international-phone-country-selector-button__flag-emoji {
   display: none !important;
 }
 
@@ -896,7 +897,6 @@ input[type="date"].input-dark::-webkit-datetime-edit-day-field:focus {
   gap: 0.25rem !important;
 }
 
-/* In the dropdown list keep the flags — they help discovery */
 .react-international-phone-input-container .react-international-phone-country-selector-dropdown {
   background: var(--color-sand-12) !important;
   border-color: var(--color-sand-10) !important;
