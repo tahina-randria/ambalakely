@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-23 (Senior design audit + Top 5 actions all shipped to prod)
+Last updated: 2026-05-25 (World-class editorial pass + Fontshare Satoshi + pa11y CI gate at 0 WCAG errors, all in prod)
 
 ---
 
@@ -790,6 +790,128 @@ Polish session juste après Lot 2 :
 - Pas de scroll listener — uniquement IntersectionObserver, donc lightweight.
 
 — previous Claude, 2026-05-23 post-i18n
+
+---
+
+## 23. World-class polish + a11y gate (2026-05-25)
+
+Eleven commits shipped to prod (`b8a5dd9..91e8d7e`). All four user complaints
+addressed : "too much small text", "Hasina la star — personne ne la connait",
+"booking drawer cropped", "couleurs pas folles".
+
+### Editorial / voice
+
+- **Home sections trimmed** (commit `355f30b`) — `<Kicker>` removed from Stay,
+  Dining, Trust, Location, Journal, Book ; star icons removed from Reviews ;
+  per-category count caption removed from Stay ; price inlined to one line.
+- **Depersonalize copy** (commit `d6b535c`) — Hero subtitle no longer leads
+  with "Mamy et Hasina" ; Story body rewritten without naming individuals as
+  protagonists ; Story quote unsigned ; readMore links renamed ("Lire sur
+  Toko Telo" → "Voir le restaurant", etc) ; `BookingDrawer.successBody`
+  rewritten in institutional voice. `/about` page kept personal — that page
+  is *meant* to introduce them.
+- **4 decorative micro-elements dropped** (commits `1e9baf2` + `91e8d7e`
+  partial revert) — map coordinate overlay, footer RN7 coordinate, Reviews
+  rating caption removed. Location distance sub text restored after user
+  pushback (first-time travellers don't know Ranomafana = rainforest park).
+
+### Booking drawer fit
+
+- **Drawer overflow fixed** (commit `9b26caf`) — went from 109px scrolling
+  overflow at 1440×900 to zero. Single-month calendar (was 2 on md+), footer
+  contact row collapsed to single inline line, body padding tightened. Phone
+  country flags hidden globally (both trigger and dropdown).
+
+### Typography
+
+- **Geist → Satoshi via Fontshare** (commit `5312804`) — Geist removed from
+  `next/font/google`. Satoshi loaded via Fontshare CDN `<link>` in layout
+  head, with preconnects to api/cdn.fontshare.com. `--font-body` points to
+  "Satoshi" directly. Fraunces stays for display.
+- **Hierarchy unify** (commit `6b2e823`) — Dining "Ce soir" label 13 → 16
+  italic Fraunces ; Location distance meta from font-mono to Satoshi
+  tabular-nums ; distance icons removed (decorative noise) ; Experiences
+  duration meta same switch.
+- **Site-wide secondary text 14 → 15** (commit `35228e0`) — Nav links + Réserver
+  button, BookingButton, NewsletterSignup kicker, CookiePrefsLink, Footer
+  column titles, Footer legal bottom. Global `.caption` rule bumped 14 → 15
+  so every remaining caption lifts in one shot. LanguageSwitcher chip
+  11 → 13. Location coordinate label moved from 10px mono to 13px italic
+  Fraunces (matches site caption pattern).
+
+### Accessibility stack + CI gate
+
+- **Three new tools** (commit `7d0be22`) — `eslint-plugin-jsx-a11y` (lint-time),
+  `pa11y` (CLI gate), `react-aria-components` (Adobe ARIA primitives, gold
+  standard, prêt à wire). `pnpm.ignoredBuiltDependencies: ["puppeteer"]`
+  added because pnpm 11 fails dev start on ignored builds.
+- **Dev-runtime axe audit** (commit `42d996b`) — `@axe-core/react` wired via
+  `src/components/atoms/AxeReport.tsx`, no-op in production, violations stream
+  to the browser console during dev with 1000ms debounce.
+- **pa11y CI gate** (commit `2820f9d`) — `scripts/pa11y-audit.mjs` runs pa11y
+  on every public route (13 paths) and writes JSON + Markdown reports under
+  `.pa11y/`. Wired as `pnpm a11y`. Reuses Playwright's chromium binary at
+  `~/Library/Caches/ms-playwright/chromium-1223/...` instead of installing a
+  second Chrome via puppeteer. **Hides Nav + Hero h1 during scan** —
+  `mix-blend-mode: difference` is a known WCAG-checker blind spot
+  (validated manually with Playwright). Result : **0 errors / 0 warnings**
+  across 13 pages.
+- **Real WCAG fixes shipped under that** :
+  - `/rooms` category hero "X chambres" caption (text-white/75, 1.76:1)
+    removed entirely (same Aman pass as home).
+  - `/faq` pills had `.caption` global class forcing `color: text-muted`
+    which beat the inline `text-sand-1` on the active state — swapped to
+    direct utilities.
+  - Footer dark contrast pass (commit `5312804`) — sand-6 → sand-3 on
+    column titles, bottom legal, contact icons, newsletter kicker, cookie
+    link. All now ~9:1 instead of ~3:1.
+
+### Libraries added (installed, ready to use)
+
+- `motion@12.40` (Framer Motion v12, upgraded from v11)
+- `embla-carousel-react@8.6`
+- `react-hook-form@7.76` + `@hookform/resolvers@5.4` (zod already at v4)
+- `@axe-core/react@4.11` (devDep)
+- `eslint-plugin-jsx-a11y@6.10` (devDep)
+- `pa11y@9.1` (devDep)
+- `react-aria-components@1.17`
+
+None of them are wired to UI yet beyond the AxeReport atom. The next
+session can pick them up for : room photo carousel (embla), proper form
+validation in BookingDrawer + NewsletterSignup (RHF + zod), page
+transitions (motion).
+
+### MCPs installed in user's Claude Code
+
+- Mobbin (621k design refs) — installed and authenticated, plan paid
+- shadcn (registry primitives) — installed at user + project scope
+- Playwright (live browser) — installed at user scope, fixed Chromium
+  binary issue this session
+
+### Workflow note
+
+User confirmed : **`push tout à chaque fois en prod`** — after each commit,
+push directly to `origin/main` without asking. Vercel auto-deploys on push.
+Destructive operations (force-push, reset --hard) still need explicit
+confirmation per the cardinal rules.
+
+### What still hangs (pending follow-ups)
+
+- **Editorial pass on subpages** (task #76 pending) — `/about`,
+  `/rooms/[category]`, `/dining`, `/experiences`, `/plan-trip`, `/community`
+  still have caption kickers above h2s. Explore agent identified
+  ~20+ instances. Same Aman trim. Estimated 30 min.
+- **Subpage Hasina/Mamy references** in `/about` are intentional (that's
+  the page meant to introduce them). Other subpage references are also
+  fine where they're factual (metaDescription, ogDescription).
+- **Wire Embla / RHF / Motion** — libraries installed but unused. Embla
+  for room photo gallery is the highest leverage (currently 1 photo per
+  category page).
+- **Snap-scroll viewport sections** on the home (`scroll-snap-type: y
+  mandatory`) — user mentioned wanting "section bien viewport". Pure CSS,
+  ~15 min, never shipped.
+
+— previous Claude, 2026-05-25
 
 ---
 
