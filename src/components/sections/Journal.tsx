@@ -30,7 +30,7 @@ export async function Journal() {
                   className="group flex items-center justify-between py-8 md:py-10 border-b border-[var(--color-border-subtle)] hover:border-[var(--color-sand-12)] transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]"
                 >
                   <div className="flex-1">
-                    <div className="font-mono text-[13px] uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                    <div className="text-[13px] tracking-[0] text-[var(--color-text-muted)]">
                       {post.date} · {post.author}
                     </div>
                     <div className="mt-3 font-display text-[24px] md:text-[32px] tracking-[-0.02em] text-[var(--color-text)] max-w-[680px]">

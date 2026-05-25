@@ -65,16 +65,13 @@ export async function Stay() {
                       </p>
                     </div>
 
-                    {/* Price — Aman pattern : one inline figure, no “from / br”. */}
-                    <div className="col-span-8 md:col-span-3 text-left md:text-right font-display font-light text-[var(--color-text)] text-[18px] md:text-[22px] tracking-[-0.02em] tabular-nums">
+                    {/* Price — Aman pattern : one inline figure, no “from / br”.
+                        Per-row ArrowRight removed : the section-level
+                        "Voir les dix chambres" CTA carries the affordance, and
+                        the h3 already group-hover:translates as a click hint. */}
+                    <div className="col-span-12 md:col-span-4 text-left md:text-right font-display font-light text-[var(--color-text)] text-[18px] md:text-[22px] tracking-[-0.02em] tabular-nums">
                       <span className="font-medium">{formatMga(cat.priceMga)}</span>{' '}
                       <span className="text-[var(--color-text-muted)]">{tCommon('ariary')}</span>
-                    </div>
-                    <div className="col-span-4 md:col-span-1 md:flex md:justify-end">
-                      <ArrowRight
-                        size={22}
-                        className="text-[var(--color-text-muted)] transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-2 group-hover:text-[var(--color-text)]"
-                      />
                     </div>
                   </Link>
                 </li>

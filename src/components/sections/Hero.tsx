@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { ArrowDown } from '@phosphor-icons/react/dist/ssr';
 
 const VIDEO_SRC = '/videos/hero.mp4';
 const VIDEO_POSTER = '/videos/hero-poster.webp';
@@ -91,25 +90,14 @@ export function Hero() {
             <button
               type="button"
               onClick={openBooking}
-              className="group inline-flex items-center gap-2 h-12 px-7 bg-white text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
+              className="inline-flex items-center justify-center h-12 px-7 bg-white text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)]"
             >
               {tCommon('checkAvailability')}
-              <ArrowDown
-                size={16}
-                className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-y-0.5"
-              />
             </button>
           </div>
         </div>
       </div>
 
-      <div
-        className="hero-fade-up absolute bottom-8 right-5 md:right-8 lg:right-12 text-white/70 text-[20px] leading-none"
-        style={{ ['--fade-delay' as string]: '1.2s' }}
-        aria-hidden="true"
-      >
-        ↓
-      </div>
     </section>
   );
 }
