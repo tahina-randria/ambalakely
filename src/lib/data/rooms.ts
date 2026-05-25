@@ -131,72 +131,108 @@ export const rooms: Room[] = [
 ];
 
 /**
- * Avis clients — verbatim depuis hotelambalakely.com (FR).
- * Aucun avis inventé : tous extraits du site Squarespace public.
- * 9 avis vérifiables sur TripAdvisor, Booking ou Google.
+ * Avis clients — traductions FR fidèles depuis les avis publics
+ * vérifiés sur TripAdvisor (tripadvisor.com/Hotel_Review-g298271-d7646881).
+ *
+ * Chaque entrée pointe vers un avis réel : nom du reviewer + date + lieu
+ * tels qu'ils apparaissent sur TripAdvisor. Le champ `quote` est une
+ * traduction fidèle du texte original anglais, conservé en commentaire
+ * pour traçabilité.
+ *
+ * Les 4 avis de la version précédente attribués à des reviewers Booking
+ * (Ada, Giovanni) et Google (Ruth Barbara W., Anna Maria, KingfisherOslo)
+ * ont été retirés faute de vérification ; Booking ne donne pas d'accès
+ * public aux quotes, et l'intégration live via Google Places API est
+ * laissée en TODO pour quand une clé sera disponible (cf. /docs).
+ *
+ * Ordre : les 3 premiers sont rendus sur la home (Reviews.tsx). Choisis
+ * pour diversité (location, langue maternelle, aspect mentionné).
  */
 export const reviews = [
   {
+    // EN original (TripAdvisor, Jul 2022) : "This is an amazing gem of a hotel.
+    // A beautiful location and built in the Betsileo style, with incredibly
+    // friendly and helpful staff."
     quote:
-      'Un véritable joyau ! Un bel emplacement construit dans le style Betsileo, avec un personnel amical.',
-    author: 'Polly P.',
+      'Un joyau incroyable. Un bel emplacement, construit dans le style Betsileo, avec un personnel formidable et serviable.',
+    author: 'Polly Pallister Wilkin',
     city: '',
     source: 'TripAdvisor',
   },
   {
+    // EN original (TripAdvisor, Nov 2019) : "Really good service, great food
+    // and fantastic relaxing atmosphere."
     quote:
-      'Emplacement unique à la campagne. L’Hôtel Ambalakely est un véritable joyau situé à 10 minutes.',
-    author: 'KingfisherOslo',
-    city: 'Oslo',
+      'Vraiment bon service, excellente cuisine et atmosphère fantastiquement relaxante.',
+    author: 'Kristin O. V.',
+    city: 'Trondheim',
     source: 'TripAdvisor',
   },
   {
+    // EN original (TripAdvisor, Oct 2025) : "A fantastic oasis with a
+    // friendly and good atmosphere. Very hospitable host. The owner
+    // speaks Norwegian."
     quote:
-      'Un trésor rare au milieu de Madagascar ! Excellent séjour. Nous sommes toujours accueillis avec des sourires.',
-    author: 'Ada',
-    city: '',
-    source: 'Booking',
-  },
-  {
-    quote:
-      'Excellente nuit à Ambalakely. C’est l’endroit parfait où séjourner, très agréable ambiance.',
-    author: 'Bernt R.',
+      'Un oasis fantastique, ambiance chaleureuse. Hôte très accueillant. Le propriétaire parle norvégien.',
+    author: 'Toril A.',
     city: '',
     source: 'TripAdvisor',
   },
   {
+    // EN original (TripAdvisor, Jun 2022) : "Newly-refurbished hotel with
+    // huge, well-equipped rooms: big beds, mosquito nets, lots of power
+    // sockets."
     quote:
-      'Très bel hôtel avec jardin paisible. Le repas était excellent. Chambres spacieuses et propres.',
-    author: 'Ruth Barbara W.',
-    city: '',
-    source: 'Google',
-  },
-  {
-    quote:
-      'Bel endroit ! Le propriétaire parle un anglais parfait, nous avons eu un surclassement de chambre.',
-    author: 'Anna Maria',
-    city: '',
-    source: 'Google',
-  },
-  {
-    quote:
-      'Super endroit où séjourner. Nous y avons passé une seule nuit mais aurions aimé rester plus longtemps.',
+      'Hôtel récemment rénové, immenses chambres bien équipées : grands lits, moustiquaires, beaucoup de prises.',
     author: 'Femke V.',
     city: '',
     source: 'TripAdvisor',
   },
   {
+    // EN original (TripAdvisor, Sep 2019) : "This is the perfect place to
+    // stay, either while staying in Fianarantsoa, or on the way through
+    // to Isalo, og Antsirabe."
     quote:
-      'Très bel endroit. Un très bon service, une excellente nourriture et une atmosphère relaxante fantastique.',
-    author: 'Kristin O. V.',
+      'L\'endroit parfait pour séjourner — à Fianarantsoa, ou en chemin vers Isalo et Antsirabe.',
+    author: 'Bernt R. Pedersen',
     city: '',
     source: 'TripAdvisor',
   },
   {
+    // EN original (TripAdvisor, Sep 2025) : "A rare find that exceeded
+    // expectations. Lovely room. Professional and friendly staff."
     quote:
-      'Un must absolu si vous êtes en ville. Emplacement idyllique, juste à côté des rizières absolument tranquille.',
-    author: 'Giovanni',
+      'Une trouvaille rare qui a dépassé nos attentes. Belle chambre. Personnel professionnel et chaleureux.',
+    author: 'traveltragic50',
+    city: 'Wollongong',
+    source: 'TripAdvisor',
+  },
+  {
+    // EN original (TripAdvisor, Aug 2025) : "A very nice hotel in a town
+    // where you wouldn't really expect it. Quite modern with very large
+    // rooms."
+    quote:
+      'Un très bel hôtel dans une ville où on ne s\'y attendrait pas. Plutôt moderne, avec de très grandes chambres.',
+    author: 'Robert H.',
+    city: 'Adelaide',
+    source: 'TripAdvisor',
+  },
+  {
+    // EN original (TripAdvisor, Oct 2023) : "A hidden gem next to the main
+    // road, but quiet. Very beautiful and lovingly designed hotel."
+    quote:
+      'Un joyau caché à côté de la route principale, mais calme. Hôtel très beau, décoré avec amour.',
+    author: 'Roswitha S.',
+    city: 'Vienne',
+    source: 'TripAdvisor',
+  },
+  {
+    // EN original (TripAdvisor, Apr 2023) : "The Hotel is beautifully
+    // situated, along La Riziere and nearby The village Ambalakely."
+    quote:
+      'L\'hôtel est magnifiquement situé, le long des rizières, près du village d\'Ambalakely.',
+    author: 'Pravin B.',
     city: '',
-    source: 'Booking',
+    source: 'TripAdvisor',
   },
 ] as const;

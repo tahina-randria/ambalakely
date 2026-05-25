@@ -113,7 +113,7 @@ export const HOTEL = {
   rating: {
     value: null as string | null,
     count: null as number | null,
-    sources: ['TripAdvisor', 'Booking'],
+    sources: ['TripAdvisor'],
   },
 
   socials: {

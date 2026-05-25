@@ -546,14 +546,14 @@
 
   "AvisPage": {
     "metaTitle": "Reviews",
-    "metaDescription": "All the verified reviews from our guests on Booking, TripAdvisor and Google. Hôtel Ambalakely, ten rooms in Fianarantsoa, Madagascar.",
+    "metaDescription": "All the verified reviews from our guests on TripAdvisor. Hôtel Ambalakely, ten rooms in Fianarantsoa, Madagascar.",
     "ogTitle": "Reviews · Hôtel Ambalakely",
-    "ogDescription": "Verified reviews on Booking, TripAdvisor and Google.",
+    "ogDescription": "Verified reviews on TripAdvisor.",
     "breadcrumbHome": "Home",
     "breadcrumbAvis": "Reviews",
     "heroAlt": "Hôtel Ambalakely, garden and main façade",
     "heroTitle": ["What our visitors", "are saying."],
-    "intro": "{count} verified reviews, taken word for word from Booking, TripAdvisor and Google.",
+    "intro": "{count} verified reviews from TripAdvisor (original English text).",
     "ratingLine": "{value} out of 5 — {count} reviews on {sources}",
     "ctaKicker": "Book",
     "ctaH2": "Come and see for yourself.",
