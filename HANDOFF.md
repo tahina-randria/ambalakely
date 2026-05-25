@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-25 (World-class editorial pass + Fontshare Satoshi + pa11y CI gate at 0 WCAG errors, all in prod)
+Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + 11 verified-facts commits + Reviews premium cards + Nav mobile burger, all in prod — see §24)
 
 ---
 
@@ -912,6 +912,167 @@ confirmation per the cardinal rules.
   ~15 min, never shipped.
 
 — previous Claude, 2026-05-25
+
+---
+
+## 24. Anti-Vibe-Coding audit + fact verification (2026-05-25, evening)
+
+The user pasted a formal **Anti-Vibe-Coding Master Prompt** (12-part
+brief : audit first, fix second, never invent facts, subtraction by
+default, justify everything against the three-question test
+*decide / book / trust*). Applied to the site end-to-end : Parts 1-10
+audit done as tables, then implementation under user approval per
+stage.  **No code touched until the full audit was delivered.**
+
+### Audit findings — the headline
+
+**The site was confidently shipping ≥ 15 false or unsourced facts**
+inherited from the original vibe-coded copy. Cross-referenced every
+guest-facing claim against two source documents :
+- `docs/Publics 2026 Hôtel Ambalakely - Tarifs et Politiques de Vente.pdf.pdf`
+  (8 pages, official 2025-2026 public tariff sheet)
+- `docs/Hotel Ambalakely beskrivelse Kirsten.docx` (longer Norwegian
+  property description by Kirsten)
+
+Eight critical contradictions found and fixed (commit `a662430` and
+`8391766` for the FAQ pass) :
+
+| Site claimed | PDF says | Outcome |
+|---|---|---|
+| Annulation gratuite jusqu'à 30 jours | gratuit > 10 j / 10 % à 10 / 25 % à 7 / 50 % à 5 / no-show 100 % | Replaced everywhere |
+| Aucun acompte ≤ 2 nuits | Facture réglée AVANT arrivée, tous séjours | Dropped |
+| 2 % de chaque séjour → école | Absent du PDF + du doc Kirsten | "Une part" (no number) |
+| Check-in 12-13h | à partir de 13h | Fixed in hotel.ts |
+| Aéroport Fianar 50 000 Ar / 4 pax | 70 000 Ar / 1-3 pax | Fixed in FAQ |
+| Dîner 3 svc ≈ 90 000 Ar | 72 000 Ar | Fixed in FAQ |
+| Enfants 3-12 = 50 %, < 3 gratuit | 5-12 = 50 %, < 5 offert | Fixed in FAQ |
+| Visa/MC 3 % surcharge | 5 % (Kirsten + user confirmation) | Aligned 5 % |
+
+For the **mobile money** question the user clarified post-audit :
+Mvola (Telma), Airtel Money, Orange Money — all three accepted. Now
+reflected in the FAQ payment answer.
+
+For the **Reviews** (9 quotes hardcoded in `src/lib/data/rooms.ts`) :
+cross-referenced names against the actual TripAdvisor property page
+(d7646881, 32 reviews, 4.9 / 5). Polly P. + Femke V. + Bernt R. +
+Kristin O. V. were real reviewers but the quotes were paraphrased or
+even completely substituted (Femke V.'s real quote was about rooms /
+mosquito nets ; we had her saying "Super endroit"). Four other
+attributions (KingfisherOslo, Ada, Anna Maria, Ruth Barbara W.,
+Giovanni) could not be matched to TripAdvisor and Booking does not
+have a public quote API. All 9 entries were replaced with VERIFIED
+TripAdvisor verbatim + faithful FR translations + original English
+in TypeScript comments for traceability. Source field is now
+"TripAdvisor" across the board ; the /avis page metadata and intro
+copy in fr / en / no was aligned accordingly.
+
+### What shipped — 11 commits in sequence
+
+| SHA | Subject |
+|---|---|
+| `a662430` | fix(facts) cancellation / deposit / 2 % / check-in (5 surfaces × 3 locales + hotel.ts) |
+| `e92a2ab` | refactor(type) italic + Fraunces stripped from all labels site-wide ; `.caption` + `.font-mono.uppercase` global rules rewritten to plain Satoshi 15 px medium muted ; 7 components cleaned |
+| `bf76600` | refactor(home) noise removed — Hero ↓ glyph + ArrowDown CTA icon, Stay per-row arrows, Footer 4 contact icons, Journal mono/uppercase + empty h2 |
+| `ff93184` | refactor(dining) **killed the 220 vh GSAP scroll-jack** ; replaced with static editorial spread (image left 7/12, text right 5/12, mobile stacks) ; -160 LOC ; mobile no longer breaks |
+| `e227f25` | feat(facts) **"Avant l'arrivée"** Practical i18n namespace + section on `/rooms/[category]` (cancellation ladder + check-in/out + payment methods), Transferts block on `/plan-your-trip` (70 k airport, 65 k city) |
+| `766277c` | chore(copy) dropped visible `~2005` and `~4 000` tildes (3 locales + Community stats) |
+| `6fa1ab8` | refactor(subpages) italic + mono on labels stripped on `/rooms`, `/rooms/[category]`, `/about`, `/dining`, `/community`, `/plan-your-trip` ; semantic blockquote italic kept on Story + RoomCategory concierge |
+| `8391766` | fix(faq) **FAQ verified rebuild** — 49 → 22 Q, 8 → 3 categories (booking / stay / logistics), every retained answer either sourced (PDF / Kirsten / hotel.ts) or marked `⚠️ NEEDS REAL CONTENT` ; 8 generic travel-advice questions dropped (visa, vaccinations, malaria, insurance, etc.) |
+| `1d944b5` | fix(reviews) hardcoded paraphrased quotes replaced by 9 verbatim TripAdvisor reviews + faithful FR translations + original EN in TS comments ; 4 unverifiable reviewers retired ; sources reduced to ["TripAdvisor"] in hotel.ts |
+| `c6e1bcd` | feat(reviews) **premium editorial card upgrade** — XL decorative guillemet `«` (64 px home, 96-128 px /avis) + date display + city/source middle-dot caption + outbound link "Voir les 32 avis sur TripAdvisor" ; `HOTEL.rating` populated with real 4.9 / 32 ; `HOTEL.reviewUrls.tripadvisor` added |
+| `05e28e0` | fix(nav) **mobile burger menu** (was absent — six routes hidden behind `hidden md:flex` with no fallback on mobile) + bumped scrolled bg 92 % → 95 % for legibility (user reported nav "disappearing" past hero) ; full-screen sand-12 overlay, escape key + body scroll lock, LangSwitcher moved inside the menu on mobile |
+
+### Cardinal rules added this session
+
+1. **No invented facts about the property.** Where a fact is missing,
+   write `⚠️ NEEDS REAL CONTENT: <what>` in a comment and use a
+   conservative formulation ("sur devis", "communiqué à la
+   réception"). The 12 still-flagged items in `faq.ts` are the
+   inventory of unknowns awaiting user confirmation.
+
+2. **No time promises until the user confirms exact values** —
+   "Madagascar c'est random". Apply to : delivery/response windows,
+   excursion durations, drive times that aren't documented, late
+   check-out grace periods, etc. Use "rapidement / sur demande / sous
+   réserve de disponibilité" by default.
+
+3. **No fabricated testimonials.** Reviews must point to a real
+   verifiable user on a real platform. Faithful translation is OK
+   (English → French) with the original kept in a comment ;
+   paraphrase is NOT OK. Live integration via Google Places API is
+   the next-best long-term option (needs user-provided API key).
+
+### What still hangs (pending follow-ups)
+
+#### Awaiting user input
+- **12 `⚠️ NEEDS REAL CONTENT` flags in `src/lib/data/faq.ts`** — see
+  the inline comments. Highlights : breakfast inclusion in room rate,
+  WiFi coverage in rooms vs only restaurant, single / group pricing
+  policy, late check-out specifics, security details, accessibility
+  layout, Tana→hôtel transfer price.
+- **5 % Visa/MC surcharge** is now displayed in FAQ payment answer
+  per user decision ; reverse later if business decides to absorb.
+- **Booking + Google reviews** — Booking has no public quote API
+  (partner-only), Google Places API needs a key and a Place ID
+  (recommend Featurable's React Google Reviews wrapper for the
+  simplest path ; ~1 h to wire once the key exists).
+
+#### Code that can ship without user input
+- **R2 — Activity prices →  "sur demande"** : 7 of the 8 prices in
+  `src/lib/data/experiences.ts` are unsourced. Antemoro is
+  particularly misleading ("70 000 Ar + chauffeur" suggests the
+  workshop costs that, but the workshop is FREE — the 70 k is just
+  the driver). Plan : convert specific numbers to "sur demande, devis
+  personnalisé" except Ranomafana (which matched the cross-checked
+  online ranges).
+- **R3 — Time promises softening** : "Réponse sous 24 à 48 h" in
+  BookingDrawer.successBody → "rapidement, selon les disponibilités" ;
+  itineraries "départ 5 h matin" → "tôt le matin" ; etc.
+- **Andringitra round trip distance** in `itineraries.ts` ("320 km")
+  is likely overstated (Ambalavao is 70 km south + Andringitra is
+  past it → realistic round trip ~ 200-240 km). Correct to ~240 km.
+
+#### Phase visuelle (after code editorial complete)
+- **AI-generated lifestyle photos** ("Nano Banana Pro" or equivalent)
+  with non-contractual disclaimer to fill the gaps : table dressed at
+  dusk, server pouring something, sunset with hotel logo. User wants
+  these "en mode projection, pas contractuel". Disclaimer pattern
+  must be visible.
+- **Editorial photo orchestration** : asymmetric grids (one large +
+  two small) on Stay home, cinematic ratios (21:9) for hero
+  moments, generous whitespace, editorial captions in Fraunces.
+- **Trust.tsx Squarespace CDN URL** : `HFF2.jpg` is still
+  external-hosted. No local `/public/photos/` HFF asset yet.
+  Migrate when a `.webp` is dropped in `/public/photos/`.
+- **Live Google Places API for reviews** (replace the curated 9 with
+  5 live "most relevant" reviews always pulled from Google) — needs
+  the user to create an API key first.
+- **B5 token scale** (formal typography + spacing token system) —
+  audit found 231 distinct font sizes used inline, 92 distinct
+  widths. Would consolidate to 11 type tokens + 6 layout widths.
+  Not visible UX change, pure hygiene. Risky regression-wise so do
+  it in a dedicated branch with Playwright before/after.
+
+### Workflow notes
+
+The user reaffirmed **"push tout à chaque fois en prod"** — push every
+commit immediately, Vercel auto-deploys. The session shipped 11 commits
+straight to `main` with no intermediate branches, all green on TypeScript
++ JSON validation before each push.
+
+The user's verbal-decision shortcuts to know :
+- "go" → execute the just-proposed plan straight away
+- "soit prudent" → stop committing, audit-only mode
+- "ok ok goo" → confirm + go
+- "ok pour l'instant" → defer that change but not permanently
+- "je pense juste traduction" → assume the data is real, just
+  translated — verify before assuming this
+
+The user thinks in **"mode prudent"** when stakes are legal/factual
+(reviews, prices, policies) and in **"mode go"** when stakes are
+purely visual (typography, design). Match the mode.
+
+— previous Claude, 2026-05-25 evening
 
 ---
 
