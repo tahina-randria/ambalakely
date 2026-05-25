@@ -114,9 +114,10 @@ export default async function RoomsPage({ params }: LocaleParam) {
                 className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50"
               />
               <div className="relative h-full mx-auto max-w-[1440px] px-5 md:px-8 lg:px-12 flex flex-col text-white">
-                <div className="pt-[100px] md:pt-[128px]">
-                  <div className="caption text-white/75">{cat.count}</div>
-                </div>
+                {/* Count caption "X chambres" removed — same Aman pass
+                    as the home Stay section. The room name is enough on
+                    its own. Also clears the pa11y contrast warning on
+                    text-white/75 over the gradient. */}
                 <div className="mt-auto pb-14 md:pb-20">
                   <h2 className="font-display font-light tracking-[-0.03em] text-white text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] balance">
                     {cat.name}

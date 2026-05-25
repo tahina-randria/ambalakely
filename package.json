@@ -9,7 +9,8 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "migrate:sanity": "tsx scripts/migrate-to-sanity.ts",
-    "photos:upload": "tsx scripts/upload-photos.ts"
+    "photos:upload": "tsx scripts/upload-photos.ts",
+    "a11y": "node scripts/pa11y-audit.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
