@@ -1,15 +1,19 @@
 'use client';
 
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react';
-// (no twoMonths breakpoint anymore — single month always fits the drawer
-// in the viewport without forcing the user to scroll for "Continuer")
 import { useLocale, useTranslations } from 'next-intl';
 import { DayPicker, type DateRange } from 'react-day-picker';
 import 'react-day-picker/style.css';
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 import { fr as frLocale, enUS, nb } from 'date-fns/locale';
-import { differenceInCalendarDays, format } from 'date-fns';
+import {
+  differenceInCalendarDays,
+  format,
+  isAfter,
+  isBefore,
+  isSameDay,
+} from 'date-fns';
 import {
   ArrowLeft,
   ArrowRight,
@@ -64,6 +68,16 @@ export function BookingDrawer({ open, onClose }: Props) {
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [roomDropdownOpen, setRoomDropdownOpen] = useState(false);
+  // Hover preview : when arrival is picked but no departure yet, paint a
+  // softer band on the dates the cursor sweeps. Cleared on selection /
+  // mouse leave. Set only via onDayMouseEnter (touch devices won't
+  // trigger this — they just tap the dates directly, no harm).
+  const [hoverDate, setHoverDate] = useState<Date | undefined>(undefined);
+  // Single month on mobile, two months side-by-side on md+ so the
+  // calendar actually uses the 640 px desktop drawer width (was 36 % of
+  // it before). Detected with matchMedia so SSR returns false and we
+  // don't hydration-mismatch ; effect bumps it client-side.
+  const [twoMonths, setTwoMonths] = useState(false);
 
   // Group flow triggered only for "11+" (we ship up to 10 individual slots).
   const isGroup = Number(form.guests) >= 11;
@@ -83,10 +97,20 @@ export function BookingDrawer({ open, onClose }: Props) {
         setForm(INITIAL_FORM);
         setStep(1);
         setRoomDropdownOpen(false);
+        setHoverDate(undefined);
       }, 350);
       return () => clearTimeout(timer);
     }
   }, [open]);
+
+  // Wire up the md breakpoint listener for the calendar two-month layout
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)');
+    const update = () => setTwoMonths(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -136,7 +160,11 @@ export function BookingDrawer({ open, onClose }: Props) {
         aria-label={t('ariaLabel')}
         showCloseButton={false}
         className={cn(
-          'w-full max-w-[480px] md:max-w-[640px] sm:max-w-none',
+          // mobile up to md : caps at 480 px ; md+ : 640 px to host
+          // the two-month calendar without crops. Dropped the earlier
+          // sm:max-w-none which made the drawer full-screen between
+          // 640–767 px (broken UX).
+          'w-full max-w-[480px] md:max-w-[640px]',
           'bg-[var(--color-sand-12)]! text-[var(--color-sand-1)] border-l border-[var(--color-sand-10)]',
           'p-0 gap-0 overflow-y-auto',
         )}
@@ -252,18 +280,46 @@ export function BookingDrawer({ open, onClose }: Props) {
                         <DayPicker
                           mode="range"
                           selected={form.range}
-                          onSelect={(range) => setForm((f) => ({ ...f, range }))}
+                          onSelect={(range) => {
+                            setForm((f) => ({ ...f, range }));
+                            // Clear preview the moment a range completes
+                            // so we don't leave a stale highlight band
+                            // behind the now-committed dates.
+                            if (range?.from && range?.to) setHoverDate(undefined);
+                          }}
+                          onDayMouseEnter={(day) => {
+                            // Only show preview while exactly one anchor
+                            // is committed (arrival, no departure yet).
+                            if (form.range?.from && !form.range?.to) {
+                              setHoverDate(day);
+                            }
+                          }}
+                          onDayMouseLeave={() => setHoverDate(undefined)}
                           disabled={{ before: today }}
                           locale={dateLocale}
                           weekStartsOn={1}
-                          numberOfMonths={1}
+                          numberOfMonths={twoMonths ? 2 : 1}
                           showOutsideDays={false}
                           classNames={{ root: 'rdp-root-dark' }}
+                          modifiers={{
+                            'preview-middle': (day) => {
+                              if (!form.range?.from || form.range?.to || !hoverDate) return false;
+                              if (!isAfter(hoverDate, form.range.from)) return false;
+                              return isAfter(day, form.range.from) && isBefore(day, hoverDate);
+                            },
+                            'preview-end': (day) => {
+                              if (!form.range?.from || form.range?.to || !hoverDate) return false;
+                              if (!isAfter(hoverDate, form.range.from)) return false;
+                              return isSameDay(day, hoverDate);
+                            },
+                          }}
                           modifiersClassNames={{
                             range_start: 'is-range-start',
                             range_middle: 'is-range-middle',
                             range_end: 'is-range-end',
                             selected: 'is-selected',
+                            'preview-middle': 'is-preview-middle',
+                            'preview-end': 'is-preview-end',
                           }}
                           labels={{
                             labelPrevious: () => t('calendarPrev'),

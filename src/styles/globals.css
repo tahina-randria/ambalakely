@@ -852,6 +852,31 @@ input[type="date"].input-dark::-webkit-datetime-edit-day-field:focus {
   background: linear-gradient(to right, var(--color-sand-10) 50%, transparent 50%);
 }
 
+/* ────────────────────────────────────────────────────────────────────
+   Hover preview — only paints when arrival is picked but departure
+   is not yet committed. The band uses sand-11 (one step lighter than
+   the committed sand-10 range) so the user reads it as a soft
+   "what-if" preview that hardens into the darker shade on click.
+   Touch devices never fire mouseenter so the band silently no-ops on
+   mobile, which is what we want.
+   ──────────────────────────────────────────────────────────────────── */
+.rdp-root-dark .is-preview-middle .rdp-day_button,
+.rdp-root-dark .is-preview-end .rdp-day_button {
+  background: var(--color-sand-11);
+  color: var(--color-sand-1);
+}
+
+.rdp-root-dark .is-preview-middle {
+  background: var(--color-sand-11);
+}
+
+.rdp-root-dark .is-preview-end {
+  /* Half-and-half so the preview band terminates at the hovered day
+     button just like committed range_end, instead of overflowing
+     into the gutter to the right. */
+  background: linear-gradient(to right, var(--color-sand-11) 50%, transparent 50%);
+}
+
 .rdp-root-dark .rdp-day_button:disabled,
 .rdp-root-dark .rdp-disabled .rdp-day_button {
   opacity: 0.25;
