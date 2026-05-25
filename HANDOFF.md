@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + R2/R3 + BookingDrawer pass 2 + pass 3 `8513c7b` — textarea height fix + JS wheel handler so country dropdown scrolls + 2-month calendar + range hover preview + min={1} — see §24, §25, §26, §27)
+Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + R2/R3 + BookingDrawer passes 2-4 `9289866` — phone +33 now lives in the country selector button, flag eager-loads, dropdown hover row readable, textarea 3-line, wheel scrolls dropdown, 2-month calendar, range hover preview, min={1} — see §24, §25, §26, §27, §28)
 
 ---
 
@@ -1379,6 +1379,111 @@ to attach.
   closed, so no functional issue.
 - If `react-international-phone` ever ships its own wheel handler in
   a future major version, this handler can be removed.
+
+— Claude, 2026-05-25 late evening
+
+---
+
+## 28. BookingDrawer pass 4 — phone field reshape (2026-05-25, late evening)
+
+User caught the phone field looking "pas logique" : the country
+selector button held only the flag, while "+33" sat as a forced
+prefix inside the phone input. Read like one wide input with a
+strange "+33 " in front instead of the cleaner Booking.com / Airbnb
+pattern of "country chip with dial code · input".
+
+Three small commits resolved it.
+
+### What shipped — 3 commits
+
+| SHA | Subject |
+|---|---|
+| `fc0560e` | fix(booking) move +33 dial code into country selector button (not input prefix) |
+| `c2cdcfe` | fix(booking) flag image was lazy-loading + zero-sized inside drawer |
+| `9289866` | fix(booking) country dropdown hover row was unreadable (white text on light bg) |
+
+### `fc0560e` — moved the dial code
+
+Default `<PhoneInput>` couples flag and input tightly and exposes
+only style props ; it does NOT support showing the dial code inside
+the selector button. Refactored to a custom composition using the
+exports the library already ships :
+
+- `usePhoneInput` hook with `disableDialCodeAndPrefix: true` so
+  `inputValue` holds only the local part. The full E.164 phone keeps
+  flowing to `form.phone` via the `onChange` callback so the API
+  payload is unchanged.
+- `<CountrySelector>` with a `renderButtonWrapper` that paints
+  `[FlagImage 22px] [+33 dialCode] [chevron]` instead of the default
+  `[flag] [chevron]`.
+- A plain `<input type="tel">` next to the selector, with
+  `autoComplete="tel-national"`, placeholder `"6 12 34 56 78"`, and
+  the `.input-dark` class for parity with the other dark inputs.
+
+The selector and input render in a `flex` row with `border-r-0` on
+the selector so they share a single visual boundary on the right
+edge of the selector.
+
+### `c2cdcfe` — fixed the missing flag
+
+Right after `fc0560e` shipped, the flag didn't paint :
+`naturalWidth=0, complete=false`. Default `FlagImage` props :
+`loading="lazy"`, which inside a fixed-position Radix Dialog
+container with `overflow-y:auto` never reached the IntersectionObserver's
+"visible" condition. Switched to `<FlagImage iso2={...} size="22px"
+disableLazyLoading />` — uses the library's `size` prop (sets both
+width and height the way the SCSS expects) and requests the SVG
+immediately. The Twemoji SVG from `cdnjs.cloudflare.com` loads
+cleanly (verified with `curl -sI ...` → 200, naturalWidth 150,
+complete true).
+
+### `9289866` — fixed the unreadable hover row
+
+When testing the dropdown live, the row under the cursor turned
+white-on-light : invisible. Root cause : the library uses the SAME
+CSS var (`--react-international-phone-selected-dropdown-item-background-color`)
+for **both** `:hover` AND `--selected`/`--focused`. Our earlier
+override (`!bg-[var(--color-sand-12)] !text-[var(--color-sand-1)]`
+on the dropdown root) set the BASE bg / text via Tailwind classes
+but left the hover-state CSS var falling back to the library default
+`whitesmoke`. White sand-1 text on whitesmoke bg → vanished.
+
+Set the full dark-theme palette of library CSS vars on the dropdown :
+
+```css
+.react-international-phone-country-selector-dropdown {
+  --react-international-phone-dropdown-item-background-color: var(--color-sand-12);
+  --react-international-phone-dropdown-item-text-color: var(--color-sand-1);
+  --react-international-phone-dropdown-item-dial-code-color: var(--color-sand-6);
+  --react-international-phone-selected-dropdown-item-background-color: var(--color-sand-11);
+  --react-international-phone-selected-dropdown-item-text-color: var(--color-sand-1);
+  --react-international-phone-selected-dropdown-item-dial-code-color: var(--color-sand-5);
+}
+```
+
+Verified computed values on the hovered row : bg `rgb(74, 67, 56)` =
+sand-11, text `rgb(253, 252, 250)` = sand-1, dial code `rgb(204,
+196, 179)` = sand-5. All contrasted, readable.
+
+### Net visual result
+
+Before : `[🇫🇷 ▼] [+33 1 23 45 67 89]` — input mixed indicatif with
+local number, ambiguous tap targets.
+
+After : `[🇫🇷 +33 ▼] [6 12 34 56 78]` — flag + dial code visually one
+control, input cleanly holds only the local number.
+
+Dropdown items are now legible at rest, on hover, and when keyboard-
+focused. Submission payload still arrives at Resend as the full
+E.164 number (no regression).
+
+### Files touched
+
+- `src/components/molecules/BookingDrawer.tsx` — replaced `<PhoneInput>`
+  with usePhoneInput + CountrySelector + plain input ; added
+  `defaultPhoneCountry` derived from locale (`no`/`us`/`fr`)
+- `src/styles/globals.css` — added the RIP dark-theme CSS var
+  overrides on `.react-international-phone-country-selector-dropdown`
 
 — Claude, 2026-05-25 late evening
 
