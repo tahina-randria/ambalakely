@@ -48,10 +48,16 @@ const MAX_INDIVIDUAL = 4;
  * "1 23 45 67 89" for FR, "(123) 456-7890" for US, "12 34 56 78" for NO).
  */
 const PLACEHOLDER_DIGITS = '1234567890';
+/**
+ * Some countries in the RIP dataset have no `format` field (e.g.
+ * Madagascar). Fall back to RIP's own internal `defaultMask` of 12
+ * dots so the placeholder still gives the user a sense of how long
+ * the number should be.
+ */
+const FALLBACK_MASK = '............';
 function buildPhonePlaceholder(format: string | Record<string, string> | undefined): string {
   const mask =
-    typeof format === 'string' ? format : format?.default ?? '';
-  if (!mask) return '';
+    (typeof format === 'string' ? format : format?.default) || FALLBACK_MASK;
   let digitIdx = 0;
   let result = '';
   for (const ch of mask) {
