@@ -7,28 +7,21 @@ import {
   MagnifyingGlass,
   X,
   CalendarBlank,
-  Airplane,
   Bed,
-  ForkKnife,
-  MapPin,
-  Wallet,
-  FirstAid,
-  Lightbulb,
+  MapTrifold,
 } from '@phosphor-icons/react/dist/ssr';
 import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 import type { FaqCategory } from '@/lib/data/faq';
 import { cn } from '@/lib/utils/cn';
 
-/** Slug to icon — Phosphor icon per FAQ category for fast scanning. */
+/** Slug to icon — Phosphor icon per FAQ category for fast scanning.
+ *  Updated dec-2026 : FAQ reorg from 8 to 3 categories (booking, stay,
+ *  logistics) — icons aligned. Old slugs (arrival, rooms, food, nearby,
+ *  money, health, practical) merged into the three above. */
 const categoryIcon: Record<string, PhosphorIcon> = {
   booking: CalendarBlank,
-  arrival: Airplane,
-  rooms: Bed,
-  food: ForkKnife,
-  nearby: MapPin,
-  money: Wallet,
-  health: FirstAid,
-  practical: Lightbulb,
+  stay: Bed,
+  logistics: MapTrifold,
 };
 
 /**
