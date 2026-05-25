@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + 11 verified-facts commits + Reviews premium cards + Nav mobile burger, all in prod — see §24)
+Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + 13 commits incl. Reviews premium + Nav mobile burger + mobile video preload fix + sticky bar removed, all in prod — see §24)
 
 ---
 
@@ -981,6 +981,8 @@ copy in fr / en / no was aligned accordingly.
 | `1d944b5` | fix(reviews) hardcoded paraphrased quotes replaced by 9 verbatim TripAdvisor reviews + faithful FR translations + original EN in TS comments ; 4 unverifiable reviewers retired ; sources reduced to ["TripAdvisor"] in hotel.ts |
 | `c6e1bcd` | feat(reviews) **premium editorial card upgrade** — XL decorative guillemet `«` (64 px home, 96-128 px /avis) + date display + city/source middle-dot caption + outbound link "Voir les 32 avis sur TripAdvisor" ; `HOTEL.rating` populated with real 4.9 / 32 ; `HOTEL.reviewUrls.tripadvisor` added |
 | `05e28e0` | fix(nav) **mobile burger menu** (was absent — six routes hidden behind `hidden md:flex` with no fallback on mobile) + bumped scrolled bg 92 % → 95 % for legibility (user reported nav "disappearing" past hero) ; full-screen sand-12 overlay, escape key + body scroll lock, LangSwitcher moved inside the menu on mobile |
+| `9d56c5d` | docs(handoff) section 24 — this section |
+| `c8e1e4f` | fix(mobile) **stop preloading hero MP4** (`preload="metadata"` + `media="(min-width:768px)"` on source so mobile never downloads) + **removed MobileBookingBar from layout** (was on every mobile page blocking 56 px ; top Nav still carries Réserver, conversion preserved ; component file kept for future conditional remount on /rooms/[category]) |
 
 ### Cardinal rules added this session
 
