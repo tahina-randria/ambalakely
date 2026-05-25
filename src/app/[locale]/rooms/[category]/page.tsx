@@ -147,9 +147,9 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
             </ScrollReveal>
 
             <ScrollReveal delay={0.15}>
-              <p className="mt-10 max-w-[700px] font-display font-light italic text-[var(--color-text-muted)] text-[17px] md:text-[19px] leading-[1.55]">
+              <p className="mt-10 max-w-[700px] font-display font-light text-[var(--color-text-muted)] text-[17px] md:text-[19px] leading-[1.55]">
                 {t('countLine', { count: cat.count })}{' '}
-                <span className="not-italic tabular-nums text-[var(--color-text)]">
+                <span className="tabular-nums text-[var(--color-text)]">
                   {formatMga(cat.priceMga)} Ariary
                 </span>{' '}
                 {t('perNight')}.

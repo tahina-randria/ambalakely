@@ -135,7 +135,7 @@ export default async function RoomsPage({ params }: LocaleParam) {
                   </p>
                 </ScrollReveal>
                 <ScrollReveal delay={0.05}>
-                  <p className="mt-12 font-display font-light italic text-[18px] leading-[1.55] text-[var(--color-text-muted)]">
+                  <p className="mt-12 font-display font-light text-[18px] leading-[1.55] text-[var(--color-text-muted)]">
                     {t('fromLine', {
                       size: cat.size,
                       capacity: cat.capacity.toLowerCase(),

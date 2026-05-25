@@ -194,7 +194,7 @@ export default async function PlanYourTripPage({ params }: LocaleParam) {
                     <ScrollReveal key={d.day} delay={i * 0.04}>
                       <li className="grid grid-cols-12 gap-6 py-10 md:py-14 border-b border-[var(--color-border-subtle)]">
                         <div className="col-span-3 md:col-span-2">
-                          <div className="font-mono text-[12px] tracking-[0.05em] text-[var(--color-text-muted)] uppercase">
+                          <div className="text-[13px] font-medium text-[var(--color-text-muted)] tabular-nums">
                             {t('dayLabel')} {d.day}
                           </div>
                         </div>

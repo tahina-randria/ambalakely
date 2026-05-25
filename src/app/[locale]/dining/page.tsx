@@ -202,7 +202,7 @@ export default async function DiningPage({ params }: LocaleParam) {
                                 {h.label}
                               </span>
                             </div>
-                            <span className="font-mono text-[13px] md:text-[14px] tabular-nums text-[var(--color-text)]">
+                            <span className="text-[14px] md:text-[15px] tabular-nums text-[var(--color-text)]">
                               {h.value}
                             </span>
                           </li>

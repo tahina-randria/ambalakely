@@ -158,7 +158,7 @@ export default async function AboutPage({ params }: LocaleParam) {
                     <ScrollReveal key={m.year} delay={i * 0.04}>
                       <li className="grid grid-cols-12 gap-6 py-10 md:py-14 border-b border-[var(--color-border-subtle)]">
                         <div className="col-span-3 md:col-span-2">
-                          <div className="font-mono text-[12px] tabular-nums text-[var(--color-text-muted)] tracking-[0.05em]">
+                          <div className="text-[14px] tabular-nums text-[var(--color-text-muted)]">
                             {m.year}
                           </div>
                         </div>
