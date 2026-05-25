@@ -48,12 +48,17 @@ export async function Story() {
               <blockquote className="mt-12 font-display font-light italic text-[var(--color-text)] text-[20px] md:text-[22px] leading-[1.45] tracking-[-0.005em] max-w-[420px]">
                 &laquo;&nbsp;{t('quote')}&nbsp;&raquo;
               </blockquote>
-              <div className="mt-6 flex items-center gap-4">
-                <div className="w-10 border-t border-[var(--color-sand-12)]" />
-                <div className="font-display text-[16px] tracking-[-0.005em] text-[var(--color-text)]">
-                  {t('quoteSigned')}
+              {/* Signature only rendered when the i18n key is non-empty.
+                  Set to "" to keep the quote as the institutional voice of
+                  the house, the Aman/Como pattern. */}
+              {t('quoteSigned') ? (
+                <div className="mt-6 flex items-center gap-4">
+                  <div className="w-10 border-t border-[var(--color-sand-12)]" />
+                  <div className="font-display text-[16px] tracking-[-0.005em] text-[var(--color-text)]">
+                    {t('quoteSigned')}
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </ScrollReveal>
 
             <ScrollReveal delay={0.15}>

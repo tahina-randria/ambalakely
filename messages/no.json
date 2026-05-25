@@ -77,8 +77,8 @@
       "12 km fra Fianarantsoa,",
       "i Madagaskars høyland."
     ],
-    "subtitle": "Mamy og Hasinas hus, åpnet i oktober 2018.",
-    "socialProof": "Verifiserte anmeldelser på Booking & TripAdvisor"
+    "subtitle": "Åpnet i 2018, tolv kilometer nord for Fianarantsoa.",
+    "socialProof": ""
   },
 
   "Stay": {
@@ -97,7 +97,7 @@
       "Kjøttkaker, bønner fra rismarkene",
       "Krumkake, husets sorbet"
     ],
-    "readMore": "Les om Toko Telo",
+    "readMore": "Se restauranten",
     "imageAlt": "Spisesalen i Toko Telo"
   },
 
@@ -109,12 +109,12 @@
 
   "Story": {
     "h2": "Ti rom, siden 2018.",
-    "bodyLead": "Mamy kjøpte åsen i 2015 og plantet de første trærne. Hasina tok med hjem fra Norge ideen om ",
+    "bodyLead": "Åsen ble kjøpt i 2015, de første trærne plantet samme år. Fra Norge, ideen om ",
     "bodyKoseligEm": "koselig",
-    "bodyTrail": ", en oppmerksomhet på de små, varme tingene i hverdagen. Huset åpnet i oktober 2018. Hasina holder menyen og tar imot gjestene. Mamy steller hagen.",
+    "bodyTrail": " — en oppmerksomhet på de små, varme tingene i hverdagen. Huset åpnet i oktober 2018. Drives som en familie: hagen, kjøkkenet, mottagelsen.",
     "quote": "Hotellet er like mye familiens hjem som et sted for gjester.",
-    "quoteSigned": "Hasina",
-    "readMore": "Les om Mamy og Hasina",
+    "quoteSigned": "",
+    "readMore": "Husets historie",
     "imageAlt": "Hovedbygningen på Hôtel Ambalakely, Fianarantsoa"
   },
 
@@ -129,7 +129,7 @@
     "kicker": "Felleskap",
     "h2": "To prosent av hvert opphold går til skolen ved siden av.",
     "body": "Hope for the Future åpnet i 2014. Hundre og tretti barn fra Tanambao, nabolaget rundt Ambalakely. Ti år med de samme onsdag- og lørdagsettermiddagene.",
-    "readMore": "Les om Hope for the Future",
+    "readMore": "Se skolen",
     "imageAlt": "Hope for the Future, skolen i Tanambao-nabolaget"
   },
 
@@ -184,7 +184,7 @@
     "h2": "Si fra om når.",
     "body": "To måter å nå oss på. Skjemaet for datoer og rom. WhatsApp eller e-post hvis du heller vil skrive. Vi svarer samme dag.",
     "freeCancellation": "Gratis avbestilling inntil tretti dager før ankomst.",
-    "whatsappLabel": "WhatsApp Hasina",
+    "whatsappLabel": "WhatsApp",
     "whatsappMessage": "Hei, jeg ønsker å bestille et opphold på Ambalakely."
   },
 

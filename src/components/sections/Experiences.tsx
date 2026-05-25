@@ -22,7 +22,7 @@ export async function Experiences() {
         </ScrollReveal>
 
         <Stagger className="flex flex-col max-w-[900px]">
-          {experiences.slice(0, 6).map((exp) => (
+          {experiences.slice(0, 4).map((exp) => (
             <StaggerItem key={exp.slug}>
               <Link
                 href={`/experiences#${exp.slug}`}

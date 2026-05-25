@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { ArrowDown, Star } from '@phosphor-icons/react/dist/ssr';
+import { ArrowDown } from '@phosphor-icons/react/dist/ssr';
 
 const VIDEO_SRC = '/videos/hero.mp4';
 const VIDEO_POSTER = '/videos/hero-poster.webp';
@@ -82,9 +82,10 @@ export function Hero() {
             {t('subtitle')}
           </div>
 
-          {/* CTA + social proof */}
+          {/* CTA — single primary action. Social proof and stars are
+              editorial noise in a hero; reviews live in the Reviews section. */}
           <div
-            className="hero-fade-up mt-10 md:mt-12 flex flex-wrap items-center gap-x-6 gap-y-4"
+            className="hero-fade-up mt-10 md:mt-12"
             style={{ ['--fade-delay' as string]: '0.95s' }}
           >
             <button
@@ -98,10 +99,6 @@ export function Hero() {
                 className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-y-0.5"
               />
             </button>
-            <div className="flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.08em] text-white/80">
-              <Star size={14} weight="fill" aria-hidden className="text-white/90" />
-              <span>{t('socialProof')}</span>
-            </div>
           </div>
         </div>
       </div>

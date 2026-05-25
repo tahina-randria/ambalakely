@@ -77,8 +77,8 @@
       "à 12 km de Fianarantsoa,",
       "dans les hautes terres."
     ],
-    "subtitle": "La maison de Mamy et Hasina, ouverte en octobre 2018.",
-    "socialProof": "Avis vérifiés sur Booking & TripAdvisor"
+    "subtitle": "Ouvert en 2018, à douze kilomètres au nord de Fianarantsoa.",
+    "socialProof": ""
   },
 
   "Stay": {
@@ -97,7 +97,7 @@
       "Kjøttkaker, haricots des rizières",
       "Krumkake, sorbet maison"
     ],
-    "readMore": "Lire sur Toko Telo",
+    "readMore": "Voir le restaurant",
     "imageAlt": "Salle à manger du restaurant Toko Telo"
   },
 
@@ -109,12 +109,12 @@
 
   "Story": {
     "h2": "Dix chambres, depuis 2018.",
-    "bodyLead": "Mamy a acheté la colline en 2015 et planté les premiers arbres. Hasina a rapporté de Norvège l'idée du ",
+    "bodyLead": "La colline achetée en 2015, les premiers arbres plantés la même année. De Norvège, l'idée du ",
     "bodyKoseligEm": "koselig",
-    "bodyTrail": ", une attention aux petites choses chaudes du quotidien. La maison a ouvert en octobre 2018. Hasina tient le menu et l'accueil. Mamy s'occupe du jardin.",
+    "bodyTrail": " — une attention aux petites choses chaudes du quotidien. La maison a ouvert en octobre 2018. Tenue en famille : le jardin, la cuisine, l'accueil.",
     "quote": "L'hôtel est autant la maison de famille que le lieu des invités.",
-    "quoteSigned": "Hasina",
-    "readMore": "Lire sur Mamy et Hasina",
+    "quoteSigned": "",
+    "readMore": "L'histoire de la maison",
     "imageAlt": "Bâtiment principal de l'Hôtel Ambalakely, Fianarantsoa"
   },
 
@@ -129,7 +129,7 @@
     "kicker": "Communauté",
     "h2": "Deux pour cent de chaque séjour vont à l'école d'à côté.",
     "body": "Hope for the Future a ouvert en 2014. Cent trente enfants de Tanambao, le quartier d'Ambalakely. Dix ans des mêmes mercredis et samedis après-midi.",
-    "readMore": "Lire sur Hope for the Future",
+    "readMore": "Voir l'école",
     "imageAlt": "Hope for the Future, l'école du quartier Tanambao"
   },
 
@@ -184,7 +184,7 @@
     "h2": "Dites-nous quand.",
     "body": "Deux façons de nous joindre. Le formulaire pour les dates et les chambres. WhatsApp ou e-mail si vous préférez écrire. Nous répondons dans la journée.",
     "freeCancellation": "Annulation gratuite jusqu'à trente jours avant l'arrivée.",
-    "whatsappLabel": "WhatsApp Hasina",
+    "whatsappLabel": "WhatsApp",
     "whatsappMessage": "Bonjour, je souhaite réserver un séjour à Ambalakely."
   },
 

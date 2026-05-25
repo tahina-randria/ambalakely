@@ -4,19 +4,12 @@ import {
   Drop,
   Tree,
   Mountains,
-  Car,
-  House,
-  AirplaneTakeoff,
 } from '@phosphor-icons/react/dist/ssr';
 import { getTranslations } from 'next-intl/server';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { MapboxMap } from '@/components/molecules/MapboxMap';
-
-const RoadIcon = Car;
-const LocalIcon = House;
-const AirIcon = AirplaneTakeoff;
 
 export async function Location() {
   const t = await getTranslations('Location');
@@ -103,61 +96,9 @@ export async function Location() {
         </ScrollReveal>
 
         {/* How to get there */}
-        <ScrollReveal delay={0.1} className="mt-20 md:mt-24">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-            <div>
-              <RoadIcon
-                size={22}
-                weight="light"
-                className="text-[var(--color-text-muted)] mb-4"
-                aria-hidden
-              />
-              <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-3">
-                {t('byRoadKicker')}
-              </div>
-              <div className="font-display text-[22px] tracking-[-0.02em] text-[var(--color-text)]">
-                {t('byRoadValue')}
-              </div>
-              <p className="mt-3 text-[15px] leading-[1.55] text-[var(--color-text-muted)]">
-                {t('byRoadBody')}
-              </p>
-            </div>
-            <div>
-              <LocalIcon
-                size={22}
-                weight="light"
-                className="text-[var(--color-text-muted)] mb-4"
-                aria-hidden
-              />
-              <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-3">
-                {t('fromCentreKicker')}
-              </div>
-              <div className="font-display text-[22px] tracking-[-0.02em] text-[var(--color-text)]">
-                {t('fromCentreValue')}
-              </div>
-              <p className="mt-3 text-[15px] leading-[1.55] text-[var(--color-text-muted)]">
-                {t('fromCentreBody')}
-              </p>
-            </div>
-            <div>
-              <AirIcon
-                size={22}
-                weight="light"
-                className="text-[var(--color-text-muted)] mb-4"
-                aria-hidden
-              />
-              <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-3">
-                {t('byAirKicker')}
-              </div>
-              <div className="font-display text-[22px] tracking-[-0.02em] text-[var(--color-text)]">
-                {t('byAirValue')}
-              </div>
-              <p className="mt-3 text-[15px] leading-[1.55] text-[var(--color-text-muted)]">
-                {t('byAirBody')}
-              </p>
-            </div>
-          </div>
-        </ScrollReveal>
+        {/* Bottom 3-cards (by road / from centre / by air) removed —
+            the distances table above already says it more concisely.
+            i18n keys byRoad/fromCentre/byAir kept in messages for /plan-your-trip. */}
       </Container>
     </Section>
   );
