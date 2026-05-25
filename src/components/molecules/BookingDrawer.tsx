@@ -38,6 +38,33 @@ import { HOTEL } from '@/lib/data/hotel';
 const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');
 const MAX_INDIVIDUAL = 4;
 
+/**
+ * Build a placeholder for the phone input from the selected country's
+ * formatting mask. RIP exposes `country.format` either as a string
+ * (e.g. ". .. .. .. .." for France) or as a Record with a `default`
+ * key when several mobile/landline masks exist. Each `.` in the mask
+ * stands for one digit ; we replace them by sequential 1-0 so the
+ * placeholder reads as obviously fake but country-shaped (e.g.
+ * "1 23 45 67 89" for FR, "(123) 456-7890" for US, "12 34 56 78" for NO).
+ */
+const PLACEHOLDER_DIGITS = '1234567890';
+function buildPhonePlaceholder(format: string | Record<string, string> | undefined): string {
+  const mask =
+    typeof format === 'string' ? format : format?.default ?? '';
+  if (!mask) return '';
+  let digitIdx = 0;
+  let result = '';
+  for (const ch of mask) {
+    if (ch === '.') {
+      result += PLACEHOLDER_DIGITS[digitIdx % PLACEHOLDER_DIGITS.length];
+      digitIdx++;
+    } else {
+      result += ch;
+    }
+  }
+  return result;
+}
+
 type Props = { open: boolean; onClose: () => void };
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 type Step = 1 | 2;
@@ -497,7 +524,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                           ref={phoneInput.inputRef}
                           value={phoneInput.inputValue}
                           onChange={phoneInput.handlePhoneValueChange}
-                          placeholder="6 12 34 56 78"
+                          placeholder={buildPhonePlaceholder(phoneInput.country.format)}
                           className="input-dark w-full min-w-0"
                         />
                       </div>
