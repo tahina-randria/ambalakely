@@ -10,7 +10,29 @@ Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + R2/R3 + BookingDrawer
 
 Copy-paste this block as the first message:
 
-> I'm continuing work on Hôtel Ambalakely, a real 10-room boutique hotel in Fianarantsoa, Madagascar. Read HANDOFF.md at the project root first — it's the single source of truth: architecture, verified facts, what shipped, what's pending, the 15 cardinal rules. The site is live at https://ambalakely.vercel.app with Sanity CMS + Resend booking + RGPD consent + hero video + brand assets all deployed. `.env.local` already has every secret. Active branch is `main`; Vercel auto-deploys on push. Before any work, check `git log --oneline -10` to see the latest commits, then ask me what to pick up next from section 9 of HANDOFF.md. Reference docs from Mamy + Hasina are in `docs/`.
+> Je continue le projet Hôtel Ambalakely (vrai hôtel 10 chambres à Fianarantsoa, Madagascar). Lis HANDOFF.md à la racine en premier — c'est la source de vérité unique : architecture, faits vérifiés, ce qui a shippé, ce qui pend, les règles cardinales. La dernière section live est §29 (placeholder téléphone dynamique + nav auto-hide on scroll), avec un état "rien d'urgent ne hang" — 21 commits poussés ce soir sur main, Vercel auto-deploy à chaque push.
+>
+> Site live : https://ambalakely.vercel.app · Branche active : `main` · `.env.local` a déjà tous les secrets · `git log --oneline -10` pour voir les derniers commits.
+>
+> Trois règles cardinales à ne JAMAIS oublier (§24) :
+> 1. No invented facts about the property — quand un fait manque, écris `⚠️ NEEDS REAL CONTENT` en commentaire et utilise "sur devis"/"communiqué à la réception"
+> 2. No time promises tant que je confirme pas — Madagascar c'est random. Par défaut : "rapidement", "sur demande", "sous réserve"
+> 3. No fabricated testimonials — uniquement des vrais avis vérifiables d'une plateforme réelle
+>
+> Workflow établi : "push tout à chaque fois en prod" — push chaque commit immédiatement sur main, Vercel auto-deploy. TypeScript + JSON validation green avant chaque push.
+>
+> Items qui attendent MON input (toi user) :
+> - 12 flags `⚠️ NEEDS REAL CONTENT` dans `src/lib/data/faq.ts`
+> - Distance Andringitra round-trip (320 ou 240 km dans `itineraries.ts`)
+> - Création d'une clé API Google Places ($0/mois avec ISR cache 24h) si on veut wirer les live reviews
+>
+> Items différés jusqu'à direction créa :
+> - AI assets Nano Banana Pro non-contractuels (table dressée crépuscule, serveur, sunset logo)
+> - Photo orchestration éditoriale (grids asymétriques, 21:9 hero)
+> - Migration HFF.webp local quand je drop le fichier dans `/public/photos/`
+> - B5 token scale (231 font-sizes → 11 tokens, pure hygiene)
+>
+> Lis HANDOFF.md d'abord, puis demande-moi ce qu'on attaque.
 
 That's it. Claude reads HANDOFF.md and has everything.
 
