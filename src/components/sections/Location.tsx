@@ -51,7 +51,7 @@ export async function Location() {
                 identify themselves). Meta converted from mono to Satoshi
                 tabular-nums for consistency with the rest of the page. */}
             <div className="lg:col-span-4 flex flex-col">
-              <div className="font-display italic font-light text-[15px] tracking-[0] text-[var(--color-text-muted)] mb-6">
+              <div className="font-medium text-[15px] tracking-[0] text-[var(--color-text-muted)] mb-6">
                 {t('fromAmbalakely')}
               </div>
               <ul className="border-t border-[var(--color-border-subtle)]">

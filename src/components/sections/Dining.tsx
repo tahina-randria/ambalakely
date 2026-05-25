@@ -141,14 +141,14 @@ export function Dining() {
                 .font-mono.uppercase override) to 16px serif at -0.005em
                 tracking. Same family as the dishes so the section reads
                 as one editorial block. */}
-            <div className="font-display font-light italic text-[16px] tracking-[-0.005em] text-[var(--color-text-muted)] mb-4">
+            <div className="font-medium text-[14px] tracking-[0] text-[var(--color-text-muted)] mb-4">
               {t('tonightLabel')}
             </div>
             <ul className="flex flex-col gap-2">
               {tonight.map((dish) => (
                 <li
                   key={dish}
-                  className="font-display text-[17px] tracking-[-0.01em] text-[var(--color-text)] italic leading-[1.35]"
+                  className="font-display text-[17px] tracking-[-0.01em] text-[var(--color-text)] leading-[1.35]"
                 >
                   {dish}
                 </li>

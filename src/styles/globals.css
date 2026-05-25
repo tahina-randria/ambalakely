@@ -386,12 +386,13 @@ video {
   }
 }
 
-/* Caption — editorial label. Italic Fraunces, sentence-case, no longer
-   the small mono-uppercase voice. Pairs with the new serif display. */
+/* Caption — editorial label. Plain Satoshi, sentence-case, medium weight,
+   text-muted color. No italic, no Fraunces — the italic-Fraunces signature
+   became its own decoration noise and was rejected. Pairs with body type. */
 .caption {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 400;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 500;
   font-size: 15px;
   line-height: 1.4;
   letter-spacing: 0;
@@ -400,13 +401,14 @@ video {
 }
 
 /* Editorial pass — any element marked as a "kicker" (font-mono + uppercase
-   together) is converted to italic Fraunces sentence-case. This kills the
-   dev-tool / AI-slop visual signature site-wide without touching markup.
+   together) is normalised to plain Satoshi medium muted, sentence-case.
+   Previous step replaced mono-uppercase with italic Fraunces ; this step
+   strips the italic too — labels are functional, not decorative.
    font-mono alone (for tabular nums) is preserved. */
 .font-mono.uppercase {
-  font-family: var(--font-display) !important;
-  font-style: italic !important;
-  font-weight: 400 !important;
+  font-family: var(--font-body) !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
   text-transform: none !important;
   letter-spacing: 0 !important;
 }

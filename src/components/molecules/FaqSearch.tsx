@@ -101,7 +101,7 @@ export function FaqSearch({ faq }: { faq: FaqCategory[] }) {
               type="button"
               onClick={() => setActiveCategory(null)}
               className={cn(
-                'px-3.5 md:px-4 py-1.5 md:py-2 font-display italic font-light text-[14px] tracking-[0] transition-colors duration-[var(--duration-fast)]',
+                'px-3.5 md:px-4 py-1.5 md:py-2 font-medium text-[14px] tracking-[0] transition-colors duration-[var(--duration-fast)]',
                 activeCategory === null
                   ? 'bg-[var(--color-sand-12)] text-[var(--color-sand-1)]'
                   : 'border border-[var(--color-border)] text-[var(--color-text)] hover:border-[var(--color-sand-12)]',
