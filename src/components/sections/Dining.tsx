@@ -137,10 +137,14 @@ export function Dining() {
           </p>
 
           <div className="mt-8 pt-6 border-t border-[var(--color-border-subtle)]">
-            <div className="font-mono text-[13px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
+            {/* "Ce soir" — bumped from 13px italic Fraunces (via global
+                .font-mono.uppercase override) to 16px serif at -0.005em
+                tracking. Same family as the dishes so the section reads
+                as one editorial block. */}
+            <div className="font-display font-light italic text-[16px] tracking-[-0.005em] text-[var(--color-text-muted)] mb-4">
               {t('tonightLabel')}
             </div>
-            <ul className="mt-4 flex flex-col gap-2">
+            <ul className="flex flex-col gap-2">
               {tonight.map((dish) => (
                 <li
                   key={dish}

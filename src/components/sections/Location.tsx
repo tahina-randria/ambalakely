@@ -1,10 +1,4 @@
-import {
-  ArrowUpRight,
-  Buildings,
-  Drop,
-  Tree,
-  Mountains,
-} from '@phosphor-icons/react/dist/ssr';
+import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import { getTranslations } from 'next-intl/server';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
@@ -15,10 +9,10 @@ export async function Location() {
   const t = await getTranslations('Location');
 
   const distances = [
-    { label: t('antananarivo'), sub: t('antananarivoSub'), meta: '8 h', Icon: Buildings },
-    { label: t('antsirabe'), sub: t('antsirabeSub'), meta: '4 h', Icon: Drop },
-    { label: t('ranomafana'), sub: t('ranomafanaSub'), meta: '1 h 20', Icon: Tree },
-    { label: t('isalo'), sub: t('isaloSub'), meta: '5 h', Icon: Mountains },
+    { label: t('antananarivo'), sub: t('antananarivoSub'), meta: '8 h' },
+    { label: t('antsirabe'),    sub: t('antsirabeSub'),    meta: '4 h' },
+    { label: t('ranomafana'),   sub: t('ranomafanaSub'),   meta: '1 h 20' },
+    { label: t('isalo'),        sub: t('isaloSub'),        meta: '5 h' },
   ];
   return (
     <Section id="location" divider>
@@ -55,41 +49,33 @@ export async function Location() {
               </div>
             </div>
 
-            {/* Distance list */}
+            {/* Distance list — pure table editorial : label left, drive time
+                right. Icons removed (decorative noise — the place names
+                identify themselves). Meta converted from mono to Satoshi
+                tabular-nums for consistency with the rest of the page. */}
             <div className="lg:col-span-4 flex flex-col">
-              <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] mb-6">
+              <div className="font-display italic font-light text-[15px] tracking-[0] text-[var(--color-text-muted)] mb-6">
                 {t('fromAmbalakely')}
               </div>
               <ul className="border-t border-[var(--color-border-subtle)]">
-                {distances.map((d) => {
-                  const Icon = d.Icon;
-                  return (
-                    <li
-                      key={d.label}
-                      className="flex items-center justify-between gap-4 py-5 border-b border-[var(--color-border-subtle)]"
-                    >
-                      <div className="flex items-center gap-4 min-w-0">
-                        <Icon
-                          size={20}
-                          weight="light"
-                          className="text-[var(--color-text-muted)] shrink-0"
-                          aria-hidden
-                        />
-                        <div className="min-w-0">
-                          <div className="font-display text-[18px] tracking-[-0.01em] text-[var(--color-text)]">
-                            {d.label}
-                          </div>
-                          <div className="mt-0.5 text-[13px] text-[var(--color-text-muted)] truncate">
-                            {d.sub}
-                          </div>
-                        </div>
+                {distances.map((d) => (
+                  <li
+                    key={d.label}
+                    className="flex items-baseline justify-between gap-4 py-5 border-b border-[var(--color-border-subtle)]"
+                  >
+                    <div className="min-w-0">
+                      <div className="font-display text-[20px] tracking-[-0.01em] text-[var(--color-text)]">
+                        {d.label}
                       </div>
-                      <div className="font-mono text-[13px] tabular-nums text-[var(--color-text)] shrink-0">
-                        {d.meta}
+                      <div className="mt-1 text-[14px] text-[var(--color-text-muted)] truncate">
+                        {d.sub}
                       </div>
-                    </li>
-                  );
-                })}
+                    </div>
+                    <div className="text-[15px] tabular-nums text-[var(--color-text)] shrink-0">
+                      {d.meta}
+                    </div>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
