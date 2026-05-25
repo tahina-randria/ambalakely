@@ -132,7 +132,9 @@ export async function Footer() {
             <div>{t('legalCopyright')}</div>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
               <CookiePrefsLink />
-              <span>RN7 · 21°27′15″S 47°05′10″E</span>
+              {/* "RN7 · 21°27′15″S 47°05′10″E" removed — coordinates as
+                  decoration duplicate the map. The address is in the schema.org
+                  JSON-LD and in /faq, which is where guests actually look. */}
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
-import { fetchHotel, fetchReviews } from '@/sanity/lib/fetch';
+import { fetchReviews } from '@/sanity/lib/fetch';
 
 /**
  * Homepage "guests say" — 3 quotes max in a dense grid.
@@ -14,13 +14,11 @@ import { fetchHotel, fetchReviews } from '@/sanity/lib/fetch';
  * Data: Sanity (with .ts fallback via fetchReviews/fetchHotel).
  */
 export async function Reviews() {
-  const [HOTEL, allReviews, t] = await Promise.all([
-    fetchHotel(),
+  const [allReviews, t] = await Promise.all([
     fetchReviews(),
     getTranslations('Reviews'),
   ]);
   const reviews = allReviews.slice(0, 3);
-  const sourcesStr = HOTEL.rating.sources.join(' & ');
   return (
     <Section id="reviews" divider>
       <Container>
@@ -30,19 +28,12 @@ export async function Reviews() {
             <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] tracking-[-0.03em] balance max-w-[720px]">
               {t('h2')}
             </h2>
-            {HOTEL.rating.value && HOTEL.rating.count ? (
-              <div className="mt-8 caption text-[var(--color-text-muted)]">
-                {t('ratingWithNumber', {
-                  value: HOTEL.rating.value,
-                  count: HOTEL.rating.count,
-                  sources: sourcesStr,
-                })}
-              </div>
-            ) : (
-              <div className="mt-8 caption text-[var(--color-text-muted)]">
-                {t('ratingNoNumber', { sources: sourcesStr })}
-              </div>
-            )}
+            {/* "Avis vérifiés sur TripAdvisor & Booking" rating caption
+                removed — each quote already shows its source label above
+                the quote ("TripAdvisor", "Booking"). The repetition added
+                noise without trust value. i18n keys ratingWithNumber and
+                ratingNoNumber preserved for /avis where this line still
+                makes sense. */}
           </ScrollReveal>
 
           {/* Three quotes in a 3-col grid (md+). Each card : source label,

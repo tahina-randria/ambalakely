@@ -42,11 +42,8 @@ export async function Location() {
             {/* Mapbox interactive map */}
             <div className="lg:col-span-8 relative aspect-[4/3] md:aspect-[16/10] lg:aspect-[5/4] bg-[var(--color-bg-subtle)] border border-[var(--color-border-subtle)] overflow-hidden">
               <MapboxMap />
-
-              {/* Coordinate label overlay */}
-              <div className="absolute top-4 left-4 z-10 font-display italic font-light text-[13px] tracking-[0] text-[var(--color-text-muted)] bg-[color-mix(in_srgb,var(--color-bg)_85%,transparent)] backdrop-blur-[6px] px-2.5 py-1.5">
-                21°27′15″S · 47°05′10″E
-              </div>
+              {/* Coordinate label overlay removed — pure decoration that
+                  duplicated what the pin on the map already shows. */}
             </div>
 
             {/* Distance list — pure table editorial : label left, drive time
@@ -63,12 +60,13 @@ export async function Location() {
                     key={d.label}
                     className="flex items-baseline justify-between gap-4 py-5 border-b border-[var(--color-border-subtle)]"
                   >
+                    {/* Sub text ("Capitale · aéroport Ivato", "Ville thermale",
+                        "Parc national", "Massif") removed — anyone planning a
+                        trip to Madagascar knows what these places are. The
+                        place name + drive time is enough. */}
                     <div className="min-w-0">
                       <div className="font-display text-[20px] tracking-[-0.01em] text-[var(--color-text)]">
                         {d.label}
-                      </div>
-                      <div className="mt-1 text-[15px] text-[var(--color-text-muted)] truncate">
-                        {d.sub}
                       </div>
                     </div>
                     <div className="text-[16px] tabular-nums text-[var(--color-text)] shrink-0">
