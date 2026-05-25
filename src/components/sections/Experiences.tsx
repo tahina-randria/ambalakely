@@ -36,7 +36,7 @@ export async function Experiences() {
                     {exp.tagline}
                   </div>
                 </div>
-                <div className="text-[14px] tabular-nums text-[var(--color-text-muted)] shrink-0">
+                <div className="text-[15px] tabular-nums text-[var(--color-text-muted)] shrink-0">
                   {exp.duration}
                 </div>
               </Link>

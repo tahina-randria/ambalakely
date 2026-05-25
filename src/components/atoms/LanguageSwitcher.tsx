@@ -62,7 +62,7 @@ export function LanguageSwitcher({ scrolled }: { scrolled: boolean }) {
         aria-label={`${t('switchLanguage')} — ${fullLabels[current]}`}
         className={cn(
           'inline-flex items-center gap-1.5 px-2.5 py-1.5',
-          'font-mono text-[11px] uppercase tracking-[0.08em]',
+          'font-mono text-[13px] uppercase tracking-[0.06em]',
           'border border-transparent rounded-none',
           'transition-colors duration-[var(--duration-fast)]',
           scrolled

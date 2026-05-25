@@ -78,7 +78,7 @@ export function Nav() {
                 <Link
                   href={l.href}
                   className={cn(
-                    'text-[14px] transition-opacity duration-[var(--duration-fast)] ease-[var(--ease-standard)] opacity-70 hover:opacity-100',
+                    'text-[15px] transition-opacity duration-[var(--duration-fast)] ease-[var(--ease-standard)] opacity-80 hover:opacity-100',
                     scrolled ? 'text-[var(--color-text)]' : 'text-white',
                   )}
                 >
@@ -94,7 +94,7 @@ export function Nav() {
               type="button"
               onClick={() => setDrawerOpen(true)}
               className={cn(
-                'inline-flex items-center justify-center h-10 px-5 text-[14px] font-medium transition-[color,background-color] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
+                'inline-flex items-center justify-center h-10 px-5 text-[15px] font-medium transition-[color,background-color] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
                 scrolled
                   ? 'text-[var(--color-sand-1)] bg-[var(--color-sand-12)] hover:bg-[var(--color-sand-11)]'
                   : 'text-black bg-white hover:bg-white/90',

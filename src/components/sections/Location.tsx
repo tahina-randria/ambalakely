@@ -44,7 +44,7 @@ export async function Location() {
               <MapboxMap />
 
               {/* Coordinate label overlay */}
-              <div className="absolute top-4 left-4 z-10 font-mono text-[10px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] bg-[color-mix(in_srgb,var(--color-bg)_85%,transparent)] backdrop-blur-[6px] px-2.5 py-1.5">
+              <div className="absolute top-4 left-4 z-10 font-display italic font-light text-[13px] tracking-[0] text-[var(--color-text-muted)] bg-[color-mix(in_srgb,var(--color-bg)_85%,transparent)] backdrop-blur-[6px] px-2.5 py-1.5">
                 21°27′15″S · 47°05′10″E
               </div>
             </div>
@@ -67,11 +67,11 @@ export async function Location() {
                       <div className="font-display text-[20px] tracking-[-0.01em] text-[var(--color-text)]">
                         {d.label}
                       </div>
-                      <div className="mt-1 text-[14px] text-[var(--color-text-muted)] truncate">
+                      <div className="mt-1 text-[15px] text-[var(--color-text-muted)] truncate">
                         {d.sub}
                       </div>
                     </div>
-                    <div className="text-[15px] tabular-nums text-[var(--color-text)] shrink-0">
+                    <div className="text-[16px] tabular-nums text-[var(--color-text)] shrink-0">
                       {d.meta}
                     </div>
                   </li>

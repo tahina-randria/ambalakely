@@ -52,7 +52,7 @@ export function NewsletterSignup({
           against sand-12. sand-6 was ~3:1 — too faint for body text. */}
       <div
         className={cn(
-          'font-display italic font-light text-[14px] tracking-[0]',
+          'font-display italic font-light text-[15px] tracking-[0]',
           isDark ? 'text-[var(--color-sand-3)]' : 'text-[var(--color-text-muted)]',
         )}
       >

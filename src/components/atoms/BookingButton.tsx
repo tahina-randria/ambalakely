@@ -29,7 +29,7 @@ export function BookingButton({
       type="button"
       onClick={open}
       className={cn(
-        'inline-flex items-center justify-center h-12 px-7 text-[14px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]',
+        'inline-flex items-center justify-center h-12 px-7 text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]',
         variantClass[variant],
         className,
       )}

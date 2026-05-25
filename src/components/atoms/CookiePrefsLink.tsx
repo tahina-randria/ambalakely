@@ -15,7 +15,7 @@ export function CookiePrefsLink() {
     <button
       type="button"
       onClick={reset}
-      className="font-display italic font-light text-[14px] tracking-[0] text-[var(--color-sand-3)] underline-offset-4 hover:text-[var(--color-sand-1)] hover:underline transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]"
+      className="font-display italic font-light text-[15px] tracking-[0] text-[var(--color-sand-3)] underline-offset-4 hover:text-[var(--color-sand-1)] hover:underline transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]"
     >
       {t('cookiesManage')}
     </button>
