@@ -40,7 +40,9 @@
     "about": "The house",
     "book": "Book",
     "homeAriaLabel": "Hôtel Ambalakely — home",
-    "switchLanguage": "Language"
+    "switchLanguage": "Language",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu"
   },
 
   "Footer": {

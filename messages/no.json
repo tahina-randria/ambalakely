@@ -40,7 +40,9 @@
     "about": "Huset",
     "book": "Bestill",
     "homeAriaLabel": "Hôtel Ambalakely — hjem",
-    "switchLanguage": "Språk"
+    "switchLanguage": "Språk",
+    "menuOpen": "Åpne meny",
+    "menuClose": "Lukk meny"
   },
 
   "Footer": {

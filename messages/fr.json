@@ -40,7 +40,9 @@
     "about": "La maison",
     "book": "Réserver",
     "homeAriaLabel": "Hôtel Ambalakely — accueil",
-    "switchLanguage": "Langue"
+    "switchLanguage": "Langue",
+    "menuOpen": "Ouvrir le menu",
+    "menuClose": "Fermer le menu"
   },
 
   "Footer": {
