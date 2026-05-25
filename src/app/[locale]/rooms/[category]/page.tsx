@@ -94,10 +94,12 @@ async function HotelOfferJsonLd({ category }: { category: Category | undefined }
 export default async function RoomCategoryPage({ params }: { params: Promise<Params> }) {
   const { locale, category } = await params;
   setRequestLocale(locale);
-  const [cat, allCategories, t] = await Promise.all([
+  const [cat, allCategories, t, tPractical, HOTEL] = await Promise.all([
     fetchCategoryBySlug(category),
     fetchCategories(),
     getTranslations('RoomCategory'),
+    getTranslations('Practical'),
+    fetchHotel(),
   ]);
   if (!cat) notFound();
 
@@ -255,6 +257,52 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                 </p>
               </div>
             </ScrollReveal>
+          </div>
+        </section>
+
+        {/* PRACTICAL — verified facts from the official 2025-2026 tariff
+            sheet : cancellation ladder, check-in/out windows, payment
+            methods.  Replaces the earlier "Annulation gratuite jusqu'à
+            30 jours + aucun acompte ≤ 2 nuits" claim that contradicted
+            the source document. */}
+        <section className="py-32 md:py-48 lg:py-56 hair-rule">
+          <div className="mx-auto max-w-[920px] px-5 md:px-8">
+            <ScrollReveal>
+              <h2 className="font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
+                {tPractical('h2')}
+              </h2>
+            </ScrollReveal>
+
+            <div className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+              <ScrollReveal delay={0.05}>
+                <div className="caption mb-5">{tPractical('cancellationLabel')}</div>
+                <ul className="space-y-2 text-[15px] leading-[1.5] text-[var(--color-text)]">
+                  <li>{tPractical('cancelOver10')}</li>
+                  <li>{tPractical('cancelBetween10and7')}</li>
+                  <li>{tPractical('cancelBetween7and5')}</li>
+                  <li>{tPractical('cancelUnder5')}</li>
+                  <li>{tPractical('cancelNoShow')}</li>
+                </ul>
+              </ScrollReveal>
+
+              <ScrollReveal delay={0.1}>
+                <div className="caption mb-5">{tPractical('checkinLabel')}</div>
+                <p className="text-[15px] leading-[1.5] text-[var(--color-text)]">
+                  {tPractical('checkinValue', {
+                    checkIn: HOTEL.hours.checkIn,
+                    checkOut: HOTEL.hours.checkOut,
+                  })}
+                </p>
+
+                <div className="caption mt-10 mb-5">{tPractical('paymentLabel')}</div>
+                <p className="text-[15px] leading-[1.5] text-[var(--color-text)]">
+                  {tPractical('paymentMethods')}
+                </p>
+                <p className="mt-2 text-[13px] leading-[1.5] text-[var(--color-text-muted)]">
+                  {tPractical('paymentNote')}
+                </p>
+              </ScrollReveal>
+            </div>
           </div>
         </section>
 

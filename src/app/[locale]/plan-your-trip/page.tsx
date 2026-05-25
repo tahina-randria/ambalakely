@@ -41,9 +41,10 @@ export async function generateMetadata({ params }: LocaleParam): Promise<Metadat
 export default async function PlanYourTripPage({ params }: LocaleParam) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [itineraries, t] = await Promise.all([
+  const [itineraries, t, tPractical] = await Promise.all([
     fetchItineraries(),
     getTranslations('PlanTrip'),
+    getTranslations('Practical'),
   ]);
 
   const heroTitle = t.raw('heroTitle') as string[];
@@ -82,6 +83,23 @@ export default async function PlanYourTripPage({ params }: LocaleParam) {
                 <p>{t('introP1')}</p>
                 <p>{t('introP2')}</p>
               </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* TRANSFERS — official PDF prices, so the "we organise chauffeurs"
+            promise lands with a number, not a vague claim. */}
+        <section className="hair-rule py-16 md:py-20">
+          <div className="mx-auto max-w-[920px] px-5 md:px-8">
+            <ScrollReveal>
+              <div className="caption mb-5">{tPractical('transfersLabel')}</div>
+              <ul className="space-y-2 text-[15px] leading-[1.5] text-[var(--color-text)]">
+                <li>{tPractical('transferAirport')}</li>
+                <li>{tPractical('transferCity')}</li>
+              </ul>
+              <p className="mt-3 text-[13px] leading-[1.5] text-[var(--color-text-muted)]">
+                {tPractical('transfersNote')}
+              </p>
             </ScrollReveal>
           </div>
         </section>

@@ -560,6 +560,25 @@
     "ctaCheck": "Se tilgjengelighet"
   },
 
+  "Practical": {
+    "h2": "Før ankomst.",
+    "cancellationLabel": "Avbestilling",
+    "cancelOver10": "Mer enn 10 dager før — gratis",
+    "cancelBetween10and7": "10 til 7 dager — 10 % beholdes",
+    "cancelBetween7and5": "7 til 5 dager — 25 % beholdes",
+    "cancelUnder5": "Mindre enn 5 dager — 50 % beholdes",
+    "cancelNoShow": "No-show — 100 % beholdes",
+    "checkinLabel": "Innsjekking og utsjekking",
+    "checkinValue": "Innsjekking fra {checkIn} · Utsjekking før {checkOut}",
+    "paymentLabel": "Betaling",
+    "paymentMethods": "Kontanter (MGA), Visa, Mastercard, bankoverføring",
+    "paymentNote": "Betaling kreves før ankomst.",
+    "transfersLabel": "Transfer (1-3 personer)",
+    "transferAirport": "Fianarantsoa flyplass ↔ Hotell — 70 000 Ar",
+    "transferCity": "Fianarantsoa by ↔ Hotell — 65 000 Ar",
+    "transfersNote": "For grupper eller spesielle behov, skriv til oss."
+  },
+
   "RoomCategory": {
     "notFoundTitle": "Rom finnes ikke",
     "metaTitle": "{name}-rom",
