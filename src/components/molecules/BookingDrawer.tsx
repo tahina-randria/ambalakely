@@ -112,6 +112,35 @@ export function BookingDrawer({ open, onClose }: Props) {
     return () => mq.removeEventListener('change', update);
   }, []);
 
+  // The react-international-phone country list dropdown lives inside
+  // the Radix Dialog's overflow-y:auto container. Even with the
+  // dropdown declaring overflow-y:scroll + overscroll-behavior:contain,
+  // wheel events were not natively driving its scrollTop (browser
+  // wasn't picking the UL as the scroll target — verified via wheel
+  // trace, deltaY was hitting the LI but neither dropdown nor sheet
+  // scrolled). This document-level capture listener intercepts wheel
+  // when the target is inside the dropdown, calls preventDefault to
+  // stop the sheet from scrolling, and drives the dropdown scrollTop
+  // by hand. Net result : trackpad / mouse-wheel now scroll the
+  // country list as expected. Touch users are unaffected (touch fires
+  // scroll, not wheel).
+  useEffect(() => {
+    const onWheel = (e: WheelEvent) => {
+      const target = e.target as Element | null;
+      if (!target?.closest) return;
+      const dropdown = target.closest(
+        '.react-international-phone-country-selector-dropdown',
+      ) as HTMLElement | null;
+      if (!dropdown) return;
+      e.preventDefault();
+      e.stopPropagation();
+      dropdown.scrollTop += e.deltaY;
+    };
+    document.addEventListener('wheel', onWheel, { passive: false, capture: true });
+    return () =>
+      document.removeEventListener('wheel', onWheel, { capture: true } as AddEventListenerOptions);
+  }, []);
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (status === 'submitting' || status === 'success') return;
