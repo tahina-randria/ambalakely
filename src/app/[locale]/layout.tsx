@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Fraunces } from 'next/font/google';
+import { Fraunces } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale, getTranslations } from 'next-intl/server';
@@ -19,12 +19,12 @@ import { fetchHotel } from '@/sanity/lib/fetch';
 import { routing } from '@/i18n/routing';
 import '@/styles/globals.css';
 
-const geist = Geist({
-  subsets: ['latin'],
-  variable: '--font-geist',
-  display: 'swap',
-  weight: ['400', '500'],
-});
+/**
+ * Body text uses Satoshi via Fontshare. Loaded as a CDN <link> in the
+ * <head> below — Fontshare doesn't ship a next/font plugin, but their
+ * api.fontshare.com endpoint serves a stable WOFF2 with font-display:swap.
+ * Wired as the CSS variable --font-satoshi via the .satoshi class on body.
+ */
 
 /**
  * Fraunces — modern editorial serif with an opsz axis. Used for display
@@ -124,8 +124,14 @@ export default async function LocaleLayout({
   const tCommon = await getTranslations({ locale: typedLocale, namespace: 'Common' });
 
   return (
-    <html lang={typedLocale} className={`${geist.variable} ${fraunces.variable}`}>
+    <html lang={typedLocale} className={fraunces.variable}>
       <head>
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap"
+        />
         <link rel="preconnect" href="https://images.squarespace-cdn.com" />
         <link rel="dns-prefetch" href="https://images.squarespace-cdn.com" />
         <HotelJsonLd />

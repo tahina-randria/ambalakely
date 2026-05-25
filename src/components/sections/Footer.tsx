@@ -82,7 +82,7 @@ export async function Footer() {
           <div className="mt-20 md:mt-28 grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
             {columns.map((col) => (
               <div key={col.title}>
-                <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-sand-6)] mb-5">
+                <div className="font-display italic font-light text-[14px] tracking-[0] text-[var(--color-sand-3)] mb-5">
                   {col.title}
                 </div>
                 <ul className="space-y-3">
@@ -102,7 +102,7 @@ export async function Footer() {
 
             {/* Contact — with phosphor icons for fast scan */}
             <div>
-              <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-sand-6)] mb-5">
+              <div className="font-display italic font-light text-[14px] tracking-[0] text-[var(--color-sand-3)] mb-5">
                 {contactTitle}
               </div>
               <ul className="space-y-3">
@@ -117,7 +117,7 @@ export async function Footer() {
                       <Icon
                         size={16}
                         weight="regular"
-                        className="text-[var(--color-sand-6)] group-hover:text-[var(--color-sand-1)] transition-colors shrink-0"
+                        className="text-[var(--color-sand-3)] group-hover:text-[var(--color-sand-1)] transition-colors shrink-0"
                       />
                       <span>{label}</span>
                     </Link>
@@ -128,7 +128,7 @@ export async function Footer() {
           </div>
 
           {/* Bottom legal */}
-          <div className="mt-20 pt-8 border-t border-[var(--color-sand-10)] flex flex-col md:flex-row md:items-center md:justify-between gap-4 font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--color-sand-6)]">
+          <div className="mt-20 pt-8 border-t border-[var(--color-sand-10)] flex flex-col md:flex-row md:items-center md:justify-between gap-4 font-display italic font-light text-[14px] tracking-[0] text-[var(--color-sand-3)]">
             <div>{t('legalCopyright')}</div>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
               <CookiePrefsLink />

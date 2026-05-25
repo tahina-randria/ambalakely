@@ -48,10 +48,12 @@ export function NewsletterSignup({
 
   return (
     <form onSubmit={onSubmit} className={cn('flex flex-col gap-4', className)}>
+      {/* Kicker bumped to sand-3 on dark to clear WCAG AA contrast
+          against sand-12. sand-6 was ~3:1 — too faint for body text. */}
       <div
         className={cn(
-          'caption',
-          isDark ? 'text-[var(--color-sand-6)]' : 'text-[var(--color-text-muted)]',
+          'font-display italic font-light text-[14px] tracking-[0]',
+          isDark ? 'text-[var(--color-sand-3)]' : 'text-[var(--color-text-muted)]',
         )}
       >
         {t('newsletterKicker')}
@@ -59,7 +61,7 @@ export function NewsletterSignup({
       <p
         className={cn(
           'text-[15px] leading-[1.55] max-w-[420px]',
-          isDark ? 'text-[var(--color-sand-5)]' : 'text-[var(--color-text-muted)]',
+          isDark ? 'text-[var(--color-sand-3)]' : 'text-[var(--color-text-muted)]',
         )}
       >
         {t('newsletterBody')}
@@ -86,7 +88,7 @@ export function NewsletterSignup({
             className={cn(
               'flex-1 h-12 px-4 border border-solid text-[15px] focus:outline-none transition-colors',
               isDark
-                ? 'bg-transparent border-[var(--color-sand-7)] text-[var(--color-sand-1)] placeholder-[var(--color-sand-7)] focus:border-[var(--color-sand-1)]'
+                ? 'bg-transparent border-[var(--color-sand-5)] text-[var(--color-sand-1)] placeholder-[var(--color-sand-5)] focus:border-[var(--color-sand-1)]'
                 : 'bg-[var(--color-bg)] border-[var(--color-sand-12)] text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:border-[var(--color-sand-12)]',
             )}
           />
