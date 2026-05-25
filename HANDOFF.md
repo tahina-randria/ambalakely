@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + 13 commits incl. Reviews premium + Nav mobile burger + mobile video preload fix + sticky bar removed, all in prod — see §24)
+Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + R2/R3 prudence pass `062c0dc` — 8 prices → "sur demande", 12 time promises softened, in prod — see §24 + §25)
 
 ---
 
@@ -1075,6 +1075,125 @@ The user thinks in **"mode prudent"** when stakes are legal/factual
 purely visual (typography, design). Match the mode.
 
 — previous Claude, 2026-05-25 evening
+
+---
+
+## 25. Prudence pass R2 + R3 — prices & time promises (2026-05-25, late evening, post-/compact)
+
+Single follow-up commit after the /compact, closing out the two "code
+that can ship without user input" items flagged at the end of §24.
+**No new content invented** ; this commit is purely subtractive
+(removing specific claims that weren't sourceable).
+
+### What shipped — 1 commit
+
+| SHA | Subject |
+|---|---|
+| `062c0dc` | fix(facts) soften 8 unsourced prices + 12 time promises to honest defaults |
+
+### R2 — Activity prices in `experiences.ts`
+
+Eight of ten entries had numerical Ariary prices the property could not
+confirm against any source document. All converted to **"Sur demande,
+devis personnalisé"** with an optional clarifier (chauffeur inclus /
+agence partenaire). The two genuinely-free entries
+(`rice-fields`, `community/HFF`) kept their `Sans frais` cost field.
+
+| Slug | Was | Now |
+|---|---|---|
+| `ranomafana` | "Autour de 280 000 Ariary par personne, tout compris." | "Sur demande, devis personnalisé selon le nombre de voyageurs." |
+| `cooking` | "120 000 Ariary par personne." | "Sur demande, devis personnalisé." |
+| `sahambavy` | "Autour de 90 000 Ariary par personne plus chauffeur." | "Sur demande, devis personnalisé (chauffeur inclus)." |
+| `fianarantsoa-old-town` | "Autour de 80 000 Ariary par personne plus chauffeur." | "Sur demande, devis personnalisé (chauffeur inclus)." |
+| `ambositra-woodcarving` | "Autour de 180 000 Ariary par personne plus chauffeur." | "Sur demande, devis personnalisé (chauffeur inclus)." |
+| `andringitra` | "Autour de 1 200 000 Ariary par personne, tout compris pour trois jours." | "Sur demande, devis personnalisé (organisation via agence partenaire)." |
+| `tsaranoro-stargazing` | "Autour de 400 000 Ariary par personne, tout compris pour une nuit." | "Sur demande, devis personnalisé." |
+| `antemoro-paper` | "Autour de 70 000 Ariary par personne plus chauffeur." | "Atelier sans frais d'entrée. Chauffeur sur demande, devis personnalisé." |
+
+**The Antemoro entry was the headline misleading claim** : "70 000 Ar
+par personne + chauffeur" suggested the workshop costs that, but the
+workshop is actually free — the 70 k was just the driver. Now reframed
+honestly. If the hotel later wants to publish a real driver day-rate
+they can drop a number back in ; meanwhile this is the prudent default.
+
+### R3 — Time promises softened (cardinal rule #2)
+
+The user explicitly said : "ne mets pas de promesse de temps parce que
+madagascar c'est random tant que je te confirme pas proprement". This
+pass removed every precise-hour promise the property hadn't confirmed.
+
+**Prose in `experiences.ts`** (6 entries, 6 distinct phrases) :
+- `ranomafana` body : `à une heure vingt à l'est` → `à l'est` ;
+  `Départ à six heures du matin` → `Départ tôt le matin` ;
+  `trois à quatre heures de marche` → `quelques heures de marche` ;
+  `bouillotte est dans le lit à dix-huit heures` → `retour en fin
+  d'après-midi, juste à temps pour le thé et la bouillotte au lit le
+  soir`
+- `cooking` body : `à huit heures du matin` → `en début de matinée`
+- `sahambavy` body : `à une demi-heure à l'est de Fianarantsoa` →
+  `à l'est de Fianarantsoa`
+- `ambositra-woodcarving` body + tagline : `à deux heures au nord de
+  l'hôtel sur la RN7` → `au nord de l'hôtel sur la RN7` (tagline
+  also reworded : `À deux heures au nord` → `Au nord sur la RN7`)
+- `andringitra` body : `La route depuis l'hôtel prend environ cinq
+  heures à l'aller comme au retour` → `Compter une journée de transit
+  à l'aller comme au retour, selon les conditions de la route`
+- `antemoro-paper` body : `à une heure trente au sud de l'hôtel` → `au
+  sud de l'hôtel`
+
+**Prose in `itineraries.ts`** (2 entries) :
+- `three-days` day 2 : `Départ à six heures du matin` → `Départ tôt le
+  matin` ; `Bouillottes dans le lit à dix-huit heures` → `bouillotte
+  au lit le soir`
+- `five-days` day 4 : `départ à cinq heures du matin` → `départ tôt le
+  matin`
+
+**i18n surfaces** (3 keys × 3 locales = 9 strings) :
+- `Book.body` : "Nous répondons dans la journée" / "We reply within
+  the day" / "Vi svarer samme dag" → "Hasina ou Mamy vous répondent
+  personnellement" (and EN/NO equivalents)
+- `BookingDrawer.successBody` : "Nous répondons sous 24 à 48 heures
+  avec les disponibilités et un devis personnalisé" / "We reply within
+  24 to 48 hours" / "Vi svarer innen 24 til 48 timer" → "Nous revenons
+  vers vous personnellement avec les disponibilités et un devis. Pour
+  un séjour proche, WhatsApp reste le plus rapide." (and EN/NO
+  equivalents)
+- `FaqPage.introBodyMid` : "et nous répondrons dans la journée" / "and
+  we'll reply the same day" / "så svarer vi samme dag" → "et nous
+  vous répondrons personnellement" (and EN/NO equivalents)
+
+**Email template** : `BookingAck.tsx` L34 — "Hasina ou Mamy vous
+répondra personnellement sous 24 à 48 heures avec la disponibilité et
+un devis détaillé" → "Hasina ou Mamy vous répondra personnellement
+avec la disponibilité et un devis détaillé" (the sub-clause is dropped).
+
+### What was deliberately preserved
+
+- `transit:` fields with `"environ X heures"` qualifier in
+  `itineraries.ts` — these are km-derived estimates with the soft
+  qualifier ; useful info, not a precise promise. Examples : "230 km,
+  environ 5 heures de route", "180 km aller-retour, environ 3 heures",
+  "420 km, environ 7 heures". Verbatim from original.
+- PDF-sourced facts : dining `24 h à l'avance` reservation notice
+  (PDF p.4), check-in `13 h` (PDF), cancellation ladder (PDF p.2).
+- "Sans frais" for `rice-fields` (in-house guided walk) and
+  `community` (HFF visit) — both legitimately free per pre-existing
+  property docs.
+
+### What still hangs (pending follow-ups)
+
+#### Still awaiting user input (unchanged from §24)
+- 12 `⚠️ NEEDS REAL CONTENT` flags in `src/lib/data/faq.ts`
+- Andringitra round-trip distance in `itineraries.ts` (still says
+  "320 km", possibly closer to 240 km — needs user / map confirmation)
+- Live Google Places reviews integration (needs user-created API key)
+
+#### Phase visuelle (deferred until code editorial is fully locked)
+- AI lifestyle assets (Nano Banana Pro) with non-contractual disclaimer
+- Trust.tsx Squarespace URL → local migration when HFF.webp dropped
+- B5 token scale formal pass (purely hygiene, no user-visible change)
+
+— Claude, 2026-05-25 late evening, post-/compact
 
 ---
 
