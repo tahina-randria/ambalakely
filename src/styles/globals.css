@@ -717,6 +717,18 @@ textarea {
   opacity: 1;
 }
 
+/* Textareas use the same dark styling but must NOT inherit the fixed
+   48 px input height or zero vertical padding from .input-dark — that
+   collapsed the rows={3} attribute into a single line and cropped
+   the placeholder. Override here keeps the dark theme but restores
+   multi-line behavior. */
+textarea.input-dark {
+  height: auto;
+  min-height: 120px;
+  padding: 12px 16px;
+  line-height: 1.45;
+}
+
 /* Dark select — white chevron */
 select.input-dark {
   padding-right: 44px;
@@ -875,6 +887,36 @@ input[type="date"].input-dark::-webkit-datetime-edit-day-field:focus {
      button just like committed range_end, instead of overflowing
      into the gutter to the right. */
   background: linear-gradient(to right, var(--color-sand-11) 50%, transparent 50%);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   react-international-phone country selector dropdown
+   ════════════════════════════════════════════════════════════════════
+   The dropdown lives inside the booking drawer (a fixed Radix dialog
+   with overflow-y:auto). Without overscroll-behavior:contain, wheel
+   events would chain to the drawer and scroll the form instead of
+   the dropdown's long country list — leaving users stuck scrolling
+   the dropdown by drag-clicking the scrollbar. `contain` isolates
+   the wheel scroll to the dropdown. We also add a slimmer scrollbar
+   so it doesn't fight the dark theme visually.
+   ──────────────────────────────────────────────────────────────────── */
+.react-international-phone-country-selector-dropdown {
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-sand-9) transparent;
+}
+
+.react-international-phone-country-selector-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.react-international-phone-country-selector-dropdown::-webkit-scrollbar-thumb {
+  background: var(--color-sand-9);
+  border-radius: 3px;
+}
+
+.react-international-phone-country-selector-dropdown::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .rdp-root-dark .rdp-day_button:disabled,
