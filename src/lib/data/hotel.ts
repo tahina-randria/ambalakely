@@ -108,12 +108,18 @@ export const HOTEL = {
   // 4 langues parlées sur place (du document Kirsten)
   languages: ['fr', 'en', 'no', 'mg'],
 
-  // Aggregate rating — à confirmer depuis TripAdvisor/Booking publics.
-  // Pour l'instant on retire les chiffres inventés.
+  // Aggregate rating — vérifié sur TripAdvisor le 2026-05-25 :
+  // 32 avis, 4.9/5 sur https://www.tripadvisor.com/Hotel_Review-g298271-d7646881
   rating: {
-    value: null as string | null,
-    count: null as number | null,
+    value: '4.9' as string | null,
+    count: 32 as number | null,
     sources: ['TripAdvisor'],
+  },
+
+  // URL des plateformes de reviews — utilisée pour le lien "Voir tous les avis"
+  reviewUrls: {
+    tripadvisor:
+      'https://www.tripadvisor.com/Hotel_Review-g298271-d7646881-Reviews-Hotel_Ambalakely-Fianarantsoa_Fianarantsoa_Province.html',
   },
 
   socials: {

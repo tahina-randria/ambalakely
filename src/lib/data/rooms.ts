@@ -148,7 +148,15 @@ export const rooms: Room[] = [
  * Ordre : les 3 premiers sont rendus sur la home (Reviews.tsx). Choisis
  * pour diversité (location, langue maternelle, aspect mentionné).
  */
-export const reviews = [
+export type Review = {
+  quote: string;
+  author: string;
+  city: string;
+  source: string;
+  date?: string;
+};
+
+export const reviews: Review[] = [
   {
     // EN original (TripAdvisor, Jul 2022) : "This is an amazing gem of a hotel.
     // A beautiful location and built in the Betsileo style, with incredibly
@@ -158,6 +166,7 @@ export const reviews = [
     author: 'Polly Pallister Wilkin',
     city: '',
     source: 'TripAdvisor',
+    date: 'Juillet 2022',
   },
   {
     // EN original (TripAdvisor, Nov 2019) : "Really good service, great food
@@ -167,6 +176,7 @@ export const reviews = [
     author: 'Kristin O. V.',
     city: 'Trondheim',
     source: 'TripAdvisor',
+    date: 'Novembre 2019',
   },
   {
     // EN original (TripAdvisor, Oct 2025) : "A fantastic oasis with a
@@ -177,6 +187,7 @@ export const reviews = [
     author: 'Toril A.',
     city: '',
     source: 'TripAdvisor',
+    date: 'Octobre 2025',
   },
   {
     // EN original (TripAdvisor, Jun 2022) : "Newly-refurbished hotel with
@@ -187,6 +198,7 @@ export const reviews = [
     author: 'Femke V.',
     city: '',
     source: 'TripAdvisor',
+    date: 'Juin 2022',
   },
   {
     // EN original (TripAdvisor, Sep 2019) : "This is the perfect place to
@@ -197,6 +209,7 @@ export const reviews = [
     author: 'Bernt R. Pedersen',
     city: '',
     source: 'TripAdvisor',
+    date: 'Septembre 2019',
   },
   {
     // EN original (TripAdvisor, Sep 2025) : "A rare find that exceeded
@@ -206,6 +219,7 @@ export const reviews = [
     author: 'traveltragic50',
     city: 'Wollongong',
     source: 'TripAdvisor',
+    date: 'Septembre 2025',
   },
   {
     // EN original (TripAdvisor, Aug 2025) : "A very nice hotel in a town
@@ -216,6 +230,7 @@ export const reviews = [
     author: 'Robert H.',
     city: 'Adelaide',
     source: 'TripAdvisor',
+    date: 'Août 2025',
   },
   {
     // EN original (TripAdvisor, Oct 2023) : "A hidden gem next to the main
@@ -225,6 +240,7 @@ export const reviews = [
     author: 'Roswitha S.',
     city: 'Vienne',
     source: 'TripAdvisor',
+    date: 'Octobre 2023',
   },
   {
     // EN original (TripAdvisor, Apr 2023) : "The Hotel is beautifully
@@ -234,5 +250,6 @@ export const reviews = [
     author: 'Pravin B.',
     city: '',
     source: 'TripAdvisor',
+    date: 'Avril 2023',
   },
-] as const;
+];

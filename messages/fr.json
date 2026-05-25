@@ -557,7 +557,8 @@
     "ratingLine": "{value} sur 5 — {count} avis sur {sources}",
     "ctaKicker": "Réserver",
     "ctaH2": "Venez vérifier par vous-même.",
-    "ctaCheck": "Voir les disponibilités"
+    "ctaCheck": "Voir les disponibilités",
+    "viewAllOnTripadvisor": "Voir les {count} avis sur TripAdvisor"
   },
 
   "Practical": {

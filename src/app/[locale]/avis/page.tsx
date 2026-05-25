@@ -8,6 +8,7 @@ import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
 import { PHOTOS } from '@/lib/data/photos';
 import { fetchHotel, fetchReviews } from '@/sanity/lib/fetch';
+import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
 
@@ -74,7 +75,9 @@ export default async function AvisPage({ params }: LocaleParam) {
           </div>
         </section>
 
-        {/* Editorial stack of all reviews */}
+        {/* Editorial stack of all reviews — each entry is a tall figure
+            with a big decorative guillemet, the full quote in display
+            serif, and a hair-rule before the attribution. */}
         <section className="hair-rule">
           <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
             <ul className="border-t border-[var(--color-border-subtle)]">
@@ -82,28 +85,51 @@ export default async function AvisPage({ params }: LocaleParam) {
                 <ScrollReveal key={`${review.author}-${i}`} delay={i * 0.04}>
                   <li className="border-b border-[var(--color-border-subtle)]">
                     <figure className="py-16 md:py-24 max-w-[920px]">
-                      <div className="caption text-[var(--color-text-muted)]">
-                        {review.source}
-                      </div>
-                      <blockquote className="mt-6 md:mt-8 font-display font-light text-[var(--color-text)] text-[26px] md:text-[36px] lg:text-[44px] leading-[1.25] md:leading-[1.2] tracking-[-0.02em] balance">
-                        &ldquo;{review.quote}&rdquo;
+                      {/* Decorative guillemet — large pull-quote mark */}
+                      <span
+                        aria-hidden="true"
+                        className="block font-display font-light text-[var(--color-sand-7)] text-[96px] md:text-[128px] leading-[0.5] tracking-[-0.05em] mb-4 md:mb-6 select-none"
+                      >
+                        «
+                      </span>
+                      <blockquote className="font-display font-light text-[var(--color-text)] text-[26px] md:text-[36px] lg:text-[44px] leading-[1.25] md:leading-[1.2] tracking-[-0.02em] balance">
+                        {review.quote}
                       </blockquote>
-                      <figcaption className="mt-8 md:mt-10 flex items-center gap-4">
-                        <div className="w-10 border-t border-[var(--color-sand-12)]" />
-                        <div className="font-display text-[16px] tracking-[-0.005em] text-[var(--color-text)]">
-                          {review.author}
-                        </div>
-                        {review.city ? (
-                          <div className="caption text-[var(--color-text-muted)]">
-                            {review.city}
+                      <figcaption className="mt-10 md:mt-12 flex flex-col gap-2">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 border-t border-[var(--color-sand-12)]" />
+                          <div className="font-display text-[16px] md:text-[18px] tracking-[-0.005em] text-[var(--color-text)]">
+                            {review.author}
                           </div>
-                        ) : null}
+                        </div>
+                        <div className="pl-14 caption text-[var(--color-text-muted)]">
+                          {[review.city, review.date, review.source].filter(Boolean).join(' · ')}
+                        </div>
                       </figcaption>
                     </figure>
                   </li>
                 </ScrollReveal>
               ))}
             </ul>
+
+            {/* Link to the full TripAdvisor page — for guests who want all
+                32 reviews, not just our curated 9. */}
+            {HOTEL.reviewUrls?.tripadvisor && HOTEL.rating.count ? (
+              <ScrollReveal className="mt-16 md:mt-20 mb-12">
+                <a
+                  href={HOTEL.reviewUrls.tripadvisor}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]"
+                >
+                  {t('viewAllOnTripadvisor', { count: HOTEL.rating.count })}
+                  <ArrowUpRight
+                    size={18}
+                    className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </a>
+              </ScrollReveal>
+            ) : null}
           </div>
         </section>
 

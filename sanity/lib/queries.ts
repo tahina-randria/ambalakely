@@ -93,7 +93,8 @@ export const REVIEWS_QUERY = defineQuery(`
     "quote": ${FR('quote')},
     author,
     city,
-    source
+    source,
+    date
   }
 `);
 

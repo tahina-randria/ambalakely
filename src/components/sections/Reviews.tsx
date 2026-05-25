@@ -36,29 +36,36 @@ export async function Reviews() {
                 makes sense. */}
           </ScrollReveal>
 
-          {/* Three quotes in a 3-col grid (md+). Each card : source label,
-              quote, attribution. Hairline border, no inner padding hierarchy. */}
-          <ul className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 border-t border-[var(--color-border-subtle)] pt-12 md:pt-16">
+          {/* Three quotes in a 3-col grid (md+). Premium editorial card :
+              big decorative guillemet pull-mark, larger quote, attribution
+              with author + city · date · source on one line below a hair
+              rule.  No inner padding hierarchy — each card breathes on its
+              own grid cell. */}
+          <ul className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 border-t border-[var(--color-border-subtle)] pt-14 md:pt-20">
             {reviews.map((review, i) => (
               <ScrollReveal key={`${review.author}-${i}`} delay={i * 0.06}>
                 <li>
                   <figure className="flex flex-col">
-                    <div className="caption text-[var(--color-text-muted)]">
-                      {review.source}
-                    </div>
-                    <blockquote className="mt-5 font-display font-light text-[var(--color-text)] text-[20px] md:text-[22px] leading-[1.35] tracking-[-0.015em] balance">
-                      &ldquo;{review.quote}&rdquo;
+                    {/* Big decorative guillemet — pull-quote signal, aria-hidden */}
+                    <span
+                      aria-hidden="true"
+                      className="font-display font-light text-[var(--color-sand-7)] text-[64px] leading-[0.5] tracking-[-0.05em] mb-3 select-none"
+                    >
+                      «
+                    </span>
+                    <blockquote className="font-display font-light text-[var(--color-text)] text-[20px] md:text-[22px] leading-[1.4] tracking-[-0.015em] balance">
+                      {review.quote}
                     </blockquote>
-                    <figcaption className="mt-6 flex items-center gap-3">
-                      <div className="w-8 border-t border-[var(--color-sand-12)]" />
-                      <div className="font-display text-[15px] tracking-[-0.005em] text-[var(--color-text)]">
-                        {review.author}
-                      </div>
-                      {review.city ? (
-                        <div className="caption text-[var(--color-text-muted)]">
-                          {review.city}
+                    <figcaption className="mt-8 flex flex-col gap-1.5">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 border-t border-[var(--color-sand-12)]" />
+                        <div className="font-display text-[15px] tracking-[-0.005em] text-[var(--color-text)]">
+                          {review.author}
                         </div>
-                      ) : null}
+                      </div>
+                      <div className="pl-11 caption text-[var(--color-text-muted)]">
+                        {[review.city, review.date, review.source].filter(Boolean).join(' · ')}
+                      </div>
                     </figcaption>
                   </figure>
                 </li>

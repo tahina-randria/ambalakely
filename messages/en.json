@@ -557,7 +557,8 @@
     "ratingLine": "{value} out of 5 — {count} reviews on {sources}",
     "ctaKicker": "Book",
     "ctaH2": "Come and see for yourself.",
-    "ctaCheck": "Check availability"
+    "ctaCheck": "Check availability",
+    "viewAllOnTripadvisor": "Read all {count} reviews on TripAdvisor"
   },
 
   "Practical": {

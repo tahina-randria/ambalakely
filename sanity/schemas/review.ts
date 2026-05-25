@@ -19,6 +19,11 @@ export const review = defineType({
       type: 'number',
       description: 'Ordre d\'affichage sur /reviews',
     }),
+    defineField({
+      name: 'date',
+      type: 'string',
+      description: 'Date de publication telle qu\'elle apparaît sur la plateforme (ex. "Juillet 2022")',
+    }),
   ],
   preview: {
     select: { title: 'author', subtitle: 'source', quote: 'quote.fr' },

@@ -557,7 +557,8 @@
     "ratingLine": "{value} av 5 — {count} anmeldelser på {sources}",
     "ctaKicker": "Bestill",
     "ctaH2": "Kom og se selv.",
-    "ctaCheck": "Se tilgjengelighet"
+    "ctaCheck": "Se tilgjengelighet",
+    "viewAllOnTripadvisor": "Les alle {count} anmeldelser på TripAdvisor"
   },
 
   "Practical": {
