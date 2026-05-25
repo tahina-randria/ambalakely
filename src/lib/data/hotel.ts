@@ -77,7 +77,7 @@ export const HOTEL = {
 
   // Horaires réels depuis le document Kirsten
   hours: {
-    checkIn: '12h à 13h',
+    checkIn: '13h',
     checkOut: '11h',
     dayRoom: '50 % du tarif',
     breakfast: '5h30 à 9h',

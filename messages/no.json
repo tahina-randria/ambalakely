@@ -25,7 +25,7 @@
     "ariary": "Ariary",
     "viewAll": "Se alt",
     "readMore": "Les mer",
-    "freeCancellation30": "Gratis avbestilling inntil tretti dager før ankomst.",
+    "freeCancellation30": "Gratis avbestilling inntil 10 dager før ankomst.",
     "yes": "Ja",
     "no": "Nei",
     "or": "Eller"
@@ -127,7 +127,7 @@
 
   "Trust": {
     "kicker": "Felleskap",
-    "h2": "To prosent av hvert opphold går til skolen ved siden av.",
+    "h2": "En del av hvert opphold støtter skolen ved siden av.",
     "body": "Hope for the Future åpnet i 2014. Hundre og tretti barn fra Tanambao, nabolaget rundt Ambalakely. Ti år med de samme onsdag- og lørdagsettermiddagene.",
     "readMore": "Se skolen",
     "imageAlt": "Hope for the Future, skolen i Tanambao-nabolaget"
@@ -183,7 +183,7 @@
     "kicker": "Bestill",
     "h2": "Si fra om når.",
     "body": "To måter å nå oss på. Skjemaet for datoer og rom. WhatsApp eller e-post hvis du heller vil skrive. Vi svarer samme dag.",
-    "freeCancellation": "Gratis avbestilling inntil tretti dager før ankomst.",
+    "freeCancellation": "Gratis avbestilling inntil 10 dager før ankomst.",
     "whatsappLabel": "WhatsApp",
     "whatsappMessage": "Hei, jeg ønsker å bestille et opphold på Ambalakely."
   },
@@ -205,7 +205,7 @@
     "messagePlaceholder": "Det vi bør vite — preferanser, anledninger, spørsmål.",
     "sending": "Sender…",
     "send": "Send forespørsel",
-    "footer": "Inntil {max} gjester. Gratis avbestilling inntil 30 dager før ankomst.",
+    "footer": "Inntil {max} gjester. Gratis avbestilling inntil 10 dager før ankomst.",
     "writeUs": "Eller skriv direkte til oss",
     "groupCTA": "For grupper kombinerer vi rommene og tilpasser oppholdet. Skriv direkte til oss.",
     "groupWhatsapp": "WhatsApp",
@@ -400,7 +400,7 @@
     "ctaKicker": "Bestill",
     "ctaH2": "Direkte bestilling.",
     "ctaButton": "Se tilgjengelighet",
-    "ctaNote": "Gratis avbestilling inntil tretti dager før ankomst. Ingen forskudd for opphold på to netter eller mindre."
+    "ctaNote": "Gratis avbestilling inntil 10 dager før ankomst."
   },
 
   "ExperiencesPage": {
@@ -582,7 +582,7 @@
     "reserveH2": "Et {name}-rom, fra",
     "reservePerNight": "Ariary.",
     "reserveCheck": "Se tilgjengelighet",
-    "reserveNote": "Per natt. Gratis avbestilling inntil tretti dager før ankomst.",
+    "reserveNote": "Per natt. Gratis avbestilling inntil 10 dager før ankomst.",
     "othersKicker": "Eller et annet rom",
     "othersAlt": "{name}-rom",
     "othersFrom": "Fra"

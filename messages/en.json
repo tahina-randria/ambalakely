@@ -25,7 +25,7 @@
     "ariary": "Ariary",
     "viewAll": "View all",
     "readMore": "Read more",
-    "freeCancellation30": "Free cancellation up to thirty days before arrival.",
+    "freeCancellation30": "Free cancellation up to 10 days before arrival.",
     "yes": "Yes",
     "no": "No",
     "or": "Or"
@@ -127,7 +127,7 @@
 
   "Trust": {
     "kicker": "Community",
-    "h2": "Two percent of every stay goes to the school next door.",
+    "h2": "A share of every stay supports the school next door.",
     "body": "Hope for the Future opened in 2014. One hundred and thirty children from Tanambao, the Ambalakely neighbourhood. Ten years of the same Wednesday and Saturday afternoons.",
     "readMore": "Visit the school",
     "imageAlt": "Hope for the Future, the school of the Tanambao neighbourhood"
@@ -183,7 +183,7 @@
     "kicker": "Book",
     "h2": "Tell us when.",
     "body": "Two ways to reach us. The form for dates and rooms. WhatsApp or email if you'd rather write. We reply within the day.",
-    "freeCancellation": "Free cancellation up to thirty days before arrival.",
+    "freeCancellation": "Free cancellation up to 10 days before arrival.",
     "whatsappLabel": "WhatsApp",
     "whatsappMessage": "Hello, I'd like to book a stay at Ambalakely."
   },
@@ -205,7 +205,7 @@
     "messagePlaceholder": "Anything we should know — preferences, occasions, questions.",
     "sending": "Sending…",
     "send": "Send request",
-    "footer": "Up to {max} guests. Free cancellation up to 30 days before arrival.",
+    "footer": "Up to {max} guests. Free cancellation up to 10 days before arrival.",
     "writeUs": "Or write to us directly",
     "groupCTA": "For groups, we combine rooms and tailor the stay. Write to us directly.",
     "groupWhatsapp": "WhatsApp",
@@ -400,7 +400,7 @@
     "ctaKicker": "Book",
     "ctaH2": "Direct booking.",
     "ctaButton": "Check availability",
-    "ctaNote": "Free cancellation up to thirty days before arrival. No deposit for stays of two nights or fewer."
+    "ctaNote": "Free cancellation up to 10 days before arrival."
   },
 
   "ExperiencesPage": {
@@ -582,7 +582,7 @@
     "reserveH2": "A {name} room, from",
     "reservePerNight": "Ariary.",
     "reserveCheck": "Check availability",
-    "reserveNote": "Per night. Free cancellation up to thirty days before arrival.",
+    "reserveNote": "Per night. Free cancellation up to 10 days before arrival.",
     "othersKicker": "Or another room",
     "othersAlt": "{name} room",
     "othersFrom": "From"

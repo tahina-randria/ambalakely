@@ -25,7 +25,7 @@
     "ariary": "Ariary",
     "viewAll": "Voir tout",
     "readMore": "Lire la suite",
-    "freeCancellation30": "Annulation gratuite jusqu'à trente jours avant l'arrivée.",
+    "freeCancellation30": "Annulation gratuite jusqu'à 10 jours avant l'arrivée.",
     "yes": "Oui",
     "no": "Non",
     "or": "Ou"
@@ -127,7 +127,7 @@
 
   "Trust": {
     "kicker": "Communauté",
-    "h2": "Deux pour cent de chaque séjour vont à l'école d'à côté.",
+    "h2": "Une part de chaque séjour soutient l'école d'à côté.",
     "body": "Hope for the Future a ouvert en 2014. Cent trente enfants de Tanambao, le quartier d'Ambalakely. Dix ans des mêmes mercredis et samedis après-midi.",
     "readMore": "Voir l'école",
     "imageAlt": "Hope for the Future, l'école du quartier Tanambao"
@@ -183,7 +183,7 @@
     "kicker": "Réserver",
     "h2": "Dites-nous quand.",
     "body": "Deux façons de nous joindre. Le formulaire pour les dates et les chambres. WhatsApp ou e-mail si vous préférez écrire. Nous répondons dans la journée.",
-    "freeCancellation": "Annulation gratuite jusqu'à trente jours avant l'arrivée.",
+    "freeCancellation": "Annulation gratuite jusqu'à 10 jours avant l'arrivée.",
     "whatsappLabel": "WhatsApp",
     "whatsappMessage": "Bonjour, je souhaite réserver un séjour à Ambalakely."
   },
@@ -205,7 +205,7 @@
     "messagePlaceholder": "Ce que nous devons savoir — préférences, occasions, questions.",
     "sending": "Envoi…",
     "send": "Envoyer la demande",
-    "footer": "Jusqu'à {max} voyageurs. Annulation gratuite jusqu'à 30 jours avant l'arrivée.",
+    "footer": "Jusqu'à {max} voyageurs. Annulation gratuite jusqu'à 10 jours avant l'arrivée.",
     "writeUs": "Ou écrivez-nous directement",
     "groupCTA": "Pour les groupes, nous regroupons les chambres et adaptons le séjour. Écrivez-nous directement.",
     "groupWhatsapp": "WhatsApp",
@@ -400,7 +400,7 @@
     "ctaKicker": "Réserver",
     "ctaH2": "Réservation directe.",
     "ctaButton": "Voir les disponibilités",
-    "ctaNote": "Annulation gratuite jusqu'à trente jours avant l'arrivée. Aucun acompte pour les séjours de deux nuits ou moins."
+    "ctaNote": "Annulation gratuite jusqu'à 10 jours avant l'arrivée."
   },
 
   "ExperiencesPage": {
@@ -582,7 +582,7 @@
     "reserveH2": "Une chambre {name}, à partir de",
     "reservePerNight": "Ariary.",
     "reserveCheck": "Voir les disponibilités",
-    "reserveNote": "Par nuit. Annulation gratuite jusqu'à trente jours avant l'arrivée.",
+    "reserveNote": "Par nuit. Annulation gratuite jusqu'à 10 jours avant l'arrivée.",
     "othersKicker": "Ou une autre chambre",
     "othersAlt": "Chambre {name}",
     "othersFrom": "À partir de"
