@@ -904,6 +904,18 @@ input[type="date"].input-dark::-webkit-datetime-edit-day-field:focus {
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: var(--color-sand-9) transparent;
+
+  /* Dark theme — override the library's CSS vars on the dropdown root.
+     The same `--selected-dropdown-item-background-color` var is used by
+     the library for BOTH :hover AND --selected/--focused, so without
+     this override the hover/selected row painted whitesmoke under our
+     sand-1 white text → invisible. */
+  --react-international-phone-dropdown-item-background-color: var(--color-sand-12);
+  --react-international-phone-dropdown-item-text-color: var(--color-sand-1);
+  --react-international-phone-dropdown-item-dial-code-color: var(--color-sand-6);
+  --react-international-phone-selected-dropdown-item-background-color: var(--color-sand-11);
+  --react-international-phone-selected-dropdown-item-text-color: var(--color-sand-1);
+  --react-international-phone-selected-dropdown-item-dial-code-color: var(--color-sand-5);
 }
 
 .react-international-phone-country-selector-dropdown::-webkit-scrollbar {
