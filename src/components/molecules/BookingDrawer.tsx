@@ -4,7 +4,12 @@ import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 're
 import { useLocale, useTranslations } from 'next-intl';
 import { DayPicker, type DateRange } from 'react-day-picker';
 import 'react-day-picker/style.css';
-import { PhoneInput } from 'react-international-phone';
+import {
+  CountrySelector,
+  FlagImage,
+  usePhoneInput,
+  type CountryIso2,
+} from 'react-international-phone';
 import 'react-international-phone/style.css';
 import { fr as frLocale, enUS, nb } from 'date-fns/locale';
 import {
@@ -78,6 +83,21 @@ export function BookingDrawer({ open, onClose }: Props) {
   // it before). Detected with matchMedia so SSR returns false and we
   // don't hydration-mismatch ; effect bumps it client-side.
   const [twoMonths, setTwoMonths] = useState(false);
+
+  // Phone input — custom layout so the dial code (+33) sits IN the
+  // country selector button next to the flag, not as a prefix inside
+  // the phone input. `disableDialCodeAndPrefix: true` removes it
+  // from the inputValue ; we paint it ourselves inside renderButtonWrapper
+  // below. usePhoneInput keeps the full E.164 phone in `form.phone`
+  // via the onChange callback, which is what the API expects.
+  const defaultPhoneCountry: CountryIso2 =
+    locale === 'no' ? 'no' : locale === 'en' ? 'us' : 'fr';
+  const phoneInput = usePhoneInput({
+    defaultCountry: defaultPhoneCountry,
+    value: form.phone,
+    disableDialCodeAndPrefix: true,
+    onChange: ({ phone }) => setForm((f) => ({ ...f, phone })),
+  });
 
   // Group flow triggered only for "11+" (we ship up to 10 individual slots).
   const isGroup = Number(form.guests) >= 11;
@@ -439,19 +459,47 @@ export function BookingDrawer({ open, onClose }: Props) {
                     </div>
 
                     <Field label={t('phoneLabel')}>
-                      <PhoneInput
-                        defaultCountry={locale === 'no' ? 'no' : locale === 'en' ? 'us' : 'fr'}
-                        value={form.phone}
-                        onChange={(phone) => setForm((f) => ({ ...f, phone }))}
-                        forceDialCode
-                        inputClassName="!w-full !h-12 !bg-transparent !border !border-[var(--color-sand-10)] !text-[var(--color-sand-1)] !text-[15px] !rounded-none focus:!border-[var(--color-sand-1)]"
-                        countrySelectorStyleProps={{
-                          buttonClassName: 'phone-country-button !h-12 !bg-transparent !border !border-[var(--color-sand-10)] !rounded-none hover:!bg-[var(--color-sand-11)]',
-                          dropdownStyleProps: {
-                            className: '!bg-[var(--color-sand-12)] !text-[var(--color-sand-1)] !border-[var(--color-sand-10)]',
-                          },
-                        }}
-                      />
+                      <div className="flex">
+                        <CountrySelector
+                          selectedCountry={phoneInput.country.iso2}
+                          onSelect={(c) =>
+                            phoneInput.setCountry(c.iso2, { focusOnInput: true })
+                          }
+                          dropdownStyleProps={{
+                            className:
+                              '!bg-[var(--color-sand-12)] !text-[var(--color-sand-1)] !border-[var(--color-sand-10)]',
+                          }}
+                          renderButtonWrapper={({ rootProps }) => (
+                            <button
+                              type="button"
+                              {...rootProps}
+                              className="inline-flex items-center gap-2 h-12 px-3 border border-r-0 border-[var(--color-sand-10)] hover:bg-[var(--color-sand-11)] transition-colors duration-[var(--duration-fast)] text-[var(--color-sand-1)] shrink-0"
+                            >
+                              <FlagImage
+                                iso2={phoneInput.country.iso2}
+                                style={{ width: 22, height: 16 }}
+                              />
+                              <span className="text-[15px] tabular-nums font-body">
+                                +{phoneInput.country.dialCode}
+                              </span>
+                              <CaretDown
+                                size={12}
+                                weight="regular"
+                                className="text-[var(--color-sand-6)]"
+                              />
+                            </button>
+                          )}
+                        />
+                        <input
+                          type="tel"
+                          autoComplete="tel-national"
+                          ref={phoneInput.inputRef}
+                          value={phoneInput.inputValue}
+                          onChange={phoneInput.handlePhoneValueChange}
+                          placeholder="6 12 34 56 78"
+                          className="input-dark w-full min-w-0"
+                        />
+                      </div>
                     </Field>
 
                     <Field label={t('email')}>
