@@ -62,7 +62,7 @@ export default async function CommunityPage({ params }: LocaleParam) {
 
   const numbers: Stat[] = [
     { value: '130', label: t('numberChildrenLabel'), Icon: Users },
-    { value: '~4 000', label: t('numberInhabitantsLabel'), Icon: HouseIcon },
+    { value: '4 000', label: t('numberInhabitantsLabel'), Icon: HouseIcon },
     { value: '1', label: t('numberNeighbourhoodLabel'), Icon: MapPinLine },
     { value: '152 m²', label: t('numberBuildingLabel'), Icon: Calendar },
   ];
