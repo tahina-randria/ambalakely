@@ -279,6 +279,16 @@ export function BookingDrawer({ open, onClose }: Props) {
                       <div className="border border-[var(--color-sand-10)] p-3 md:p-4">
                         <DayPicker
                           mode="range"
+                          // min={1} forces "first click sets from only,
+                          // second click sets to". Without it RDP v9
+                          // sets from=to on the first click (0-night
+                          // range), which a) prevented our hover preview
+                          // from ever firing because range.to was
+                          // always set, and b) confused users into
+                          // thinking nothing happened after the first
+                          // click. Minimum 1-night stay is the right
+                          // default for a hotel.
+                          min={1}
                           selected={form.range}
                           onSelect={(range) => {
                             setForm((f) => ({ ...f, range }));
