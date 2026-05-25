@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + R2/R3 prudence + BookingDrawer pass 2 `32c7d60` — two-month calendar on md+ + dynamic range hover preview + sm:max-w-none breakpoint fix + min={1} so first click commits arrival only — see §24, §25, §26)
+Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + R2/R3 + BookingDrawer pass 2 + pass 3 `8513c7b` — textarea height fix + JS wheel handler so country dropdown scrolls + 2-month calendar + range hover preview + min={1} — see §24, §25, §26, §27)
 
 ---
 
@@ -1290,6 +1290,95 @@ single-month layout on mobile keeps the click target generous.
   small follow-up if cleanup matters.
 - The Field component is a small inline helper — could move to
   `atoms/Field.tsx` if reused elsewhere.
+
+— Claude, 2026-05-25 late evening
+
+---
+
+## 27. BookingDrawer pass 3 — textarea collapse + phone dropdown wheel (2026-05-25, late evening)
+
+User flagged step-2 bugs after pass 2 landed :
+1. Message textarea looked "cropped" — placeholder running off the right edge
+2. Couldn't scroll the country dial-code dropdown with mouse wheel ;
+   only the scrollbar drag worked
+
+### What shipped — 2 commits
+
+| SHA | Subject |
+|---|---|
+| `6dcb4d9` | fix(booking) textarea height + phone dropdown wheel scroll (CSS) |
+| `8513c7b` | fix(booking) JS handler to make wheel scroll the country dropdown |
+
+### Root causes
+
+**a. Textarea collapsed to single-line.** `.input-dark` in
+`globals.css` sets `height: 48px` + `padding: 0 16px` (designed for
+single-line `<input>` elements) and lives **outside any Tailwind
+cascade layer**, so its rules win over the inline `py-3` utility
+trying to add vertical padding. The textarea kept `rows={3}` as an
+HTML attribute but the CSS height: 48px clipped it to a single visual
+line, cropping the placeholder text on the right edge.
+
+→ Fix : `textarea.input-dark { height: auto ; min-height: 120px ;
+padding: 12px 16px ; line-height: 1.45 ; }`. Selectors with element +
+class are more specific than `.input-dark` alone, so this wins
+without `!important`. Verified live : textarea now 120 px tall,
+padding 12 px 16 px, three lines of placeholder visible.
+
+**b. Wheel didn't scroll the country dropdown.** Verified via Playwright
+wheel trace : the wheel event hit the dropdown's `LI` cleanly (deltaY
+200, defaultPrevented false), but **neither the UL nor the parent
+sheet actually scrolled**. The browser was failing to pick the UL as
+the scroll target — likely an interaction with Radix Dialog's modal
+container that breaks the standard "walk up to nearest scrollable
+ancestor" logic.
+
+CSS-only `overscroll-behavior: contain` on the dropdown was not
+enough (it only prevents chain-out, doesn't force scroll-in).
+
+→ Fix : document-level capture wheel listener in BookingDrawer that
+detects the event coming from inside `.react-international-phone-
+country-selector-dropdown`, calls `preventDefault` + `stopPropagation`,
+and drives `scrollTop += deltaY` by hand. Verified live : wheel
+deltaY=400 → dropdown.scrollTop 1784 → 2184 ; sheet.scrollTop stays 0
+(no chain). Touch users unaffected (touch fires scroll, not wheel).
+
+The CSS bits (`overscroll-behavior: contain`, slim scrollbar matching
+the dark theme) from `6dcb4d9` are kept — they're still useful as
+belt-and-suspenders for any browser where the JS handler ever fails
+to attach.
+
+### Verification (live, prod, 1440 × 900)
+
+- Open Réserver → calendar : pick May 27 then May 28 → click Continuer
+- Step 2 renders : Message textarea is **120 px tall, 3 lines visible**
+  ✓ (was 48 px = single line)
+- Open phone country dropdown : 300 × 200 px overlay with the long
+  country list
+- `page.mouse.wheel(0, 400)` over the dropdown → dropdown scrollTop
+  jumps by exactly 400 ✓ ; sheet scrollTop unchanged ✓
+- Scrollbar styling : 6 px wide sand-9 thumb on transparent track,
+  matches dark theme
+
+### Files touched
+
+- `src/styles/globals.css` — `textarea.input-dark { ... }` overrides ;
+  `.react-international-phone-country-selector-dropdown` rules
+  (`overscroll-behavior: contain` + slim scrollbar)
+- `src/components/molecules/BookingDrawer.tsx` — third `useEffect`
+  that mounts a document-level capture wheel listener and routes
+  wheel events inside the country dropdown to a manual `scrollTop +=
+  deltaY` ; cleans up on unmount
+
+### Notes
+
+- The wheel handler runs **only when the dropdown is in the DOM** ; if
+  the dropdown's open state ever moves into React state we could
+  gate the listener attach/detach on it. Currently the early-return
+  via `.closest(...)` makes the listener cheap when the dropdown is
+  closed, so no functional issue.
+- If `react-international-phone` ever ships its own wheel handler in
+  a future major version, this handler can be removed.
 
 — Claude, 2026-05-25 late evening
 
