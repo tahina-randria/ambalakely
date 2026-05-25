@@ -38,7 +38,12 @@ export function Hero() {
         className="md:hidden -z-20 object-cover object-[50%_30%] hero-bg-settle"
       />
 
-      {/* Desktop : autoplay loop video. Aspect 16:9 fits well at md+ widths. */}
+      {/* Desktop : autoplay loop video.
+          `media` attribute on the source means the MP4 is only requested
+          on viewports ≥ 768 px ; mobile users never download the file
+          even though the <video> tag is in the DOM (CSS-hidden).
+          preload="metadata" caps the bandwidth on desktop until autoplay
+          decides to fetch frames — a polite default. */}
       <video
         ref={videoRef}
         aria-hidden="true"
@@ -46,11 +51,11 @@ export function Hero() {
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         poster={VIDEO_POSTER}
         className="hidden md:block absolute inset-0 -z-20 h-full w-full object-cover object-center hero-bg-settle"
       >
-        <source src={VIDEO_SRC} type="video/mp4" />
+        <source src={VIDEO_SRC} type="video/mp4" media="(min-width: 768px)" />
       </video>
       <div
         aria-hidden="true"

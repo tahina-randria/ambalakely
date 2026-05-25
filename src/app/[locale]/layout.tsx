@@ -14,7 +14,6 @@ import { SentryConsentSync } from '@/components/atoms/SentryConsentSync';
 import { AxeReport } from '@/components/atoms/AxeReport';
 import { ConsentProvider } from '@/lib/consent';
 import { CookieBanner } from '@/components/molecules/CookieBanner';
-import { MobileBookingBar } from '@/components/molecules/MobileBookingBar';
 import { fetchHotel } from '@/sanity/lib/fetch';
 import { routing } from '@/i18n/routing';
 import '@/styles/globals.css';
@@ -149,7 +148,14 @@ export default async function LocaleLayout({
               <SmoothScrollProvider>{children}</SmoothScrollProvider>
             </PostHogProvider>
             <CookieBanner />
-            <MobileBookingBar />
+            {/* MobileBookingBar removed from the layout 2026-05-25 evening :
+                the sticky bottom CTA was permanently blocking ~56 px of
+                screen on every mobile page (journal articles, FAQ,
+                story...) where it had no business intruding. The top Nav
+                already exposes Réserver on mobile, so the conversion
+                affordance is preserved. Re-mount conditionally on
+                /rooms/[category] later if intent-page sticky CTA is
+                wanted back. */}
           </ConsentProvider>
         </NextIntlClientProvider>
         <Analytics />
