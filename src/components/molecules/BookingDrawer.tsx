@@ -477,7 +477,8 @@ export function BookingDrawer({ open, onClose }: Props) {
                             >
                               <FlagImage
                                 iso2={phoneInput.country.iso2}
-                                style={{ width: 22, height: 16 }}
+                                size="22px"
+                                disableLazyLoading
                               />
                               <span className="text-[15px] tabular-nums font-body">
                                 +{phoneInput.country.dialCode}
