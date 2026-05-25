@@ -31,8 +31,8 @@ export function BookingAck({
         <Text style={styles.heading}>Merci, {name.split(' ')[0]}.</Text>
         <Text style={styles.paragraph}>
           Nous avons bien reçu votre demande de séjour à l'Hôtel Ambalakely.
-          Hasina ou Mamy vous répondra personnellement sous 24 à 48 heures avec
-          la disponibilité et un devis détaillé.
+          Hasina ou Mamy vous répondra personnellement avec la disponibilité et
+          un devis détaillé.
         </Text>
         <Text style={styles.paragraph}>
           Si votre voyage est imminent, n'hésitez pas à nous joindre directement

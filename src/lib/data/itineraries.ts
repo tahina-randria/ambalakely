@@ -47,7 +47,7 @@ export const itineraries: Itinerary[] = [
         day: 2,
         title: 'Parc national de Ranomafana',
         body:
-          "Départ à six heures du matin avec un petit déjeuner emporté. Le parc est plus animé aux premières heures, quand les lémuriens descendent se nourrir. Marche guidée de trois à quatre heures à la recherche du sifaka de Milne-Edwards et du lémurien doré du bambou. Déjeuner au village de Ranomafana, retour à Ambalakely pour le dîner. Bouillottes dans le lit à dix-huit heures.",
+          "Départ tôt le matin avec un petit déjeuner emporté. Le parc est plus animé aux premières heures, quand les lémuriens descendent se nourrir. Marche guidée de quelques heures à la recherche du sifaka de Milne-Edwards et du lémurien doré du bambou. Déjeuner au village de Ranomafana, retour à Ambalakely en fin d'après-midi pour le dîner, bouillotte au lit le soir.",
         transit: '180 km aller-retour, environ 3 heures de route.',
       },
       {
@@ -94,7 +94,7 @@ export const itineraries: Itinerary[] = [
         day: 4,
         title: "Journée Andringitra ou repos au village",
         body:
-          "Deux options. La version active : départ à cinq heures du matin pour le massif du Tsaranoro au pied d'Andringitra, une journée de marche à travers les villages et les falaises de granite. Ou la version calme : une demi-journée à cuisiner avec Hasina et un après-midi au jardin.",
+          "Deux options. La version active : départ tôt le matin pour le massif du Tsaranoro au pied d'Andringitra, une journée de marche à travers les villages et les falaises de granite. Ou la version calme : une demi-journée à cuisiner avec Hasina et un après-midi au jardin.",
         transit: '320 km aller-retour pour Andringitra, ou 5 km pour la cuisine.',
       },
       {

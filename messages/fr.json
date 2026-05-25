@@ -184,7 +184,7 @@
   "Book": {
     "kicker": "Réserver",
     "h2": "Dites-nous quand.",
-    "body": "Deux façons de nous joindre. Le formulaire pour les dates et les chambres. WhatsApp ou e-mail si vous préférez écrire. Nous répondons dans la journée.",
+    "body": "Deux façons de nous joindre. Le formulaire pour les dates et les chambres. WhatsApp ou e-mail si vous préférez écrire. Hasina ou Mamy vous répondent personnellement.",
     "freeCancellation": "Annulation gratuite jusqu'à 10 jours avant l'arrivée.",
     "whatsappLabel": "WhatsApp",
     "whatsappMessage": "Bonjour, je souhaite réserver un séjour à Ambalakely."
@@ -215,7 +215,7 @@
     "groupWhatsappText": "Demande de réservation de groupe à Ambalakely",
     "groupEmailSubject": "Réservation groupe ({guests} voyageurs)",
     "successH2": "Demande reçue.",
-    "successBody": "Merci. Nous répondons sous 24 à 48 heures avec les disponibilités et un devis personnalisé. Une confirmation a été envoyée dans votre boîte de réception.",
+    "successBody": "Merci. Nous revenons vers vous personnellement avec les disponibilités et un devis. Une confirmation a été envoyée dans votre boîte de réception. Pour un séjour proche, WhatsApp reste le plus rapide.",
     "successClose": "Fermer",
     "step": "Étape",
     "of": "sur",
@@ -540,7 +540,7 @@
     "heroTitle": ["Questions fréquentes,", "réponses simples."],
     "introLede": "Les questions qu'on nous pose le plus souvent, avec de vraies réponses.",
     "introBodyLead": "Si vous ne trouvez pas, écrivez-nous à ",
-    "introBodyMid": " et nous répondrons dans la journée. WhatsApp ",
+    "introBodyMid": " et nous vous répondrons personnellement. WhatsApp ",
     "introBodyTrail": " fonctionne aussi.",
     "ctaH2": "Écrivez-nous, ou réservez directement.",
     "ctaCheck": "Voir les disponibilités"

@@ -184,7 +184,7 @@
   "Book": {
     "kicker": "Bestill",
     "h2": "Si fra om når.",
-    "body": "To måter å nå oss på. Skjemaet for datoer og rom. WhatsApp eller e-post hvis du heller vil skrive. Vi svarer samme dag.",
+    "body": "To måter å nå oss på. Skjemaet for datoer og rom. WhatsApp eller e-post hvis du heller vil skrive. Hasina eller Mamy svarer personlig.",
     "freeCancellation": "Gratis avbestilling inntil 10 dager før ankomst.",
     "whatsappLabel": "WhatsApp",
     "whatsappMessage": "Hei, jeg ønsker å bestille et opphold på Ambalakely."
@@ -215,7 +215,7 @@
     "groupWhatsappText": "Gruppeforespørsel for Ambalakely",
     "groupEmailSubject": "Gruppeforespørsel ({guests} gjester)",
     "successH2": "Forespørsel mottatt.",
-    "successBody": "Takk. Vi svarer innen 24 til 48 timer med tilgjengelighet og et tilpasset tilbud. En bekreftelse er sendt til innboksen din.",
+    "successBody": "Takk. Vi kommer personlig tilbake til deg med tilgjengelighet og et tilbud. En bekreftelse er sendt til innboksen din. For nær forestående reise er WhatsApp raskest.",
     "successClose": "Lukk",
     "step": "Trinn",
     "of": "av",
@@ -540,7 +540,7 @@
     "heroTitle": ["Vanlige spørsmål,", "enkle svar."],
     "introLede": "Spørsmålene vi får oftest, med ekte svar.",
     "introBodyLead": "Finner du det ikke, skriv til oss på ",
-    "introBodyMid": " så svarer vi samme dag. WhatsApp ",
+    "introBodyMid": " så svarer vi personlig. WhatsApp ",
     "introBodyTrail": " fungerer også.",
     "ctaH2": "Skriv til oss, eller bestill direkte.",
     "ctaCheck": "Se tilgjengelighet"

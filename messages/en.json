@@ -184,7 +184,7 @@
   "Book": {
     "kicker": "Book",
     "h2": "Tell us when.",
-    "body": "Two ways to reach us. The form for dates and rooms. WhatsApp or email if you'd rather write. We reply within the day.",
+    "body": "Two ways to reach us. The form for dates and rooms. WhatsApp or email if you'd rather write. Hasina or Mamy reply personally.",
     "freeCancellation": "Free cancellation up to 10 days before arrival.",
     "whatsappLabel": "WhatsApp",
     "whatsappMessage": "Hello, I'd like to book a stay at Ambalakely."
@@ -215,7 +215,7 @@
     "groupWhatsappText": "Group booking request for Ambalakely",
     "groupEmailSubject": "Group booking ({guests} guests)",
     "successH2": "Request received.",
-    "successBody": "Thank you. We reply within 24 to 48 hours with availability and a tailored quote. A confirmation has been sent to your inbox.",
+    "successBody": "Thank you. We will reply personally with availability and a tailored quote. A confirmation has been sent to your inbox. For travel that's imminent, WhatsApp is the fastest way to reach us.",
     "successClose": "Close",
     "step": "Step",
     "of": "of",
@@ -540,7 +540,7 @@
     "heroTitle": ["Frequently asked,", "simply answered."],
     "introLede": "The questions we hear most often, with real answers.",
     "introBodyLead": "If you can't find it, write to us at ",
-    "introBodyMid": " and we'll reply the same day. WhatsApp ",
+    "introBodyMid": " and we'll reply personally. WhatsApp ",
     "introBodyTrail": " works too.",
     "ctaH2": "Write to us, or book directly.",
     "ctaCheck": "Check availability"
