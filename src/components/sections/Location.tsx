@@ -60,13 +60,16 @@ export async function Location() {
                     key={d.label}
                     className="flex items-baseline justify-between gap-4 py-5 border-b border-[var(--color-border-subtle)]"
                   >
-                    {/* Sub text ("Capitale · aéroport Ivato", "Ville thermale",
-                        "Parc national", "Massif") removed — anyone planning a
-                        trip to Madagascar knows what these places are. The
-                        place name + drive time is enough. */}
                     <div className="min-w-0">
                       <div className="font-display text-[20px] tracking-[-0.01em] text-[var(--color-text)]">
                         {d.label}
+                      </div>
+                      {/* Restored — a first-time Madagascar traveller
+                          doesn't know that Isalo = sandstone massif or
+                          Ranomafana = rainforest national park. The sub
+                          text earns its place. */}
+                      <div className="mt-1 text-[15px] text-[var(--color-text-muted)] truncate">
+                        {d.sub}
                       </div>
                     </div>
                     <div className="text-[16px] tabular-nums text-[var(--color-text)] shrink-0">
