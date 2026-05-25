@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + R2/R3 + BookingDrawer passes 2-4 `9289866` — phone +33 now lives in the country selector button, flag eager-loads, dropdown hover row readable, textarea 3-line, wheel scrolls dropdown, 2-month calendar, range hover preview, min={1} — see §24, §25, §26, §27, §28)
+Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + R2/R3 + BookingDrawer passes 2-4 + nav auto-hide `1b30718` — dynamic phone placeholder per country, nav slides off on scroll-down + back on scroll-up, full booking drawer polish — see §24, §25, §26, §27, §28, §29)
 
 ---
 
@@ -1484,6 +1484,184 @@ E.164 number (no regression).
   `defaultPhoneCountry` derived from locale (`no`/`us`/`fr`)
 - `src/styles/globals.css` — added the RIP dark-theme CSS var
   overrides on `.react-international-phone-country-selector-dropdown`
+
+— Claude, 2026-05-25 late evening
+
+---
+
+## 29. Phone placeholder per country + nav auto-hide on scroll (2026-05-25, late evening)
+
+Two unrelated polish items the user flagged after pass 4 :
+
+1. The phone input placeholder was hardcoded `"6 12 34 56 78"` —
+   FR-shaped — which became wrong the moment a user picked any
+   other country in the indicatif dropdown.
+2. The fixed nav was permanently eating 72 px at the top during
+   reading. User wanted it accessible when scrolling without
+   permanently taking real estate.
+
+### What shipped — 3 commits
+
+| SHA | Subject |
+|---|---|
+| `aa34d3f` | feat(booking) dynamic phone placeholder per selected country |
+| `138d9d5` | fix(booking) phone placeholder fallback for countries without a format mask |
+| `1b30718` | feat(nav) auto-hide on scroll-down, show on scroll-up |
+
+### Dynamic phone placeholder (`aa34d3f` + `138d9d5`)
+
+`buildPhonePlaceholder(format)` helper in `BookingDrawer.tsx` :
+
+```ts
+const PLACEHOLDER_DIGITS = '1234567890';
+const FALLBACK_MASK = '............';
+
+function buildPhonePlaceholder(format: string | Record<string, string> | undefined): string {
+  const mask =
+    (typeof format === 'string' ? format : format?.default) || FALLBACK_MASK;
+  let digitIdx = 0;
+  let result = '';
+  for (const ch of mask) {
+    if (ch === '.') {
+      result += PLACEHOLDER_DIGITS[digitIdx % 10];
+      digitIdx++;
+    } else {
+      result += ch;
+    }
+  }
+  return result;
+}
+```
+
+Reads `phoneInput.country.format` from the RIP hook (the same mask
+the library applies to actual user input), substitutes `.` with
+sequential 1-0 digits, keeps separator chars (`( ) - space`) as-is.
+Wired via `placeholder={buildPhonePlaceholder(phoneInput.country.format)}`
+on the `<input type="tel">`.
+
+`138d9d5` added a 12-dot fallback for countries the RIP dataset
+ships without a format string (Madagascar, several smaller ones).
+
+Verified live :
+
+| Pays | Mask RIP | Placeholder rendu |
+|---|---|---|
+| 🇫🇷 France | `. .. .. .. ..` | `1 23 45 67 89` |
+| 🇺🇸 États-Unis | `(...) ...-....` | `(123) 456-7890` |
+| 🇳🇴 Norvège | `... .. ...` | `123 45 678` |
+| 🇲🇬 Madagascar | (none, fallback) | `123456789012` |
+
+Zero new dependency. The placeholder updates instantly when the user
+switches country in the dropdown because the helper runs on every
+render and reads the current `phoneInput.country` reactively.
+
+### Nav auto-hide (`1b30718`)
+
+Pattern : Substack / Apple / Aman / Six Senses. The nav slides
+hidden when the user scrolls down (reading focus), reappears the
+moment they scroll back up (typical "I want to navigate" intent).
+
+Implementation in `Nav.tsx` :
+
+```ts
+const [hidden, setHidden] = useState(false);
+const lastScrollY = useRef(0);
+
+useEffect(() => {
+  const handler = () => {
+    const y = window.scrollY;
+    const delta = y - lastScrollY.current;
+    setScrolled(y > 40);
+    if (y < 80) setHidden(false);          // top zone — always show
+    else if (delta > 5) setHidden(true);    // scroll DOWN by >5 px → hide
+    else if (delta < -5) setHidden(false);  // scroll UP by >5 px → show
+    lastScrollY.current = y;
+  };
+  handler();
+  window.addEventListener('scroll', handler, { passive: true });
+  return () => window.removeEventListener('scroll', handler);
+}, []);
+```
+
+Applied via :
+
+```tsx
+className={cn(
+  'fixed top-0 left-0 right-0 z-50 motion-safe:transition-[background-color,backdrop-filter,transform] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
+  scrolled ? '...' : 'bg-transparent',
+  hidden && !menuOpen && '-translate-y-full',
+)}
+```
+
+Key constraints :
+- **Always visible when `scrollY < 80`** — landing experience untouched
+- **5 px jitter threshold** prevents trackpad twitches from flickering
+  the nav in and out
+- **`motion-safe:`** so users with `prefers-reduced-motion: reduce`
+  get the hide/show instantly (no animation)
+- **Forced visible when mobile burger menu is open** — otherwise the
+  X close button would slide out of reach
+
+Verified live by programmatic scroll : `scrollY=2000` → `-translate-y-full`
+class applied, screenshot shows the Standard room section without any
+nav band at top ✓. `scrollY=1500` (back up) → class removed, nav
+reappears ✓.
+
+Note : Lenis intercepts `page.mouse.wheel()` events from Playwright
+so the wheel-based test didn't trigger the scroll listener. Used
+`window.scrollTo(...)` directly to verify the underlying logic,
+which works in real Chrome.
+
+### Files touched
+
+- `src/components/molecules/BookingDrawer.tsx` — `buildPhonePlaceholder`
+  helper + `placeholder` prop wired to the helper
+- `src/components/sections/Nav.tsx` — added `hidden` state +
+  `lastScrollY` ref + merged into existing scroll handler ;
+  `-translate-y-full` conditional class
+
+### What still hangs (full long-form follow-ups)
+
+#### Awaiting user input (unchanged from prior sections)
+- 12 `⚠️ NEEDS REAL CONTENT` flags in `src/lib/data/faq.ts`
+  (breakfast inclusion, WiFi room coverage, late check-out specifics,
+  accessibility layout, security details, Tana→hôtel transfer price…)
+- Andringitra round-trip distance in `itineraries.ts` (says 320 km,
+  probably closer to 240 km)
+- Google Places API integration for live reviews (needs user-created
+  API key + Place ID ; cost is $0/month with Next.js ISR cache 24 h
+  because 30 calls/mo × $0.025 = $0.75 vs $200 free credit)
+
+#### Code that can ship without user input
+- Currently none. All known UX bugs and content prudence items have
+  shipped. The codebase is in a "nothing pending" state for the
+  first time this session.
+
+#### Phase visuelle (deferred until creative direction lands)
+- AI lifestyle assets (Nano Banana Pro) with non-contractual
+  disclaimer to fill gaps : table dressed at dusk, server pouring,
+  sunset with hotel logo. User wants these "en mode projection, pas
+  contractuel". Disclaimer pattern must be visible.
+- Editorial photo orchestration : asymmetric grids (one large + two
+  small) on Stay home, cinematic 21:9 ratios for hero moments,
+  generous whitespace, editorial captions in Fraunces.
+- Trust.tsx Squarespace CDN URL → local migration when `HFF.webp` is
+  dropped in `/public/photos/`.
+- Live Google Places API for reviews (replace the 9 curated TripAdvisor
+  with 5 live Google) — see "Awaiting user input" above.
+- B5 token scale (consolidate 231 inline font-sizes → 11 tokens, 92
+  widths → 6 tokens). Pure hygiene, no user-visible change. Branch +
+  Playwright before/after recommended.
+
+### Verbal-decision shortcuts seen this session
+
+The user's "shortcut" responses, useful to recognize :
+- "go" / "goo" / "ok go" → execute the just-proposed plan straight away
+- "soit prudent" → stop committing, audit-only mode
+- "ok ok goo" → confirm + go
+- "ok pour l'instant" → defer that change but not permanently
+- "next steps" → consolidate HANDOFF + list what's left
+- "consolide" → write HANDOFF section for what just shipped
 
 — Claude, 2026-05-25 late evening
 
