@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils/cn';
@@ -23,9 +23,29 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  // Auto-hide on scroll-down, show on scroll-up (Substack / Apple pattern).
+  // Always visible at the very top (scrollY < 80 px). A small 5 px
+  // jitter threshold avoids the nav flickering on every touchpad twitch.
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40);
+    const handler = () => {
+      const y = window.scrollY;
+      const delta = y - lastScrollY.current;
+      setScrolled(y > 40);
+      if (y < 80) {
+        // Near the top → always show
+        setHidden(false);
+      } else if (delta > 5) {
+        // Scrolling DOWN by more than 5 px → hide
+        setHidden(true);
+      } else if (delta < -5) {
+        // Scrolling UP by more than 5 px → show
+        setHidden(false);
+      }
+      lastScrollY.current = y;
+    };
     handler();
     window.addEventListener('scroll', handler, { passive: true });
     return () => window.removeEventListener('scroll', handler);
@@ -63,7 +83,7 @@ export function Nav() {
     <>
       <nav
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
+          'fixed top-0 left-0 right-0 z-50 motion-safe:transition-[background-color,backdrop-filter,transform] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
           // 95% opaque sand-1 + backdrop blur once scrolled, so the nav
           // stays legible over every section (Trust full-bleed dark image,
           // Reviews white, etc.). Earlier 92% bordered on translucent on
@@ -73,6 +93,11 @@ export function Nav() {
           scrolled
             ? 'bg-[color-mix(in_srgb,var(--color-bg)_95%,transparent)] backdrop-blur-[12px] border-b border-[var(--color-border-subtle)]'
             : 'bg-transparent',
+          // Auto-hide on scroll-down to free vertical real estate ;
+          // reappears on first upward gesture. Hidden state never
+          // applies when the mobile menu is open (otherwise its X
+          // would slide out of reach).
+          hidden && !menuOpen && '-translate-y-full',
         )}
       >
         <div
