@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + R2/R3 prudence pass `062c0dc` — 8 prices → "sur demande", 12 time promises softened, in prod — see §24 + §25)
+Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + R2/R3 prudence + BookingDrawer pass 2 `32c7d60` — two-month calendar on md+ + dynamic range hover preview + sm:max-w-none breakpoint fix + min={1} so first click commits arrival only — see §24, §25, §26)
 
 ---
 
@@ -1194,6 +1194,104 @@ avec la disponibilité et un devis détaillé" (the sub-clause is dropped).
 - B5 token scale formal pass (purely hygiene, no user-visible change)
 
 — Claude, 2026-05-25 late evening, post-/compact
+
+---
+
+## 26. BookingDrawer UX pass 2 (2026-05-25, late evening)
+
+User flagged three issues on the right-side booking sheet :
+1. "Inputs croppés" — calendar felt tiny relative to the desktop drawer width
+2. Range color (lighter middle band) only appeared AFTER both arrival
+   and departure were clicked — no preview as the user hovered
+3. Implicit : the in-between sm-md breakpoint (640–767 px) made the
+   drawer go full-screen, broken UX
+
+### What shipped — 2 commits
+
+| SHA | Subject |
+|---|---|
+| `a746bdf` | fix(booking) two-month calendar on md+ + range hover preview + drawer breakpoint |
+| `32c7d60` | fix(booking) add min={1} so first click only commits arrival (enables hover preview) |
+
+### Diagnosis
+
+Three distinct problems, three fixes :
+
+**a. Desktop calendar looked tiny.** Drawer was 640 px wide on md+, but
+the single-month calendar grid used only 252 px (7 cells × 36 px) =
+39 % of the drawer. Big empty zone right of the calendar made the form
+feel cramped despite the generous drawer width.
+
+→ Fix : render **two months side-by-side on md+** via a `matchMedia('(min-width: 768px)')` listener that flips `numberOfMonths` from 1 to 2 client-side. SSR returns false so no hydration mismatch. Mobile keeps single month (vertical space stays compact and Continuer button stays above the fold).
+
+**b. No hover preview.** RDP v9 supports `onDayMouseEnter` + custom
+`modifiers` matchers, but the wiring needs three coordinated pieces :
+   - `hoverDate` state set on enter / cleared on leave + range
+     completion + drawer close
+   - Custom matchers `preview-middle` + `preview-end` that fire when
+     `range.from` is set, `range.to` is undefined, hover is after from
+   - CSS rules using `sand-11` (one step lighter than committed
+     `sand-10` range) so the band reads as a soft "what-if" that
+     hardens into the darker shade on click. `linear-gradient(to right, sand-11 50%, transparent 50%)` on the preview-end so the band terminates cleanly at the hovered day button
+
+   First commit (`a746bdf`) had all three pieces correctly wired but
+   the preview still didn't fire because of problem (d) below.
+
+**c. Broken sm-md drawer width.** Local className `sm:max-w-none`
+overrode shadcn's `sm:max-w-sm` default → between 640–767 px the
+drawer became full-screen (100 vw). Reasonable on iPad portrait
+(768 = md kicks in to cap at 640) but bad on landscape phones or
+Surface 720 px.
+
+→ Fix : drop `sm:max-w-none` entirely. The base `max-w-[480px]` plus
+`md:max-w-[640px]` gives a predictable 480 → 640 progression without
+intermediate full-screen states.
+
+**d. RDP v9 single-click = same-day range bug.** Looked into
+`node_modules/react-day-picker/dist/esm/utils/addToRange.js` after
+the preview matcher kept returning false in production. Root cause :
+v9's `addToRange` defaults `min` to 0, and with `min = 0` the first
+click sets `from = to = clickedDate` instead of `from = date, to = undefined`. Our preview correctly bails when `range.to` is set, so it
+NEVER fired with the default config.
+
+→ Fix : `<DayPicker min={1} ... />`. Flips RDP to "incomplete range"
+mode on first click → from set, to undefined → preview can paint.
+Bonus : eliminates the accidental 0-night same-day range that was
+previously possible.
+
+### Verification (live in prod after deploy)
+
+Captured via Playwright on `https://ambalakely.vercel.app` at 1440 px desktop :
+- Drawer width : 640 px ✓
+- Months rendered : 2 (Mai 2026 + Juin 2026) ✓
+- Click May 27 → 1 `.is-selected` cell, 0 range_start/range_end ✓
+  (first click sets `from` only with `min={1}`)
+- Hover June 5 → 8 `.is-preview-middle` (May 28→June 4) + 1 `.is-preview-end` (June 5), with the softer `sand-11` band ✓
+- Click June 5 → range commits ; classes flip to 1 range_start + 8 range_middle + 1 range_end ; preview classes clear ; "9 nuits" label updates ✓
+- Mouse leave → preview clears even when only arrival is picked ✓
+
+### Touch device behavior
+
+`onDayMouseEnter` never fires on touch devices, so the preview band
+is silently a no-op on mobile/tablet — which is exactly what we want
+since touch users tap dates directly rather than hovering. The
+single-month layout on mobile keeps the click target generous.
+
+### Files touched
+
+- `src/components/molecules/BookingDrawer.tsx` — `hoverDate` + `twoMonths` state, `useEffect` for matchMedia listener, new imports from date-fns (isAfter, isBefore, isSameDay), `onDayMouseEnter`/`onDayMouseLeave` handlers, `modifiers` + `modifiersClassNames` for preview band, `numberOfMonths={twoMonths ? 2 : 1}`, `min={1}`, drawer `sm:max-w-none` dropped
+- `src/styles/globals.css` — `.is-preview-middle` + `.is-preview-end` rules using `var(--color-sand-11)` and a half-and-half linear gradient for the end day
+
+### Notes for the next pass
+
+- The Combobox component (`src/components/ui/combobox.tsx`) was
+  installed via shadcn for the room-type dropdown migration but the
+  current implementation still uses a custom dropdown. Migration is a
+  small follow-up if cleanup matters.
+- The Field component is a small inline helper — could move to
+  `atoms/Field.tsx` if reused elsewhere.
+
+— Claude, 2026-05-25 late evening
 
 ---
 
