@@ -71,11 +71,24 @@ export const fetchHotel = cache(async (locale: string = 'fr'): Promise<Hotel> =>
   const data = await sanityFetch<Partial<Hotel>>(HOTEL_QUERY, { locale });
   if (!data || !data.name) return HOTEL_FALLBACK;
   // Merge field-by-field so any null (= empty in this locale) uses fallback.
+  // The nested `rating` object needs its own per-field merge — without this,
+  // a Sanity rating block with `count: null` clobbers the verified fallback
+  // (HOTEL.rating.count = 32 from the 2026-05-25 TripAdvisor check). §32 fix.
+  const sanityRating = (data as { rating?: Partial<Hotel['rating']> }).rating;
   return {
     ...HOTEL_FALLBACK,
     ...data,
     tagline: data.tagline ?? HOTEL_FALLBACK.tagline,
     description: data.description ?? HOTEL_FALLBACK.description,
+    rating: sanityRating
+      ? {
+          value: sanityRating.value ?? HOTEL_FALLBACK.rating.value,
+          count: sanityRating.count ?? HOTEL_FALLBACK.rating.count,
+          sources: sanityRating.sources?.length
+            ? sanityRating.sources
+            : HOTEL_FALLBACK.rating.sources,
+        }
+      : HOTEL_FALLBACK.rating,
   } as Hotel;
 });
 
