@@ -13,7 +13,6 @@
       "Fianarantsoa stay"
     ]
   },
-
   "Common": {
     "skipToContent": "Skip to content",
     "checkAvailability": "Check availability",
@@ -30,7 +29,6 @@
     "no": "No",
     "or": "Or"
   },
-
   "Nav": {
     "rooms": "Rooms",
     "dining": "Dining",
@@ -44,7 +42,6 @@
     "menuOpen": "Open menu",
     "menuClose": "Close menu"
   },
-
   "Footer": {
     "newsletterKicker": "Quarterly letter",
     "newsletterBody": "A note each season. The garden, the menu, the people who passed through. No advertising, no promotions.",
@@ -72,7 +69,6 @@
     "legalCopyright": "© 2026 Hôtel Ambalakely · Fianarantsoa, Madagascar",
     "cookiesManage": "Manage cookies"
   },
-
   "Hero": {
     "lines": [
       "Ten rooms on the RN7,",
@@ -82,13 +78,11 @@
     "subtitle": "Opened in 2018, twelve kilometres north of Fianarantsoa.",
     "socialProof": ""
   },
-
   "Stay": {
     "kicker": "The rooms",
     "intro": "The same sand walls, the same dark wood floors, the same hot water bottles at night. What changes: the size, the view, the bed.",
     "viewAll": "View all ten rooms"
   },
-
   "Dining": {
     "kicker": "Dining",
     "name": "Toko Telo.",
@@ -102,13 +96,11 @@
     "readMore": "About the restaurant",
     "imageAlt": "Toko Telo dining room"
   },
-
   "Experiences": {
     "kicker": "Experiences",
     "h2": "To walk, to weave, to cook. What this land gives, when it gives it.",
     "viewAll": "View all experiences"
   },
-
   "Story": {
     "h2": "Ten rooms, since 2018.",
     "bodyLead": "The hill was bought in 2015, the first trees planted that same year. From Norway, the idea of ",
@@ -119,7 +111,6 @@
     "readMore": "About the house",
     "imageAlt": "Main building of Hôtel Ambalakely, Fianarantsoa"
   },
-
   "Reviews": {
     "h2": "What our guests say.",
     "ratingNoNumber": "Verified reviews on {sources}",
@@ -130,7 +121,6 @@
     "prevReview": "Previous review",
     "nextReview": "Next review"
   },
-
   "Trust": {
     "kicker": "Community",
     "h2": "A share of every stay supports the school next door.",
@@ -138,7 +128,6 @@
     "readMore": "Visit the school",
     "imageAlt": "Hope for the Future, the school of the Tanambao neighbourhood"
   },
-
   "Location": {
     "kicker": "Location",
     "h2": "On Route Nationale 7, halfway between the capital and the south.",
@@ -162,7 +151,6 @@
     "byAirValue": "TNR → WFI · 1 h 10",
     "byAirBody": "Domestic flights to Fianarantsoa airport from Antananarivo, then a 25-minute drive."
   },
-
   "Journal": {
     "kicker": "Seasonal notes — the kitchen, the garden, the highlands.",
     "viewAll": "Read the journal",
@@ -170,7 +158,10 @@
     "metaDescription": "The journal of Hôtel Ambalakely. Hasina and Mamy on cooking, the garden, the highlands and the people who pass through.",
     "ogTitle": "Journal · Hôtel Ambalakely",
     "ogDescription": "Writings by Hasina and Mamy.",
-    "heroTitle": ["The journal of", "Hôtel Ambalakely."],
+    "heroTitle": [
+      "The journal of",
+      "Hôtel Ambalakely."
+    ],
     "heroAlt": "The journal of Hôtel Ambalakely",
     "introLead": "Writings by Hasina and Mamy. The kitchen, the garden, the people who pass through.",
     "emptyKicker": "Soon",
@@ -184,7 +175,6 @@
     "backToJournal": "Back to the journal",
     "moreWriting": "More writing"
   },
-
   "Book": {
     "kicker": "Book",
     "h2": "Tell us when.",
@@ -193,7 +183,6 @@
     "whatsappLabel": "WhatsApp",
     "whatsappMessage": "Hello, I'd like to book a stay at Ambalakely."
   },
-
   "BookingDrawer": {
     "ariaLabel": "Book a stay",
     "kicker": "Book",
@@ -239,20 +228,16 @@
     "phoneLabel": "Phone",
     "summarize": "Summary"
   },
-
   "MobileBar": {
     "label": "Book"
   },
-
   "StickyReserve": {
     "from": "From",
     "reserve": "Book"
   },
-
   "PageHero": {
     "checkAvailability": "Check availability"
   },
-
   "Faq": {
     "search": "Search the FAQ...",
     "searchAria": "Search the FAQ",
@@ -265,7 +250,6 @@
     "questionsOne": "{n} question",
     "questionsMany": "{n} questions"
   },
-
   "Cookie": {
     "title": "Cookies",
     "body": "We use anonymous audience measurement and error tracking to improve the site. No advertising, no sharing with commercial third parties.",
@@ -281,7 +265,6 @@
     "categoriesLegend": "Cookie categories",
     "manage": "Manage cookies"
   },
-
   "About": {
     "metaTitle": "About",
     "metaDescription": "Mamy and Hasina opened Hôtel Ambalakely in 2018, on the RN7, 12 km north of Fianarantsoa. They also run Trans Groupe Hasina, a travel agency for the past twenty years.",
@@ -291,7 +274,10 @@
     "breadcrumbHome": "Home",
     "breadcrumbAbout": "About",
     "heroAlt": "Mamy and Hasina, founders of Hôtel Ambalakely in Fianarantsoa, Madagascar",
-    "heroTitle": ["Mamy and Hasina,", "since 2018."],
+    "heroTitle": [
+      "Mamy and Hasina,",
+      "since 2018."
+    ],
     "introKicker": "Since 2018",
     "introLede": "A hotel that feels like a home, on a hill twelve kilometres north of Fianarantsoa.",
     "introP1Lead": "Mamy and Hasina opened Hôtel Ambalakely in October 2018, on what had been farmland. Ten rooms, a kitchen, a garden, a small team. The idea of the house: ",
@@ -338,7 +324,6 @@
       "todayBody": "The hotel and the agency employ people from the Tanambao neighbourhood. Part of every night supports Hope for the Future, the school next door that opened in 2014."
     }
   },
-
   "DiningPage": {
     "metaTitle": "Toko Telo, the restaurant",
     "metaDescription": "Toko Telo, the restaurant of Hôtel Ambalakely. Fifty covers, Malagasy country cooking with Scandinavian touches. Breakfast, lunch and dinner on site, pizza on the rooftop terrace.",
@@ -348,19 +333,14 @@
     "breadcrumbHome": "Home",
     "breadcrumbDining": "Toko Telo",
     "heroAlt": "Toko Telo, the restaurant of Hôtel Ambalakely in Fianarantsoa, Madagascar",
-    "heroTitle": ["Toko Telo,", "the restaurant."],
+    "heroTitle": [
+      "Toko Telo,",
+      "the restaurant."
+    ],
     "introKicker": "The kitchen",
-    "introLede": "A small kitchen between Madagascar and Norway. Fifty covers, open to residents and day visitors alike.",
+    "introLede": "A small kitchen between Madagascar and Norway. Fifty seats in the shade of the mango trees, open every day by reservation.",
     "introP1": "The idea of the house: Eny ambanivohitra, in the country. Most of what reaches the table comes from the garden behind the kitchen, the rice paddies below, and the local growers (the Tantsaha) a few kilometres away.",
     "introP2": "The menu is chosen as one, two or three courses. Upstairs, the terrace runs as a pizzeria all day, open from 10 am to 9.30 pm. Three signature dishes return often: Zebu Marengo, Kjøttkaker, Krumkake.",
-    "factCovers": "Covers",
-    "factCoversValue": "Fifty",
-    "factService": "Service",
-    "factServiceValue": "À la carte, 1 to 3 courses",
-    "factOpenTo": "Open to",
-    "factOpenToValue": "Residents and visitors",
-    "factReservation": "Reservation",
-    "factReservationValue": "24 h in advance",
     "loungeAlt": "The Toko Telo lounge, with its fireplace and stone walls",
     "loungeCaption": "The dining room",
     "hoursKicker": "Hours and prices",
@@ -384,7 +364,6 @@
     "ctaButton": "Book",
     "ctaNote": "24 hours' notice. Please flag allergies the day before."
   },
-
   "RoomsPage": {
     "metaTitle": "The rooms",
     "metaDescription": "Ten rooms across three categories. Supérieure, Confort, Standard. From 182,000 Ariary per night.",
@@ -394,7 +373,10 @@
     "breadcrumbHome": "Home",
     "breadcrumbRooms": "Rooms",
     "heroAlt": "View of the Supérieure rooms over the rice paddies",
-    "heroTitle": ["Ten rooms", "at Ambalakely."],
+    "heroTitle": [
+      "Ten rooms",
+      "at Ambalakely."
+    ],
     "introLede": "The same sand walls, the same dark wood floors, the same hot water bottles at night. What changes: the size, the view, the bed.",
     "introP1": "Ten rooms across two buildings. Two face the main façade and overlook the rice paddies. Four sit in the middle category, with a writing desk at the window and a king-size bed. Four more are the original rooms, opened in 2018. Choose by what you'd like to see from the window.",
     "compareKicker": "At a glance",
@@ -408,7 +390,6 @@
     "ctaButton": "Check availability",
     "ctaNote": "Free cancellation up to 10 days before arrival."
   },
-
   "ExperiencesPage": {
     "metaTitle": "Experiences",
     "metaDescription": "Ten things to do from Hôtel Ambalakely. Lemurs at Ranomafana, walks through the rice paddies, cooking, Sahambavy tea, the Andringitra trek, Ambositra carving, a visit to the school, and more.",
@@ -418,7 +399,10 @@
     "breadcrumbHome": "Home",
     "breadcrumbExperiences": "Experiences",
     "heroAlt": "View of the rice paddies from Hôtel Ambalakely",
-    "heroTitle": ["Experiences", "from Ambalakely."],
+    "heroTitle": [
+      "Experiences",
+      "from Ambalakely."
+    ],
     "introLede": "Ten things to do from the hotel. All arranged from the house.",
     "introP1": "Most guests do two or three. The rice-paddy walk and the school visit are on foot from the hotel. Ranomafana, Sahambavy, Andringitra, Ambositra and Tsaranoro need a driver. We arrange the driver, the park guide, the picnic basket and the tea, in whichever combination suits you.",
     "quickNavKicker": "At a glance",
@@ -429,7 +413,6 @@
     "ctaCheck": "Check availability",
     "ctaItineraries": "See our itineraries"
   },
-
   "PlanTrip": {
     "metaTitle": "Plan your trip",
     "metaDescription": "Three RN7 itineraries with Hôtel Ambalakely as your base. Three, five and seven days through Madagascar.",
@@ -439,7 +422,10 @@
     "breadcrumbHome": "Home",
     "breadcrumbPlan": "Plan your trip",
     "heroAlt": "Rice paddies below Hôtel Ambalakely on the RN7",
-    "heroTitle": ["Plan your trip", "on the RN7."],
+    "heroTitle": [
+      "Plan your trip",
+      "on the RN7."
+    ],
     "introLede": "Three ways to take to the road. Same hotel, different stop.",
     "introP1": "The RN7 crosses Madagascar from north to south, from the capital Antananarivo to the south coast at Tuléar. Most travellers do at least part of it. Ambalakely sits halfway, twelve kilometres north of Fianarantsoa. A comfortable two-night stop for a short trip, three or four for a longer one.",
     "introP2": "Here are three itineraries that work. Mix them as you like. The drivers, transfers and park guides are arranged by the hotel.",
@@ -453,7 +439,6 @@
     "ctaCheck": "Check availability",
     "ctaRooms": "View the rooms"
   },
-
   "Community": {
     "metaTitle": "Hope for the Future",
     "metaDescription": "Hope for the Future: a school for the children of Tanambao, the Ambalakely neighbourhood in Madagascar. 130 children, nine educational and social programmes, a new Akanimamy building built since 2020.",
@@ -463,7 +448,10 @@
     "breadcrumbHome": "Home",
     "breadcrumbCommunity": "Hope for the Future",
     "heroAlt": "Hope for the Future, the children of Tanambao, Ambalakely",
-    "heroTitle": ["Hope for the Future,", "the school next door."],
+    "heroTitle": [
+      "Hope for the Future,",
+      "the school next door."
+    ],
     "introLede": "A school for the children of our neighbourhood. One hundred and thirty active children, nine programmes, and a new home called Akanimamy.",
     "introP1": "Hope for the Future is the project Mamy and Hasina started in 2014, in the Tanambao neighbourhood of Ambalakely. The village has roughly 4,000 inhabitants, 12 km north of Fianarantsoa.",
     "introP2": "They began with a simple question: how many children in the neighbourhood weren't going to public school, or hardly at all? The answer was around a hundred and fifty. By then, Mamy and Hasina had already built the hotel. They knew what the hotel would be funding alongside it.",
@@ -532,7 +520,6 @@
     "ctaCheck": "Check availability",
     "ctaReadAbout": "Read about the house"
   },
-
   "FaqPage": {
     "metaTitle": "FAQ",
     "metaDescription": "Practical answers for your stay at Hôtel Ambalakely. Booking, transfers from Antananarivo, what to bring, the table, payment and the road.",
@@ -541,7 +528,10 @@
     "breadcrumbHome": "Home",
     "breadcrumbFaq": "FAQ",
     "heroAlt": "Hôtel Ambalakely, Fianarantsoa, Madagascar",
-    "heroTitle": ["Frequently asked,", "simply answered."],
+    "heroTitle": [
+      "Frequently asked,",
+      "simply answered."
+    ],
     "introLede": "The questions we hear most often, with real answers.",
     "introBodyLead": "If you can't find it, write to us at ",
     "introBodyMid": " and we'll reply personally. WhatsApp ",
@@ -549,7 +539,6 @@
     "ctaH2": "Write to us, or book directly.",
     "ctaCheck": "Check availability"
   },
-
   "AvisPage": {
     "metaTitle": "Reviews",
     "metaDescription": "All the verified reviews from our guests on TripAdvisor. Hôtel Ambalakely, ten rooms in Fianarantsoa, Madagascar.",
@@ -558,7 +547,10 @@
     "breadcrumbHome": "Home",
     "breadcrumbAvis": "Reviews",
     "heroAlt": "Hôtel Ambalakely, garden and main façade",
-    "heroTitle": ["What our visitors", "are saying."],
+    "heroTitle": [
+      "What our visitors",
+      "are saying."
+    ],
     "intro": "{count} verified reviews from TripAdvisor (original English text).",
     "ratingLine": "{value} out of 5 — {count} reviews on {sources}",
     "ctaKicker": "Book",
@@ -566,7 +558,6 @@
     "ctaCheck": "Check availability",
     "viewAllOnTripadvisor": "Read all {count} reviews on TripAdvisor"
   },
-
   "Practical": {
     "h2": "Before arrival.",
     "cancellationLabel": "Cancellation",
@@ -585,7 +576,6 @@
     "transferCity": "Fianarantsoa city ↔ Hotel — 65,000 Ar",
     "transfersNote": "For groups or specific needs, write to us."
   },
-
   "RoomCategory": {
     "notFoundTitle": "Room not found",
     "metaTitle": "{name} room",
@@ -613,7 +603,6 @@
     "othersAlt": "{name} room",
     "othersFrom": "From"
   },
-
   "NotFound": {
     "code": "404",
     "h1": "Off the path.",
@@ -625,7 +614,6 @@
     "linkJournal": "The journal",
     "linkAbout": "Mamy and Hasina"
   },
-
   "ArticlePage": {
     "metaTitleFallback": "Article not found",
     "breadcrumbHome": "Home",

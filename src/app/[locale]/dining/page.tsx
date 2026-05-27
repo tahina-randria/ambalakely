@@ -9,10 +9,6 @@ import { BreadcrumbJsonLd, RestaurantJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
 import {
-  Users,
-  ForkKnife,
-  Door,
-  Clock,
   Sun,
   SunHorizon,
   Moon,
@@ -66,13 +62,6 @@ export default async function DiningPage({ params }: LocaleParam) {
 
   const mealExtras = [t('extraChild'), t('extraChildFree')];
 
-  const facts: { label: string; value: string; Icon: PhosphorIcon }[] = [
-    { label: t('factCovers'), value: t('factCoversValue'), Icon: Users },
-    { label: t('factService'), value: t('factServiceValue'), Icon: ForkKnife },
-    { label: t('factOpenTo'), value: t('factOpenToValue'), Icon: Door },
-    { label: t('factReservation'), value: t('factReservationValue'), Icon: Clock },
-  ];
-
   const hours: { label: string; value: string; Icon: PhosphorIcon }[] = [
     { label: t('hourBreakfast'), value: HOTEL.hours.breakfast, Icon: Sun },
     { label: t('hourLunch'), value: HOTEL.hours.lunch, Icon: SunHorizon },
@@ -116,34 +105,13 @@ export default async function DiningPage({ params }: LocaleParam) {
                     <p>{t('introP2')}</p>
                   </div>
                 </ScrollReveal>
-
-                {/* FACTS */}
-                <ScrollReveal delay={0.1}>
-                  <dl className="mt-16 grid grid-cols-2 md:grid-cols-4 border-y border-[var(--color-border-subtle)] divide-x divide-[var(--color-border-subtle)]">
-                    {facts.map((f) => {
-                      const Icon = f.Icon;
-                      return (
-                        <div
-                          key={f.label}
-                          className="px-4 md:px-6 py-8 md:py-10 flex flex-col items-start"
-                        >
-                          <Icon
-                            size={20}
-                            weight="light"
-                            className="text-[var(--color-text-muted)] mb-5"
-                            aria-hidden
-                          />
-                          <dt className="caption text-[var(--color-text-muted)] mb-2">
-                            {f.label}
-                          </dt>
-                          <dd className="font-display font-light text-[var(--color-text)] text-[17px] md:text-[19px] leading-[1.3] tracking-[-0.01em]">
-                            {f.value}
-                          </dd>
-                        </div>
-                      );
-                    })}
-                  </dl>
-                </ScrollReveal>
+                {/* The 4-fact grid with Users / ForkKnife / Door / Clock
+                    icons was removed §32 #123 (2026-05-27). The facts
+                    were already in the prose (50 couverts in introLede,
+                    1-3 services in introP2, 24 h advance in ctaNote) and
+                    "Open to: Residents and visitors" read as gatekeeping.
+                    The hours + pricing live a section below with their
+                    own dense list. */}
               </div>
             </div>
           </Container>

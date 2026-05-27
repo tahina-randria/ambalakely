@@ -13,7 +13,6 @@
       "opphold Fianarantsoa"
     ]
   },
-
   "Common": {
     "skipToContent": "Hopp til innhold",
     "checkAvailability": "Se tilgjengelighet",
@@ -30,7 +29,6 @@
     "no": "Nei",
     "or": "Eller"
   },
-
   "Nav": {
     "rooms": "Rom",
     "dining": "Restaurant",
@@ -44,7 +42,6 @@
     "menuOpen": "Åpne meny",
     "menuClose": "Lukk meny"
   },
-
   "Footer": {
     "newsletterKicker": "Brev hver sesong",
     "newsletterBody": "Et brev hver sesong. Hagen, menyen, menneskene som var innom. Ingen reklame, ingen kampanjer.",
@@ -72,7 +69,6 @@
     "legalCopyright": "© 2026 Hôtel Ambalakely · Fianarantsoa, Madagaskar",
     "cookiesManage": "Administrer cookies"
   },
-
   "Hero": {
     "lines": [
       "Ti rom langs RN7,",
@@ -82,13 +78,11 @@
     "subtitle": "Åpnet i 2018, tolv kilometer nord for Fianarantsoa.",
     "socialProof": ""
   },
-
   "Stay": {
     "kicker": "Rommene",
     "intro": "Samme sandfargede vegger, samme mørke tregulv, samme varmeflasker om kvelden. Forskjellen: størrelsen, utsikten, sengen.",
     "viewAll": "Se alle ti rom"
   },
-
   "Dining": {
     "kicker": "Restaurant",
     "name": "Toko Telo.",
@@ -102,13 +96,11 @@
     "readMore": "Se restauranten",
     "imageAlt": "Spisesalen i Toko Telo"
   },
-
   "Experiences": {
     "kicker": "Opplevelser",
     "h2": "Å gå, å veve, å lage mat. Det denne jorden gir, når den gir det.",
     "viewAll": "Se alle opplevelser"
   },
-
   "Story": {
     "h2": "Ti rom, siden 2018.",
     "bodyLead": "Åsen ble kjøpt i 2015, de første trærne plantet samme år. Fra Norge, ideen om ",
@@ -119,7 +111,6 @@
     "readMore": "Husets historie",
     "imageAlt": "Hovedbygningen på Hôtel Ambalakely, Fianarantsoa"
   },
-
   "Reviews": {
     "h2": "Det gjestene våre sier.",
     "ratingNoNumber": "Verifiserte anmeldelser på {sources}",
@@ -130,7 +121,6 @@
     "prevReview": "Forrige anmeldelse",
     "nextReview": "Neste anmeldelse"
   },
-
   "Trust": {
     "kicker": "Felleskap",
     "h2": "En del av hvert opphold støtter skolen ved siden av.",
@@ -138,7 +128,6 @@
     "readMore": "Se skolen",
     "imageAlt": "Hope for the Future, skolen i Tanambao-nabolaget"
   },
-
   "Location": {
     "kicker": "Beliggenhet",
     "h2": "Ved Route Nationale 7, halvveis mellom hovedstaden og sør.",
@@ -162,7 +151,6 @@
     "byAirValue": "TNR → WFI · 1 t 10",
     "byAirBody": "Innenlandsfly til Fianarantsoa lufthavn fra Antananarivo, deretter 25 minutter med bil."
   },
-
   "Journal": {
     "kicker": "Sesongnotater — kjøkkenet, hagen, høylandet.",
     "viewAll": "Les journalen",
@@ -170,7 +158,10 @@
     "metaDescription": "Journalen til Hôtel Ambalakely. Hasina og Mamy om kjøkkenet, hagen, høylandet og menneskene som passerer.",
     "ogTitle": "Journal · Hôtel Ambalakely",
     "ogDescription": "Tekster av Hasina og Mamy.",
-    "heroTitle": ["Journalen til", "Hôtel Ambalakely."],
+    "heroTitle": [
+      "Journalen til",
+      "Hôtel Ambalakely."
+    ],
     "heroAlt": "Journalen til Hôtel Ambalakely",
     "introLead": "Tekster av Hasina og Mamy. Kjøkkenet, hagen, menneskene som passerer.",
     "emptyKicker": "Snart",
@@ -184,7 +175,6 @@
     "backToJournal": "Tilbake til journalen",
     "moreWriting": "Flere tekster"
   },
-
   "Book": {
     "kicker": "Bestill",
     "h2": "Si fra om når.",
@@ -193,7 +183,6 @@
     "whatsappLabel": "WhatsApp",
     "whatsappMessage": "Hei, jeg ønsker å bestille et opphold på Ambalakely."
   },
-
   "BookingDrawer": {
     "ariaLabel": "Bestill et opphold",
     "kicker": "Bestill",
@@ -239,20 +228,16 @@
     "phoneLabel": "Telefon",
     "summarize": "Sammendrag"
   },
-
   "MobileBar": {
     "label": "Bestill"
   },
-
   "StickyReserve": {
     "from": "Fra",
     "reserve": "Bestill"
   },
-
   "PageHero": {
     "checkAvailability": "Se tilgjengelighet"
   },
-
   "Faq": {
     "search": "Søk i FAQ...",
     "searchAria": "Søk i FAQ",
@@ -265,7 +250,6 @@
     "questionsOne": "{n} spørsmål",
     "questionsMany": "{n} spørsmål"
   },
-
   "Cookie": {
     "title": "Cookies",
     "body": "Vi bruker anonyme målingsverktøy og feilsporing for å forbedre nettsiden. Ingen reklame, ingen deling med kommersielle tredjeparter.",
@@ -281,7 +265,6 @@
     "categoriesLegend": "Cookie-kategorier",
     "manage": "Administrer cookies"
   },
-
   "About": {
     "metaTitle": "Om oss",
     "metaDescription": "Mamy og Hasina åpnet Hôtel Ambalakely i 2018, langs RN7 12 km nord for Fianarantsoa. De driver også Trans Groupe Hasina, et reisebyrå gjennom tjue år.",
@@ -291,7 +274,10 @@
     "breadcrumbHome": "Hjem",
     "breadcrumbAbout": "Om oss",
     "heroAlt": "Mamy og Hasina, grunnleggerne av Hôtel Ambalakely i Fianarantsoa, Madagaskar",
-    "heroTitle": ["Mamy og Hasina,", "siden 2018."],
+    "heroTitle": [
+      "Mamy og Hasina,",
+      "siden 2018."
+    ],
     "introKicker": "Siden 2018",
     "introLede": "Et hotell som føles som et hjem, på en ås tolv kilometer nord for Fianarantsoa.",
     "introP1Lead": "Mamy og Hasina åpnet Hôtel Ambalakely i oktober 2018, på det som hadde vært jordbruksland. Ti rom, et kjøkken, en hage, et lite team. Husets idé: ",
@@ -338,7 +324,6 @@
       "todayBody": "Hotellet og byrået ansetter folk fra Tanambao-nabolaget. En del av hver natt går til Hope for the Future, skolen ved siden av som åpnet i 2014."
     }
   },
-
   "DiningPage": {
     "metaTitle": "Toko Telo, restauranten",
     "metaDescription": "Toko Telo, restauranten på Hôtel Ambalakely. Femti kuverter, madagassisk landkjøkken med skandinaviske innslag. Frokost, lunsj og middag på stedet, pizza på takterrassen.",
@@ -348,19 +333,14 @@
     "breadcrumbHome": "Hjem",
     "breadcrumbDining": "Toko Telo",
     "heroAlt": "Toko Telo, restauranten på Hôtel Ambalakely i Fianarantsoa, Madagaskar",
-    "heroTitle": ["Toko Telo,", "restauranten."],
+    "heroTitle": [
+      "Toko Telo,",
+      "restauranten."
+    ],
     "introKicker": "Kjøkkenet",
-    "introLede": "Et lite kjøkken mellom Madagaskar og Norge. Femti kuverter, åpent for både husgjester og dagsbesøk.",
+    "introLede": "Et lite kjøkken mellom Madagaskar og Norge. Femti kuverter i skyggen av mangotrærne, åpent hver dag etter avtale.",
     "introP1": "Husets idé: Eny ambanivohitra, på landet. Det meste av det som havner på bordet kommer fra hagen bak kjøkkenet, rismarkene nedenfor, og de lokale dyrkerne (Tantsaha) noen kilometer unna.",
     "introP2": "Menyen kan velges som en, to eller tre retter. Oppe holder terrassen pizzeria hele dagen, åpen fra 10 til 21.30. Tre signaturretter går igjen: Zebu Marengo, Kjøttkaker, Krumkake.",
-    "factCovers": "Kuverter",
-    "factCoversValue": "Femti",
-    "factService": "Servering",
-    "factServiceValue": "À la carte, 1 til 3 retter",
-    "factOpenTo": "Åpent for",
-    "factOpenToValue": "Husgjester og besøkende",
-    "factReservation": "Reservasjon",
-    "factReservationValue": "24 t i forveien",
     "loungeAlt": "Salongen på Toko Telo, med peis og steinvegger",
     "loungeCaption": "Spisesalen",
     "hoursKicker": "Åpningstider og priser",
@@ -384,7 +364,6 @@
     "ctaButton": "Bestill",
     "ctaNote": "Minst 24 timer i forveien. Allergier meldes dagen før."
   },
-
   "RoomsPage": {
     "metaTitle": "Rommene",
     "metaDescription": "Ti rom fordelt på tre kategorier. Supérieure, Confort, Standard. Fra 182 000 Ariary per natt.",
@@ -394,7 +373,10 @@
     "breadcrumbHome": "Hjem",
     "breadcrumbRooms": "Rom",
     "heroAlt": "Utsikt fra Supérieure-rommene over rismarkene",
-    "heroTitle": ["Ti rom", "på Ambalakely."],
+    "heroTitle": [
+      "Ti rom",
+      "på Ambalakely."
+    ],
     "introLede": "Samme sandfargede vegger, samme mørke tregulv, samme varmeflasker om kvelden. Forskjellen: størrelsen, utsikten, sengen.",
     "introP1": "Ti rom i to bygninger. To vender mot hovedfasaden og overskuer rismarkene. Fire holder mellomkategorien, med skrivebord ved vinduet og en king-seng. Fire andre er de opprinnelige rommene, åpnet i 2018. Velg etter hva du vil se ut av vinduet.",
     "compareKicker": "Med ett blikk",
@@ -408,7 +390,6 @@
     "ctaButton": "Se tilgjengelighet",
     "ctaNote": "Gratis avbestilling inntil 10 dager før ankomst."
   },
-
   "ExperiencesPage": {
     "metaTitle": "Opplevelser",
     "metaDescription": "Ti ting å gjøre fra Hôtel Ambalakely. Lemurer i Ranomafana, vandring i rismarkene, matlaging, te fra Sahambavy, Andringitra-trek, treskjæring i Ambositra, besøk på skolen, og mer.",
@@ -418,7 +399,10 @@
     "breadcrumbHome": "Hjem",
     "breadcrumbExperiences": "Opplevelser",
     "heroAlt": "Utsikt over rismarkene fra Hôtel Ambalakely",
-    "heroTitle": ["Opplevelser", "fra Ambalakely."],
+    "heroTitle": [
+      "Opplevelser",
+      "fra Ambalakely."
+    ],
     "introLede": "Ti ting å gjøre fra hotellet. Alle arrangert fra huset.",
     "introP1": "De fleste gjestene gjør to eller tre. Vandringen i rismarkene og skolebesøket er til fots fra hotellet. Ranomafana, Sahambavy, Andringitra, Ambositra og Tsaranoro krever sjåfør. Vi ordner sjåføren, parkguiden, pikinikkurven og teen, i den kombinasjonen som passer deg.",
     "quickNavKicker": "Med ett blikk",
@@ -429,7 +413,6 @@
     "ctaCheck": "Se tilgjengelighet",
     "ctaItineraries": "Se våre opplegg"
   },
-
   "PlanTrip": {
     "metaTitle": "Planlegg reisen",
     "metaDescription": "Tre opplegg langs RN7 med Hôtel Ambalakely som base. Tre, fem og sju dager gjennom Madagaskar.",
@@ -439,7 +422,10 @@
     "breadcrumbHome": "Hjem",
     "breadcrumbPlan": "Planlegg reisen",
     "heroAlt": "Rismarker nedenfor Hôtel Ambalakely langs RN7",
-    "heroTitle": ["Planlegg reisen", "langs RN7."],
+    "heroTitle": [
+      "Planlegg reisen",
+      "langs RN7."
+    ],
     "introLede": "Tre måter å ta veien. Samme hotell, ulik stoppestasjon.",
     "introP1": "RN7 går gjennom Madagaskar fra nord til sør, fra hovedstaden Antananarivo til sørkysten ved Tuléar. De fleste reisende kjører i hvert fall en del av den. Ambalakely ligger midtveis, tolv kilometer nord for Fianarantsoa. To netter er en behagelig stopp for et kort opphold, tre eller fire for en lengre tur.",
     "introP2": "Her er tre opplegg som fungerer. Bland dem som du vil. Sjåfører, transport og parkguider organiseres av hotellet.",
@@ -453,7 +439,6 @@
     "ctaCheck": "Se tilgjengelighet",
     "ctaRooms": "Se rommene"
   },
-
   "Community": {
     "metaTitle": "Hope for the Future",
     "metaDescription": "Hope for the Future: en skole for barna i Tanambao, nabolaget rundt Ambalakely på Madagaskar. 130 barn, ni pedagogiske og sosiale programmer, et nytt Akanimamy-bygg under oppføring siden 2020.",
@@ -463,7 +448,10 @@
     "breadcrumbHome": "Hjem",
     "breadcrumbCommunity": "Hope for the Future",
     "heroAlt": "Hope for the Future, barna i Tanambao, Ambalakely",
-    "heroTitle": ["Hope for the Future,", "skolen ved siden av."],
+    "heroTitle": [
+      "Hope for the Future,",
+      "skolen ved siden av."
+    ],
     "introLede": "En skole for barna i nabolaget vårt. Hundre og tretti aktive barn, ni programmer, og et nytt hjem som heter Akanimamy.",
     "introP1": "Hope for the Future er prosjektet Mamy og Hasina startet i 2014, i Tanambao-nabolaget i Ambalakely. Landsbyen har omtrent 4 000 innbyggere, 12 km nord for Fianarantsoa.",
     "introP2": "De startet med et enkelt spørsmål: hvor mange barn i nabolaget gikk ikke, eller knapt, på den offentlige skolen? Svaret var rundt halvannet hundre. På den tiden hadde Mamy og Hasina allerede bygget hotellet. De visste hva hotellet kom til å finansiere ved siden av.",
@@ -532,7 +520,6 @@
     "ctaCheck": "Se tilgjengelighet",
     "ctaReadAbout": "Les om huset"
   },
-
   "FaqPage": {
     "metaTitle": "FAQ",
     "metaDescription": "Praktiske svar for oppholdet på Hôtel Ambalakely. Bestilling, transport fra Antananarivo, hva du bør ta med, måltidene, betaling og veien.",
@@ -541,7 +528,10 @@
     "breadcrumbHome": "Hjem",
     "breadcrumbFaq": "FAQ",
     "heroAlt": "Hôtel Ambalakely, Fianarantsoa, Madagaskar",
-    "heroTitle": ["Vanlige spørsmål,", "enkle svar."],
+    "heroTitle": [
+      "Vanlige spørsmål,",
+      "enkle svar."
+    ],
     "introLede": "Spørsmålene vi får oftest, med ekte svar.",
     "introBodyLead": "Finner du det ikke, skriv til oss på ",
     "introBodyMid": " så svarer vi personlig. WhatsApp ",
@@ -549,7 +539,6 @@
     "ctaH2": "Skriv til oss, eller bestill direkte.",
     "ctaCheck": "Se tilgjengelighet"
   },
-
   "AvisPage": {
     "metaTitle": "Anmeldelser",
     "metaDescription": "Alle de verifiserte anmeldelsene fra våre gjester på TripAdvisor. Hôtel Ambalakely, ti rom i Fianarantsoa, Madagaskar.",
@@ -558,7 +547,10 @@
     "breadcrumbHome": "Hjem",
     "breadcrumbAvis": "Anmeldelser",
     "heroAlt": "Hôtel Ambalakely, hagen og hovedfasaden",
-    "heroTitle": ["Det gjestene", "våre sier."],
+    "heroTitle": [
+      "Det gjestene",
+      "våre sier."
+    ],
     "intro": "{count} verifiserte anmeldelser oversatt trofast fra TripAdvisor (originale engelske tekster i kilden).",
     "ratingLine": "{value} av 5 — {count} anmeldelser på {sources}",
     "ctaKicker": "Bestill",
@@ -566,7 +558,6 @@
     "ctaCheck": "Se tilgjengelighet",
     "viewAllOnTripadvisor": "Les alle {count} anmeldelser på TripAdvisor"
   },
-
   "Practical": {
     "h2": "Før ankomst.",
     "cancellationLabel": "Avbestilling",
@@ -585,7 +576,6 @@
     "transferCity": "Fianarantsoa by ↔ Hotell — 65 000 Ar",
     "transfersNote": "For grupper eller spesielle behov, skriv til oss."
   },
-
   "RoomCategory": {
     "notFoundTitle": "Rom finnes ikke",
     "metaTitle": "{name}-rom",
@@ -613,7 +603,6 @@
     "othersAlt": "{name}-rom",
     "othersFrom": "Fra"
   },
-
   "NotFound": {
     "code": "404",
     "h1": "Utenfor stien.",
@@ -625,7 +614,6 @@
     "linkJournal": "Journalen",
     "linkAbout": "Mamy og Hasina"
   },
-
   "ArticlePage": {
     "metaTitleFallback": "Artikkelen finnes ikke",
     "breadcrumbHome": "Hjem",
