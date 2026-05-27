@@ -36,15 +36,16 @@ export function Hero() {
           poster frame. Saves the 2 MB MP4 on cellular AND ditches the
           "frozen video" look — users see the actual hotel + rice paddies
           composition that was curated as the canonical hero shot.
-          object-[35%_55%] keeps the building (on the left of the landscape
-          frame) visible when cropped to a portrait viewport. */}
+          object-[20%_55%] : pushed left to keep the wooden balcony at the
+          edge of the building visible alongside the banana trees and the
+          rice terraces, instead of mostly vegetation. */}
       <Image
         src={MOBILE_HERO}
         alt=""
         fill
         priority
         sizes="100vw"
-        className="md:hidden -z-20 object-cover object-[35%_55%] hero-bg-settle"
+        className="md:hidden -z-20 object-cover object-[20%_55%] hero-bg-settle"
       />
 
       {/* Desktop : autoplay loop video.
