@@ -7,20 +7,15 @@ import { fetchReviews, fetchHotel } from '@/sanity/lib/fetch';
 import { ReviewsCarousel } from '@/components/molecules/ReviewsCarousel';
 
 /**
- * Home "guests say" — refonte §32 #121 (2026-05-27).
+ * Home "guests say" — current state after §35 (2026-05-27 evening) :
+ * H2 + Embla horizontal carousel of 11 trilingual quotes (9 TripAdvisor
+ * + 2 Google) + two outbound CTAs (TripAdvisor / Google). The verified-
+ * review stat counter ("32") that previously sat top-right was removed
+ * per user direction "retire le nombre d'avis" — the source pill on
+ * each card and the two outbound links already carry the trust signal.
  *
- * Before : 3-card grid (slice 0-3) with a "Voir tous les avis" link to
- * /avis. The user found the design slop ; the truncation hid the social
- * proof (we have 32 verified reviews on TripAdvisor) and the card style
- * was generic.
- *
- * After : (1) verified-review counter "32 avis vérifiés depuis 2018" as
- * trust signal up top, (2) horizontal Embla scroll of the 9 curated
- * quotes (no slice — they're all good), (3) two outbound CTAs : /avis
- * for the editorial archive + TripAdvisor for the full feed.
- *
- * Cards use the Contra / MasterClass premium card style (Mobbin §32 #121
- * inspiration set) : white card, source pill top, big « guillemet,
+ * Cards use the Contra / MasterClass premium card pattern (Mobbin §32
+ * inspiration set) : white card, source pill top, Phosphor Quotes icon,
  * display-serif quote line-clamped 7 lines, hair-rule + author+date.
  */
 export async function Reviews() {
@@ -31,35 +26,25 @@ export async function Reviews() {
     getTranslations('Reviews'),
   ]);
 
+  // The outbound CTA block is gated on `hasCount` so we only flex
+  // "read the rest on TripAdvisor / Google" once we have a verified
+  // count from HOTEL.rating (cardinal rule §3 : no fake claims).
   const hasCount = HOTEL.rating.count != null;
-  const sources = HOTEL.rating.sources.join(' / ');
 
   return (
     <Section id="reviews" divider>
       <Container>
         <div className="mx-auto max-w-[1280px]">
-          {/* Header — H2 + verified-review stat counter */}
-          <ScrollReveal className="mb-12 md:mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-12">
-            <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] tracking-[-0.03em] balance max-w-[640px]">
+          {/* Header — H2 only. §35 (2026-05-27 evening) the verified-
+              review stat counter ("32" + caption) was removed per user
+              direction "retire le nombre d'avis". Each card already
+              shows its source pill (TripAdvisor / Google), the H2
+              speaks for itself, and the outbound links below cover
+              the trust signal. */}
+          <ScrollReveal className="mb-12 md:mb-16">
+            <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] tracking-[-0.03em] balance max-w-[720px]">
               {t('h2')}
             </h2>
-
-            {/* Stat — only renders if HOTEL.rating.count is set
-                (cardinal rule §3 : no fake numbers without source).
-                §34 (2026-05-27 afternoon) : dropped the trailing
-                "depuis 2018" — the hotel actually opened in September
-                2014, and the year hint was misleading. Sources line
-                stays so the platforms read at a glance. */}
-            {hasCount ? (
-              <div className="md:text-right">
-                <div className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[48px] leading-[1] tracking-[-0.025em] tabular-nums">
-                  {HOTEL.rating.count}
-                </div>
-                <div className="mt-2 caption text-[var(--color-text-muted)]">
-                  {t('statSince', { sources })}
-                </div>
-              </div>
-            ) : null}
           </ScrollReveal>
 
           {/* Carousel — pass localized data + a11y labels */}

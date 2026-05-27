@@ -4,10 +4,14 @@ import { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-const HOTEL_LNG_LAT: [number, number] = [47.0862, -21.4541];
+// Coordonnées vérifiées du document Kirsten (HANDOFF §5) :
+// 21°25' S, 47°10' E → décimal -21.4167, 47.1667.
+// La valeur précédente [47.0862, -21.4541] pointait ~9 km au sud-ouest
+// du vrai emplacement, dans les rizières en contrebas. §35 fix
+// (2026-05-27) sur retour user "update mapbox pour mettre vraie adresse".
+const HOTEL_LNG_LAT: [number, number] = [47.1667, -21.4167];
 
 // Set NEXT_PUBLIC_MAPBOX_TOKEN in .env (free tier at mapbox.com)
-// Build cache buster: 2026-05-04
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 /**
