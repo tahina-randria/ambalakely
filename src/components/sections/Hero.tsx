@@ -3,9 +3,14 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { PHOTOS } from '@/lib/data/photos';
 
 const VIDEO_SRC = '/videos/hero.mp4';
+// Desktop fallback only — the actual mobile hero now uses the editorial
+// PHOTOS.hero (p23) so users on cellular get a real photo of the building +
+// rice paddies rather than a frozen frame of the video.
 const VIDEO_POSTER = '/videos/hero-poster.webp';
+const MOBILE_HERO = PHOTOS.hero.path;
 
 export function Hero() {
   const t = useTranslations('Hero');
@@ -27,15 +32,19 @@ export function Hero() {
 
   return (
     <section className="relative h-[100svh] md:h-screen w-full overflow-hidden text-white isolate">
-      {/* Mobile : poster image only — saves 2 MB of video on cellular and
-          keeps the cropping intentional (Aman pattern). */}
+      {/* Mobile : editorial photo (PHOTOS.hero / p23) instead of the video
+          poster frame. Saves the 2 MB MP4 on cellular AND ditches the
+          "frozen video" look — users see the actual hotel + rice paddies
+          composition that was curated as the canonical hero shot.
+          object-[35%_55%] keeps the building (on the left of the landscape
+          frame) visible when cropped to a portrait viewport. */}
       <Image
-        src={VIDEO_POSTER}
+        src={MOBILE_HERO}
         alt=""
         fill
         priority
         sizes="100vw"
-        className="md:hidden -z-20 object-cover object-[50%_30%] hero-bg-settle"
+        className="md:hidden -z-20 object-cover object-[35%_55%] hero-bg-settle"
       />
 
       {/* Desktop : autoplay loop video.
