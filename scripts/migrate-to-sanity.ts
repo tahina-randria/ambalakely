@@ -17,7 +17,7 @@ dotenv.config({ path: resolve(__dirname, '..', '.env.local') });
 
 import { HOTEL } from '../src/lib/data/hotel';
 import { categories } from '../src/lib/data/categories';
-import { reviews } from '../src/lib/data/rooms';
+import { getReviews } from '../src/lib/data/reviews';
 import { articles } from '../src/lib/data/articles';
 import { experiences } from '../src/lib/data/experiences';
 import { itineraries } from '../src/lib/data/itineraries';
@@ -152,12 +152,22 @@ for (const cat of categories) {
   });
 }
 
-// 3. Reviews
-reviews.forEach((r, i) => {
+// 3. Reviews — seed FR + EN + NO from the trilingual source so any
+// Studio editor can switch tabs without going through the JSON.
+// The old script was FR-only and pulled from the legacy rooms.ts list
+// (Ada, Giovanni, Anna Maria, etc. — unverified Booking / Google) — those
+// docs were deleted from Sanity 2026-05-27 §32 #124 and the new helper
+// `getReviews(locale)` returns the 9 curated TripAdvisor quotes only.
+const reviewsFR = getReviews('fr');
+const reviewsEN = getReviews('en');
+const reviewsNO = getReviews('no');
+reviewsFR.forEach((r, i) => {
+  const en = reviewsEN[i];
+  const no = reviewsNO[i];
   docs.push({
     _id: `review-${slugify(r.author)}`,
     _type: 'review',
-    quote: fr(r.quote),
+    quote: { _type: 'localeText', fr: r.quote, en: en.quote, no: no.quote },
     author: r.author,
     city: r.city,
     source: r.source,
