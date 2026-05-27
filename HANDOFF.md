@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-27 morning (Locale-aware Sanity + hero mobile editorial photo + email per-locale `9c3f1ca` — Sanity GROQ now picks `[$locale]` with empty-string filter so /fr stops showing English ; newsletter + booking ack ship in the visitor's language with end-to-end Gmail validation ; hero mobile now uses curated p23 instead of the video poster — see §30 for the full chain, the audit table, and the architecture posée)
+Last updated: 2026-05-27 mid-morning (`ae703a1` booking polish — guest cap lifted 4→10 ; "+33" trigger now a clearly defined "case" matching the phone input. Section §31 also tracks 3 open threads queued for a fresh session : responsive mobile site-wide (#117), title typography hesitation Fraunces vs alternatives (#118), newsletter purpose pivot toward conversion/promo while preserving Aman tone (#119). §30 still describes the locale-aware Sanity + editorial hero mobile + email per-locale, all green and Gmail-validated.)
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-05-27 morning (Locale-aware Sanity + hero mobile editorial ph
 
 Copy-paste this block as the first message:
 
-> Je continue le projet Hôtel Ambalakely (vrai hôtel 10 chambres à Fianarantsoa, Madagascar). Lis HANDOFF.md à la racine en premier — c'est la source de vérité unique : architecture, faits vérifiés, ce qui a shippé, ce qui pend, les règles cardinales. La dernière section live est §30 (Sanity locale-aware + hero mobile editorial photo + email per-locale validé end-to-end via Gmail) — 6 commits ship ce matin sur main, Vercel auto-deploy à chaque push.
+> Je continue le projet Hôtel Ambalakely (vrai hôtel 10 chambres à Fianarantsoa, Madagascar). Lis HANDOFF.md à la racine en premier — c'est la source de vérité unique : architecture, faits vérifiés, ce qui a shippé, ce qui pend, les règles cardinales. La dernière section live est §31 (booking quick wins + 3 open threads queued #117 responsive mobile, #118 typo titres Fraunces, #119 newsletter purpose pivot). §30 décrit le refacto locale-aware Sanity + hero mobile + email per-locale (validé end-to-end Gmail FR/EN/NO). 8 commits poussés ce matin sur main, Vercel auto-deploy à chaque push.
 >
 > Site live : https://ambalakely.vercel.app · Branche active : `main` · `.env.local` a déjà tous les secrets · `git log --oneline -10` pour voir les derniers commits.
 >
@@ -1909,6 +1909,104 @@ In addition to those from §29 :
   visitor's language
 
 — Claude, 2026-05-27 morning
+
+---
+
+## 31. Booking quick wins + 4 open threads from the user (2026-05-27, mid-morning)
+
+After §30 the user stacked five concerns in one breath. Two were 5-minute
+fixes shipped immediately ; three are larger threads tracked as tasks
+#117–#119 for a fresh session.
+
+### What shipped — 1 commit
+
+| SHA | Subject |
+|---|---|
+| `ae703a1` | polish(booking): lift guest cap to 10 + visible "case" around dial code |
+
+**Guest cap (#115)** : `MAX_INDIVIDUAL = 4` in `BookingDrawer.tsx` was a
+silent ceiling that blocked any party of 5+. It was sized for "one
+Standard with twin beds" — meaningless for a property with 10 rooms.
+Bumped to 10 (full-hotel buyout supported via the form, groups beyond
+that still go through the email flow per the FAQ "Tarif groupe ≥5
+chambres" entry).
+
+**Dial-code case (#116)** : the "+33" trigger had no explicit background
+and inherited `react-international-phone`'s default border (a light
+sand-6) — visually disconnected from the phone `<input>` next to it
+(sand-10 border, transparent bg). Forced trigger via inline style :
+`borderColor: var(--color-sand-10)` + `backgroundColor:
+var(--color-sand-11)` so it now reads as a unified "case" with the
+input. Hover bumps to sand-10. Inline style wins the cascade against
+RIP's library CSS.
+
+### Threads that need a fresh session
+
+These are explicitly NOT touched in this commit — each is large enough
+to warrant its own focused pass.
+
+**#117 — Responsive mobile site-wide audit**
+> "regarde aussi stp en mode sur mobile le responsive tu fix tout le
+> responsive proprely"
+
+Scope : Playwright sweep on the 9 main pages × at least 3 viewports
+(iPhone SE 375, iPhone 14 390, iPad 768). Catalogue crops, overflow,
+alignment, tap-target sizes, scroll behaviours. Then fix. Will be a
+multi-commit pass.
+
+**#118 — Title typography hesitation**
+> "je ne suis pas encore convaincu par contre par la typo principal
+> pour les titres là... Satoshi oui mais pour les titres pas encore"
+
+Disambiguation : the body is **Satoshi** (user validated). The titles
+are **Fraunces** (user not yet convinced). Candidates to explore for
+the display face : Tiempos, GT Sectra, Editorial New, Reckless, Söhne
+Breit, or a more dramatic Fraunces optical-size + weight combo. Has
+to fit the editorial / Aman direction — no humanist sans, no display
+script.
+
+**#119 — Newsletter purpose pivot**
+> "newsletter on va changer le purpose aussi par contre ?? pas que
+> saisonnière si on veut convertir lead etc il faut promotionnel aussi"
+
+Tension : the current copy (FR/EN/NO) explicitly says "no commercial
+offers, no promotions, one letter four times a year" — that's
+intentional positioning per the editorial brand. User now wants to
+shift toward conversion / lead nurture / promo. Risk : losing the
+Aman/Six Senses tone. Worth proposing a middle ground (e.g. "letter
++ 1 seasonal offer / year", or "letter + last-minute availability
+alerts") rather than swinging to a generic newsletter. Will touch :
+- `messages/{fr,en,no}.json` (`Footer.newsletterKicker` /
+  `newsletterBody` / `newsletterDone`)
+- `src/lib/email/templates/NewsletterWelcome.tsx` (3-locale COPY map)
+- Possibly the API route if we add a "list" segmentation later
+
+### What still hangs
+
+#### Awaiting user input (unchanged from §29 / §30)
+- 10 `⚠️ NEEDS REAL CONTENT` flags in `src/lib/data/faq.ts`
+- Andringitra round-trip distance in `itineraries.ts`
+- Google Places API key for live reviews
+
+#### Sanity follow-ups (unchanged from §30)
+- Seed FR for excursion / itinerary / faq in Studio
+- Seed EN for hotel / roomCategory / review / community
+- Seed NO across the board
+
+#### Phase visuelle (unchanged)
+- AI lifestyle assets (Nano Banana Pro)
+- Editorial photo grids
+- HFF.webp local migration
+- B5 token scale
+
+### Verbal-decision shortcuts seen this session
+
+In addition to those from §29 / §30 :
+- "quick wins maintenant puis /compact" → ship trivial fixes, then
+  end the session before context pressure becomes a problem
+- "ducoup" / "ducoup on fait quoi" → asking for the next-step menu
+
+— Claude, 2026-05-27 mid-morning
 
 ---
 
