@@ -36,13 +36,6 @@ import { cn } from '@/lib/utils/cn';
 import { HOTEL } from '@/lib/data/hotel';
 
 const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');
-// 10 = total room count = max plausible single-request capacity. The
-// hotel has 10 rooms ; a family of 5+ or a small group booking several
-// rooms at once was being blocked by the previous limit of 4 (which
-// only covered "one Standard with twin beds"). Now the form supports
-// up to a full-hotel buyout. Groups of >10 still go through the
-// dedicated email flow per the FAQ "Tarif groupe ≥5 chambres" entry.
-const MAX_INDIVIDUAL = 10;
 
 /**
  * Build a placeholder for the phone input from the selected country's
@@ -613,7 +606,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                       </p>
                     ) : (
                       <p className="text-[13px] leading-[1.5] text-[var(--color-sand-7)]">
-                        {t('footer', { max: MAX_INDIVIDUAL })}
+                        {t('footer')}
                       </p>
                     )}
                   </>
