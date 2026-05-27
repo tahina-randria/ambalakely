@@ -82,7 +82,7 @@
      Fontshare doesn't ship a next/font plugin so the family name is
      declared directly here. system-ui kicks in before Fontshare
      responds (font-display: swap). */
-  --font-display: var(--font-fraunces), "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  --font-display: var(--font-fraunces), "Newsreader", "Cormorant Garamond", "Times New Roman", Georgia, serif;
   --font-body:    "Satoshi", system-ui, -apple-system, "Segoe UI", sans-serif;
   /* Mono kept as a system fallback for tabular data and timestamps in tables.
      Decorative captions (.caption) have been retired site-wide. */

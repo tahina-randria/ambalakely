@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Fraunces } from 'next/font/google';
+import { Newsreader } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale, getTranslations } from 'next-intl/server';
@@ -26,15 +26,20 @@ import '@/styles/globals.css';
  */
 
 /**
- * Fraunces — modern editorial serif with an opsz axis. Used for display
- * (h1/h2 and any other title surfaces). Boutique-hotel signature.
+ * Newsreader — high-contrast editorial serif by Production Type, free on
+ * Google Fonts. Replaces Fraunces (which the user found insufficiently
+ * editorial for the boutique-hotel direction §31 #118). Newsreader has
+ * an `opsz` axis like Fraunces, so the existing CSS that animates
+ * font-optical-sizing with viewport keeps working unchanged. The CSS
+ * variable name stays `--font-fraunces` to avoid a sweep across every
+ * stylesheet — it's just the alias name now, not the actual face.
  */
-const fraunces = Fraunces({
+const newsreader = Newsreader({
   subsets: ['latin'],
   variable: '--font-fraunces',
   display: 'swap',
   style: ['normal', 'italic'],
-  axes: ['opsz', 'SOFT'],
+  axes: ['opsz'],
 });
 
 /**
@@ -123,7 +128,7 @@ export default async function LocaleLayout({
   const tCommon = await getTranslations({ locale: typedLocale, namespace: 'Common' });
 
   return (
-    <html lang={typedLocale} className={fraunces.variable}>
+    <html lang={typedLocale} className={newsreader.variable}>
       <head>
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />

@@ -1,12 +1,16 @@
 /**
  * Typography tokens (reference only — runtime values live in globals.css
  * via CSS variables). Body is Satoshi (Indian Type Foundry, free for
- * commercial via Fontshare). Display is Fraunces (Google Fonts, opsz
- * axis). Minimum readable size: 14px. Body starts at 17px.
+ * commercial via Fontshare). Display is Newsreader (Google Fonts,
+ * Production Type, opsz axis — high-contrast editorial serif). The
+ * `--font-fraunces` variable name is a historical alias kept after the
+ * Fraunces→Newsreader swap in §31 #118 to avoid a sweep across the
+ * styles, but the face served is Newsreader. Minimum readable size:
+ * 14px. Body starts at 17px.
  */
 
 export const fontFamily = {
-  display: 'var(--font-fraunces), "Cormorant Garamond", Georgia, serif',
+  display: 'var(--font-fraunces), "Newsreader", "Cormorant Garamond", Georgia, serif',
   body: 'Satoshi, system-ui, -apple-system, sans-serif',
   mono: 'ui-monospace, "SF Mono", Menlo, monospace',
 } as const;
