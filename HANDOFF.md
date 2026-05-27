@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-27 mid-morning (`ae703a1` booking polish — guest cap lifted 4→10 ; "+33" trigger now a clearly defined "case" matching the phone input. Section §31 also tracks 3 open threads queued for a fresh session : responsive mobile site-wide (#117), title typography hesitation Fraunces vs alternatives (#118), newsletter purpose pivot toward conversion/promo while preserving Aman tone (#119). §30 still describes the locale-aware Sanity + editorial hero mobile + email per-locale, all green and Gmail-validated.)
+Last updated: 2026-05-27 late morning (`4d66181` Newsreader shipped — display face swapped Fraunces → Newsreader free Google Fonts ; `b313b34` booking footer drop the "Up to N guests" cap — copy now invites groups to write directly. §31 #118 typo thread closed live in Production Type's Newsreader (high-contrast editorial serif, free, opsz axis). Open threads remaining : #117 responsive mobile site-wide, #119 newsletter purpose pivot.)
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-05-27 mid-morning (`ae703a1` booking polish — guest cap lif
 
 Copy-paste this block as the first message:
 
-> Je continue le projet Hôtel Ambalakely (vrai hôtel 10 chambres à Fianarantsoa, Madagascar). Lis HANDOFF.md à la racine en premier — c'est la source de vérité unique : architecture, faits vérifiés, ce qui a shippé, ce qui pend, les règles cardinales. La dernière section live est §31 (booking quick wins + 3 open threads queued #117 responsive mobile, #118 typo titres Fraunces, #119 newsletter purpose pivot). §30 décrit le refacto locale-aware Sanity + hero mobile + email per-locale (validé end-to-end Gmail FR/EN/NO). 8 commits poussés ce matin sur main, Vercel auto-deploy à chaque push.
+> Je continue le projet Hôtel Ambalakely (vrai hôtel 10 chambres à Fianarantsoa, Madagascar). Lis HANDOFF.md à la racine en premier — c'est la source de vérité unique : architecture, faits vérifiés, ce qui a shippé, ce qui pend, les règles cardinales. La dernière section live est §31 (booking quick wins + Newsreader display face livré dans `4d66181`). §30 décrit le refacto locale-aware Sanity + hero mobile + email per-locale (validé end-to-end Gmail FR/EN/NO). Open threads restants : #117 responsive mobile site-wide + #119 newsletter purpose pivot. 12+ commits poussés ce matin sur main, Vercel auto-deploy à chaque push.
 >
 > Site live : https://ambalakely.vercel.app · Branche active : `main` · `.env.local` a déjà tous les secrets · `git log --oneline -10` pour voir les derniers commits.
 >
@@ -1954,34 +1954,33 @@ Scope : Playwright sweep on the 9 main pages × at least 3 viewports
 alignment, tap-target sizes, scroll behaviours. Then fix. Will be a
 multi-commit pass.
 
-**#118 — Title typography : pivot to GT Sectra (user picked)**
+**#118 — Title typography : shipped Newsreader (free)**
 > "je ne suis pas encore convaincu par contre par la typo principal
 > pour les titres là... Satoshi oui mais pour les titres pas encore"
-> then : "sectra j'aime bien"
+> then : "sectra j'aime bien" → then : "Je veux une font gratuite"
 
-Disambiguation : the body is **Satoshi** (user validated). The titles
-are **Fraunces** today — user wants **GT Sectra** instead. Sectra is
-a high-contrast editorial serif by Grilli Type — exactly the
-Aman/Six Senses register the brand is aiming for.
+User first picked GT Sectra (Grilli Type, paid ~$650), then asked
+for a free alternative. Among Newsreader / Cormorant / Spectral,
+picked **Newsreader** — high-contrast editorial serif by Production
+Type, free on Google Fonts, with an opsz axis matching Fraunces.
 
-**Licensing caveat to surface in the next session** : GT Sectra is
-NOT free. Grilli Type sells it as a paid family ; expect ~$650 for
-the 6 styles desktop+web bundle, or ~$80/style. Self-hosted via
-their Web License (WOFF2 served from `/fonts/`).
-Free near-matches if budget says no : **Newsreader** (Google),
-**Spectral** (Google), **Cormorant Garamond** (Google). All three
-share the high-contrast didone-ish feel but lose Sectra's signature
-sharpness.
+**Shipped in `4d66181`** :
+- `src/app/[locale]/layout.tsx` : `Fraunces` → `Newsreader` import
+  + font definition + `<html>` className.
+- `src/lib/tokens/typography.ts` : comment + display fallback chain
+  updated to mention Newsreader.
+- `src/styles/globals.css` : `--font-display` fallback chain now
+  includes `"Newsreader"` between the next/font alias and
+  Cormorant Garamond.
 
-Work to do once Sectra files land :
-- Drop `.woff2` files in `/public/fonts/gt-sectra/`
-- Wire via `next/font/local` in `src/lib/fonts.ts` (already exists
-  for Fraunces) as `--font-display`
-- Swap `font-display` Tailwind alias from Fraunces to GT Sectra in
-  `tailwind.config.ts` / globals.css
-- Visual pass on home + every subpage hero to verify weights /
-  sizes / optical sizes match the new font
-- Update §30 / §31 references if any
+Implementation detail kept the CSS variable name `--font-fraunces`
+as an historical alias to avoid a sweep across every stylesheet
+that already references it. It's an alias now, not the actual face.
+If the user ever wants to swap fonts again, just change the
+`Newsreader` call in layout.tsx — no other touch required.
+
+Verified live on `/fr` desktop : home hero H1 renders Newsreader,
+high-contrast strokes, classic editorial feel. Body stays Satoshi.
 
 **#119 — Newsletter purpose pivot**
 > "newsletter on va changer le purpose aussi par contre ?? pas que
