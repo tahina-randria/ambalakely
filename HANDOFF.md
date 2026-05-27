@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-27 late morning (`4d66181` Newsreader shipped — display face swapped Fraunces → Newsreader free Google Fonts ; `b313b34` booking footer drop the "Up to N guests" cap — copy now invites groups to write directly. §31 #118 typo thread closed live in Production Type's Newsreader (high-contrast editorial serif, free, opsz axis). Open threads remaining : #117 responsive mobile site-wide, #119 newsletter purpose pivot.)
+Last updated: 2026-05-27 lunch (`1fbde6b` rating nested merge fix — last in a 6-commit chain §32 that reworked Reviews home + /avis + /dining + reviews trilingual + Sanity cleanup. Reviews home now has a Contra-style Embla horizontal carousel with all 9 quotes + "32 avis vérifiés sur TripAdvisor depuis 2018" stat counter ; /avis re-rendered as a 3-col card grid ; /dining killed the 4-icon facts row (segregationist "Open to Residents / Visitors" gone) ; reviews.ts now trilingual FR/EN/NO so /no doesn't leak French ; 9 stale Sanity review docs (Ada / Giovanni / unverified Booking-Google) deleted via Mutate API + future migrate script future-proofed. Open threads remaining : #117 responsive mobile site-wide, #119 newsletter purpose pivot.)
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-05-27 late morning (`4d66181` Newsreader shipped — display 
 
 Copy-paste this block as the first message:
 
-> Je continue le projet Hôtel Ambalakely (vrai hôtel 10 chambres à Fianarantsoa, Madagascar). Lis HANDOFF.md à la racine en premier — c'est la source de vérité unique : architecture, faits vérifiés, ce qui a shippé, ce qui pend, les règles cardinales. La dernière section live est §31 (booking quick wins + Newsreader display face livré dans `4d66181`). §30 décrit le refacto locale-aware Sanity + hero mobile + email per-locale (validé end-to-end Gmail FR/EN/NO). Open threads restants : #117 responsive mobile site-wide + #119 newsletter purpose pivot. 12+ commits poussés ce matin sur main, Vercel auto-deploy à chaque push.
+> Je continue le projet Hôtel Ambalakely (vrai hôtel 10 chambres à Fianarantsoa, Madagascar). Lis HANDOFF.md à la racine en premier — c'est la source de vérité unique : architecture, faits vérifiés, ce qui a shippé, ce qui pend, les règles cardinales. La dernière section live est §32 — Reviews & /avis refonte (Embla horizontal carousel + stat 32/TripAdvisor + 3-col card grid sur /avis) + /dining facts row killed (le "Open to: Residents & Visitors" ségrégationnel est viré) + reviews trilingue FR/EN/NO (Sanity nettoyé des 9 docs Ada/Giovanni/unverified Booking-Google). §31 = Newsreader display face. §30 = locale-aware Sanity + hero mobile + email per-locale. Open threads restants : #117 responsive mobile site-wide + #119 newsletter purpose pivot. 18 commits poussés ce matin sur main, Vercel auto-deploy à chaque push.
 >
 > Site live : https://ambalakely.vercel.app · Branche active : `main` · `.env.local` a déjà tous les secrets · `git log --oneline -10` pour voir les derniers commits.
 >
@@ -2024,6 +2024,95 @@ In addition to those from §29 / §30 :
 - "ducoup" / "ducoup on fait quoi" → asking for the next-step menu
 
 — Claude, 2026-05-27 mid-morning
+
+---
+
+## 32. Reviews refonte + /avis simplifié + /dining facts killed (2026-05-27, lunch)
+
+**Context.** User pinged after a Norwegian visit to the home : (1) NO leaked French in the Reviews section ("the blog articles not translated" — actually the reviews FR-only fallback), (2) the 3-card "What our guests say" grid was generic, (3) the /dining facts row icons read slop and "Open to: Residents and visitors" framed the kitchen as gated. Three threads, six commits, all shipped on `main`.
+
+### #120 — Reviews trilingual data
+
+The legacy `REVIEWS_FALLBACK` lived inside `src/lib/data/rooms.ts` as a 9-entry FR-only array. On /en and /no, the fetchReviews helper returned this fallback verbatim — French quotes appeared everywhere.
+
+**Refactor :** moved to dedicated `src/lib/data/reviews.ts` with a trilingual source map. New API :
+
+```ts
+export type Review = { quote, author, city, source, date };
+type LocalizedReview = {
+  author, city, source,
+  fr: { quote, date }, en: { quote, date }, no: { quote, date }
+};
+export function getReviews(locale: string): Review[];
+```
+
+The 9 quotes were re-translated from the original English (the verifiable language on TripAdvisor — kept in the EN field as the canonical source) + new NO translations. Dates also localized : "Juillet 2022" / "July 2022" / "Juli 2022". `rooms.ts` re-exports for legacy callers. `sanity/lib/fetch.ts` :
+
+```ts
+const fallback = getReviews(locale);
+const data = await sanityFetch(REVIEWS_QUERY, { locale });
+if (!data || data.length === 0) return fallback;
+const filtered = data.filter((r) => r.quote);
+return filtered.length === 0 ? fallback : filtered;
+```
+
+Commit `977e5e4`.
+
+### #121 — Reviews home refonte
+
+Killed the 3-card grid with `slice(0, 3)`. New direction (Mobbin §32 inspiration set : Contra, MasterClass, Booking) :
+
+- **Header row :** H2 left + stat counter right ("32" big tabular + "avis vérifiés sur TripAdvisor depuis 2018" caption). Stat only renders when `HOTEL.rating.count != null` (cardinal rule §3).
+- **Carousel :** new `src/components/molecules/ReviewsCarousel.tsx` (client component, Embla — already in deps from §19). All 9 quotes in horizontal scroll. Cards : `420px` wide, white bg, `border-border-subtle`, source pill micro-caps top, big « decorative, line-clamp-7 Newsreader quote, hair-rule attribution.
+- **Arrow controls :** prev/next IconButtons on md+, native swipe on touch. Disabled state at edges.
+- **Two CTAs :** /avis (long-form archive) + outbound TripAdvisor (live 32-review feed).
+
+Commit `047a630`.
+
+### #122 — /avis simplified
+
+The dedicated reviews page kept its full-bleed XL editorial flavour from §20 — 9 quotes stacked vertically, each one rendered ~44 px display serif. Beautiful in isolation but stale + inconsistent with the new card direction.
+
+New design : intro two-column (lede left, "32" stat counter right) + 3-col responsive card grid using the same primitive as the home carousel. Same source pill, same « decorative, same hair-rule. Outbound TripAdvisor link kept.
+
+Commit `64aeb84`.
+
+### #123 — /dining facts row killed
+
+The 4-fact grid (Couverts · Service · Open to · Réservation) with Phosphor icons (Users · ForkKnife · Door · Clock) was redundant : all 4 facts were already in the surrounding prose, AND "Open to: Residents and visitors" / "Ouvert à : Résidents et visiteurs" framed the kitchen as gated.
+
+- Drop `Users / ForkKnife / Door` from imports
+- Drop the entire `facts` array + `<dl>` block from the JSX
+- Drop 8 i18n keys × 3 locales = 24 strings from messages bundles
+- Rewrite `introLede` : the segregationist line becomes sensory — FR "Cinquante couverts à l'ombre des grands manguiers, ouverte tous les jours sur réservation." / EN "Fifty seats in the shade of the mango trees, open every day by reservation." / NO "Femti kuverter i skyggen av mangotrærne, åpent hver dag etter avtale."
+
+Commit `b6dd909`.
+
+### #124 — Sanity cleanup
+
+Visual verification on prod after #121 showed the **old** reviewer names still rendering on /fr ("Polly P.", "KingfisherOslo", "Ada"). The Sanity dataset had 9 review documents seeded from the legacy `rooms.ts` list — unverified Booking / Google reviewers (Ada, Giovanni, KingfisherOslo, Anna Maria, Ruth Barbara W.) plus the old short-form names. These overrode the new trilingual fallback.
+
+- Deleted 9 published + 9 draft review docs via Mutate API (transaction `ab8iSaX02thf1x4VV7GQLy`)
+- Patched the Sanity hotel doc to `rating: { value: "4.9", count: 32, sources: ["TripAdvisor"] }` (transaction `rwz24mnmHGuuUUUfMQRajJ`) — was `null` everywhere, hiding the "32" stat counter
+- Added a defensive per-field merge inside `fetchHotel` for the nested `rating` block — without it, a single null Sanity field clobbers the whole verified rating object
+- Updated `scripts/migrate-to-sanity.ts` to seed FR/EN/NO via `localeText` so a future re-run rebuilds the trilingual reviews correctly
+
+Commits `66b39ab` + `1fbde6b`.
+
+### Live verification
+
+- `/fr` Reviews section : H2 "Ce que disent nos visiteurs." + "32" + caption "avis vérifiés sur TripAdvisor depuis 2018" + 3 cards visible (Polly Pallister Wilkin / Kristin O. V. / Toril A.) + prev/next arrows ✓
+- `/fr/avis` : intro two-col + "32" stat + 9 cards in 3-col grid + TripAdvisor outbound ✓
+- `/no/dining` : facts row gone + new lede "Femti kuverter i skyggen av mangotrærne, åpent hver dag etter avtale." ✓
+- `/no` Reviews : NO translations rendering (no more FR leak) ✓
+
+### What's left open
+
+- **#117 responsive mobile site-wide** — Playwright sweep across 9 main pages × 3 viewports (375/390/768), catalog crops + overflow + alignment + tap-targets, then fix in a multi-commit pass.
+- **#119 newsletter purpose pivot** — shift from "no commercial offers" stance toward conversion / lead nurture / promo while preserving Aman tone. Touch `messages/{fr,en,no}.json` (Footer.newsletterKicker/Body/Done) + `NewsletterWelcome.tsx` COPY map.
+- **Sanity hotel rating per-locale tab** — `value` and `count` are top-level number fields (not localeText), so any future edit in Studio risks the same null wipe-out we saw. The new per-field merge in fetchHotel covers it.
+
+— Claude, 2026-05-27 lunch
 
 ---
 
