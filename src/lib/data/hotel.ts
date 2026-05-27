@@ -11,9 +11,23 @@ export const HOTEL = {
   shortName: 'Ambalakely',
   legalName: 'Hôtel Ambalakely',
   description:
-    'Un petit hôtel de dix chambres dans les hautes terres de Fianarantsoa, Madagascar. Sur la RN7, à 12 km de la ville, fondé en 2018 par Mamy et Hasina.',
+    'Un petit hôtel de dix chambres dans les hautes terres de Fianarantsoa, Madagascar. Sur la RN7, à 12 km de la ville. Ouvert en septembre 2014, sur le domaine familial fondé en 2002.',
   tagline: 'Dix chambres dans les hautes terres de Madagascar.',
-  founded: '2018',
+  // §34 fact correction (2026-05-27) — source : timeline document from
+  // the owners. The domain dates from 2002 (terrain Vonimboahirana
+  // acquired by Mamy + Hasina) ; the chalet for first visitors came in
+  // 2003 ; the garden kitchen Villa Hagen in 2005 ; foundation stone
+  // of Hôtel Ambalakely in April 2013 ; hotel opens officially
+  // September 2014 ; the chalet becomes Toko Telo restaurant in 2015 ;
+  // reception inaugurated April 2018 (was previously confused with the
+  // hotel opening — wrong). Schema.org `foundingDate` = 2014.
+  founded: '2014',
+  domainAcquired: '2002',
+  chaletOpened: '2003',
+  villaHagenKitchen: '2005',
+  foundationStone: 'April 2013',
+  tokoTeloOpened: '2015',
+  receptionInaugurated: 'April 2018',
   founders: ['Mamy', 'Hasina'],
 
   // Single point of contact — pas de contacts internes exposés
@@ -120,10 +134,15 @@ export const HOTEL = {
     sources: ['TripAdvisor', 'Google'],
   },
 
-  // URL des plateformes de reviews — utilisée pour le lien "Voir tous les avis"
+  // URL des plateformes de reviews — utilisée pour les liens "Voir tous
+  // les avis". Google n'a pas de Place ID stable préservé ici ; on
+  // ouvre Maps via search query — c'est robuste et n'expose pas une URL
+  // qui peut casser si la fiche Google bouge.
   reviewUrls: {
     tripadvisor:
       'https://www.tripadvisor.com/Hotel_Review-g298271-d7646881-Reviews-Hotel_Ambalakely-Fianarantsoa_Fianarantsoa_Province.html',
+    google:
+      'https://www.google.com/maps/search/?api=1&query=H%C3%B4tel+Ambalakely+Fianarantsoa',
   },
 
   socials: {

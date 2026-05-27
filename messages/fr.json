@@ -1,7 +1,7 @@
 {
   "Site": {
     "defaultTitleSuffix": "Dix chambres dans les hautes terres de Madagascar",
-    "description": "Un petit hôtel de dix chambres dans les hautes terres de Fianarantsoa, Madagascar. Sur la RN7, à 12 km de la ville, fondé en 2018 par Mamy et Hasina.",
+    "description": "Un petit hôtel de dix chambres dans les hautes terres de Fianarantsoa, Madagascar. Sur la RN7, à 12 km de la ville. Ouvert en septembre 2014, sur le domaine familial fondé en 2002.",
     "keywords": [
       "Hôtel Ambalakely",
       "hôtel Fianarantsoa",
@@ -75,7 +75,7 @@
       "à 12 km de Fianarantsoa,",
       "dans les hautes terres."
     ],
-    "subtitle": "Ouvert en 2018, à douze kilomètres au nord de Fianarantsoa.",
+    "subtitle": "Ouvert depuis septembre 2014, à douze kilomètres au nord de Fianarantsoa.",
     "socialProof": ""
   },
   "Stay": {
@@ -102,10 +102,10 @@
     "viewAll": "Voir toutes les excursions"
   },
   "Story": {
-    "h2": "Dix chambres, depuis 2018.",
-    "bodyLead": "La colline achetée en 2015, les premiers arbres plantés la même année. De Norvège, l'idée du ",
+    "h2": "Dix chambres, depuis 2014.",
+    "bodyLead": "Le terrain a été acquis en 2002 — un lieu nommé Vonimboahirana, ancien point de rassemblement familial. Un chalet pour les premiers visiteurs suit en 2003, la cuisine du domaine Villa Hagen en 2005. Depuis la Norvège, l'idée du ",
     "bodyKoseligEm": "koselig",
-    "bodyTrail": " — une attention aux petites choses chaudes du quotidien. La maison a ouvert en octobre 2018. Tenue en famille : le jardin, la cuisine, l'accueil.",
+    "bodyTrail": " — une attention aux petites choses chaudes du quotidien. L'Hôtel Ambalakely ouvre officiellement ses portes en septembre 2014. Tenu en famille : le jardin, la cuisine, l'accueil.",
     "quote": "L'hôtel est autant la maison de famille que le lieu des invités.",
     "quoteSigned": "",
     "readMore": "L'histoire de la maison",
@@ -115,10 +115,11 @@
     "h2": "Ce que disent nos visiteurs.",
     "ratingNoNumber": "Avis vérifiés sur {sources}",
     "ratingWithNumber": "{value} sur 5 — {count} avis sur {sources}",
-    "statSince": "avis vérifiés sur {sources} depuis {year}",
+    "statSince": "avis vérifiés sur {sources}",
     "readOnTripadvisor": "Tout lire sur TripAdvisor",
     "prevReview": "Avis précédent",
-    "nextReview": "Avis suivant"
+    "nextReview": "Avis suivant",
+    "readOnGoogle": "Tout lire sur Google"
   },
   "Trust": {
     "kicker": "Communauté",
@@ -266,20 +267,20 @@
   },
   "About": {
     "metaTitle": "À propos",
-    "metaDescription": "Mamy et Hasina ont ouvert l'Hôtel Ambalakely en 2018, sur la RN7 à 12 km au nord de Fianarantsoa. Ils dirigent aussi Trans Groupe Hasina, agence de voyage depuis vingt ans.",
+    "metaDescription": "Mamy et Hasina ont acquis le terrain de Vonimboahirana en 2002. Un chalet pour les visiteurs en 2003, la cuisine Villa Hagen en 2005, l'Hôtel Ambalakely ouvre officiellement en septembre 2014. Toko Telo, la table de la maison, en 2015. Ils dirigent aussi Trans Groupe Hasina, agence de voyage depuis vingt ans.",
     "ogTitle": "À propos · Hôtel Ambalakely",
-    "ogDescription": "Mamy et Hasina, depuis 2018.",
+    "ogDescription": "Mamy et Hasina, depuis 2002.",
     "imageAlt": "Hôtel Ambalakely, hautes terres Fianarantsoa Madagascar",
     "breadcrumbHome": "Accueil",
     "breadcrumbAbout": "À propos",
     "heroAlt": "Mamy et Hasina, fondateurs de l'Hôtel Ambalakely à Fianarantsoa, Madagascar",
     "heroTitle": [
       "Mamy et Hasina,",
-      "depuis 2018."
+      "depuis 2002."
     ],
-    "introKicker": "Depuis 2018",
+    "introKicker": "Depuis 2002",
     "introLede": "Un hôtel qui ressemble à une maison, sur une colline à douze kilomètres au nord de Fianarantsoa.",
-    "introP1Lead": "Mamy et Hasina ont ouvert l'Hôtel Ambalakely en octobre 2018, sur un terrain auparavant agricole. Dix chambres, une cuisine, un jardin, une petite équipe. Le concept de la maison : ",
+    "introP1Lead": "Mamy et Hasina ont acquis le terrain de Vonimboahirana à Ambalakely en 2002 — un ancien lieu de rassemblement familial. Un chalet pour les premiers visiteurs suit en 2003, la cuisine du domaine Villa Hagen en 2005. La première pierre de l'Hôtel Ambalakely est posée en avril 2013, et l'hôtel ouvre officiellement ses portes en septembre 2014. Dix chambres, une cuisine, un jardin, une petite équipe. Le concept de la maison : ",
     "introP1Em": "Eny ambanivohitra",
     "introP1Trail": ", à la campagne, dans la tradition Betsileo.",
     "introP2Lead": "Avant l'hôtel, ils dirigeaient déjà l'agence de voyage ",
@@ -312,14 +313,20 @@
     "bookCheck": "Vérifier disponibilités",
     "continueLabel": "Les chambres",
     "milestones": {
-      "tghYear": "2005",
+      "landYear": "2002",
+      "landTitle": "Vonimboahirana, le terrain",
+      "landBody": "Mamy et Hasina acquièrent un terrain à Ambalakely connu sous le nom de Vonimboahirana, ancien lieu de rassemblement familial. Premier chalet pour visiteurs en 2003, cuisine du domaine Villa Hagen en 2005.",
+      "tghYear": "2006",
       "tghTitle": "Trans Groupe Hasina",
-      "tghBody": "Mamy et Hasina fondent leur agence de voyage à Fianarantsoa, dans les hautes terres Betsileo. Vingt ans plus tard, l'agence opère dans toute Madagascar.",
-      "openYear": "2018",
-      "openTitle": "Ouverture de l'hôtel",
-      "openBody": "L'Hôtel Ambalakely ouvre en octobre, sur un terrain anciennement agricole nommé Vonimboahirana, à 12 km au nord de Fianarantsoa. Dix chambres, une cuisine, un jardin.",
+      "tghBody": "Ils fondent Trans Groupe Hasina, agence de voyage à Fianarantsoa. Vingt ans plus tard, TGH organise des séjours dans toute Madagascar avec un soin particulier pour le tourisme responsable.",
+      "openYear": "2014",
+      "openTitle": "L'Hôtel Ambalakely ouvre",
+      "openBody": "Première pierre posée en avril 2013. L'Hôtel Ambalakely ouvre officiellement ses portes en septembre 2014, à 12 km au nord de Fianarantsoa. Dix chambres, une cuisine, un jardin, une petite équipe.",
+      "tokoTeloYear": "2015",
+      "tokoTeloTitle": "Toko Telo, la cuisine",
+      "tokoTeloBody": "Le chalet initial devient Toko Telo — les trois pierres du foyer, en malgache. La cuisine de la maison prolonge celle de Villa Hagen : produits du jardin et des Tantsaha voisins, croisement entre les hautes terres, la Norvège et la France.",
       "todayYear": "Aujourd'hui",
-      "todayTitle": "Une équipe de quartier",
+      "todayTitle": "La famille, l'équipe, la maison",
       "todayBody": "L'hôtel et l'agence emploient des habitants du quartier de Tanambao. Une partie de chaque nuit soutient Hope for the Future, l'école voisine ouverte en 2014."
     }
   },
@@ -377,7 +384,7 @@
       "à Ambalakely."
     ],
     "introLede": "Mêmes murs sable, mêmes parquets en bois sombre, mêmes bouillottes au soir. La différence : la taille, la vue, le lit.",
-    "introP1": "Dix chambres dans deux bâtiments. Deux donnent sur la façade principale et surplombent les rizières. Quatre occupent la catégorie intermédiaire, avec un bureau à la fenêtre et un lit king. Quatre autres sont les chambres d'origine, ouvertes en 2018. Choisissez selon ce que vous voulez voir par la fenêtre.",
+    "introP1": "Dix chambres dans deux bâtiments. Deux donnent sur la façade principale et surplombent les rizières. Quatre occupent la catégorie intermédiaire, avec un bureau à la fenêtre et un lit king. Quatre autres sont les chambres d'origine, ouvertes avec l'hôtel en 2014. Choisissez selon ce que vous voulez voir par la fenêtre.",
     "compareKicker": "En un coup d'œil",
     "compareH2": "Douze critères pour choisir.",
     "chapter": "Chapitre",

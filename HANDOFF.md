@@ -133,9 +133,18 @@ public/
 
 ## 5. Real verified data — DO NOT change without re-checking the source documents
 
-### Hotel basics (from `Tarifs Publics 2026.pdf` and `Kirsten beskrivelse.docx`)
+### Hotel basics (from `Tarifs Publics 2026.pdf`, `Kirsten beskrivelse.docx`, and the family-supplied timeline doc — §34 fact correction 2026-05-27)
 - Name: **Hôtel Ambalakely**
-- Founded: **October 2018** by Mamy + Hasina Randriamahazo
+- **Real timeline** (from owners) :
+  - **2002** : Terrain "Vonimboahirana" acquired at Ambalakely by Mamy + Hasina
+  - **2003** : Chalet for first visitors built — known for garden-produce meals
+  - **2005** : Villa Hagen, the kitchen of the domain, built
+  - **~2006** : Trans Groupe Hasina (TGH) founded — sister travel agency
+  - **April 2013** : Foundation stone of Hôtel Ambalakely laid
+  - **September 2014** : **HOTEL OFFICIALLY OPENS** — ten rooms, the project takes hotel form
+  - **2015** : Chalet transformed into Toko Telo restaurant ("three stones of the hearth")
+  - **April 2018** : Hotel reception inaugurated (formal entry/check-in space) — this was the event previously confused with "opening" in older HANDOFF entries.
+- Run by Mamy + Hasina Randriamahazo
 - 10 rooms, capacity 20–28 guests
 - Location: **on the RN7, 12 km north of Fianarantsoa**
 - GPS: **21°25' S, 47°10' E**, altitude **1 082 m**

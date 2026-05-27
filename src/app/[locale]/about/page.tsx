@@ -44,9 +44,15 @@ export default async function AboutPage({ params }: LocaleParam) {
   const [HOTEL, t] = await Promise.all([fetchHotel(locale), getTranslations('About')]);
 
   const heroTitle = t.raw('heroTitle') as string[];
+  // Timeline expanded §34 (2026-05-27 afternoon) — from 3 to 5 events
+  // reflecting the real 22-year project chronology : 2002 terrain
+  // acquired (Vonimboahirana), 2006 TGH founded, 2014 Hotel opens,
+  // 2015 Toko Telo restaurant opens (the chalet rebadged), today.
   const milestones = [
+    { year: t('milestones.landYear'), title: t('milestones.landTitle'), body: t('milestones.landBody') },
     { year: t('milestones.tghYear'), title: t('milestones.tghTitle'), body: t('milestones.tghBody') },
     { year: t('milestones.openYear'), title: t('milestones.openTitle'), body: t('milestones.openBody') },
+    { year: t('milestones.tokoTeloYear'), title: t('milestones.tokoTeloTitle'), body: t('milestones.tokoTeloBody') },
     { year: t('milestones.todayYear'), title: t('milestones.todayTitle'), body: t('milestones.todayBody') },
   ];
 

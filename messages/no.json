@@ -1,7 +1,7 @@
 {
   "Site": {
     "defaultTitleSuffix": "Ti rom i Madagaskars høyland",
-    "description": "Et lite hotell med ti rom i Fianarantsoas høyland, Madagaskar. Langs RN7, 12 km fra byen, åpnet i 2018 av Mamy og Hasina.",
+    "description": "Et lite hotell med ti rom i Fianarantsoas høyland, Madagaskar. Langs RN7, 12 km fra byen. Åpnet i september 2014, på familiedomenet som ble grunnlagt i 2002.",
     "keywords": [
       "Hôtel Ambalakely",
       "Fianarantsoa hotell",
@@ -75,7 +75,7 @@
       "12 km fra Fianarantsoa,",
       "i Madagaskars høyland."
     ],
-    "subtitle": "Åpnet i 2018, tolv kilometer nord for Fianarantsoa.",
+    "subtitle": "Åpent siden september 2014, tolv kilometer nord for Fianarantsoa.",
     "socialProof": ""
   },
   "Stay": {
@@ -102,10 +102,10 @@
     "viewAll": "Se alle opplevelser"
   },
   "Story": {
-    "h2": "Ti rom, siden 2018.",
-    "bodyLead": "Åsen ble kjøpt i 2015, de første trærne plantet samme år. Fra Norge, ideen om ",
+    "h2": "Ti rom, siden 2014.",
+    "bodyLead": "Tomten ble ervervet i 2002 — et sted som heter Vonimboahirana, en gang et samlingssted for familier. En hytte for de første besøkende fulgte i 2003, hagekjøkkenet Villa Hagen i 2005. Fra Norge, ideen om ",
     "bodyKoseligEm": "koselig",
-    "bodyTrail": " — en oppmerksomhet på de små, varme tingene i hverdagen. Huset åpnet i oktober 2018. Drives som en familie: hagen, kjøkkenet, mottagelsen.",
+    "bodyTrail": " — en oppmerksomhet på de små, varme tingene i hverdagen. Hôtel Ambalakely åpnet offisielt i september 2014. Drives som en familie: hagen, kjøkkenet, mottagelsen.",
     "quote": "Hotellet er like mye familiens hjem som et sted for gjester.",
     "quoteSigned": "",
     "readMore": "Husets historie",
@@ -115,10 +115,11 @@
     "h2": "Det gjestene våre sier.",
     "ratingNoNumber": "Verifiserte anmeldelser på {sources}",
     "ratingWithNumber": "{value} av 5 — {count} anmeldelser på {sources}",
-    "statSince": "verifiserte anmeldelser på {sources} siden {year}",
+    "statSince": "verifiserte anmeldelser på {sources}",
     "readOnTripadvisor": "Les alt på TripAdvisor",
     "prevReview": "Forrige anmeldelse",
-    "nextReview": "Neste anmeldelse"
+    "nextReview": "Neste anmeldelse",
+    "readOnGoogle": "Les alt på Google"
   },
   "Trust": {
     "kicker": "Felleskap",
@@ -266,20 +267,20 @@
   },
   "About": {
     "metaTitle": "Om oss",
-    "metaDescription": "Mamy og Hasina åpnet Hôtel Ambalakely i 2018, langs RN7 12 km nord for Fianarantsoa. De driver også Trans Groupe Hasina, et reisebyrå gjennom tjue år.",
+    "metaDescription": "Mamy og Hasina ervervet Vonimboahirana-tomten i 2002. En hytte for besøkende i 2003, Villa Hagen-kjøkkenet i 2005, Hôtel Ambalakely åpnet offisielt i september 2014. Toko Telo, husets bord, i 2015. De driver også Trans Groupe Hasina, et reisebyrå gjennom tjue år.",
     "ogTitle": "Om oss · Hôtel Ambalakely",
-    "ogDescription": "Mamy og Hasina, siden 2018.",
+    "ogDescription": "Mamy og Hasina, siden 2002.",
     "imageAlt": "Hôtel Ambalakely, høylandet i Fianarantsoa, Madagaskar",
     "breadcrumbHome": "Hjem",
     "breadcrumbAbout": "Om oss",
     "heroAlt": "Mamy og Hasina, grunnleggerne av Hôtel Ambalakely i Fianarantsoa, Madagaskar",
     "heroTitle": [
       "Mamy og Hasina,",
-      "siden 2018."
+      "siden 2002."
     ],
-    "introKicker": "Siden 2018",
+    "introKicker": "Siden 2002",
     "introLede": "Et hotell som føles som et hjem, på en ås tolv kilometer nord for Fianarantsoa.",
-    "introP1Lead": "Mamy og Hasina åpnet Hôtel Ambalakely i oktober 2018, på det som hadde vært jordbruksland. Ti rom, et kjøkken, en hage, et lite team. Husets idé: ",
+    "introP1Lead": "Mamy og Hasina ervervet Vonimboahirana-tomten i Ambalakely i 2002 — en gang et samlingssted for familier. En hytte for de første besøkende fulgte i 2003, Villa Hagen-kjøkkenet i 2005. Grunnsteinen til Hôtel Ambalakely ble lagt i april 2013, og hotellet åpnet offisielt i september 2014. Ti rom, et kjøkken, en hage, et lite team. Husets idé: ",
     "introP1Em": "Eny ambanivohitra",
     "introP1Trail": ", på landet, i Betsileo-tradisjonen.",
     "introP2Lead": "Før hotellet drev de allerede reisebyrået ",
@@ -312,14 +313,20 @@
     "bookCheck": "Se tilgjengelighet",
     "continueLabel": "Rommene",
     "milestones": {
-      "tghYear": "2005",
+      "landYear": "2002",
+      "landTitle": "Vonimboahirana, tomten",
+      "landBody": "Mamy og Hasina erverver Vonimboahirana-tomten i Ambalakely, en gang et samlingssted for familier. Første hytte for besøkende i 2003, hagekjøkkenet Villa Hagen i 2005.",
+      "tghYear": "2006",
       "tghTitle": "Trans Groupe Hasina",
-      "tghBody": "Mamy og Hasina grunnlegger reisebyrået sitt i Fianarantsoa, i Betsileo-høylandet. Tjue år senere opererer byrået over hele Madagaskar.",
-      "openYear": "2018",
-      "openTitle": "Hotellet åpner",
-      "openBody": "Hôtel Ambalakely åpner i oktober på tidligere jordbruksland kalt Vonimboahirana, 12 km nord for Fianarantsoa. Ti rom, et kjøkken, en hage.",
+      "tghBody": "De grunnlegger Trans Groupe Hasina, et reisebyrå i Fianarantsoa. Tjue år senere arrangerer TGH reiser over hele Madagaskar med spesielt fokus på ansvarlig turisme.",
+      "openYear": "2014",
+      "openTitle": "Hôtel Ambalakely åpner",
+      "openBody": "Grunnsteinen lagt i april 2013. Hôtel Ambalakely åpner offisielt i september 2014, 12 km nord for Fianarantsoa. Ti rom, et kjøkken, en hage, et lite team.",
+      "tokoTeloYear": "2015",
+      "tokoTeloTitle": "Toko Telo, kjøkkenet",
+      "tokoTeloBody": "Den opprinnelige hytten blir Toko Telo — tre steiner i ildstedet, på gassisk. Husets kjøkken forlenger Villa Hagen: råvarer fra hagen og fra Tantsaha i nabolaget, der høylandet, Norge og Frankrike stille krysser hverandre.",
       "todayYear": "I dag",
-      "todayTitle": "Et nabolagsteam",
+      "todayTitle": "Familien, teamet, huset",
       "todayBody": "Hotellet og byrået ansetter folk fra Tanambao-nabolaget. En del av hver natt går til Hope for the Future, skolen ved siden av som åpnet i 2014."
     }
   },
@@ -377,7 +384,7 @@
       "på Ambalakely."
     ],
     "introLede": "Samme sandfargede vegger, samme mørke tregulv, samme varmeflasker om kvelden. Forskjellen: størrelsen, utsikten, sengen.",
-    "introP1": "Ti rom i to bygninger. To vender mot hovedfasaden og overskuer rismarkene. Fire holder mellomkategorien, med skrivebord ved vinduet og en king-seng. Fire andre er de opprinnelige rommene, åpnet i 2018. Velg etter hva du vil se ut av vinduet.",
+    "introP1": "Ti rom i to bygninger. To vender mot hovedfasaden og overskuer rismarkene. Fire holder mellomkategorien, med skrivebord ved vinduet og en king-seng. Fire andre er de opprinnelige rommene, åpnet med hotellet i 2014. Velg etter hva du vil se ut av vinduet.",
     "compareKicker": "Med ett blikk",
     "compareH2": "Tolv kriterier å velge etter.",
     "chapter": "Kapittel",
