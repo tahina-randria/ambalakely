@@ -1,14 +1,23 @@
 /**
  * Typed fetchers — try Sanity first, fall back to the static `.ts` data
- * if the dataset is empty or the request fails. This is the "graceful
- * degradation" path: the site keeps rendering even if Sanity is down
- * or while data is being edited.
+ * if the dataset is empty, the request fails, OR the requested locale
+ * field is missing in Sanity for an item. This is "locale-aware graceful
+ * degradation" : even if Sanity has only EN populated for some entities,
+ * the FR site serves the FR fallback (`src/lib/data/*.ts`) field-by-field
+ * via the `??` merge — never English on /fr.
  *
  * Each fetcher returns the SAME SHAPE as the corresponding .ts export,
  * so component imports can swap with no other change.
  *
- * Server Components only. Calling from client components requires
- * passing the resolved value as a prop.
+ * Server Components only. Each fetcher takes a `locale` parameter that
+ * MUST be forwarded from `getLocale()` (next-intl/server). The default
+ * is `'fr'` to preserve existing callers (sitemap/robots/etc.) that
+ * don't have a locale context.
+ *
+ * The locale parameter is passed to the GROQ query as `$locale`. The
+ * `LOC` helper in `queries.ts` returns null when that locale-specific
+ * value is empty in Sanity, so the merge falls back to the local FR
+ * source instead of leaking the wrong language.
  */
 
 import { cache } from 'react';
@@ -58,30 +67,50 @@ async function sanityFetch<T>(query: string, params: Record<string, unknown> = {
 
 export type Hotel = typeof HOTEL_FALLBACK;
 
-export const fetchHotel = cache(async (): Promise<Hotel> => {
-  const data = await sanityFetch<Partial<Hotel>>(HOTEL_QUERY);
+export const fetchHotel = cache(async (locale: string = 'fr'): Promise<Hotel> => {
+  const data = await sanityFetch<Partial<Hotel>>(HOTEL_QUERY, { locale });
   if (!data || !data.name) return HOTEL_FALLBACK;
-  // Merge Sanity data over fallback, so any missing field uses fallback.
-  return { ...HOTEL_FALLBACK, ...(data as Hotel) };
+  // Merge field-by-field so any null (= empty in this locale) uses fallback.
+  return {
+    ...HOTEL_FALLBACK,
+    ...data,
+    tagline: data.tagline ?? HOTEL_FALLBACK.tagline,
+    description: data.description ?? HOTEL_FALLBACK.description,
+  } as Hotel;
 });
 
 // ─── Room categories ──────────────────────────────────────────────────────
 
 type Category = (typeof CATEGORIES_FALLBACK)[number];
 
-export const fetchCategories = cache(async (): Promise<Category[]> => {
-  const data = await sanityFetch<Category[]>(ROOM_CATEGORIES_QUERY);
+export const fetchCategories = cache(async (locale: string = 'fr'): Promise<Category[]> => {
+  const data = await sanityFetch<Category[]>(ROOM_CATEGORIES_QUERY, { locale });
   if (!data || data.length === 0) return CATEGORIES_FALLBACK;
-  // Merge with fallback per-category so heroImage / gallery URLs stay
-  // even if Sanity hasn't wired images yet (T1.7 not done).
+  // Merge field-by-field per category. Image URLs from Sanity may be null
+  // until T1.7 photo uploads finish — fall back to fallback URLs.
   return data.map((cat) => {
     const fallback = CATEGORIES_FALLBACK.find((f) => f.slug === cat.slug);
-    return fallback ? { ...fallback, ...cat, heroImage: cat.heroImage || fallback.heroImage, gallery: cat.gallery?.length ? cat.gallery : fallback.gallery } : cat;
+    if (!fallback) return cat;
+    return {
+      ...fallback,
+      ...cat,
+      // Textual fields : null from GROQ means empty in this locale → use fallback.
+      name: cat.name ?? fallback.name,
+      shortDescription: cat.shortDescription ?? fallback.shortDescription,
+      longDescription: cat.longDescription ?? fallback.longDescription,
+      bedSetup: cat.bedSetup ?? fallback.bedSetup,
+      view: cat.view ?? fallback.view,
+      bestFor: cat.bestFor ?? fallback.bestFor,
+      pullQuote: cat.pullQuote ?? fallback.pullQuote,
+      // Image fields : prefer Sanity if available, fall back to local URLs.
+      heroImage: cat.heroImage || fallback.heroImage,
+      gallery: cat.gallery?.length ? cat.gallery : fallback.gallery,
+    };
   }) as Category[];
 });
 
-export async function fetchCategoryBySlug(slug: string): Promise<Category | undefined> {
-  const cats = await fetchCategories();
+export async function fetchCategoryBySlug(slug: string, locale: string = 'fr'): Promise<Category | undefined> {
+  const cats = await fetchCategories(locale);
   return cats.find((c) => c.slug === slug);
 }
 
@@ -89,10 +118,14 @@ export async function fetchCategoryBySlug(slug: string): Promise<Category | unde
 
 type Review = (typeof REVIEWS_FALLBACK)[number];
 
-export const fetchReviews = cache(async (): Promise<readonly Review[]> => {
-  const data = await sanityFetch<Review[]>(REVIEWS_QUERY);
+export const fetchReviews = cache(async (locale: string = 'fr'): Promise<readonly Review[]> => {
+  const data = await sanityFetch<Review[]>(REVIEWS_QUERY, { locale });
   if (!data || data.length === 0) return REVIEWS_FALLBACK;
-  return data;
+  // Filter out items with no quote in this locale (null = empty in this
+  // locale). If nothing left, return local fallback.
+  const filtered = data.filter((r) => r.quote);
+  if (filtered.length === 0) return REVIEWS_FALLBACK;
+  return filtered;
 });
 
 // ─── Articles ─────────────────────────────────────────────────────────────
@@ -126,19 +159,22 @@ function adaptArticle(raw: SanityArticle, fallback?: Article): Article {
   };
 }
 
-export const fetchArticles = cache(async (): Promise<Article[]> => {
-  const data = await sanityFetch<SanityArticle[]>(ARTICLES_QUERY);
+export const fetchArticles = cache(async (locale: string = 'fr'): Promise<Article[]> => {
+  const data = await sanityFetch<SanityArticle[]>(ARTICLES_QUERY, { locale });
   if (!data || data.length === 0) return [...ARTICLES_FALLBACK];
-  return data.map((raw) => {
+  // Skip articles with no title in this locale.
+  const filtered = data.filter((raw) => raw.title);
+  if (filtered.length === 0) return [...ARTICLES_FALLBACK];
+  return filtered.map((raw) => {
     const fallback = ARTICLES_FALLBACK.find((f) => f.slug === raw.slug);
     return adaptArticle(raw, fallback);
   });
 });
 
-export async function fetchArticleBySlug(slug: string): Promise<Article | undefined> {
-  const data = await sanityFetch<SanityArticle | null>(ARTICLE_BY_SLUG_QUERY, { slug });
+export async function fetchArticleBySlug(slug: string, locale: string = 'fr'): Promise<Article | undefined> {
+  const data = await sanityFetch<SanityArticle | null>(ARTICLE_BY_SLUG_QUERY, { slug, locale });
   const fallback = ARTICLES_FALLBACK.find((f) => f.slug === slug);
-  if (!data) return fallback;
+  if (!data || !data.title) return fallback;
   return adaptArticle(data, fallback);
 }
 
@@ -146,13 +182,27 @@ export async function fetchArticleBySlug(slug: string): Promise<Article | undefi
 
 type Excursion = (typeof EXCURSIONS_FALLBACK)[number];
 
-export const fetchExcursions = cache(async (): Promise<Excursion[]> => {
-  const data = await sanityFetch<Excursion[]>(EXCURSIONS_QUERY);
+export const fetchExcursions = cache(async (locale: string = 'fr'): Promise<Excursion[]> => {
+  const data = await sanityFetch<Excursion[]>(EXCURSIONS_QUERY, { locale });
   if (!data || data.length === 0) return [...EXCURSIONS_FALLBACK];
-  // Merge with fallback to keep image URLs until photos are wired.
+  // Merge per excursion : null from GROQ for textual fields means empty
+  // in this locale → use the local FR fallback. Image stays from Sanity
+  // if uploaded, else fallback URL.
   return data.map((e) => {
     const fb = EXCURSIONS_FALLBACK.find((f) => f.slug === e.slug);
-    return fb ? { ...fb, ...e, image: e.image || fb.image } : e;
+    if (!fb) return e;
+    return {
+      ...fb,
+      ...e,
+      name: e.name ?? fb.name,
+      duration: e.duration ?? fb.duration,
+      tagline: e.tagline ?? fb.tagline,
+      body: e.body ?? fb.body,
+      best: e.best ?? fb.best,
+      cost: e.cost ?? fb.cost,
+      ctaLabel: e.ctaLabel ?? fb.ctaLabel,
+      image: e.image || fb.image,
+    };
   }) as Excursion[];
 });
 
@@ -160,19 +210,40 @@ export const fetchExcursions = cache(async (): Promise<Excursion[]> => {
 
 type Itinerary = (typeof ITINERARIES_FALLBACK)[number];
 
-export const fetchItineraries = cache(async (): Promise<Itinerary[]> => {
-  const data = await sanityFetch<Itinerary[]>(ITINERARIES_QUERY);
+export const fetchItineraries = cache(async (locale: string = 'fr'): Promise<Itinerary[]> => {
+  const data = await sanityFetch<Itinerary[]>(ITINERARIES_QUERY, { locale });
   if (!data || data.length === 0) return [...ITINERARIES_FALLBACK];
   return data.map((it) => {
     const fb = ITINERARIES_FALLBACK.find((f) => f.slug === it.slug);
-    return fb ? { ...fb, ...it, image: it.image || fb.image, best: fb.best, totalKm: fb.totalKm } : it;
+    if (!fb) return it;
+    return {
+      ...fb,
+      ...it,
+      title: it.title ?? fb.title,
+      pitch: it.pitch ?? fb.pitch,
+      // Days array : if Sanity has it, merge per-day. Otherwise local.
+      days: it.days?.length
+        ? it.days.map((day, idx) => {
+            const fbDay = fb.days?.[idx];
+            return {
+              ...(fbDay ?? {}),
+              ...day,
+              title: day.title ?? fbDay?.title ?? '',
+              body: day.body ?? fbDay?.body ?? '',
+            };
+          })
+        : fb.days,
+      image: it.image || fb.image,
+      best: fb.best,
+      totalKm: fb.totalKm,
+    };
   }) as Itinerary[];
 });
 
 // ─── FAQ ──────────────────────────────────────────────────────────────────
 
 type FaqCategory = (typeof FAQ_FALLBACK)[number];
-type FlatFaq = { q: string; a: string; category: string };
+type FlatFaq = { q: string | null; a: string | null; category: string };
 
 const FAQ_CATEGORY_SLUG_MAP: Record<string, string> = {
   'Réservation': 'booking',
@@ -195,17 +266,22 @@ const FAQ_CATEGORY_LABEL_MAP: Record<string, string> = {
   practical: 'Pratique',
 };
 
-export const fetchFaq = cache(async (): Promise<FaqCategory[]> => {
-  const data = await sanityFetch<FlatFaq[]>(FAQ_QUERY);
+export const fetchFaq = cache(async (locale: string = 'fr'): Promise<FaqCategory[]> => {
+  const data = await sanityFetch<FlatFaq[]>(FAQ_QUERY, { locale });
   if (!data || data.length === 0) return [...FAQ_FALLBACK];
+  // Filter out FAQ items missing q or a in this locale. If most/all are
+  // missing, fall back entirely to the local FR FAQ (which is the
+  // curated, PDF-sourced source of truth per §94).
+  const filtered = data.filter((item) => item.q && item.a);
+  if (filtered.length === 0) return [...FAQ_FALLBACK];
 
   // Re-group by category to match the FaqCategory[] shape components expect.
   const groups = new Map<string, FaqCategory>();
-  for (const item of data) {
+  for (const item of filtered) {
     const slug = FAQ_CATEGORY_SLUG_MAP[item.category] ?? 'practical';
     const label = FAQ_CATEGORY_LABEL_MAP[slug] ?? item.category;
     if (!groups.has(slug)) groups.set(slug, { slug, label, entries: [] });
-    groups.get(slug)!.entries.push({ q: item.q, a: item.a });
+    groups.get(slug)!.entries.push({ q: item.q!, a: item.a! });
   }
   return Array.from(groups.values());
 });
@@ -214,13 +290,13 @@ export const fetchFaq = cache(async (): Promise<FaqCategory[]> => {
 
 export type Staff = {
   name: string;
-  role: string;
-  bio: string;
+  role: string | null;
+  bio: string | null;
   photo: string | null;
 };
 
-export const fetchStaff = cache(async (): Promise<Staff[]> => {
-  const data = await sanityFetch<Staff[]>(STAFF_QUERY);
+export const fetchStaff = cache(async (locale: string = 'fr'): Promise<Staff[]> => {
+  const data = await sanityFetch<Staff[]>(STAFF_QUERY, { locale });
   return data ?? [];
 });
 
@@ -232,8 +308,8 @@ export type Community = {
   location: string;
   activeChildren: number;
   communePopulation: number;
-  description: string;
-  programs: { title: string; description: string }[];
+  description: string | null;
+  programs: { title: string | null; description: string | null }[];
   akanimamy: {
     meaning: string;
     landAcquired: string;
@@ -244,6 +320,6 @@ export type Community = {
   };
 };
 
-export const fetchCommunity = cache(async (): Promise<Community | null> => {
-  return await sanityFetch<Community>(COMMUNITY_QUERY);
+export const fetchCommunity = cache(async (locale: string = 'fr'): Promise<Community | null> => {
+  return await sanityFetch<Community>(COMMUNITY_QUERY, { locale });
 });

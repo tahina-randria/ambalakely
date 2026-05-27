@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
@@ -16,8 +16,9 @@ import { fetchCategories } from '@/sanity/lib/fetch';
  * Data : Sanity (categories) with fallback to data/categories.ts.
  */
 export async function Stay() {
+  const locale = await getLocale();
   const [categories, t, tCommon] = await Promise.all([
-    fetchCategories(),
+    fetchCategories(locale),
     getTranslations('Stay'),
     getTranslations('Common'),
   ]);

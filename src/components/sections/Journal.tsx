@@ -1,4 +1,4 @@
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
@@ -7,8 +7,9 @@ import { ArrowRight, ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchArticles } from '@/sanity/lib/fetch';
 
 export async function Journal() {
+  const locale = await getLocale();
   const [articles, t] = await Promise.all([
-    fetchArticles(),
+    fetchArticles(locale),
     getTranslations('Journal'),
   ]);
   if (articles.length === 0) return null;

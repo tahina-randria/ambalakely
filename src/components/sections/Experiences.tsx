@@ -1,4 +1,4 @@
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
@@ -8,8 +8,9 @@ import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchExcursions } from '@/sanity/lib/fetch';
 
 export async function Experiences() {
+  const locale = await getLocale();
   const [experiences, t] = await Promise.all([
-    fetchExcursions(),
+    fetchExcursions(locale),
     getTranslations('Experiences'),
   ]);
   return (

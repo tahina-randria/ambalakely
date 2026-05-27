@@ -1,4 +1,4 @@
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { CookiePrefsLink } from '@/components/atoms/CookiePrefsLink';
@@ -8,8 +8,9 @@ import { fetchHotel } from '@/sanity/lib/fetch';
 type ContactLink = { label: string; href: string };
 
 export async function Footer() {
+  const locale = await getLocale();
   const [HOTEL, t] = await Promise.all([
-    fetchHotel(),
+    fetchHotel(locale),
     getTranslations('Footer'),
   ]);
   const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');

@@ -1,3 +1,4 @@
+import { getLocale } from 'next-intl/server';
 import { fetchHotel, fetchReviews } from '@/sanity/lib/fetch';
 
 /**
@@ -9,7 +10,8 @@ import { fetchHotel, fetchReviews } from '@/sanity/lib/fetch';
  * Data: Sanity (with .ts fallback via fetchHotel/fetchReviews).
  */
 export async function HotelJsonLd() {
-  const [HOTEL, reviews] = await Promise.all([fetchHotel(), fetchReviews()]);
+  const locale = await getLocale();
+  const [HOTEL, reviews] = await Promise.all([fetchHotel(locale), fetchReviews(locale)]);
 
   const aggregateRating =
     HOTEL.rating.value && HOTEL.rating.count
@@ -76,7 +78,8 @@ export async function HotelJsonLd() {
  * Restaurant schema for /dining page.
  */
 export async function RestaurantJsonLd() {
-  const HOTEL = await fetchHotel();
+  const locale = await getLocale();
+  const HOTEL = await fetchHotel(locale);
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Restaurant',
@@ -118,7 +121,8 @@ export async function RestaurantJsonLd() {
  * Breadcrumb schema for detail pages.
  */
 export async function BreadcrumbJsonLd({ items }: { items: { name: string; url: string }[] }) {
-  const HOTEL = await fetchHotel();
+  const locale = await getLocale();
+  const HOTEL = await fetchHotel(locale);
   const data = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

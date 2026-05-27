@@ -1,4 +1,4 @@
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
@@ -14,8 +14,9 @@ import { fetchReviews } from '@/sanity/lib/fetch';
  * Data: Sanity (with .ts fallback via fetchReviews/fetchHotel).
  */
 export async function Reviews() {
+  const locale = await getLocale();
   const [allReviews, t] = await Promise.all([
-    fetchReviews(),
+    fetchReviews(locale),
     getTranslations('Reviews'),
   ]);
   const reviews = allReviews.slice(0, 3);

@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: LocaleParam): Promise<Metadat
 export default async function RoomsPage({ params }: LocaleParam) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [categories, t] = await Promise.all([fetchCategories(), getTranslations('RoomsPage')]);
+  const [categories, t] = await Promise.all([fetchCategories(locale), getTranslations('RoomsPage')]);
 
   const heroTitle = t.raw('heroTitle') as string[];
 

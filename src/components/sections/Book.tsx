@@ -1,12 +1,13 @@
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import { Container } from '@/components/atoms/Container';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { fetchHotel } from '@/sanity/lib/fetch';
 
 export async function Book() {
+  const locale = await getLocale();
   const [HOTEL, t, tCommon] = await Promise.all([
-    fetchHotel(),
+    fetchHotel(locale),
     getTranslations('Book'),
     getTranslations('Common'),
   ]);

@@ -26,7 +26,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const article = await fetchArticleBySlug(slug);
+  const article = await fetchArticleBySlug(slug, locale);
   if (!article) {
     const t = await getTranslations({ locale, namespace: 'ArticlePage' });
     return { title: t('metaTitleFallback') };
@@ -48,9 +48,9 @@ export async function generateMetadata({
   };
 }
 
-async function ArticleJsonLd({ article }: { article: Article | undefined }) {
+async function ArticleJsonLd({ article, locale }: { article: Article | undefined; locale: string }) {
   if (!article) return null;
-  const HOTEL = await fetchHotel();
+  const HOTEL = await fetchHotel(locale);
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -75,12 +75,12 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
   const { locale, slug } = await params;
   setRequestLocale(locale);
   const [article, t] = await Promise.all([
-    fetchArticleBySlug(slug),
+    fetchArticleBySlug(slug, locale),
     getTranslations('ArticlePage'),
   ]);
   if (!article) notFound();
 
-  const allArticles = await fetchArticles();
+  const allArticles = await fetchArticles(locale);
   const others = allArticles.filter((a) => a.slug !== article.slug);
   const middleIndex = Math.floor(article.body.length / 2);
   const beforeQuote = article.body.slice(0, middleIndex);
@@ -95,7 +95,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
           { name: article.title, url: `/journal/${article.slug}` },
         ]}
       />
-      <ArticleJsonLd article={article} />
+      <ArticleJsonLd article={article} locale={locale} />
       <Nav />
       <main id="main">
         <PageHero

@@ -31,8 +31,8 @@ export default async function AvisPage({ params }: LocaleParam) {
   const { locale } = await params;
   setRequestLocale(locale);
   const [HOTEL, reviews, t] = await Promise.all([
-    fetchHotel(),
-    fetchReviews(),
+    fetchHotel(locale),
+    fetchReviews(locale),
     getTranslations('AvisPage'),
   ]);
 

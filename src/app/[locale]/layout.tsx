@@ -57,7 +57,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const [HOTEL, t] = await Promise.all([
-    fetchHotel(),
+    fetchHotel(locale),
     getTranslations({ locale, namespace: 'Site' }),
   ]);
   return {

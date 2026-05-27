@@ -55,8 +55,8 @@ export default async function FaqPage({ params }: LocaleParam) {
   const { locale } = await params;
   setRequestLocale(locale);
   const [faq, HOTEL, t] = await Promise.all([
-    fetchFaq(),
-    fetchHotel(),
+    fetchFaq(locale),
+    fetchHotel(locale),
     getTranslations('FaqPage'),
   ]);
 

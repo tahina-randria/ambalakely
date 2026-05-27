@@ -1,15 +1,43 @@
 /**
  * GROQ queries — each projects to a flat shape matching the existing
  * `src/lib/data/*.ts` exports, so components can swap imports without
- * other changes. Locale is unwrapped in GROQ (default fr, fallback en).
+ * other changes. Locale is unwrapped in GROQ from the `$locale` param.
  *
- * The `coalesce(field.fr, field.en, "")` pattern enforces HANDOFF rule 7
- * (French primary, English fallback).
+ * Locale strategy (post-§30 audit) :
+ *   - Sanity has bilingual fields stored as `field.fr`, `field.en`, `field.no`.
+ *   - State of the dataset as of 2026-05-27 :
+ *       Group A — fr populated, en empty : hotel, roomCategory, review, community
+ *       Group B — en populated, fr empty : excursion, itinerary, faq
+ *       Group C — empty                 : article
+ *   - To avoid the home FR showing English (because the old
+ *     `coalesce(field.fr, field.en, "")` returned the empty string as a
+ *     truthy value before reaching the EN fallback), the new helper is
+ *     STRICT : it only returns the value for the requested locale and
+ *     filters out the empty string. If the locale is empty, GROQ returns
+ *     null and the JS-side merge in `fetch.ts` falls back to the local
+ *     `.ts` source (which is in FR). That way :
+ *       /fr — Sanity .fr if non-empty, else local FR fallback
+ *       /en — Sanity .en if non-empty, else local FR fallback (still
+ *             better than nothing ; will be improved once EN is
+ *             populated in Sanity for the entities that need it).
+ *       /no — Sanity .no if non-empty, else local FR fallback
+ *
+ * Each fetch helper passes `{ locale }` to the GROQ runtime. Consuming
+ * Server Components call `await getLocale()` from `next-intl/server`
+ * and forward it.
  */
 
 import { defineQuery } from 'next-sanity';
 
-const FR = (field: string) => `coalesce(${field}.fr, ${field}.en, "")`;
+/**
+ * Returns the field value for the current `$locale` param, treating the
+ * empty string as null (so the JS-side merge can substitute the local
+ * fallback). Returns null when the locale-specific value is missing.
+ */
+const LOC = (field: string) => `select(
+  ${field}[$locale] != null && ${field}[$locale] != "" => ${field}[$locale],
+  null
+)`;
 
 // ─── Hotel singleton ──────────────────────────────────────────────────────
 
@@ -18,8 +46,8 @@ export const HOTEL_QUERY = defineQuery(`
     name,
     shortName,
     legalName,
-    "tagline": ${FR('tagline')},
-    "description": ${FR('description')},
+    "tagline": ${LOC('tagline')},
+    "description": ${LOC('description')},
     founded,
     founders,
     url,
@@ -34,7 +62,7 @@ export const HOTEL_QUERY = defineQuery(`
     "concept": {
       "phrase": concept.phrase,
       "translation": concept.translation,
-      "description": ${FR('concept.description')}
+      "description": ${LOC('concept.description')}
     },
     "tgh": {
       "name": tgh.name,
@@ -42,7 +70,7 @@ export const HOTEL_QUERY = defineQuery(`
       "tagline": tgh.tagline,
       "taglineFr": tgh.taglineFr,
       "foundedYearsAgo": tgh.foundedYearsAgo,
-      "description": ${FR('tgh.description')}
+      "description": ${LOC('tgh.description')}
     },
     hours,
     "amenities": amenities[].fr,
@@ -58,7 +86,7 @@ export const ROOM_CATEGORIES_QUERY = defineQuery(`
   *[_type == "roomCategory"] | order(number asc){
     "slug": slug.current,
     number,
-    "name": ${FR('name')},
+    "name": ${LOC('name')},
     suiteNames,
     roomNumbers,
     size,
@@ -67,22 +95,22 @@ export const ROOM_CATEGORIES_QUERY = defineQuery(`
     countNum,
     priceMga,
     priceMgaDayUse,
-    "shortDescription": ${FR('shortDescription')},
-    "longDescription": ${FR('longDescription')},
-    "bedSetup": ${FR('bedSetup')},
-    "view": ${FR('view')},
-    "bestFor": ${FR('bestFor')},
+    "shortDescription": ${LOC('shortDescription')},
+    "longDescription": ${LOC('longDescription')},
+    "bedSetup": ${LOC('bedSetup')},
+    "view": ${LOC('view')},
+    "bestFor": ${LOC('bestFor')},
     "features": features[]{
       icon,
-      "label": ${FR('label')}
+      "label": ${LOC('label')}
     },
     "heroImage": heroImage.asset->url,
     "gallery": gallery[].asset->url,
     "concierge": {
-      "body": ${FR('concierge.body')},
+      "body": ${LOC('concierge.body')},
       "signed": concierge.signed
     },
-    "pullQuote": ${FR('pullQuote')}
+    "pullQuote": ${LOC('pullQuote')}
   }
 `);
 
@@ -90,7 +118,7 @@ export const ROOM_CATEGORIES_QUERY = defineQuery(`
 
 export const REVIEWS_QUERY = defineQuery(`
   *[_type == "review"] | order(order asc){
-    "quote": ${FR('quote')},
+    "quote": ${LOC('quote')},
     author,
     city,
     source,
@@ -103,10 +131,10 @@ export const REVIEWS_QUERY = defineQuery(`
 export const ARTICLES_QUERY = defineQuery(`
   *[_type == "article" && published == true] | order(date desc){
     "slug": slug.current,
-    "title": coalesce(title.en, title.fr, ""),
+    "title": ${LOC('title')},
     date,
-    "excerpt": coalesce(excerpt.en, excerpt.fr, ""),
-    "body": coalesce(body.en, body.fr),
+    "excerpt": ${LOC('excerpt')},
+    "body": ${LOC('body')},
     author,
     "heroImage": heroImage.asset->url
   }
@@ -115,10 +143,10 @@ export const ARTICLES_QUERY = defineQuery(`
 export const ARTICLE_BY_SLUG_QUERY = defineQuery(`
   *[_type == "article" && slug.current == $slug][0]{
     "slug": slug.current,
-    "title": coalesce(title.en, title.fr, ""),
+    "title": ${LOC('title')},
     date,
-    "excerpt": coalesce(excerpt.en, excerpt.fr, ""),
-    "body": coalesce(body.en, body.fr),
+    "excerpt": ${LOC('excerpt')},
+    "body": ${LOC('body')},
     author,
     "heroImage": heroImage.asset->url
   }
@@ -130,14 +158,14 @@ export const EXCURSIONS_QUERY = defineQuery(`
   *[_type == "excursion"] | order(number asc){
     "slug": slug.current,
     number,
-    "name": coalesce(name.en, name.fr, ""),
-    "duration": coalesce(duration.en, duration.fr, ""),
-    "tagline": coalesce(tagline.en, tagline.fr, ""),
-    "body": coalesce(body.en, body.fr, ""),
-    "best": coalesce(best.en, best.fr, ""),
-    "cost": coalesce(cost.en, cost.fr, ""),
+    "name": ${LOC('name')},
+    "duration": ${LOC('duration')},
+    "tagline": ${LOC('tagline')},
+    "body": ${LOC('body')},
+    "best": ${LOC('best')},
+    "cost": ${LOC('cost')},
     "image": image.asset->url,
-    "ctaLabel": coalesce(ctaLabel.en, ctaLabel.fr, ""),
+    "ctaLabel": ${LOC('ctaLabel')},
     category
   }
 `);
@@ -148,12 +176,12 @@ export const ITINERARIES_QUERY = defineQuery(`
   *[_type == "itinerary"] | order(duration asc){
     "slug": slug.current,
     duration,
-    "title": coalesce(title.en, title.fr, ""),
-    "pitch": coalesce(summary.en, summary.fr, ""),
+    "title": ${LOC('title')},
+    "pitch": ${LOC('summary')},
     "days": days[]{
       day,
-      "title": coalesce(title.en, title.fr, ""),
-      "body": coalesce(body.en, body.fr, "")
+      "title": ${LOC('title')},
+      "body": ${LOC('body')}
     },
     "image": heroImage.asset->url
   }
@@ -163,8 +191,8 @@ export const ITINERARIES_QUERY = defineQuery(`
 
 export const FAQ_QUERY = defineQuery(`
   *[_type == "faq"] | order(order asc){
-    "q": coalesce(question.en, question.fr, ""),
-    "a": coalesce(answer.en, answer.fr, ""),
+    "q": ${LOC('question')},
+    "a": ${LOC('answer')},
     category
   }
 `);
@@ -174,8 +202,8 @@ export const FAQ_QUERY = defineQuery(`
 export const STAFF_QUERY = defineQuery(`
   *[_type == "staff" && public == true] | order(order asc){
     name,
-    "role": ${FR('role')},
-    "bio": ${FR('bio')},
+    "role": ${LOC('role')},
+    "bio": ${LOC('bio')},
     "photo": photo.asset->url
   }
 `);
@@ -189,10 +217,10 @@ export const COMMUNITY_QUERY = defineQuery(`
     location,
     activeChildren,
     communePopulation,
-    "description": ${FR('description')},
+    "description": ${LOC('description')},
     "programs": programs[]{
-      "title": ${FR('title')},
-      "description": ${FR('description')}
+      "title": ${LOC('title')},
+      "description": ${LOC('description')}
     },
     "akanimamy": {
       "meaning": akanimamy.meaning,
@@ -210,12 +238,12 @@ export const COMMUNITY_QUERY = defineQuery(`
 export const PAGE_BY_SLUG_QUERY = defineQuery(`
   *[_type == "page" && slug.current == $slug][0]{
     "slug": slug.current,
-    "title": ${FR('title')},
-    "description": ${FR('description')},
-    "heroHeadline": ${FR('heroHeadline')},
-    "heroSubline": ${FR('heroSubline')},
+    "title": ${LOC('title')},
+    "description": ${LOC('description')},
+    "heroHeadline": ${LOC('heroHeadline')},
+    "heroSubline": ${LOC('heroSubline')},
     "heroImage": heroImage.asset->url,
-    "seoTitle": ${FR('seoTitle')},
-    "seoDescription": ${FR('seoDescription')}
+    "seoTitle": ${LOC('seoTitle')},
+    "seoDescription": ${LOC('seoDescription')}
   }
 `);

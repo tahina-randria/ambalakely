@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: LocaleParam): Promise<Metadat
 export default async function JournalPage({ params }: LocaleParam) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [articles, t] = await Promise.all([fetchArticles(), getTranslations('Journal')]);
+  const [articles, t] = await Promise.all([fetchArticles(locale), getTranslations('Journal')]);
 
   const heroSrc = articles[0]?.cover ?? PHOTOS.story.path;
   const isEmpty = articles.length === 0;

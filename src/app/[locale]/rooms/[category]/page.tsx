@@ -30,7 +30,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, category } = await params;
   const t = await getTranslations({ locale, namespace: 'RoomCategory' });
-  const [cat, HOTEL] = await Promise.all([fetchCategoryBySlug(category), fetchHotel()]);
+  const [cat, HOTEL] = await Promise.all([fetchCategoryBySlug(category, locale), fetchHotel(locale)]);
   if (!cat) return { title: t('notFoundTitle') };
 
   return {
@@ -51,9 +51,9 @@ export async function generateMetadata({
   };
 }
 
-async function HotelOfferJsonLd({ category }: { category: Category | undefined }) {
+async function HotelOfferJsonLd({ category, locale }: { category: Category | undefined; locale: string }) {
   if (!category) return null;
-  const HOTEL = await fetchHotel();
+  const HOTEL = await fetchHotel(locale);
   const data = {
     '@context': 'https://schema.org',
     '@type': 'HotelRoom',
@@ -95,11 +95,11 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
   const { locale, category } = await params;
   setRequestLocale(locale);
   const [cat, allCategories, t, tPractical, HOTEL] = await Promise.all([
-    fetchCategoryBySlug(category),
-    fetchCategories(),
+    fetchCategoryBySlug(category, locale),
+    fetchCategories(locale),
     getTranslations('RoomCategory'),
     getTranslations('Practical'),
-    fetchHotel(),
+    fetchHotel(locale),
   ]);
   if (!cat) notFound();
 
@@ -114,7 +114,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
           { name: cat.name, url: `/rooms/${cat.slug}` },
         ]}
       />
-      <HotelOfferJsonLd category={cat} />
+      <HotelOfferJsonLd category={cat} locale={locale} />
       <Nav />
       <StickyReserveBar name={cat.name} priceMga={cat.priceMga} />
       <main id="main">

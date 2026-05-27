@@ -42,7 +42,7 @@ export default async function PlanYourTripPage({ params }: LocaleParam) {
   const { locale } = await params;
   setRequestLocale(locale);
   const [itineraries, t, tPractical] = await Promise.all([
-    fetchItineraries(),
+    fetchItineraries(locale),
     getTranslations('PlanTrip'),
     getTranslations('Practical'),
   ]);

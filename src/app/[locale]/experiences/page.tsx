@@ -42,7 +42,7 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
   const { locale } = await params;
   setRequestLocale(locale);
   const [experiences, t] = await Promise.all([
-    fetchExcursions(),
+    fetchExcursions(locale),
     getTranslations('ExperiencesPage'),
   ]);
 
