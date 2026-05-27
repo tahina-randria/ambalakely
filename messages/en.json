@@ -124,7 +124,11 @@
     "h2": "What our guests say.",
     "ratingNoNumber": "Verified reviews on {sources}",
     "ratingWithNumber": "{value} out of 5 — {count} reviews on {sources}",
-    "viewAll": "View all {count} reviews"
+    "statSince": "verified reviews on {sources} since {year}",
+    "viewAll": "Read all {count} reviews in long form",
+    "readOnTripadvisor": "Read everything on TripAdvisor",
+    "prevReview": "Previous review",
+    "nextReview": "Next review"
   },
 
   "Trust": {

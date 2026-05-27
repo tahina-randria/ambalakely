@@ -124,7 +124,11 @@
     "h2": "Det gjestene våre sier.",
     "ratingNoNumber": "Verifiserte anmeldelser på {sources}",
     "ratingWithNumber": "{value} av 5 — {count} anmeldelser på {sources}",
-    "viewAll": "Se alle {count} anmeldelser"
+    "statSince": "verifiserte anmeldelser på {sources} siden {year}",
+    "viewAll": "Les alle {count} anmeldelser i lang versjon",
+    "readOnTripadvisor": "Les alt på TripAdvisor",
+    "prevReview": "Forrige anmeldelse",
+    "nextReview": "Neste anmeldelse"
   },
 
   "Trust": {

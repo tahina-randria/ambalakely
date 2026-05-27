@@ -124,7 +124,11 @@
     "h2": "Ce que disent nos visiteurs.",
     "ratingNoNumber": "Avis vérifiés sur {sources}",
     "ratingWithNumber": "{value} sur 5 — {count} avis sur {sources}",
-    "viewAll": "Voir les {count} avis"
+    "statSince": "avis vérifiés sur {sources} depuis {year}",
+    "viewAll": "Lire les {count} avis en édition longue",
+    "readOnTripadvisor": "Tout lire sur TripAdvisor",
+    "prevReview": "Avis précédent",
+    "nextReview": "Avis suivant"
   },
 
   "Trust": {
