@@ -36,7 +36,13 @@ import { cn } from '@/lib/utils/cn';
 import { HOTEL } from '@/lib/data/hotel';
 
 const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');
-const MAX_INDIVIDUAL = 4;
+// 10 = total room count = max plausible single-request capacity. The
+// hotel has 10 rooms ; a family of 5+ or a small group booking several
+// rooms at once was being blocked by the previous limit of 4 (which
+// only covered "one Standard with twin beds"). Now the form supports
+// up to a full-hotel buyout. Groups of >10 still go through the
+// dedicated email flow per the FAQ "Tarif groupe ≥5 chambres" entry.
+const MAX_INDIVIDUAL = 10;
 
 /**
  * Build a placeholder for the phone input from the selected country's
@@ -507,7 +513,15 @@ export function BookingDrawer({ open, onClose }: Props) {
                             <button
                               type="button"
                               {...rootProps}
-                              className="inline-flex items-center gap-2 h-12 px-3 border border-r-0 border-[var(--color-sand-10)] hover:bg-[var(--color-sand-11)] transition-colors duration-[var(--duration-fast)] text-[var(--color-sand-1)] shrink-0"
+                              // Inline style forces our border/bg over RIP's default
+                              // `--react-international-phone-country-selector-border-color`
+                              // (which renders as sand-6 / light) so the trigger reads
+                              // as a unified "case" with the phone input next to it.
+                              style={{
+                                borderColor: 'var(--color-sand-10)',
+                                backgroundColor: 'var(--color-sand-11)',
+                              }}
+                              className="inline-flex items-center gap-2 h-12 px-3 border border-r-0 hover:!bg-[var(--color-sand-10)] transition-colors duration-[var(--duration-fast)] text-[var(--color-sand-1)] shrink-0"
                             >
                               <FlagImage
                                 iso2={phoneInput.country.iso2}
