@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-27 lunch (`1fbde6b` rating nested merge fix — last in a 6-commit chain §32 that reworked Reviews home + /avis + /dining + reviews trilingual + Sanity cleanup. Reviews home now has a Contra-style Embla horizontal carousel with all 9 quotes + "32 avis vérifiés sur TripAdvisor depuis 2018" stat counter ; /avis re-rendered as a 3-col card grid ; /dining killed the 4-icon facts row (segregationist "Open to Residents / Visitors" gone) ; reviews.ts now trilingual FR/EN/NO so /no doesn't leak French ; 9 stale Sanity review docs (Ada / Giovanni / unverified Booking-Google) deleted via Mutate API + future migrate script future-proofed. Open threads remaining : #117 responsive mobile site-wide, #119 newsletter purpose pivot.)
+Last updated: 2026-05-27 afternoon (`07248ca` trilingual experiences/itineraries/categories/faq — 4 sub-agents in parallel killed the FR leaks on /en + /no for the entire data layer. Live sweep returns 0 FR leaks across the 9 main pages × 2 non-FR locales. §32 carousel + /avis kill + Google reviews still in place. Open threads remaining : #117 responsive mobile site-wide, #119 newsletter purpose pivot, hotel.ts JSON-LD trilingual (SEO-only, deferred).)
 
 ---
 
@@ -2113,6 +2113,63 @@ Commits `66b39ab` + `1fbde6b`.
 - **Sanity hotel rating per-locale tab** — `value` and `count` are top-level number fields (not localeText), so any future edit in Studio risks the same null wipe-out we saw. The new per-field merge in fetchHotel covers it.
 
 — Claude, 2026-05-27 lunch
+
+---
+
+## 33. Trilingual data files — kill the FR leaks on /en + /no (2026-05-27, afternoon)
+
+**Context.** After §32 shipped the Reviews + Dining + Sanity work, the user pinged "il y a des pages pas traduits" — there were still FR strings leaking on /en and /no on the data-driven pages. Curl-driven sweep across 9 pages × 2 locales surfaced ~50 distinct FR markers : "Réservation et tarifs" on /en/faq, full Hasina-voice paragraphs in FR on /no/experiences + /no/plan-your-trip + /no/rooms/* , etc.
+
+**Root cause.** Four `src/lib/data/*.ts` files were FR-only and used by their respective fetcher in `sanity/lib/fetch.ts` as the fallback. When Sanity was empty for a locale (which it is for most entities — see §30 table), the fetcher returned FR text on every locale.
+
+**Fix.** Four sub-agents in parallel, one per file, each refactoring to the trilingual pattern `reviews.ts` established §32 #120 :
+
+```ts
+type LocalizedX = {
+  /* identity fields shared across locales */
+  fr: { /* textual fields */ };
+  en: { /* same */ };
+  no: { /* same */ };
+};
+const SOURCES: LocalizedX[] = [ /* data */ ];
+export function getX(locale: string): X[] {
+  const l = (['fr','en','no'].includes(locale) ? locale : 'fr') as 'fr'|'en'|'no';
+  return SOURCES.map((s) => ({ /* identity */, ...s[l] }));
+}
+export const x: X[] = getX('fr');  // legacy compat
+```
+
+| File | Items × locales | Notes |
+|---|---|---|
+| `experiences.ts` | 10 × 3 | Place names kept Malagasy (Ranomafana, Sahambavy, Tsaranoro). EN British editorial. NO Bokmål matched to messages/no.json voice. |
+| `itineraries.ts` | 3 × 3 (multi-day prose) | Duration translated too ("Trois jours" → "Three days" / "Tre dager") since it's editorial. |
+| `categories.ts` | 3 × 3 (rooms) | Wood identities `palissandre` + `katrafay` kept as Malagasy loanwords across all locales. |
+| `faq.ts` | 22 items + 3 cats × 3 | NEEDS REAL CONTENT flags preserved verbatim. New stable slug for each item. Category taxonomy : booking / stay / logistics. |
+
+`sanity/lib/fetch.ts` updated for all 4 fetchers — each now seeds `const fallback = getX(locale)` before hitting Sanity, so /en and /no never leak FR text when Sanity is empty or partial for that locale.
+
+### Live verification
+
+Curl sweep across 9 pages × 2 non-FR locales for known FR markers : **0 leaks**. Concrete sample lines :
+- `/en/faq` : "Two months ahead in high season (May to October)" ✓
+- `/no/experiences` : "De fleste gjestene gjør to eller tre. Vandringen i rismarkene…" ✓
+- `/no/plan-your-trip` : "RN7 går gjennom Madagaskar fra nord til sør…" ✓
+- `/no/rooms/standard` : "De fire første rommene i huset. Kompakte, stille…" ✓
+- `/en/rooms/standard` : "The first four rooms of the house. Compact, quiet…" ✓
+
+### What's still partially FR (deferred — not visitor-visible)
+
+- `src/lib/data/hotel.ts` : `description`, `tagline`, `concept.translation`, `concept.description`, `tgh.description`, `amenities` array. Only consumed by `JsonLd.tsx` (SEO structured data) — Google search snippets will show FR description for /en + /no URLs. **SEO impact**, not visitor-visible. Defer until later cleanup pass.
+- `src/lib/data/articles.ts` : type-only file (empty `articles: Article[] = []`). When Hasina writes the first journal piece, it'll need trilingual content from day 1.
+- Sanity dataset itself : still mostly FR-only per the §30 table. The local trilingual fallbacks now cover the gap, so visitor pages render correctly in every locale. Future Sanity seeding work is for letting Hasina edit content per locale via the Studio, not for shipping translation parity.
+
+### Commits
+
+- `07248ca` — i18n(data): trilingual experiences/itineraries/categories/faq
+
+1 commit. ~700 lines of FR data → ~2000 lines (3 locales each).
+
+— Claude, 2026-05-27 afternoon
 
 ---
 
