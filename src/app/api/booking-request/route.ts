@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { FROM_EMAIL, HOTEL_INBOX, HOTEL_REPLY_TO, getResend } from '@/lib/email/client';
 import { BookingRequest } from '@/lib/email/templates/BookingRequest';
-import { BookingAck } from '@/lib/email/templates/BookingAck';
+import { BookingAck, BOOKING_ACK_SUBJECT } from '@/lib/email/templates/BookingAck';
 
 export const runtime = 'nodejs';
 
@@ -16,6 +16,7 @@ const BookingSchema = z.object({
   phone: z.string().trim().max(50).optional().or(z.literal('')),
   message: z.string().trim().max(2000).optional().or(z.literal('')),
   company: z.string().max(0).optional(),
+  locale: z.enum(['fr', 'en', 'no']).optional().default('fr'),
 });
 
 const ratelimit = new Map<string, number[]>();
@@ -105,8 +106,8 @@ export async function POST(req: NextRequest) {
         from: FROM_EMAIL,
         to: normalized.email,
         replyTo: HOTEL_REPLY_TO,
-        subject: 'Votre demande à l\'Hôtel Ambalakely',
-        react: BookingAck(normalized),
+        subject: BOOKING_ACK_SUBJECT[data.locale],
+        react: BookingAck({ ...normalized, locale: data.locale }),
       }),
     ]);
 

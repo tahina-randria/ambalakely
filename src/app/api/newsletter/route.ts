@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { FROM_EMAIL, HOTEL_REPLY_TO, getResend } from '@/lib/email/client';
-import { NewsletterWelcome } from '@/lib/email/templates/NewsletterWelcome';
+import {
+  NewsletterWelcome,
+  NEWSLETTER_SUBJECT,
+} from '@/lib/email/templates/NewsletterWelcome';
 
 export const runtime = 'nodejs';
 
 const NewsletterSchema = z.object({
   email: z.email().max(200),
   company: z.string().max(0).optional(),
+  locale: z.enum(['fr', 'en', 'no']).optional().default('fr'),
 });
 
 const ratelimit = new Map<string, number[]>();
@@ -46,6 +50,7 @@ export async function POST(req: NextRequest) {
   }
 
   const email = parsed.data.email.toLowerCase().trim();
+  const locale = parsed.data.locale;
 
   const resend = getResend();
   if (!resend) {
@@ -79,8 +84,8 @@ export async function POST(req: NextRequest) {
         from: FROM_EMAIL,
         to: email,
         replyTo: HOTEL_REPLY_TO,
-        subject: 'Bienvenue dans la lettre saisonnière d\'Ambalakely',
-        react: NewsletterWelcome(),
+        subject: NEWSLETTER_SUBJECT[locale],
+        react: NewsletterWelcome({ locale }),
       });
       if (welcome.error) {
         console.error('[newsletter] Welcome email error:', welcome.error);

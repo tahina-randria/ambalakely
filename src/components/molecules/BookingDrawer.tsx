@@ -214,6 +214,7 @@ export function BookingDrawer({ open, onClose }: Props) {
           phone: form.phone,
           message: form.message,
           company: form.company,
+          locale,
         }),
       });
       const data = (await res.json().catch(() => ({}))) as { error?: string };

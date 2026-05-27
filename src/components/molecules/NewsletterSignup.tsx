@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { cn } from '@/lib/utils/cn';
 
@@ -19,6 +19,7 @@ export function NewsletterSignup({
   className?: string;
 }) {
   const t = useTranslations('Footer');
+  const locale = useLocale();
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'done' | 'error'>('idle');
@@ -33,7 +34,7 @@ export function NewsletterSignup({
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, company }),
+        body: JSON.stringify({ email, company, locale }),
       });
       const data = (await res.json().catch(() => ({}))) as { error?: string };
       if (!res.ok) throw new Error(data.error ?? t('newsletterError'));

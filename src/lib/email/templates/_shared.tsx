@@ -85,15 +85,19 @@ export const styles = {
   SAND_12,
 };
 
+export type EmailLocale = 'fr' | 'en' | 'no';
+
 export function Shell({
   preview,
+  lang = 'fr',
   children,
 }: {
   preview: string;
+  lang?: EmailLocale;
   children: ReactNode;
 }) {
   return (
-    <Html lang="fr">
+    <Html lang={lang}>
       <Head />
       <Preview>{preview}</Preview>
       <Body style={main}>
