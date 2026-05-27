@@ -139,13 +139,20 @@ body {
   letter-spacing: 0;
 }
 
-/* images: 0 radius, full block display */
-img,
-video {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  border-radius: 0;
+/* images: 0 radius, full block display.
+   Wrapped in @layer base so Tailwind utilities (`.hidden`, `md:hidden`,
+   `md:block`, etc.) can override `display`. Without the layer, this
+   unlayered rule beat the utility layer and kept <video> visible on
+   mobile despite `className="hidden md:block"` — leaking the video
+   poster over the editorial hero photo. */
+@layer base {
+  img,
+  video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0;
+  }
 }
 
 /* NEVER opacity on text — enforced via utility absence */
