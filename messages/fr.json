@@ -116,7 +116,6 @@
     "ratingNoNumber": "Avis vérifiés sur {sources}",
     "ratingWithNumber": "{value} sur 5 — {count} avis sur {sources}",
     "statSince": "avis vérifiés sur {sources} depuis {year}",
-    "viewAll": "Lire les {count} avis en édition longue",
     "readOnTripadvisor": "Tout lire sur TripAdvisor",
     "prevReview": "Avis précédent",
     "nextReview": "Avis suivant"
@@ -538,25 +537,6 @@
     "introBodyTrail": " fonctionne aussi.",
     "ctaH2": "Écrivez-nous, ou réservez directement.",
     "ctaCheck": "Voir les disponibilités"
-  },
-  "AvisPage": {
-    "metaTitle": "Avis",
-    "metaDescription": "Tous les avis vérifiés de nos visiteurs sur TripAdvisor. Hôtel Ambalakely, dix chambres à Fianarantsoa, Madagascar.",
-    "ogTitle": "Avis · Hôtel Ambalakely",
-    "ogDescription": "Avis vérifiés sur TripAdvisor.",
-    "breadcrumbHome": "Accueil",
-    "breadcrumbAvis": "Avis",
-    "heroAlt": "Hôtel Ambalakely, jardin et façade principale",
-    "heroTitle": [
-      "Ce que disent",
-      "nos visiteurs."
-    ],
-    "intro": "{count} avis vérifiés, traduits fidèlement depuis TripAdvisor (originaux en anglais conservés en source).",
-    "ratingLine": "{value} sur 5 — {count} avis sur {sources}",
-    "ctaKicker": "Réserver",
-    "ctaH2": "Venez vérifier par vous-même.",
-    "ctaCheck": "Voir les disponibilités",
-    "viewAllOnTripadvisor": "Voir les {count} avis sur TripAdvisor"
   },
   "Practical": {
     "h2": "Avant l'arrivée.",

@@ -103,6 +103,55 @@ const SOURCES: LocalizedReview[] = [
     },
   },
   {
+    // Google review — reinstated 2026-05-27 §32bis #2 after the user
+    // asked to include Google sources too. Original quote on Google
+    // Maps; back-translated EN from the FR translation we had in
+    // legacy rooms.ts since the original-language source wasn't
+    // preserved. Date left empty because Google didn't surface a
+    // month in the original entry.
+    author: 'Ruth Barbara W.',
+    city: '',
+    source: 'Google',
+    en: {
+      quote:
+        'A very lovely hotel with a peaceful garden. The food was excellent. Spacious, clean rooms.',
+      date: '',
+    },
+    fr: {
+      quote:
+        'Très bel hôtel avec jardin paisible. Le repas était excellent. Chambres spacieuses et propres.',
+      date: '',
+    },
+    no: {
+      quote:
+        'Et veldig fint hotell med en fredelig hage. Maten var utmerket. Romslige, rene rom.',
+      date: '',
+    },
+  },
+  {
+    // Google review — see Ruth Barbara W. note above. Author name
+    // suggests Italian original, but the only quote we have is the FR
+    // legacy translation, so EN and NO are also derived from FR.
+    author: 'Anna Maria',
+    city: '',
+    source: 'Google',
+    en: {
+      quote:
+        'Beautiful place! The owner speaks perfect English, we even got a room upgrade.',
+      date: '',
+    },
+    fr: {
+      quote:
+        "Bel endroit ! Le propriétaire parle un anglais parfait, nous avons eu un surclassement de chambre.",
+      date: '',
+    },
+    no: {
+      quote:
+        'Et vakkert sted! Eieren snakker perfekt engelsk, vi fikk til og med en romoppgradering.',
+      date: '',
+    },
+  },
+  {
     author: 'Femke V.',
     city: '',
     source: 'TripAdvisor',

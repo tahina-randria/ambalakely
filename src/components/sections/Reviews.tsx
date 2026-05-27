@@ -1,9 +1,8 @@
 import { getLocale, getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
 import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
-import { ArrowRight, ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
+import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchReviews, fetchHotel } from '@/sanity/lib/fetch';
 import { ReviewsCarousel } from '@/components/molecules/ReviewsCarousel';
 
@@ -68,26 +67,18 @@ export async function Reviews() {
             />
           </ScrollReveal>
 
-          {/* Two CTAs — editorial archive (internal) + outbound to live
-              TripAdvisor feed for guests who want all the reviews and
-              not just the curated 9. */}
-          <ScrollReveal className="mt-12 md:mt-16 flex flex-wrap items-baseline gap-x-10 gap-y-4">
-            <Link
-              href="/avis"
-              className="group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]"
-            >
-              {t('viewAll', { count: reviews.length })}
-              <ArrowRight
-                size={18}
-                className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1.5"
-              />
-            </Link>
-            {HOTEL.reviewUrls?.tripadvisor && hasCount ? (
+          {/* Outbound CTA — read everything on the live TripAdvisor feed.
+              The /avis dedicated page was killed §32bis after user judged
+              it redundant — the carousel already shows all 11 quotes
+              (9 TripAdvisor + 2 Google), and the TripAdvisor link covers
+              the long-tail (32 reviews on the live feed). */}
+          {HOTEL.reviewUrls?.tripadvisor && hasCount ? (
+            <ScrollReveal className="mt-12 md:mt-16">
               <a
                 href={HOTEL.reviewUrls.tripadvisor}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 font-body text-[15px] text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors duration-[var(--duration-base)]"
+                className="group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)]"
               >
                 {t('readOnTripadvisor')}
                 <ArrowUpRight
@@ -95,8 +86,8 @@ export async function Reviews() {
                   className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 />
               </a>
-            ) : null}
-          </ScrollReveal>
+            </ScrollReveal>
+          ) : null}
         </div>
       </Container>
     </Section>

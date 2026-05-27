@@ -109,11 +109,15 @@ export const HOTEL = {
   languages: ['fr', 'en', 'no', 'mg'],
 
   // Aggregate rating — vérifié sur TripAdvisor le 2026-05-25 :
-  // 32 avis, 4.9/5 sur https://www.tripadvisor.com/Hotel_Review-g298271-d7646881
+  // 32 avis, 4.9/5 sur https://www.tripadvisor.com/Hotel_Review-g298271-d7646881.
+  // Sources élargies §32bis #2 — on inclut désormais 2 quotes Google
+  // historiques dans le carousel (Ruth Barbara W., Anna Maria), donc
+  // la liste sources fait foi pour la caption "vérifiés sur X depuis Y".
+  // Le compteur 32 reste TripAdvisor-only (chiffre dur, source unique).
   rating: {
     value: '4.9' as string | null,
     count: 32 as number | null,
-    sources: ['TripAdvisor'],
+    sources: ['TripAdvisor', 'Google'],
   },
 
   // URL des plateformes de reviews — utilisée pour le lien "Voir tous les avis"

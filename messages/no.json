@@ -116,7 +116,6 @@
     "ratingNoNumber": "Verifiserte anmeldelser på {sources}",
     "ratingWithNumber": "{value} av 5 — {count} anmeldelser på {sources}",
     "statSince": "verifiserte anmeldelser på {sources} siden {year}",
-    "viewAll": "Les alle {count} anmeldelser i lang versjon",
     "readOnTripadvisor": "Les alt på TripAdvisor",
     "prevReview": "Forrige anmeldelse",
     "nextReview": "Neste anmeldelse"
@@ -538,25 +537,6 @@
     "introBodyTrail": " fungerer også.",
     "ctaH2": "Skriv til oss, eller bestill direkte.",
     "ctaCheck": "Se tilgjengelighet"
-  },
-  "AvisPage": {
-    "metaTitle": "Anmeldelser",
-    "metaDescription": "Alle de verifiserte anmeldelsene fra våre gjester på TripAdvisor. Hôtel Ambalakely, ti rom i Fianarantsoa, Madagaskar.",
-    "ogTitle": "Anmeldelser · Hôtel Ambalakely",
-    "ogDescription": "Verifiserte anmeldelser på TripAdvisor.",
-    "breadcrumbHome": "Hjem",
-    "breadcrumbAvis": "Anmeldelser",
-    "heroAlt": "Hôtel Ambalakely, hagen og hovedfasaden",
-    "heroTitle": [
-      "Det gjestene",
-      "våre sier."
-    ],
-    "intro": "{count} verifiserte anmeldelser oversatt trofast fra TripAdvisor (originale engelske tekster i kilden).",
-    "ratingLine": "{value} av 5 — {count} anmeldelser på {sources}",
-    "ctaKicker": "Bestill",
-    "ctaH2": "Kom og se selv.",
-    "ctaCheck": "Se tilgjengelighet",
-    "viewAllOnTripadvisor": "Les alle {count} anmeldelser på TripAdvisor"
   },
   "Practical": {
     "h2": "Før ankomst.",
