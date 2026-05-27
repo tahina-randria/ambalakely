@@ -1954,16 +1954,34 @@ Scope : Playwright sweep on the 9 main pages × at least 3 viewports
 alignment, tap-target sizes, scroll behaviours. Then fix. Will be a
 multi-commit pass.
 
-**#118 — Title typography hesitation**
+**#118 — Title typography : pivot to GT Sectra (user picked)**
 > "je ne suis pas encore convaincu par contre par la typo principal
 > pour les titres là... Satoshi oui mais pour les titres pas encore"
+> then : "sectra j'aime bien"
 
 Disambiguation : the body is **Satoshi** (user validated). The titles
-are **Fraunces** (user not yet convinced). Candidates to explore for
-the display face : Tiempos, GT Sectra, Editorial New, Reckless, Söhne
-Breit, or a more dramatic Fraunces optical-size + weight combo. Has
-to fit the editorial / Aman direction — no humanist sans, no display
-script.
+are **Fraunces** today — user wants **GT Sectra** instead. Sectra is
+a high-contrast editorial serif by Grilli Type — exactly the
+Aman/Six Senses register the brand is aiming for.
+
+**Licensing caveat to surface in the next session** : GT Sectra is
+NOT free. Grilli Type sells it as a paid family ; expect ~$650 for
+the 6 styles desktop+web bundle, or ~$80/style. Self-hosted via
+their Web License (WOFF2 served from `/fonts/`).
+Free near-matches if budget says no : **Newsreader** (Google),
+**Spectral** (Google), **Cormorant Garamond** (Google). All three
+share the high-contrast didone-ish feel but lose Sectra's signature
+sharpness.
+
+Work to do once Sectra files land :
+- Drop `.woff2` files in `/public/fonts/gt-sectra/`
+- Wire via `next/font/local` in `src/lib/fonts.ts` (already exists
+  for Fraunces) as `--font-display`
+- Swap `font-display` Tailwind alias from Fraunces to GT Sectra in
+  `tailwind.config.ts` / globals.css
+- Visual pass on home + every subpage hero to verify weights /
+  sizes / optical sizes match the new font
+- Update §30 / §31 references if any
 
 **#119 — Newsletter purpose pivot**
 > "newsletter on va changer le purpose aussi par contre ?? pas que
