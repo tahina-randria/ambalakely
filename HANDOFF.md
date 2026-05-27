@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + R2/R3 + BookingDrawer passes 2-4 + nav auto-hide `1b30718` — dynamic phone placeholder per country, nav slides off on scroll-down + back on scroll-up, full booking drawer polish — see §24, §25, §26, §27, §28, §29)
+Last updated: 2026-05-27 morning (Locale-aware Sanity + hero mobile editorial photo + email per-locale `9c3f1ca` — Sanity GROQ now picks `[$locale]` with empty-string filter so /fr stops showing English ; newsletter + booking ack ship in the visitor's language with end-to-end Gmail validation ; hero mobile now uses curated p23 instead of the video poster — see §30 for the full chain, the audit table, and the architecture posée)
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-05-25 evening (Anti-Vibe-Coding audit + R2/R3 + BookingDrawer
 
 Copy-paste this block as the first message:
 
-> Je continue le projet Hôtel Ambalakely (vrai hôtel 10 chambres à Fianarantsoa, Madagascar). Lis HANDOFF.md à la racine en premier — c'est la source de vérité unique : architecture, faits vérifiés, ce qui a shippé, ce qui pend, les règles cardinales. La dernière section live est §29 (placeholder téléphone dynamique + nav auto-hide on scroll), avec un état "rien d'urgent ne hang" — 21 commits poussés ce soir sur main, Vercel auto-deploy à chaque push.
+> Je continue le projet Hôtel Ambalakely (vrai hôtel 10 chambres à Fianarantsoa, Madagascar). Lis HANDOFF.md à la racine en premier — c'est la source de vérité unique : architecture, faits vérifiés, ce qui a shippé, ce qui pend, les règles cardinales. La dernière section live est §30 (Sanity locale-aware + hero mobile editorial photo + email per-locale validé end-to-end via Gmail) — 6 commits ship ce matin sur main, Vercel auto-deploy à chaque push.
 >
 > Site live : https://ambalakely.vercel.app · Branche active : `main` · `.env.local` a déjà tous les secrets · `git log --oneline -10` pour voir les derniers commits.
 >
@@ -22,9 +22,15 @@ Copy-paste this block as the first message:
 > Workflow établi : "push tout à chaque fois en prod" — push chaque commit immédiatement sur main, Vercel auto-deploy. TypeScript + JSON validation green avant chaque push.
 >
 > Items qui attendent MON input (toi user) :
-> - 12 flags `⚠️ NEEDS REAL CONTENT` dans `src/lib/data/faq.ts`
+> - 10 flags `⚠️ NEEDS REAL CONTENT` dans `src/lib/data/faq.ts` (petit-déj, WiFi, late check-out, accessibilité, sécurité, prix transfert Tana, etc.)
 > - Distance Andringitra round-trip (320 ou 240 km dans `itineraries.ts`)
 > - Création d'une clé API Google Places ($0/mois avec ISR cache 24h) si on veut wirer les live reviews
+>
+> Items Sanity follow-up (cf. tableau §30) :
+> - Seeder FR dans Studio pour excursion / itinerary / faq (le local FR fallback fonctionne déjà, c'est juste pour donner contrôle CMS)
+> - Seeder EN pour hotel / roomCategory / review / community (sinon /en retombe sur le FR fallback)
+> - Seeder NO partout (sinon /no = headlines NO + content FR fallback)
+> - Aucun urgent — le site rend correctement grâce au fallback chain
 >
 > Items différés jusqu'à direction créa :
 > - AI assets Nano Banana Pro non-contractuels (table dressée crépuscule, serveur, sunset logo)
@@ -1686,6 +1692,223 @@ The user's "shortcut" responses, useful to recognize :
 - "consolide" → write HANDOFF section for what just shipped
 
 — Claude, 2026-05-25 late evening
+
+---
+
+## 30. Locale-aware Sanity + hero mobile + email per-locale (2026-05-27, morning)
+
+Started innocently — user said "sur mobile d'ailleurs je suis pas fan que
+la vidéo apparaisse dans le hero". Audit cascaded into 3 concrete bugs
+and 6 commits, ending with end-to-end-validated multilingual emails.
+
+### What shipped — 6 commits
+
+| SHA | Subject |
+|---|---|
+| `4f03b13` | fix(hero): mobile poster video-frame → editorial PHOTOS.hero (p23) |
+| `3118db7` | fix(css): wrap img/video reset in @layer base so hidden utilities win |
+| `fd03686` | fix(sanity): locale-aware queries — stop the EN leak on /fr home |
+| `a1689f9` | typo(fr): insert non-breaking space before colons |
+| `bb8d44a` | polish(hero): mobile crop 35% → 20% so the building is visible |
+| `9c3f1ca` | feat(email): newsletter + booking ack now sent in visitor's locale |
+
+### Bug 1 — hero mobile leaked the video poster
+
+`Hero.tsx` rendered the editorial photo via `<Image className="md:hidden">`
+and the video via `<video className="hidden md:block">`. Both `<img>` and
+`<video>` are subject to the global reset `img, video { display: block }`
+in `globals.css`. That reset was UNLAYERED, so under Tailwind v4 cascade
+semantics it beat the `hidden` utility (which lives in `@layer utilities`).
+Result : the video element stayed `display:block` on mobile (verified via
+`getComputedStyle(video).display === 'block'` at viewport 390 px), and
+its `poster` attribute — a frozen close-up of banana leaves — leaked
+over the new p23 editorial photo.
+
+**Fix** :
+1. Switched the mobile `<Image>` source from `/videos/hero-poster.webp`
+   to `PHOTOS.hero` (`p23`) — the photo the user had already curated as
+   the canonical hero during T1.7 but that had never been wired into the
+   Hero component.
+2. Wrapped the `img, video { display: block }` reset in `@layer base` so
+   Tailwind utilities can override `display` as intended.
+3. Tuned `object-position` from `35%_55%` to `20%_55%` so the wooden
+   balcony reads at the top of the H1, instead of mostly vegetation.
+
+Same Tailwind v4 layer trick as the `.input-dark` fix in §27.
+
+### Bug 2 — Sanity returned EN on the /fr home
+
+Visible symptom : the Experiences section on `/fr` showed
+"Ranomafana National Park / Full day / Lemurs in the rainforest…" —
+English headlines in the middle of a French home. Same on `/fr/faq`
+and `/fr/plan-your-trip`.
+
+**Sanity audit** (curl-driven, 2026-05-27) :
+
+| Entity | Count | `.fr` | `.en` | `.no` | Verdict |
+|---|---|---|---|---|---|
+| hotel | 1 | ✅ | ❌ empty | ❌ | OK /fr, broken /en |
+| roomCategory | 3 | ✅ | ❌ empty | ❌ | OK /fr, broken /en |
+| review | 9 | ✅ | ❌ empty | ❌ | OK /fr, broken /en |
+| community | 1 | ✅ | ❌ empty | ❌ | OK /fr, broken /en |
+| **excursion** | **10** | **❌ empty** | **✅** | **❌** | **🚨 home FR broken** |
+| **itinerary** | **3** | **❌ empty** | **✅** | **❌** | **🚨 /fr/plan-your-trip broken** |
+| **faq** | **47** | **❌ empty** | **✅** | **❌** | **🚨 /fr/faq broken** |
+| article | 0 | — | — | — | fallback in use, OK |
+| staff | 4 | ? | ? | ? | (not audited in detail) |
+
+Two seeding generations : pre-§49 data sat in `.en` only, post-§49 data
+sat in `.fr` only. Neither generation had been re-seeded across locales.
+
+**Old GROQ helper** :
+```ts
+const FR = (field) => `coalesce(${field}.fr, ${field}.en, "")`;
+```
+plus 17 hard-coded `coalesce(${field}.en, ${field}.fr, "")` (typo, EN
+first) across 5 queries. The empty string `""` is treated by `coalesce`
+as a valid value, so when `.fr` was empty for excursion / itinerary /
+faq, GROQ returned `""` and never reached the fallback chain.
+
+**Fix** : new strict-locale GROQ helper :
+```ts
+const LOC = (field) => `select(
+  ${field}[$locale] != null && ${field}[$locale] != "" => ${field}[$locale],
+  null
+)`;
+```
+Returns null when the locale-specific field is empty. The JS-side merge
+in `fetch.ts` then falls back to the local `src/lib/data/*.ts` source
+(curated FR per §24/§95). Every `fetch*` helper now takes a `locale`
+parameter (default `'fr'`), and every consuming Server Component
+forwards `await getLocale()` from `next-intl/server`.
+
+Behaviour per locale :
+- **/fr** → Sanity `.fr` if non-empty, else local FR fallback. No EN leak.
+- **/en** → Sanity `.en` if non-empty, else local FR fallback (acceptable
+  until EN is seeded into Sanity for hotel/category/review/community).
+- **/no** → Sanity `.no` if non-empty, else local FR fallback.
+
+**20 files touched** : `queries.ts` (the helper + 25 fields), `fetch.ts`
+(8 fetch helpers + per-field merge), 11 page consumers, 7 sections / atoms.
+TypeScript green ; Vercel deploy green.
+
+Verified live :
+- `/fr` Experiences : "Parc national de Ranomafana", "Journée complète" ✓
+- `/fr/faq` : "Comment se passe le paiement ?" ✓
+- `/fr/plan-your-trip` : "Le centre du pays en douceur." ✓
+- `/en` still showing EN ✓
+- `/no` showing NO headlines + FR fallback content ✓
+
+### Bug 3 — orphan colons in French headlines
+
+The Stay headline ("Mêmes murs sable… La différence : la taille…")
+was breaking with the ":" orphaned on its own line on narrow viewports.
+Per French typography (Académie française / Imprimerie nationale),
+double punctuation ( : ; ! ? ») takes a non-breaking space before the
+mark. Replaced the 15 occurrences of ` : ` (regular space + colon)
+in `messages/fr.json` with ` :` (NBSP + colon) via a Python script,
+verified the JSON parses. Browsers never break at NBSP, so the colon
+stays attached to the preceding word.
+
+Result : "La différence : la taille" now reads on one line.
+
+### Feature — email per locale (newsletter + booking ack)
+
+User's request : "j'aimerai même que newsletter vriament en fonction
+aussi de la personne". Welcome email and booking acknowledgement were
+hard-coded in French — visitors browsing in EN or NO received French
+replies at the very moment we want to feel close.
+
+**Stack** :
+- `_shared.tsx` Shell : new `lang` prop forwarded to `<Html lang>`,
+  exports `EmailLocale = 'fr' | 'en' | 'no'`.
+- `NewsletterWelcome` : takes `locale`, embeds a `COPY` map with
+  preview / heading / 2 paragraphs / signature for FR/EN/NO. Exports
+  `NEWSLETTER_SUBJECT: Record<EmailLocale, string>`.
+- `BookingAck` : same pattern + localises date formatting via
+  `Intl.DateTimeFormat` (`fr-FR`, `en-US`, `nb-NO`). Exports
+  `BOOKING_ACK_SUBJECT: Record<EmailLocale, string>`.
+- `/api/newsletter` and `/api/booking-request` : both accept an
+  optional `locale` in their Zod schema (default `'fr'`).
+- `NewsletterSignup.tsx` and `BookingDrawer.tsx` : both inject
+  `useLocale()` into the POST body.
+
+The email sent to the hotel staff (`BookingRequest`, distinct from
+`BookingAck`) stays in French — that's the staff working language.
+
+### End-to-end validation in production
+
+POSTed `/api/newsletter` from prod, then fetched the actual email
+from Gmail via MCP :
+
+| Locale | Subject | `<html lang>` | Body |
+|---|---|---|---|
+| `en` | "Welcome to Ambalakely's seasonal letter" | `en` | "Welcome." / "You'll receive a short letter from Hasina each season…" / "See you soon, Hasina" |
+| `no` | "Velkommen til Ambalakelys sesongbrev" | `no` | "Velkommen." / "Du vil motta et kort brev fra Hasina hver sesong…" / "Vi ses, Hasina" |
+
+Both emails arrived from `ambalakely@mita-studio.com`, footer in
+French (universal), Norwegian accents intact (`kjøkkenet`, `året`).
+FR not tested (already validated indirectly — same code path with
+`locale='fr'` as the previous default).
+
+### Files touched (full list)
+
+- `src/components/sections/Hero.tsx` (mobile poster + crop)
+- `src/styles/globals.css` (img/video reset → `@layer base`)
+- `sanity/lib/queries.ts` (`LOC` helper + 25 field calls)
+- `sanity/lib/fetch.ts` (8 fetch helpers + per-field merges + types)
+- `src/components/sections/{Experiences,Reviews,Stay,Book,Journal,Footer}.tsx`
+  + `src/components/atoms/JsonLd.tsx` (each calls `getLocale()`)
+- `src/app/[locale]/{layout,about,avis,dining,experiences,faq,journal/page,journal/[slug]/page,plan-your-trip,rooms/page,rooms/[category]/page}.tsx` (each forwards `params.locale` to `fetch*`)
+- `messages/fr.json` (15 nbsp before colons)
+- `src/lib/email/templates/{_shared,NewsletterWelcome,BookingAck}.tsx` (per-locale templates)
+- `src/app/api/{newsletter,booking-request}/route.ts` (`locale` in schema, subject + react via locale)
+- `src/components/molecules/{NewsletterSignup,BookingDrawer}.tsx` (`useLocale()` in POST body)
+
+### What still hangs
+
+#### Awaiting user input (unchanged from §29)
+- 10 `⚠️ NEEDS REAL CONTENT` flags in `src/lib/data/faq.ts` (breakfast
+  inclusion, WiFi room coverage, late check-out specifics, accessibility
+  layout, security details, Tana→hôtel transfer price…)
+- Andringitra round-trip distance in `itineraries.ts` (says 320 km,
+  probably closer to 240 km)
+- Google Places API integration for live reviews (needs user-created
+  API key + Place ID ; cost $0/mo with Next.js ISR cache 24h)
+
+#### Sanity follow-ups (new this session)
+- Seed FR into Sanity Studio for excursion / itinerary / faq — once
+  the user is happy with the local FR copy as-is, port it into Sanity
+  so future edits go through the CMS instead of source code.
+- Seed EN into Sanity for hotel / roomCategory / review / community —
+  these currently fall back to FR on `/en`. The merge logic is ready
+  for it (`e.field ?? fb.field`).
+- Seed NO across the board — `/no` is currently mostly French content
+  under Norwegian headlines.
+- None of this is urgent — the site renders correctly on all 3 locales
+  thanks to the fallback chain. The follow-up is about giving the user
+  CMS control of each locale.
+
+#### Phase visuelle (unchanged)
+- AI lifestyle assets (Nano Banana Pro) with non-contractual
+  disclaimer to fill gaps : table dressed at dusk, server pouring,
+  sunset with hotel logo.
+- Editorial photo orchestration : asymmetric grids, cinematic 21:9
+  ratios, editorial captions in Fraunces.
+- Trust.tsx Squarespace CDN URL → local migration when `HFF.webp` is
+  dropped in `/public/photos/`.
+- B5 token scale (consolidate 231 inline font-sizes → 11 tokens, 92
+  widths → 6 tokens).
+
+### Verbal-decision shortcuts seen this session
+
+In addition to those from §29 :
+- "Check world class sanity" → audit the actual state of Sanity per
+  locale before deciding on the fix strategy
+- "en fonction aussi de la personne" → localize emails to the
+  visitor's language
+
+— Claude, 2026-05-27 morning
 
 ---
 
