@@ -37,7 +37,7 @@ import {
 
 import { HOTEL as HOTEL_FALLBACK } from '@/lib/data/hotel';
 import { categories as CATEGORIES_FALLBACK } from '@/lib/data/categories';
-import { reviews as REVIEWS_FALLBACK } from '@/lib/data/rooms';
+import { getReviews, type Review as ReviewType } from '@/lib/data/reviews';
 import { articles as ARTICLES_FALLBACK } from '@/lib/data/articles';
 import { experiences as EXCURSIONS_FALLBACK } from '@/lib/data/experiences';
 import { itineraries as ITINERARIES_FALLBACK } from '@/lib/data/itineraries';
@@ -116,15 +116,17 @@ export async function fetchCategoryBySlug(slug: string, locale: string = 'fr'): 
 
 // ─── Reviews ──────────────────────────────────────────────────────────────
 
-type Review = (typeof REVIEWS_FALLBACK)[number];
+type Review = ReviewType;
 
 export const fetchReviews = cache(async (locale: string = 'fr'): Promise<readonly Review[]> => {
+  // Local trilingual fallback — 9 TripAdvisor quotes already translated
+  // FR / EN / NO in `src/lib/data/reviews.ts`. Used when Sanity is empty
+  // OR returns nothing for this locale (so /no never leaks FR text).
+  const fallback = getReviews(locale);
   const data = await sanityFetch<Review[]>(REVIEWS_QUERY, { locale });
-  if (!data || data.length === 0) return REVIEWS_FALLBACK;
-  // Filter out items with no quote in this locale (null = empty in this
-  // locale). If nothing left, return local fallback.
+  if (!data || data.length === 0) return fallback;
   const filtered = data.filter((r) => r.quote);
-  if (filtered.length === 0) return REVIEWS_FALLBACK;
+  if (filtered.length === 0) return fallback;
   return filtered;
 });
 
