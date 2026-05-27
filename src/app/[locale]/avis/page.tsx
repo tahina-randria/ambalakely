@@ -8,7 +8,7 @@ import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
 import { PHOTOS } from '@/lib/data/photos';
 import { fetchHotel, fetchReviews } from '@/sanity/lib/fetch';
-import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
+import { ArrowUpRight, Quotes } from '@phosphor-icons/react/dist/ssr';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
 
@@ -104,12 +104,12 @@ export default async function AvisPage({ params }: LocaleParam) {
                       <div className="caption text-[var(--color-text-muted)] mb-6">
                         {review.source}
                       </div>
-                      <span
-                        aria-hidden="true"
-                        className="font-display font-light text-[var(--color-sand-7)] text-[64px] leading-[0.5] tracking-[-0.05em] mb-4 select-none"
-                      >
-                        «
-                      </span>
+                      <Quotes
+                        size={26}
+                        weight="light"
+                        className="text-[var(--color-sand-9)] mb-5"
+                        aria-hidden
+                      />
                       <blockquote className="font-display font-light text-[var(--color-text)] text-[17px] md:text-[19px] leading-[1.45] tracking-[-0.01em] balance mb-8 flex-1">
                         {review.quote}
                       </blockquote>

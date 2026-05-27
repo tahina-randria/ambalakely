@@ -14,7 +14,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
-import { ArrowLeft, ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import { ArrowLeft, ArrowRight, Quotes } from '@phosphor-icons/react/dist/ssr';
 import type { Review } from '@/lib/data/reviews';
 
 type Props = {
@@ -70,13 +70,17 @@ export function ReviewsCarousel({ reviews, prevLabel, nextLabel }: Props) {
                   {review.source}
                 </div>
 
-                {/* Big decorative guillemet */}
-                <span
-                  aria-hidden="true"
-                  className="font-display font-light text-[var(--color-sand-7)] text-[64px] leading-[0.5] tracking-[-0.05em] mb-4 select-none"
-                >
-                  «
-                </span>
+                {/* Phosphor Quotes icon — discreet design-y marker, replaces
+                    the orphan « that read unfinished (no closing »). Light
+                    weight, sand-9 to stay subtle against the editorial
+                    quote text. §32bis (2026-05-27 user feedback). */}
+                <Quotes
+                  size={26}
+                  weight="light"
+                  className="text-[var(--color-sand-9)] mb-5"
+                  aria-hidden
+                />
+
 
                 {/* Quote — display serif, line-clamp 7 to keep card heights even */}
                 <blockquote className="font-display font-light text-[var(--color-text)] text-[17px] md:text-[19px] leading-[1.45] tracking-[-0.01em] balance line-clamp-[7] mb-8 flex-1">
