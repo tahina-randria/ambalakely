@@ -126,8 +126,12 @@ export function Nav() {
             <span className="hidden sm:inline">Hôtel Ambalakely</span>
           </Link>
 
-          {/* Desktop links — hidden on mobile, the burger picks them up. */}
-          <ul className="hidden md:flex items-center gap-8">
+          {/* Desktop links — hidden until lg (≥1024) ; the burger picks
+              them up below that. Bumped from md (768) to lg §35 #117
+              after the responsive sweep showed the inline layout
+              overflowed by ~110 px at 768. Tablet portrait now gets the
+              burger like phone. */}
+          <ul className="hidden lg:flex items-center gap-8">
             {linkKeys.map((l) => (
               <li key={l.href}>
                 <Link
@@ -143,8 +147,8 @@ export function Nav() {
             ))}
           </ul>
 
-          <div className="flex items-center gap-3 md:gap-5">
-            <div className="hidden md:block">
+          <div className="flex items-center gap-3 lg:gap-5">
+            <div className="hidden lg:block">
               <LanguageSwitcher scrolled={scrolled} />
             </div>
             <button
@@ -159,7 +163,9 @@ export function Nav() {
             >
               {t('book')}
             </button>
-            {/* Mobile burger — md:hidden ; opens the full-screen menu. */}
+            {/* Mobile / tablet burger — lg:hidden ; opens the full-screen
+                menu (bumped from md §35 #117 — tablets at 768 didn't fit
+                the inline desktop layout). */}
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
@@ -167,7 +173,7 @@ export function Nav() {
               aria-haspopup="menu"
               aria-expanded={menuOpen}
               className={cn(
-                'md:hidden inline-flex items-center justify-center h-10 w-10 transition-colors',
+                'lg:hidden inline-flex items-center justify-center h-10 w-10 transition-colors',
                 scrolled ? 'text-[var(--color-text)]' : 'text-white',
               )}
             >
@@ -185,7 +191,7 @@ export function Nav() {
           role="dialog"
           aria-modal="true"
           aria-label={t('homeAriaLabel')}
-          className="fixed inset-0 z-[60] bg-[var(--color-sand-12)] text-[var(--color-sand-1)] md:hidden flex flex-col"
+          className="fixed inset-0 z-[60] bg-[var(--color-sand-12)] text-[var(--color-sand-1)] lg:hidden flex flex-col"
         >
           {/* Top bar — wordmark + close button */}
           <div className="h-[72px] px-5 flex items-center justify-between border-b border-[var(--color-sand-10)]">
