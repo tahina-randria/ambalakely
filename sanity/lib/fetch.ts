@@ -36,12 +36,16 @@ import {
 } from './queries';
 
 import { HOTEL as HOTEL_FALLBACK } from '@/lib/data/hotel';
-import { categories as CATEGORIES_FALLBACK } from '@/lib/data/categories';
+import { getCategories, type Category as CategoryType } from '@/lib/data/categories';
 import { getReviews, type Review as ReviewType } from '@/lib/data/reviews';
 import { articles as ARTICLES_FALLBACK } from '@/lib/data/articles';
-import { experiences as EXCURSIONS_FALLBACK } from '@/lib/data/experiences';
-import { itineraries as ITINERARIES_FALLBACK } from '@/lib/data/itineraries';
-import { faq as FAQ_FALLBACK } from '@/lib/data/faq';
+import { getExperiences, type Experience as ExperienceType } from '@/lib/data/experiences';
+import { getItineraries, type Itinerary as ItineraryType } from '@/lib/data/itineraries';
+import {
+  getFaq,
+  getFaqCategories,
+  type FaqCategory as FaqCategoryType,
+} from '@/lib/data/faq';
 
 // Re-export types so callers don't reach into /lib/data
 export type {
@@ -94,30 +98,34 @@ export const fetchHotel = cache(async (locale: string = 'fr'): Promise<Hotel> =>
 
 // ─── Room categories ──────────────────────────────────────────────────────
 
-type Category = (typeof CATEGORIES_FALLBACK)[number];
+type Category = CategoryType;
 
 export const fetchCategories = cache(async (locale: string = 'fr'): Promise<Category[]> => {
+  // Local trilingual fallback — same pattern as reviews. `getCategories(locale)`
+  // projects the 3 categories into the requested locale so /en and /no never
+  // leak FR fields when Sanity is empty or partial for that locale.
+  const fallback = getCategories(locale);
   const data = await sanityFetch<Category[]>(ROOM_CATEGORIES_QUERY, { locale });
-  if (!data || data.length === 0) return CATEGORIES_FALLBACK;
+  if (!data || data.length === 0) return fallback;
   // Merge field-by-field per category. Image URLs from Sanity may be null
   // until T1.7 photo uploads finish — fall back to fallback URLs.
   return data.map((cat) => {
-    const fallback = CATEGORIES_FALLBACK.find((f) => f.slug === cat.slug);
-    if (!fallback) return cat;
+    const fb = fallback.find((f) => f.slug === cat.slug);
+    if (!fb) return cat;
     return {
-      ...fallback,
+      ...fb,
       ...cat,
       // Textual fields : null from GROQ means empty in this locale → use fallback.
-      name: cat.name ?? fallback.name,
-      shortDescription: cat.shortDescription ?? fallback.shortDescription,
-      longDescription: cat.longDescription ?? fallback.longDescription,
-      bedSetup: cat.bedSetup ?? fallback.bedSetup,
-      view: cat.view ?? fallback.view,
-      bestFor: cat.bestFor ?? fallback.bestFor,
-      pullQuote: cat.pullQuote ?? fallback.pullQuote,
+      name: cat.name ?? fb.name,
+      shortDescription: cat.shortDescription ?? fb.shortDescription,
+      longDescription: cat.longDescription ?? fb.longDescription,
+      bedSetup: cat.bedSetup ?? fb.bedSetup,
+      view: cat.view ?? fb.view,
+      bestFor: cat.bestFor ?? fb.bestFor,
+      pullQuote: cat.pullQuote ?? fb.pullQuote,
       // Image fields : prefer Sanity if available, fall back to local URLs.
-      heroImage: cat.heroImage || fallback.heroImage,
-      gallery: cat.gallery?.length ? cat.gallery : fallback.gallery,
+      heroImage: cat.heroImage || fb.heroImage,
+      gallery: cat.gallery?.length ? cat.gallery : fb.gallery,
     };
   }) as Category[];
 });
@@ -195,16 +203,21 @@ export async function fetchArticleBySlug(slug: string, locale: string = 'fr'): P
 
 // ─── Excursions ───────────────────────────────────────────────────────────
 
-type Excursion = (typeof EXCURSIONS_FALLBACK)[number];
+type Excursion = ExperienceType;
 
 export const fetchExcursions = cache(async (locale: string = 'fr'): Promise<Excursion[]> => {
+  // Local trilingual fallback — 10 excursions already translated FR / EN /
+  // NO in `src/lib/data/experiences.ts`. Used when Sanity is empty OR
+  // returns nothing for this locale (so /no never leaks FR text). Mirror
+  // of the `fetchReviews` pattern.
+  const fallback = getExperiences(locale);
   const data = await sanityFetch<Excursion[]>(EXCURSIONS_QUERY, { locale });
-  if (!data || data.length === 0) return [...EXCURSIONS_FALLBACK];
+  if (!data || data.length === 0) return fallback;
   // Merge per excursion : null from GROQ for textual fields means empty
-  // in this locale → use the local FR fallback. Image stays from Sanity
-  // if uploaded, else fallback URL.
+  // in this locale → use the local locale-aware fallback. Image stays
+  // from Sanity if uploaded, else fallback URL.
   return data.map((e) => {
-    const fb = EXCURSIONS_FALLBACK.find((f) => f.slug === e.slug);
+    const fb = fallback.find((f) => f.slug === e.slug);
     if (!fb) return e;
     return {
       ...fb,
@@ -223,13 +236,18 @@ export const fetchExcursions = cache(async (locale: string = 'fr'): Promise<Excu
 
 // ─── Itineraries ──────────────────────────────────────────────────────────
 
-type Itinerary = (typeof ITINERARIES_FALLBACK)[number];
+type Itinerary = ItineraryType;
 
 export const fetchItineraries = cache(async (locale: string = 'fr'): Promise<Itinerary[]> => {
+  // Local trilingual fallback — three RN7 itineraries already translated
+  // FR / EN / NO in `src/lib/data/itineraries.ts`. Used when Sanity is
+  // empty OR returns nothing for this locale (so /en and /no don't leak
+  // FR text on /plan-your-trip). Mirror of the `fetchReviews` pattern.
+  const fallback = getItineraries(locale);
   const data = await sanityFetch<Itinerary[]>(ITINERARIES_QUERY, { locale });
-  if (!data || data.length === 0) return [...ITINERARIES_FALLBACK];
+  if (!data || data.length === 0) return fallback;
   return data.map((it) => {
-    const fb = ITINERARIES_FALLBACK.find((f) => f.slug === it.slug);
+    const fb = fallback.find((f) => f.slug === it.slug);
     if (!fb) return it;
     return {
       ...fb,
@@ -257,44 +275,66 @@ export const fetchItineraries = cache(async (locale: string = 'fr'): Promise<Iti
 
 // ─── FAQ ──────────────────────────────────────────────────────────────────
 
-type FaqCategory = (typeof FAQ_FALLBACK)[number];
+type FaqCategory = FaqCategoryType;
 type FlatFaq = { q: string | null; a: string | null; category: string };
 
+// Sanity stores FAQ categories as free-form labels (typically FR). Map
+// them onto the canonical 3-slug taxonomy used in `src/lib/data/faq.ts`
+// (booking / stay / logistics). Includes new + legacy names so a
+// half-migrated Sanity dataset still groups correctly. Anything
+// unmapped falls back to `logistics` rather than leaking a raw FR
+// label.
 const FAQ_CATEGORY_SLUG_MAP: Record<string, string> = {
-  'Réservation': 'booking',
-  'Transferts': 'arrival',
-  'Chambres': 'rooms',
-  'Restaurant': 'food',
-  'Excursions': 'nearby',
-  'Paiement': 'money',
-  'Pratique': 'practical',
-};
-
-const FAQ_CATEGORY_LABEL_MAP: Record<string, string> = {
-  booking: 'Réservation et tarifs',
-  arrival: 'Arrivée et transferts',
-  rooms: 'Les chambres',
-  food: 'Restauration',
-  nearby: 'Aux alentours',
-  money: 'Paiement et argent',
-  health: 'Santé et sécurité',
-  practical: 'Pratique',
+  // New 3-category set (Dec 2026)
+  'Avant de réserver': 'booking',
+  'Before you book': 'booking',
+  'Før du bestiller': 'booking',
+  'À l’hôtel': 'stay',
+  "À l'hôtel": 'stay',
+  'At the hotel': 'stay',
+  'På hotellet': 'stay',
+  Logistique: 'logistics',
+  Logistics: 'logistics',
+  Logistikk: 'logistics',
+  // Legacy FR labels — map onto the closest new slug.
+  Réservation: 'booking',
+  'Réservation et tarifs': 'booking',
+  Paiement: 'booking',
+  'Paiement et argent': 'booking',
+  Chambres: 'stay',
+  'Les chambres': 'stay',
+  Restaurant: 'stay',
+  Restauration: 'stay',
+  Transferts: 'logistics',
+  'Arrivée et transferts': 'logistics',
+  Excursions: 'logistics',
+  'Aux alentours': 'logistics',
+  Pratique: 'logistics',
+  'Santé et sécurité': 'logistics',
 };
 
 export const fetchFaq = cache(async (locale: string = 'fr'): Promise<FaqCategory[]> => {
+  // Local trilingual fallback — 22 questions across 3 categories,
+  // already translated FR / EN / NO in `src/lib/data/faq.ts`. Used
+  // when Sanity is empty OR returns nothing for this locale (so /en
+  // and /no never leak FR text on /faq).
+  const fallback = getFaq(locale);
+  const labelByCategorySlug: Record<string, string> = Object.fromEntries(
+    getFaqCategories(locale).map((c) => [c.slug, c.label]),
+  );
   const data = await sanityFetch<FlatFaq[]>(FAQ_QUERY, { locale });
-  if (!data || data.length === 0) return [...FAQ_FALLBACK];
-  // Filter out FAQ items missing q or a in this locale. If most/all are
-  // missing, fall back entirely to the local FR FAQ (which is the
-  // curated, PDF-sourced source of truth per §94).
+  if (!data || data.length === 0) return fallback;
+  // Filter out FAQ items missing q or a in this locale. If most/all
+  // are missing, fall back entirely to the localized FAQ (which is
+  // the curated, PDF-sourced source of truth per §94).
   const filtered = data.filter((item) => item.q && item.a);
-  if (filtered.length === 0) return [...FAQ_FALLBACK];
+  if (filtered.length === 0) return fallback;
 
   // Re-group by category to match the FaqCategory[] shape components expect.
   const groups = new Map<string, FaqCategory>();
   for (const item of filtered) {
-    const slug = FAQ_CATEGORY_SLUG_MAP[item.category] ?? 'practical';
-    const label = FAQ_CATEGORY_LABEL_MAP[slug] ?? item.category;
+    const slug = FAQ_CATEGORY_SLUG_MAP[item.category] ?? 'logistics';
+    const label = labelByCategorySlug[slug] ?? item.category;
     if (!groups.has(slug)) groups.set(slug, { slug, label, entries: [] });
     groups.get(slug)!.entries.push({ q: item.q!, a: item.a! });
   }
