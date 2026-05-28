@@ -8,13 +8,7 @@ import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd, RestaurantJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
-import {
-  Sun,
-  SunHorizon,
-  Moon,
-  Pizza,
-} from '@phosphor-icons/react/dist/ssr';
-import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
+import { Quotes } from '@phosphor-icons/react/dist/ssr';
 import { fetchHotel } from '@/sanity/lib/fetch';
 import { formatMga } from '@/lib/utils/format';
 import { PHOTOS } from '@/lib/data/photos';
@@ -53,22 +47,46 @@ export default async function DiningPage({ params }: LocaleParam) {
 
   const heroTitle = t.raw('heroTitle') as string[];
 
-  const meals = [
-    { label: t('mealBreakfastMalagasy'), priceMga: 25000 },
-    { label: t('mealBreakfastFull'), priceMga: 38000 },
-    { label: t('meal1Course'), priceMga: 40000 },
-    { label: t('meal2Course'), priceMga: 59000 },
-    { label: t('meal3Course'), priceMga: 72000 },
-    { label: t('mealPicnic'), priceMga: 50000 },
+  // §40 — pricing regrouped in 3 categories (Aman/Como editorial pass).
+  // Avant : 6 items linéaires. Maintenant : 2 petits-déjeuners / 3 repas /
+  // 1 extra, avec sub-headers en caption. Reads like a menu, not a Sheet.
+  const pricingGroups = [
+    {
+      label: t('pricingBreakfastsLabel'),
+      items: [
+        { name: t('mealBreakfastMalagasyShort'), priceMga: 25000 },
+        { name: t('mealBreakfastFullShort'), priceMga: 38000 },
+      ],
+    },
+    {
+      label: t('pricingMealsLabel'),
+      items: [
+        { name: t('meal1CourseShort'), priceMga: 40000 },
+        { name: t('meal2CourseShort'), priceMga: 59000 },
+        { name: t('meal3CourseShort'), priceMga: 72000 },
+      ],
+    },
+    {
+      label: t('pricingExtrasLabel'),
+      items: [{ name: t('mealPicnic'), priceMga: 50000 }],
+    },
   ];
 
   const mealExtras = [t('extraChild'), t('extraChildFree')];
 
-  const hours: { label: string; value: string; Icon: PhosphorIcon }[] = [
-    { label: t('hourBreakfast'), value: HOTEL.hours.breakfast, Icon: Sun },
-    { label: t('hourLunch'), value: HOTEL.hours.lunch, Icon: SunHorizon },
-    { label: t('hourDinner'), value: HOTEL.hours.dinner, Icon: Moon },
-    { label: t('hourPizzaTerrace'), value: HOTEL.hours.pizzaTerrace, Icon: Pizza },
+  const hours = [
+    { label: t('hourBreakfast'), value: HOTEL.hours.breakfast },
+    { label: t('hourLunch'), value: HOTEL.hours.lunch },
+    { label: t('hourDinner'), value: HOTEL.hours.dinner },
+    { label: t('hourPizzaTerrace'), value: HOTEL.hours.pizzaTerrace },
+  ];
+
+  // §40 — Press section : 2 food-specific quotes pulled by author from
+  // reviews.ts (single source of truth). Pas de duplication de quote dans
+  // messages JSON.
+  const pressQuotes = [
+    { quote: t('press1Quote'), attribution: t('press1Attribution') },
+    { quote: t('press2Quote'), attribution: t('press2Attribution') },
   ];
 
   return (
@@ -135,6 +153,36 @@ export default async function DiningPage({ params }: LocaleParam) {
           >
             {t('loungeCaption')}
           </div>
+        </section>
+
+        {/* ════════════════════════════════════════════════════════════
+            §40 — LE LIEU (the room / setting)
+            Pattern Aman : courte section éditoriale qui ancre l'espace.
+            Le rez-de-chaussée (cheminée + pierre + 50 couverts) vs
+            l'étage (terrasse pizzeria). Ce détail était noyé dans
+            introP1, maintenant il a sa scène.
+        ════════════════════════════════════════════════════════════ */}
+        <section className="py-32 md:py-48 lg:py-56 hair-rule">
+          <Container>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
+                <ScrollReveal>
+                  <div className="caption">{t('lieuKicker')}</div>
+                  <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em] max-w-[260px]">
+                    {t('lieuH2')}
+                  </h2>
+                </ScrollReveal>
+              </div>
+              <div className="lg:col-span-9">
+                <ScrollReveal>
+                  <div className="prose-editorial space-y-6 max-w-[60ch]">
+                    <p>{t('lieuP1')}</p>
+                    <p>{t('lieuP2')}</p>
+                  </div>
+                </ScrollReveal>
+              </div>
+            </div>
+          </Container>
         </section>
 
         {/* ════════════════════════════════════════════════════════════
@@ -253,7 +301,48 @@ export default async function DiningPage({ params }: LocaleParam) {
           </Container>
         </section>
 
-        {/* HOURS + PRICING */}
+        {/* ════════════════════════════════════════════════════════════
+            §40 — PRESS / MOTS DE TABLE
+            Pattern Aman / Michelin restaurant pages : 1-2 quotes signées
+            qui certifient l'expérience. Quotes food-specific extraites de
+            reviews.ts (Kristin O. V. TripAdvisor + Ruth Barbara W. Google).
+            Phosphor Quotes icon — même atom que ReviewsCarousel.
+        ════════════════════════════════════════════════════════════ */}
+        <section className="py-32 md:py-48 lg:py-56 hair-rule">
+          <Container>
+            <ScrollReveal>
+              <div className="caption text-center mb-16 md:mb-20">{t('pressKicker')}</div>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 max-w-[1100px] mx-auto">
+              {pressQuotes.map((q, i) => (
+                <ScrollReveal key={q.attribution} delay={i * 0.08}>
+                  <figure>
+                    <Quotes
+                      size={28}
+                      weight="light"
+                      className="text-[var(--color-sand-9)] mb-6"
+                      aria-hidden
+                    />
+                    <blockquote className="font-display font-light text-[var(--color-text)] text-[24px] md:text-[28px] leading-[1.3] tracking-[-0.015em] balance">
+                      {q.quote}
+                    </blockquote>
+                    <figcaption className="mt-8 caption text-[var(--color-text-muted)]">
+                      {q.attribution}
+                    </figcaption>
+                  </figure>
+                </ScrollReveal>
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        {/* ════════════════════════════════════════════════════════════
+            §40 — HOURS + PRICING (refonte éditoriale)
+            Avant : 2 listes empilées avec icons Phosphor → planning aéroport.
+            Maintenant : 2 colonnes (5/7), Quand + Combien, pas d'icons,
+            prix groupés en 3 sous-catégories (petits-déj / repas / extras).
+            Display serif sur les valeurs. Reads like a menu.
+        ════════════════════════════════════════════════════════════ */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-bg-subtle)]">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
@@ -265,66 +354,62 @@ export default async function DiningPage({ params }: LocaleParam) {
                   </h2>
                 </ScrollReveal>
               </div>
-              <div className="lg:col-span-9 space-y-16 md:space-y-20">
-                {/* Hours */}
-                <ScrollReveal>
-                  <div>
+              <div className="lg:col-span-9">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
+                  {/* WHEN — hours, 5/12 */}
+                  <ScrollReveal className="md:col-span-5">
                     <div className="caption mb-8">{t('hoursLabel')}</div>
                     <ul className="border-t border-[var(--color-border-subtle)]">
-                      {hours.map((h) => {
-                        const Icon = h.Icon;
-                        return (
-                          <li
-                            key={h.label}
-                            className="flex items-center justify-between gap-4 py-5 md:py-6 border-b border-[var(--color-border-subtle)]"
-                          >
-                            <div className="flex items-center gap-4">
-                              <Icon
-                                size={20}
-                                weight="light"
-                                className="text-[var(--color-text-muted)]"
-                                aria-hidden
-                              />
-                              <span className="font-display font-light text-[var(--color-text)] text-[16px] md:text-[18px]">
-                                {h.label}
-                              </span>
-                            </div>
-                            <span className="text-[14px] md:text-[15px] tabular-nums text-[var(--color-text)]">
-                              {h.value}
-                            </span>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                </ScrollReveal>
-
-                {/* Pricing */}
-                <ScrollReveal delay={0.05}>
-                  <div>
-                    <div className="caption mb-8">{t('pricingLabel')}</div>
-                    <ul className="border-t border-[var(--color-border-subtle)]">
-                      {meals.map((m) => (
+                      {hours.map((h) => (
                         <li
-                          key={m.label}
-                          className="flex items-baseline justify-between gap-4 py-5 md:py-6 border-b border-[var(--color-border-subtle)]"
+                          key={h.label}
+                          className="flex items-baseline justify-between gap-4 py-5 border-b border-[var(--color-border-subtle)]"
                         >
-                          <span className="font-display font-light text-[var(--color-text)] text-[16px] md:text-[18px] tracking-[-0.005em]">
-                            {m.label}
+                          <span className="font-display font-light text-[var(--color-text)] text-[16px] md:text-[18px]">
+                            {h.label}
                           </span>
-                          <span className="font-display font-light text-[var(--color-text)] text-[18px] md:text-[22px] tabular-nums shrink-0">
-                            {formatMga(m.priceMga)}
+                          <span className="font-display font-light text-[var(--color-text)] text-[15px] md:text-[16px] tabular-nums shrink-0">
+                            {h.value}
                           </span>
                         </li>
                       ))}
                     </ul>
-                    <ul className="mt-6 space-y-2 caption text-[var(--color-text-muted)]">
+                  </ScrollReveal>
+
+                  {/* HOW MUCH — pricing grouped, 7/12 */}
+                  <ScrollReveal className="md:col-span-7" delay={0.05}>
+                    <div className="caption mb-8">{t('pricingLabel')}</div>
+                    <div className="space-y-10 md:space-y-12 border-t border-[var(--color-border-subtle)] pt-2">
+                      {pricingGroups.map((group) => (
+                        <div key={group.label}>
+                          <div className="caption text-[var(--color-text-muted)] mb-3">
+                            {group.label}
+                          </div>
+                          <ul>
+                            {group.items.map((item) => (
+                              <li
+                                key={item.name}
+                                className="flex items-baseline justify-between gap-4 py-3 border-b border-[var(--color-border-subtle)]"
+                              >
+                                <span className="font-display font-light text-[var(--color-text)] text-[18px] md:text-[20px] tracking-[-0.005em]">
+                                  {item.name}
+                                </span>
+                                <span className="font-display font-light text-[var(--color-text)] text-[20px] md:text-[24px] tabular-nums shrink-0">
+                                  {formatMga(item.priceMga)}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                    <ul className="mt-8 space-y-2 caption text-[var(--color-text-muted)]">
                       {mealExtras.map((extra) => (
                         <li key={extra}>· {extra}</li>
                       ))}
                     </ul>
-                  </div>
-                </ScrollReveal>
+                  </ScrollReveal>
+                </div>
               </div>
             </div>
           </Container>
