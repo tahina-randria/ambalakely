@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-27 evening (`fa4c315` newsletter pivot — §36 closes #119. Soft editorial + privileged-access angle ("avant-premières", "tarif réservé aux lecteurs", 5-8x/year). §35 closed #117 partial — Nav breakpoint md → lg fixes 768 overflow + year math (TGH 20 ans, hotel 12 ans), Mapbox real coords, review count "32" removed per user. §34 cardinal fact correction : hotel opened September 2014 (not 2018), domain since 2002 (Vonimboahirana). §33 trilingual data layer. §32 Reviews refonte + /avis kill + Google reviews. 16 commits live today. Open threads remaining : full mobile sweep on rest of pages (#117 partial), hotel.ts JSON-LD trilingual (SEO-only).)
+Last updated: 2026-05-28 morning (`6d801f1` closes the full i18n audit — §38 batch. Trilingual `hotel.ts` (BASE + L10N + getHotel) covers description / amenities / address / hours / concept / tgh. Sanity `hotel-singleton` purged so the local fallback wins cleanly across the 3 locales. `RoomComparison.tsx` + `comparison.ts` trilingual on /rooms. API errors (booking + newsletter) localized via locale extracted from request body. 10 child pages now emit locale-prefixed canonical + full hreflang languages map via new `localizedAlternates(locale, path)` helper. og:title "Madagaskar" on /no, Mapbox popup localized, StickyTocRail aria-label localized, opengraph-image kicker fixed to "Est. 2014" (was 2018), dead `rooms.ts` deleted. 7 commits + 1 Sanity mutate. Live curl verified : 0 FR leaks on /en or /no for og:title, JSON-LD description, amenities, /rooms Comparison. Open threads : Sanity dataset still mostly FR-only by intent (local fallbacks cover it ; Sanity seeding is for editorial management later).)
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-05-27 evening (`fa4c315` newsletter pivot — §36 closes #11
 
 Copy-paste this block as the first message:
 
-> Je continue le projet Hôtel Ambalakely (vrai hôtel 10 chambres à Fianarantsoa, Madagascar). Lis HANDOFF.md à la racine en premier — c'est la source de vérité unique : architecture, faits vérifiés, ce qui a shippé, ce qui pend, les règles cardinales. La dernière journée live (2026-05-27) est dense : §32 Reviews refonte (carousel Embla + /avis killé + 2 outbound TripAdvisor / Google), §33 trilingue 4 data files (experiences/itineraries/categories/faq EN+NO via 4 sous-agents parallèles), §34 correction factuelle MAJEURE — l'hôtel a ouvert **septembre 2014** pas 2018, domaine familial Vonimboahirana acquis en **2002** (timeline 5 milestones sur /about), §35 mobile responsive partiel (Nav breakpoint md → lg + year math 20/12 ans + Mapbox real coords + review count "32" retiré), §36 newsletter pivot (saisonnière → soft editorial + avant-premières + tarif lecteurs, 5-8x/an). 16 commits live sur main. Open threads : compléter le sweep mobile au-delà du nav + hotel.ts JSON-LD trilingue (SEO only).
+> Je continue le projet Hôtel Ambalakely (vrai hôtel 10 chambres à Fianarantsoa, Madagascar). Lis HANDOFF.md à la racine en premier — c'est la source de vérité unique : architecture, faits vérifiés, ce qui a shippé, ce qui pend, les règles cardinales. Les dernières journées live sont denses : §38 (2026-05-28 matin) ferme **le full i18n audit** — hotel.ts trilingue (BASE+L10N+getHotel), Sanity hotel-singleton purgé, RoomComparison/comparison.ts trilingue, API errors (booking+newsletter) localisées, 10 child pages avec canonical locale-prefix + hreflang via nouveau helper `localizedAlternates(locale, path)`, og:title Madagaskar sur /no, Mapbox popup + StickyToc aria + opengraph kicker "Est. 2014" + delete dead rooms.ts. 0 fuite FR sur /en ou /no confirmée par curl triple-locale. §37 vraies coords Hôtel Ambalakely du pin Google (lat -21.4150267, lng 47.1656023, zoom 13). §36 newsletter pivot soft editorial + avant-premières (5-8x/an). §35 #117 partiel : Nav md→lg + year math 20/12 ans + Mapbox + review count "32" retiré. §34 correction factuelle MAJEURE — l'hôtel a ouvert **septembre 2014** pas 2018, domaine familial Vonimboahirana acquis en **2002** (timeline 5 milestones sur /about). §33 trilingue 4 data files (experiences/itineraries/categories/faq). §32 Reviews refonte (carousel Embla + /avis killé). Tree clean.
 >
 > Site live : https://ambalakely.vercel.app · Branche active : `main` · `.env.local` a déjà tous les secrets · `git log --oneline -10` pour voir les derniers commits.
 >
@@ -26,11 +26,11 @@ Copy-paste this block as the first message:
 > - Distance Andringitra round-trip (320 ou 240 km dans `itineraries.ts`)
 > - Création d'une clé API Google Places ($0/mois avec ISR cache 24h) si on veut wirer les live reviews
 >
-> Items Sanity follow-up (cf. tableau §30) :
+> Items Sanity follow-up (cf. tableau §30) — note §38 : `hotel-singleton` désormais ABSENT du dataset (purgé pour laisser passer le fallback trilingue propre). Si Hasina veut éditer via Studio plus tard, il faudra recréer le doc avec FR+EN+NO en parallèle.
 > - Seeder FR dans Studio pour excursion / itinerary / faq (le local FR fallback fonctionne déjà, c'est juste pour donner contrôle CMS)
-> - Seeder EN pour hotel / roomCategory / review / community (sinon /en retombe sur le FR fallback)
+> - Seeder EN pour roomCategory / review / community (sinon /en retombe sur le FR fallback)
 > - Seeder NO partout (sinon /no = headlines NO + content FR fallback)
-> - Aucun urgent — le site rend correctement grâce au fallback chain
+> - Aucun urgent — le site rend correctement grâce au fallback chain trilingue
 >
 > Items différés jusqu'à direction créa :
 > - AI assets Nano Banana Pro non-contractuels (table dressée crépuscule, serveur, sunset logo)
@@ -2179,6 +2179,70 @@ Curl sweep across 9 pages × 2 non-FR locales for known FR markers : **0 leaks**
 1 commit. ~700 lines of FR data → ~2000 lines (3 locales each).
 
 — Claude, 2026-05-27 afternoon
+
+---
+
+## §38 — Full i18n audit + closing batch (2026-05-28 morning)
+
+**Context.** Three sessions after §33 left two open threads ("hotel.ts JSON-LD trilingual" + "mobile sweep on rest of pages"), the user asked for a full re-audit. A background general-purpose agent ran a comprehensive static + live curl audit across messages parity, hardcoded FR strings, metadata generation, JSON-LD, email templates. The report flagged three P0 visitor blockers, three P1 SEO issues, plus polish items.
+
+**Batch landed.** Seven commits over the morning, closing every audit finding :
+
+### P0 — visitor-facing
+
+1. **`RoomComparison.tsx` + `comparison.ts` trilingual** (`abe686f`). The 12-row matrix on /rooms was FR-only and leaked crudely on /en + /no (Surface / Capacité / Rizières / palissandre …). Same pattern as `categories.ts` / `reviews.ts` : three parallel `COMPARISON_FR/EN/NO` lists + `getComparison(locale)`. Component switched to `useLocale()` + `useTranslations('RoomsPage')` + `useTranslations('Common')`. New keys : `Common.included`, `Common.notIncluded`, `RoomsPage.compareAria`, `RoomsPage.priceUnit`. Brand-names (Supérieure/Confort/Standard, palissandre, katrafay) intentionally kept FR.
+
+2. **API error i18n** (`175c4d9`). `/api/booking-request` and `/api/newsletter` returned FR-only error strings that the client surfaced directly via `setErrorMsg(data.error)`. A NO visitor hitting a rate limit got a French message they couldn't read. Both routes restructured to extract `locale` from the raw body *before* rate-limit + validation, then map to a per-locale `ERRORS` table. Six strings × 3 locales on `/booking-request`, five on `/newsletter`. Side fix : `ROOM_TYPE_LABELS` per-locale so the visitor acknowledgement email shows "Comfort" / "Komfort" instead of "Confort" ; the staff notification keeps FR labels (team works in FR).
+
+3. **Locale-prefixed canonical + hreflang on 10 child pages** (`b341f31`). Every `app/[locale]/*/page.tsx` declared `alternates: { canonical: '/about' }` — a path identical on /fr/about, /en/about, /no/about. Google read this as "only /fr is canonical" → risk of desindexing /en + /no. New helper `src/lib/i18n/alternates.ts` exports `localizedAlternates(locale, path)` that returns `{ canonical, languages: {fr, en, nb, x-default} }`. Migrated 10 pages (about, faq, journal, journal/[slug], experiences, dining, plan-your-trip, community, rooms, rooms/[category]). The og:url is also kept in sync with the canonical.
+
+### P1 — SEO + structured data
+
+4. **`hotel.ts` trilingual + Sanity purge** (`6d801f1`). Refactored to BASE + `L10N: Record<Locale, …>` + `getHotel(locale)`. Per-locale strings now cover : `description`, `tagline`, `diningDescription`, `totalCapacity`, `address.street`, `address.countryName`, `concept.translation`, `concept.description`, `tgh.description`, `hours.*`, `amenities[]`. Brand-names, numerics, ISO codes stay shared. Backwards-compat `HOTEL = getHotel('fr')` re-export for sitemap/robots/scripts. `sanity/lib/fetch.ts` `fetchHotel` updated to seed `fallback = getHotel(locale)`.
+
+   **Sanity gotcha** : the existing `hotel-singleton` doc had `description.fr` populated with the old (pre-§34) text "fondé en 2018 par Mamy et Hasina", `description.en = ""`, no `.no` field, plus `amenities[]` hardcoded `.fr` in the GROQ query → /en + /no kept rendering FR amenities. **Decision** : delete the doc. Transaction `Tbx1flm63KLLwIt5qLNkvW`. Without Sanity data, `fetchHotel` falls cleanly through to `getHotel(locale)` for all three locales. Side benefit : the stale pre-§34 "fondé en 2018" string is also gone.
+
+5. **`og:title` country name** (in `6d801f1`). Layout hardcoded `${HOTEL.name} · Madagascar` in both `openGraph.title` and `twitter.title`. Replaced with `${HOTEL.address.countryName}` so /no emits "Madagaskar". Verified live : `curl /no | grep og:title` = "Hôtel Ambalakely · Madagaskar".
+
+6. **Restaurant JSON-LD description** (in `6d801f1`). `JsonLd.tsx` `RestaurantJsonLd` hardcoded the EN sentence "A small kitchen between Madagascar and Norway. One set menu each evening, mostly from the garden." Now reads from `HOTEL.diningDescription` per locale.
+
+### P2 — polish
+
+7. **MapboxMap popup country** (in `6d801f1`). "Fianarantsoa, Madagascar" was hardcoded in the popup HTML. Now uses `useLocale()` to swap to "Madagaskar" on /no.
+
+8. **StickyTocRail aria-label** (in `6d801f1`). `aria-label="Table of contents"` hardcoded EN, displayed on /fr and /no too. Now reads `Common.tableOfContents` key.
+
+9. **`opengraph-image.tsx` Est. year** (in `6d801f1`). Top kicker said "Est. 2018" — wrong per the §34 cardinal fact correction. Now "Est. 2014".
+
+10. **Dead code purge** (in `6d801f1`). `src/lib/data/rooms.ts` was FR-only mort code with no consumers in `src/components/` or `src/app/`. Deleted.
+
+### Live verification (final state)
+
+Triple-locale curl audit, post-deploy + Sanity purge :
+
+| Locale | og:title | JSON-LD `description` | amenities sample | /rooms Comparison |
+|---|---|---|---|---|
+| /fr | `· Madagascar` | "Un petit hôtel de dix chambres…" | "Restaurant Toko Telo, Jardin, Terrasse" | Surface · Capacité · Lit · Vue · Rizières · palissandre |
+| /en | `· Madagascar` | "A small ten-room hotel…" | "Toko Telo restaurant, Garden, Terrace" | Floor area · Capacity · Outlook · Rice paddies · rosewood |
+| /no | `· Madagaskar` ✓ | "Et lite hotell med ti rom…" | "Restauranten Toko Telo, Hage, Terrasse" | Areal · Kapasitet · Utsikt · Risåkrene · palisander |
+
+`/no/rooms` canonical = `https://hotelambalakely.com/no/rooms` ✓. Hreflang fr/en/nb/x-default all in HTML head ✓.
+
+### Open threads after §38
+
+- **Sanity dataset still mostly FR-only.** That's now intentional — the local trilingual fallbacks cover every visitor-facing field. Sanity seeding (when Hasina takes over editorial via the Studio) is for content management, not for translation parity. The §30 table is the source of truth on what's where.
+- **Email staff notification still FR.** `BookingRequest.tsx` template (the email sent to `hello@hotelambalakely.com`) is FR-only by design — the team reads it in French. Visitor `BookingAck` and `NewsletterWelcome` are already trilingual.
+- **No remaining hardcoded-FR-in-code findings.** Static audit + live curl audit both clear.
+
+### Commits
+
+- `b341f31` — fix(seo): locale-prefixed canonical + hreflang on all child pages
+- `175c4d9` — fix(api): localize booking + newsletter error messages
+- `abe686f` — fix(rooms): full trilingual Comparison matrix on /rooms
+- `6d801f1` — fix(i18n): trilingual hotel data + JSON-LD + remaining string leaks (squashed with chore: gitignore .playwright-mcp/)
+- Sanity Mutate API : delete `hotel-singleton` (transaction `Tbx1flm63KLLwIt5qLNkvW`)
+
+— Claude, 2026-05-28 morning
 
 ---
 
