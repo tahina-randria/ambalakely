@@ -2,7 +2,7 @@
 
 This file is the **single source of truth** for whoever picks up this project on another machine. It contains everything needed to continue working without context loss : architecture, decisions, real data, what's done, what's next, and the strict rules to follow.
 
-Last updated: 2026-05-27 afternoon (`07248ca` trilingual experiences/itineraries/categories/faq — 4 sub-agents in parallel killed the FR leaks on /en + /no for the entire data layer. Live sweep returns 0 FR leaks across the 9 main pages × 2 non-FR locales. §32 carousel + /avis kill + Google reviews still in place. Open threads remaining : #117 responsive mobile site-wide, #119 newsletter purpose pivot, hotel.ts JSON-LD trilingual (SEO-only, deferred).)
+Last updated: 2026-05-27 evening (`fa4c315` newsletter pivot — §36 closes #119. Soft editorial + privileged-access angle ("avant-premières", "tarif réservé aux lecteurs", 5-8x/year). §35 closed #117 partial — Nav breakpoint md → lg fixes 768 overflow + year math (TGH 20 ans, hotel 12 ans), Mapbox real coords, review count "32" removed per user. §34 cardinal fact correction : hotel opened September 2014 (not 2018), domain since 2002 (Vonimboahirana). §33 trilingual data layer. §32 Reviews refonte + /avis kill + Google reviews. 16 commits live today. Open threads remaining : full mobile sweep on rest of pages (#117 partial), hotel.ts JSON-LD trilingual (SEO-only).)
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-05-27 afternoon (`07248ca` trilingual experiences/itineraries
 
 Copy-paste this block as the first message:
 
-> Je continue le projet Hôtel Ambalakely (vrai hôtel 10 chambres à Fianarantsoa, Madagascar). Lis HANDOFF.md à la racine en premier — c'est la source de vérité unique : architecture, faits vérifiés, ce qui a shippé, ce qui pend, les règles cardinales. La dernière section live est §32 — Reviews & /avis refonte (Embla horizontal carousel + stat 32/TripAdvisor + 3-col card grid sur /avis) + /dining facts row killed (le "Open to: Residents & Visitors" ségrégationnel est viré) + reviews trilingue FR/EN/NO (Sanity nettoyé des 9 docs Ada/Giovanni/unverified Booking-Google). §31 = Newsreader display face. §30 = locale-aware Sanity + hero mobile + email per-locale. Open threads restants : #117 responsive mobile site-wide + #119 newsletter purpose pivot. 18 commits poussés ce matin sur main, Vercel auto-deploy à chaque push.
+> Je continue le projet Hôtel Ambalakely (vrai hôtel 10 chambres à Fianarantsoa, Madagascar). Lis HANDOFF.md à la racine en premier — c'est la source de vérité unique : architecture, faits vérifiés, ce qui a shippé, ce qui pend, les règles cardinales. La dernière journée live (2026-05-27) est dense : §32 Reviews refonte (carousel Embla + /avis killé + 2 outbound TripAdvisor / Google), §33 trilingue 4 data files (experiences/itineraries/categories/faq EN+NO via 4 sous-agents parallèles), §34 correction factuelle MAJEURE — l'hôtel a ouvert **septembre 2014** pas 2018, domaine familial Vonimboahirana acquis en **2002** (timeline 5 milestones sur /about), §35 mobile responsive partiel (Nav breakpoint md → lg + year math 20/12 ans + Mapbox real coords + review count "32" retiré), §36 newsletter pivot (saisonnière → soft editorial + avant-premières + tarif lecteurs, 5-8x/an). 16 commits live sur main. Open threads : compléter le sweep mobile au-delà du nav + hotel.ts JSON-LD trilingue (SEO only).
 >
 > Site live : https://ambalakely.vercel.app · Branche active : `main` · `.env.local` a déjà tous les secrets · `git log --oneline -10` pour voir les derniers commits.
 >
