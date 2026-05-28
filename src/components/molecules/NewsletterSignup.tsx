@@ -87,13 +87,11 @@ export function NewsletterSignup({
             placeholder={t('newsletterPlaceholder')}
             aria-label={t('newsletterAriaInput')}
             className={cn(
-              // §41ter : encadré franchement visible. Sand-3 et sand-5 se
-              // confondaient avec le sand-12 du footer. Sand-1 (blanc) +
-              // bg sand-11 (légèrement plus clair que sand-12) donne un
-              // vrai rectangle qu'on lit comme un champ.
+              // §41quater : juste une bordure visible (pas de fill). Sand-1
+              // (blanc) sur sand-12 footer = encadré clair sans fond coloré.
               'flex-1 h-12 px-4 border-2 border-solid text-[15px] focus:outline-none transition-colors',
               isDark
-                ? 'bg-[var(--color-sand-11)] border-[var(--color-sand-1)] text-[var(--color-sand-1)] placeholder-[var(--color-sand-5)] focus:bg-[var(--color-sand-10)]'
+                ? 'bg-transparent border-[var(--color-sand-1)] text-[var(--color-sand-1)] placeholder-[var(--color-sand-5)] focus:border-[var(--color-sand-3)]'
                 : 'bg-[var(--color-bg)] border-[var(--color-sand-12)] text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:border-[var(--color-sand-12)]',
             )}
           />

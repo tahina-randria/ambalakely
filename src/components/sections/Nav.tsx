@@ -104,30 +104,29 @@ export function Nav() {
           className="mx-auto w-full max-w-[1440px] px-5 md:px-8 lg:px-12 h-[72px] flex items-center justify-between"
           style={{ mixBlendMode: scrolled ? 'normal' : 'difference' }}
         >
-          {/* §41bis — stacked logo per user feedback : favicon au-dessus,
-              wordmark dessous. Cohérent avec le footer. Le wordmark passe
-              en taille compacte (12 px letterspaced) pour tenir dans la
-              hauteur de Nav (h-72) en stacking vertical. */}
+          {/* §41ter — stacked logo, version display serif titlecase
+              comme le Footer. Favicon plus gros (40 px) + wordmark
+              display font-light (15 px) titlecase. Cohérent top + bottom. */}
           <Link
             href="/"
             aria-label={t('homeAriaLabel')}
             className={cn(
-              'flex flex-col items-center gap-1 font-display font-normal leading-none',
+              'flex flex-col items-center gap-1.5 leading-none',
               scrolled ? 'text-[var(--color-text)]' : 'text-white',
             )}
           >
             <Image
               src="/brand/logo-white.png"
               alt=""
-              width={32}
-              height={32}
+              width={40}
+              height={40}
               priority
               className={cn(
-                'h-7 w-7 transition-[filter] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
+                'h-9 w-9 transition-[filter] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
                 scrolled && 'invert',
               )}
             />
-            <span className="hidden sm:inline text-[11px] tracking-[0.06em] uppercase font-medium">
+            <span className="hidden sm:inline font-display font-light text-[15px] tracking-[-0.015em]">
               Hôtel Ambalakely
             </span>
           </Link>
