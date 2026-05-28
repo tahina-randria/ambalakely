@@ -4,12 +4,13 @@ import { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-// ⚠️ Coords en attente du pin Google Maps user (§37, 2026-05-28).
-// Précédentes valeurs essayées :
-//   - [47.0862, -21.4541] (footer arc-seconde 21°27'15"S 47°05'10"E)
-//   - [47.1667, -21.4167] (doc Kirsten arc-minute, trop imprécis ±900m)
-// User confirme : le pin actuel est faux. À remplacer dès URL maps reçue.
-const HOTEL_LNG_LAT: [number, number] = [47.1667, -21.4167];
+// Coordonnées exactes du pin Google "Hotel Ambalakely" (§37, 2026-05-28).
+// Source : URL Google Maps fournie par le user, place CID
+// 0x21e7c7b77e7ef7db:0x760efd8fe7492c02, paire !3d!4d.
+// Précédentes valeurs (toutes fausses) :
+//   - [47.0862, -21.4541] : ~9 km sud-ouest, dans les rizières
+//   - [47.1667, -21.4167] : ~250 m sud-est, doc Kirsten arc-minute
+const HOTEL_LNG_LAT: [number, number] = [47.1656023, -21.4150267];
 
 // Set NEXT_PUBLIC_MAPBOX_TOKEN in .env (free tier at mapbox.com)
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;

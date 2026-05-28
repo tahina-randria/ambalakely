@@ -47,10 +47,13 @@ export const HOTEL = {
     countryName: 'Madagascar',
   },
 
-  // GPS réel depuis le document Kirsten : 21°25' S, 47°10' E, altitude 1 082 m
+  // GPS exact du pin Google "Hotel Ambalakely" (place CID
+  // 0x760efd8fe7492c02). Altitude 1 082 m du document Kirsten.
+  // L'ancienne valeur (-21.4167, 47.1667) du doc Kirsten était
+  // arrondie à l'arc-minute → ~250 m sud-est de la vraie position.
   geo: {
-    lat: -21.4167,
-    lng: 47.1667,
+    lat: -21.4150267,
+    lng: 47.1656023,
     altitude: 1082,
   },
 

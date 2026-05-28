@@ -23,7 +23,7 @@ export async function Location() {
               {t('h2')}
             </h2>
             <a
-              href="https://www.google.com/maps/place/Fianarantsoa,+Madagascar/@-21.4541,47.0862,12z"
+              href="https://www.google.com/maps/place/Hotel+Ambalakely/@-21.4150267,47.1656023,18z"
               target="_blank"
               rel="noreferrer"
               className="group inline-flex items-center gap-2 font-body text-[15px] font-medium text-[var(--color-text)] shrink-0"
