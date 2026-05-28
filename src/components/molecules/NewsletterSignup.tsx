@@ -87,9 +87,11 @@ export function NewsletterSignup({
             placeholder={t('newsletterPlaceholder')}
             aria-label={t('newsletterAriaInput')}
             className={cn(
-              'flex-1 h-12 px-4 border border-solid text-[15px] focus:outline-none transition-colors',
+              // §41 : encadré plus visible (2 px sand-3 sur dark). Le sand-5
+              // précédent disparaissait visuellement sur le sand-12 footer.
+              'flex-1 h-12 px-4 border-2 border-solid text-[15px] focus:outline-none transition-colors',
               isDark
-                ? 'bg-transparent border-[var(--color-sand-5)] text-[var(--color-sand-1)] placeholder-[var(--color-sand-5)] focus:border-[var(--color-sand-1)]'
+                ? 'bg-transparent border-[var(--color-sand-3)] text-[var(--color-sand-1)] placeholder-[var(--color-sand-5)] focus:border-[var(--color-sand-1)]'
                 : 'bg-[var(--color-bg)] border-[var(--color-sand-12)] text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:border-[var(--color-sand-12)]',
             )}
           />

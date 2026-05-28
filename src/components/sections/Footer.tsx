@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Container } from '@/components/atoms/Container';
@@ -58,9 +59,21 @@ export async function Footer() {
     <footer className="bg-[var(--color-sand-12)] text-[var(--color-sand-1)]">
       <Container>
         <div className="py-24 md:py-32">
-          {/* Masthead */}
-          <div className="font-display font-light tracking-[-0.04em] text-[var(--color-sand-1)] text-[48px] leading-[1] md:text-[88px] lg:text-[120px]">
-            Hôtel Ambalakely
+          {/* Masthead — §41 (2026-05-28) : retour au pattern logo + wordmark
+              de la Nav. Avant : "Hôtel Ambalakely" en 120 px display
+              ressentait comme une signature géante. Maintenant : logo-white
+              (48 px) + wordmark (32 px), aligné, propre, cohérent top + bottom. */}
+          <div className="flex items-center gap-4">
+            <Image
+              src="/brand/logo-white.png"
+              alt=""
+              width={48}
+              height={48}
+              className="h-12 w-12 shrink-0"
+            />
+            <span className="font-display font-light tracking-[-0.025em] text-[var(--color-sand-1)] text-[28px] md:text-[32px] leading-none">
+              Hôtel Ambalakely
+            </span>
           </div>
 
           {/* Newsletter signup — growth lever */}
