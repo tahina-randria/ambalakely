@@ -29,7 +29,8 @@
     "no": "No",
     "or": "Or",
     "included": "Included",
-    "notIncluded": "Not included"
+    "notIncluded": "Not included",
+    "tableOfContents": "Table of contents"
   },
   "Nav": {
     "rooms": "Rooms",

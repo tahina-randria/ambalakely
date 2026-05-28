@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useLocale } from 'next-intl';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -24,11 +25,15 @@ const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 export function MapboxMap() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
+  const locale = useLocale();
 
   useEffect(() => {
     if (!containerRef.current) return;
     if (mapRef.current) return; // Already initialized
     if (!TOKEN) return; // Token not configured
+
+    // §38 — popup country name localized (Madagaskar on NO).
+    const countryName = locale === 'no' ? 'Madagaskar' : 'Madagascar';
 
     mapboxgl.accessToken = TOKEN;
 
@@ -60,7 +65,7 @@ export function MapboxMap() {
           closeOnClick: false,
           className: 'mapbox-hotel-popup',
         }).setHTML(
-          '<div class="mapbox-popup-inner"><div class="mapbox-popup-label">Ambalakely</div><div class="mapbox-popup-sub">Fianarantsoa, Madagascar</div></div>',
+          `<div class="mapbox-popup-inner"><div class="mapbox-popup-label">Ambalakely</div><div class="mapbox-popup-sub">Fianarantsoa, ${countryName}</div></div>`,
         ),
       )
       .addTo(map);
@@ -77,7 +82,7 @@ export function MapboxMap() {
       map.remove();
       mapRef.current = null;
     };
-  }, []);
+  }, [locale]);
 
   return (
     <>

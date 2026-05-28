@@ -39,7 +39,7 @@ export default function Image() {
           }}
         >
           <span>Hôtel Ambalakely</span>
-          <span>Est. 2018</span>
+          <span>Est. 2014</span>
         </div>
 
         {/* Headline */}

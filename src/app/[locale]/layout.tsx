@@ -86,7 +86,7 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title: `${HOTEL.name} · Madagascar`,
+      title: `${HOTEL.name} · ${HOTEL.address.countryName}`,
       description: t('description'),
       url: '/',
       siteName: HOTEL.name,
@@ -95,7 +95,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${HOTEL.name} · Madagascar`,
+      title: `${HOTEL.name} · ${HOTEL.address.countryName}`,
       description: t('description'),
     },
     robots: {

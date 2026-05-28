@@ -35,7 +35,7 @@ import {
   COMMUNITY_QUERY,
 } from './queries';
 
-import { HOTEL as HOTEL_FALLBACK } from '@/lib/data/hotel';
+import { HOTEL as HOTEL_FR_FALLBACK, getHotel } from '@/lib/data/hotel';
 import { getCategories, type Category as CategoryType } from '@/lib/data/categories';
 import { getReviews, type Review as ReviewType } from '@/lib/data/reviews';
 import { articles as ARTICLES_FALLBACK } from '@/lib/data/articles';
@@ -69,30 +69,34 @@ async function sanityFetch<T>(query: string, params: Record<string, unknown> = {
 
 // ─── Hotel ────────────────────────────────────────────────────────────────
 
-export type Hotel = typeof HOTEL_FALLBACK;
+export type Hotel = typeof HOTEL_FR_FALLBACK;
 
 export const fetchHotel = cache(async (locale: string = 'fr'): Promise<Hotel> => {
+  // §38 trilingual fallback : seed the fallback per locale so /en + /no
+  // get description/amenities/concept/tgh/address/hours in their own
+  // language even when Sanity hasn't been seeded for that locale.
+  const fallback = getHotel(locale);
   const data = await sanityFetch<Partial<Hotel>>(HOTEL_QUERY, { locale });
-  if (!data || !data.name) return HOTEL_FALLBACK;
+  if (!data || !data.name) return fallback;
   // Merge field-by-field so any null (= empty in this locale) uses fallback.
   // The nested `rating` object needs its own per-field merge — without this,
   // a Sanity rating block with `count: null` clobbers the verified fallback
   // (HOTEL.rating.count = 32 from the 2026-05-25 TripAdvisor check). §32 fix.
   const sanityRating = (data as { rating?: Partial<Hotel['rating']> }).rating;
   return {
-    ...HOTEL_FALLBACK,
+    ...fallback,
     ...data,
-    tagline: data.tagline ?? HOTEL_FALLBACK.tagline,
-    description: data.description ?? HOTEL_FALLBACK.description,
+    tagline: data.tagline ?? fallback.tagline,
+    description: data.description ?? fallback.description,
     rating: sanityRating
       ? {
-          value: sanityRating.value ?? HOTEL_FALLBACK.rating.value,
-          count: sanityRating.count ?? HOTEL_FALLBACK.rating.count,
+          value: sanityRating.value ?? fallback.rating.value,
+          count: sanityRating.count ?? fallback.rating.count,
           sources: sanityRating.sources?.length
             ? sanityRating.sources
-            : HOTEL_FALLBACK.rating.sources,
+            : fallback.rating.sources,
         }
-      : HOTEL_FALLBACK.rating,
+      : fallback.rating,
   } as Hotel;
 });
 

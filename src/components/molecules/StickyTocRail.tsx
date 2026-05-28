@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils/cn';
 
 type TocItem = {
@@ -26,6 +27,7 @@ type TocItem = {
  * listeners, no GSAP, very lightweight.
  */
 export function StickyTocRail({ items }: { items: TocItem[] }) {
+  const tCommon = useTranslations('Common');
   const [activeId, setActiveId] = useState<string | null>(items[0]?.id ?? null);
 
   useEffect(() => {
@@ -63,7 +65,7 @@ export function StickyTocRail({ items }: { items: TocItem[] }) {
 
   return (
     <nav
-      aria-label="Table of contents"
+      aria-label={tCommon('tableOfContents')}
       className="hidden lg:flex fixed right-6 xl:right-10 top-1/2 -translate-y-1/2 z-30 flex-col items-end gap-3"
     >
       <ul className="flex flex-col gap-2.5">

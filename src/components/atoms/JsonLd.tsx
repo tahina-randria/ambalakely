@@ -85,8 +85,7 @@ export async function RestaurantJsonLd() {
     '@type': 'Restaurant',
     '@id': `${HOTEL.url}/dining/#restaurant`,
     name: 'Toko Telo',
-    description:
-      'A small kitchen between Madagascar and Norway. One set menu each evening, mostly from the garden.',
+    description: HOTEL.diningDescription,
     url: `${HOTEL.url}/dining`,
     telephone: HOTEL.phone,
     image: HOTEL.images.hero,

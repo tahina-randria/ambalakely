@@ -29,7 +29,8 @@
     "no": "Non",
     "or": "Ou",
     "included": "Inclus",
-    "notIncluded": "Non inclus"
+    "notIncluded": "Non inclus",
+    "tableOfContents": "Sommaire"
   },
   "Nav": {
     "rooms": "Chambres",
