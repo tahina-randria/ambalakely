@@ -105,6 +105,7 @@ export default async function DiningPage({ params }: LocaleParam) {
                   <div className="mt-12 prose-editorial">
                     <p>{t('introP1')}</p>
                     <p>{t('introP2')}</p>
+                    <p>{t('introP3')}</p>
                   </div>
                 </ScrollReveal>
                 {/* The 4-fact grid with Users / ForkKnife / Door / Clock
@@ -134,6 +135,122 @@ export default async function DiningPage({ params }: LocaleParam) {
           >
             {t('loungeCaption')}
           </div>
+        </section>
+
+        {/* ════════════════════════════════════════════════════════════
+            §40 — UNE SOIRÉE TYPE (sample menu)
+            Pattern Aman / Eleven Madison Park : une section narrative
+            qui montre concrètement ce qu'on mange. Trois entrées de
+            "carte type" avec Entrée / Plat / Dessert. Le Plat met en
+            scène le cross-cultural (Zébu Marengo MG ou Kjøttkaker NO),
+            le Dessert est Krumkake — les 3 signatures Toko Telo.
+        ════════════════════════════════════════════════════════════ */}
+        <section className="py-32 md:py-48 lg:py-56 hair-rule">
+          <Container>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
+                <ScrollReveal>
+                  <div className="caption">{t('menuKicker')}</div>
+                  <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em] max-w-[260px]">
+                    {t('menuH2')}
+                  </h2>
+                </ScrollReveal>
+              </div>
+              <div className="lg:col-span-9">
+                <ScrollReveal>
+                  <ul className="border-t border-[var(--color-border-subtle)]">
+                    {([
+                      { label: t('menuEntreeLabel'), name: t('menuEntreeName'), line: t('menuEntreeLine') },
+                      { label: t('menuPlatLabel'), name: t('menuPlatName'), line: t('menuPlatLine') },
+                      { label: t('menuDessertLabel'), name: t('menuDessertName'), line: t('menuDessertLine') },
+                    ]).map((course) => (
+                      <li
+                        key={course.label}
+                        className="grid grid-cols-12 gap-6 md:gap-10 py-10 md:py-14 border-b border-[var(--color-border-subtle)]"
+                      >
+                        <div className="col-span-12 md:col-span-3">
+                          <div className="caption text-[var(--color-text-muted)]">
+                            {course.label}
+                          </div>
+                        </div>
+                        <div className="col-span-12 md:col-span-9">
+                          <h3 className="font-display font-light text-[var(--color-text)] text-[24px] md:text-[32px] tracking-[-0.02em] leading-[1.15]">
+                            {course.name}
+                          </h3>
+                          <p className="mt-4 prose-editorial text-[16px] md:text-[18px] leading-[1.55] text-[var(--color-text-muted)] max-w-[42ch]">
+                            {course.line}
+                          </p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </ScrollReveal>
+                <ScrollReveal delay={0.05}>
+                  <ul className="mt-8 space-y-2 caption text-[var(--color-text-muted)]">
+                    <li>· {t('menuNote1')}</li>
+                    <li>· {t('menuNote2')}</li>
+                  </ul>
+                </ScrollReveal>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* ════════════════════════════════════════════════════════════
+            §40 — GALLERY (asymmetric 4-photo grid)
+            Pattern Aman dining : un mur d'atmosphère, 4 images
+            asymétriques (2 landscape larges + 2 portraits). Plus de
+            "feel" sans plus de copie. Photos choisies dans la plage
+            p40-p46 du dossier dining-cluster (voir photos.ts).
+        ════════════════════════════════════════════════════════════ */}
+        <section className="py-24 md:py-32 lg:py-40 hair-rule bg-[var(--color-bg-subtle)]">
+          <Container>
+            <ScrollReveal>
+              <div className="caption mb-12 md:mb-16">{t('galleryKicker')}</div>
+            </ScrollReveal>
+            <ScrollReveal delay={0.05}>
+              <div className="grid grid-cols-12 gap-4 md:gap-6">
+                {/* Row 1 : landscape large + portrait */}
+                <div className="col-span-12 md:col-span-7 relative aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-[var(--color-bg-muted)]">
+                  <Image
+                    src={PHOTOS.diningGallery1.path}
+                    alt={t('galleryAlt1')}
+                    fill
+                    sizes="(min-width: 768px) 58vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="col-span-12 md:col-span-5 relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-[var(--color-bg-muted)]">
+                  <Image
+                    src={PHOTOS.diningGallery2.path}
+                    alt={t('galleryAlt2')}
+                    fill
+                    sizes="(min-width: 768px) 42vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                {/* Row 2 : portrait + landscape large */}
+                <div className="col-span-12 md:col-span-5 relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-[var(--color-bg-muted)]">
+                  <Image
+                    src={PHOTOS.diningGallery3.path}
+                    alt={t('galleryAlt3')}
+                    fill
+                    sizes="(min-width: 768px) 42vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="col-span-12 md:col-span-7 relative aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-[var(--color-bg-muted)]">
+                  <Image
+                    src={PHOTOS.diningGallery4.path}
+                    alt={t('galleryAlt4')}
+                    fill
+                    sizes="(min-width: 768px) 58vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </ScrollReveal>
+          </Container>
         </section>
 
         {/* HOURS + PRICING */}

@@ -32,4 +32,11 @@ export const PHOTOS = {
   planTrip: photo('p05_hotel_ambalakely_dsc6402.webp'),
   faq: photo('p32_hotel_ambalakely_dsc6361.webp'),
   diningLounge: photo('p44_hotel_ambalakely_dsc6387.webp'),
+  // §40 — dining gallery (4 photos asymétriques sur /dining). Choix
+  // provisoire dans la plage p40-p46 du dossier dining-cluster. À
+  // affiner par la suite si certaines photos ne sont pas dining.
+  diningGallery1: photo('p40_hotel_ambalakely_dsc6378.webp'),
+  diningGallery2: photo('p42_hotel_ambalakely_dsc6382.webp'),
+  diningGallery3: photo('p43_hotel_ambalakely_dsc6386.webp'),
+  diningGallery4: photo('p46_hotel_ambalakely_dsc6389.webp'),
 } as const;
