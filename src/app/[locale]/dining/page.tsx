@@ -18,20 +18,22 @@ import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 import { fetchHotel } from '@/sanity/lib/fetch';
 import { formatMga } from '@/lib/utils/format';
 import { PHOTOS } from '@/lib/data/photos';
+import { localizedAlternates } from '@/lib/i18n/alternates';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: LocaleParam): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'DiningPage' });
+  const alt = localizedAlternates(locale, '/dining');
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
-    alternates: { canonical: '/dining' },
+    alternates: alt,
     openGraph: {
       title: t('ogTitle'),
       description: t('ogDescription'),
-      url: '/dining',
+      url: alt.canonical,
       images: [
         {
           url: PHOTOS.diningHero.url,

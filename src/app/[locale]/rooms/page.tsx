@@ -13,20 +13,22 @@ import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchCategories } from '@/sanity/lib/fetch';
 import { formatMga } from '@/lib/utils/format';
 import { PHOTOS } from '@/lib/data/photos';
+import { localizedAlternates } from '@/lib/i18n/alternates';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: LocaleParam): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'RoomsPage' });
+  const alt = localizedAlternates(locale, '/rooms');
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
-    alternates: { canonical: '/rooms' },
+    alternates: alt,
     openGraph: {
       title: t('ogTitle'),
       description: t('ogDescription'),
-      url: '/rooms',
+      url: alt.canonical,
       images: [
         {
           url: PHOTOS.rooms.url,

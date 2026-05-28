@@ -15,6 +15,7 @@ import { ArrowRight, Bed, ArrowsOut, Users, Mountains } from '@phosphor-icons/re
 import type { Category } from '@/lib/data/categories';
 import { fetchCategories, fetchCategoryBySlug, fetchHotel } from '@/sanity/lib/fetch';
 import { formatMga } from '@/lib/utils/format';
+import { localizedAlternates } from '@/lib/i18n/alternates';
 
 type Params = { locale: string; category: string };
 
@@ -41,11 +42,11 @@ export async function generateMetadata({
       capacity: cat.capacity,
       price: cat.priceMga.toLocaleString(locale === 'fr' ? 'fr-FR' : locale === 'no' ? 'nb-NO' : 'en-US'),
     }),
-    alternates: { canonical: `/rooms/${cat.slug}` },
+    alternates: localizedAlternates(locale, `/rooms/${cat.slug}`),
     openGraph: {
       title: `${cat.name} · ${HOTEL.shortName}`,
       description: cat.shortDescription,
-      url: `/rooms/${cat.slug}`,
+      url: localizedAlternates(locale, `/rooms/${cat.slug}`).canonical,
       images: [{ url: cat.heroImage, width: 1500, height: 1200, alt: cat.name }],
     },
   };

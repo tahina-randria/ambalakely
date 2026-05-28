@@ -24,20 +24,22 @@ import {
   MapPinLine,
 } from '@phosphor-icons/react/dist/ssr';
 import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
+import { localizedAlternates } from '@/lib/i18n/alternates';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: LocaleParam): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Community' });
+  const alt = localizedAlternates(locale, '/community');
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
-    alternates: { canonical: '/community' },
+    alternates: alt,
     openGraph: {
       title: t('ogTitle'),
       description: t('ogDescription'),
-      url: '/community',
+      url: alt.canonical,
       images: [
         {
           url: 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=1500w',

@@ -12,6 +12,7 @@ import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import type { Article } from '@/lib/data/articles';
 import { fetchArticles, fetchArticleBySlug, fetchHotel } from '@/sanity/lib/fetch';
+import { localizedAlternates } from '@/lib/i18n/alternates';
 
 type Params = { locale: string; slug: string };
 
@@ -32,14 +33,15 @@ export async function generateMetadata({
     return { title: t('metaTitleFallback') };
   }
 
+  const alt = localizedAlternates(locale, `/journal/${article.slug}`);
   return {
     title: article.title,
     description: article.excerpt,
-    alternates: { canonical: `/journal/${article.slug}` },
+    alternates: alt,
     openGraph: {
       title: article.title,
       description: article.excerpt,
-      url: `/journal/${article.slug}`,
+      url: alt.canonical,
       type: 'article',
       publishedTime: article.datePublished,
       authors: [article.author],

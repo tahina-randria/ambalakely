@@ -12,20 +12,22 @@ import { StickyTocRail } from '@/components/molecules/StickyTocRail';
 import { ArrowRight, Clock, MapTrifold } from '@phosphor-icons/react/dist/ssr';
 import { fetchItineraries } from '@/sanity/lib/fetch';
 import { PHOTOS } from '@/lib/data/photos';
+import { localizedAlternates } from '@/lib/i18n/alternates';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: LocaleParam): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'PlanTrip' });
+  const alt = localizedAlternates(locale, '/plan-your-trip');
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
-    alternates: { canonical: '/plan-your-trip' },
+    alternates: alt,
     openGraph: {
       title: t('ogTitle'),
       description: t('ogDescription'),
-      url: '/plan-your-trip',
+      url: alt.canonical,
       images: [
         {
           url: PHOTOS.planTrip.url,

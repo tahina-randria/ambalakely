@@ -11,20 +11,22 @@ import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { NewsletterSignup } from '@/components/molecules/NewsletterSignup';
 import { PHOTOS } from '@/lib/data/photos';
 import { fetchArticles } from '@/sanity/lib/fetch';
+import { localizedAlternates } from '@/lib/i18n/alternates';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: LocaleParam): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Journal' });
+  const alt = localizedAlternates(locale, '/journal');
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
-    alternates: { canonical: '/journal' },
+    alternates: alt,
     openGraph: {
       title: t('ogTitle'),
       description: t('ogDescription'),
-      url: '/journal',
+      url: alt.canonical,
     },
   };
 }

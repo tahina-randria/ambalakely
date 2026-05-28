@@ -12,20 +12,22 @@ import { PageHero } from '@/components/molecules/PageHero';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchHotel } from '@/sanity/lib/fetch';
 import { PHOTOS } from '@/lib/data/photos';
+import { localizedAlternates } from '@/lib/i18n/alternates';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: LocaleParam): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'About' });
+  const alt = localizedAlternates(locale, '/about');
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
-    alternates: { canonical: '/about' },
+    alternates: alt,
     openGraph: {
       title: t('ogTitle'),
       description: t('ogDescription'),
-      url: '/about',
+      url: alt.canonical,
       images: [
         {
           url: PHOTOS.about.url,

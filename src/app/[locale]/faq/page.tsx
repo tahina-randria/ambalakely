@@ -10,20 +10,22 @@ import { FaqSearch } from '@/components/molecules/FaqSearch';
 import type { FaqCategory } from '@/lib/data/faq';
 import { fetchFaq, fetchHotel } from '@/sanity/lib/fetch';
 import { PHOTOS } from '@/lib/data/photos';
+import { localizedAlternates } from '@/lib/i18n/alternates';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: LocaleParam): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'FaqPage' });
+  const alt = localizedAlternates(locale, '/faq');
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
-    alternates: { canonical: '/faq' },
+    alternates: alt,
     openGraph: {
       title: t('ogTitle'),
       description: t('ogDescription'),
-      url: '/faq',
+      url: alt.canonical,
     },
   };
 }
