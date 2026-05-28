@@ -59,17 +59,16 @@ export async function Footer() {
     <footer className="bg-[var(--color-sand-12)] text-[var(--color-sand-1)]">
       <Container>
         <div className="py-24 md:py-32">
-          {/* Masthead — §41 (2026-05-28) : retour au pattern logo + wordmark
-              de la Nav. Avant : "Hôtel Ambalakely" en 120 px display
-              ressentait comme une signature géante. Maintenant : logo-white
-              (48 px) + wordmark (32 px), aligné, propre, cohérent top + bottom. */}
-          <div className="flex items-center gap-4">
+          {/* Masthead — §41bis (2026-05-28) : stacked layout per user
+              feedback. Favicon dessus, wordmark dessous, alignés à gauche.
+              Cohérent avec la Nav top qui passe au même stacked pattern. */}
+          <div className="flex flex-col items-start gap-3">
             <Image
               src="/brand/logo-white.png"
               alt=""
-              width={48}
-              height={48}
-              className="h-12 w-12 shrink-0"
+              width={64}
+              height={64}
+              className="h-16 w-16"
             />
             <span className="font-display font-light tracking-[-0.025em] text-[var(--color-sand-1)] text-[28px] md:text-[32px] leading-none">
               Hôtel Ambalakely

@@ -104,26 +104,32 @@ export function Nav() {
           className="mx-auto w-full max-w-[1440px] px-5 md:px-8 lg:px-12 h-[72px] flex items-center justify-between"
           style={{ mixBlendMode: scrolled ? 'normal' : 'difference' }}
         >
+          {/* §41bis — stacked logo per user feedback : favicon au-dessus,
+              wordmark dessous. Cohérent avec le footer. Le wordmark passe
+              en taille compacte (12 px letterspaced) pour tenir dans la
+              hauteur de Nav (h-72) en stacking vertical. */}
           <Link
             href="/"
             aria-label={t('homeAriaLabel')}
             className={cn(
-              'flex items-center gap-3 font-display font-normal text-[18px] tracking-[-0.01em]',
+              'flex flex-col items-center gap-1 font-display font-normal leading-none',
               scrolled ? 'text-[var(--color-text)]' : 'text-white',
             )}
           >
             <Image
               src="/brand/logo-white.png"
               alt=""
-              width={40}
-              height={40}
+              width={32}
+              height={32}
               priority
               className={cn(
-                'h-9 w-9 transition-[filter] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
+                'h-7 w-7 transition-[filter] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
                 scrolled && 'invert',
               )}
             />
-            <span className="hidden sm:inline">Hôtel Ambalakely</span>
+            <span className="hidden sm:inline text-[11px] tracking-[0.06em] uppercase font-medium">
+              Hôtel Ambalakely
+            </span>
           </Link>
 
           {/* Desktop links — hidden until lg (≥1024) ; the burger picks
