@@ -111,18 +111,18 @@ export function Nav() {
             href="/"
             aria-label={t('homeAriaLabel')}
             className={cn(
-              'flex flex-col items-center gap-1.5 leading-none',
+              'flex flex-col items-center gap-1 leading-none',
               scrolled ? 'text-[var(--color-text)]' : 'text-white',
             )}
           >
             <Image
               src="/brand/logo-white.png"
               alt=""
-              width={40}
-              height={40}
+              width={48}
+              height={48}
               priority
               className={cn(
-                'h-9 w-9 transition-[filter] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
+                'h-12 w-12 transition-[filter] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
                 scrolled && 'invert',
               )}
             />
