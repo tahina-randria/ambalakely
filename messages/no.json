@@ -27,7 +27,9 @@
     "freeCancellation30": "Gratis avbestilling inntil 10 dager før ankomst.",
     "yes": "Ja",
     "no": "Nei",
-    "or": "Eller"
+    "or": "Eller",
+    "included": "Inkludert",
+    "notIncluded": "Ikke inkludert"
   },
   "Nav": {
     "rooms": "Rom",
@@ -394,7 +396,9 @@
     "ctaKicker": "Bestill",
     "ctaH2": "Direkte bestilling.",
     "ctaButton": "Se tilgjengelighet",
-    "ctaNote": "Gratis avbestilling inntil 10 dager før ankomst."
+    "ctaNote": "Gratis avbestilling inntil 10 dager før ankomst.",
+    "compareAria": "Sammenlikne rommene",
+    "priceUnit": "Ariary · per natt"
   },
   "ExperiencesPage": {
     "metaTitle": "Opplevelser",

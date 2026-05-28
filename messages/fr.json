@@ -27,7 +27,9 @@
     "freeCancellation30": "Annulation gratuite jusqu'à 10 jours avant l'arrivée.",
     "yes": "Oui",
     "no": "Non",
-    "or": "Ou"
+    "or": "Ou",
+    "included": "Inclus",
+    "notIncluded": "Non inclus"
   },
   "Nav": {
     "rooms": "Chambres",
@@ -394,7 +396,9 @@
     "ctaKicker": "Réserver",
     "ctaH2": "Réservation directe.",
     "ctaButton": "Voir les disponibilités",
-    "ctaNote": "Annulation gratuite jusqu'à 10 jours avant l'arrivée."
+    "ctaNote": "Annulation gratuite jusqu'à 10 jours avant l'arrivée.",
+    "compareAria": "Comparer les chambres",
+    "priceUnit": "Ariary · par nuit"
   },
   "ExperiencesPage": {
     "metaTitle": "Excursions",

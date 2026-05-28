@@ -27,7 +27,9 @@
     "freeCancellation30": "Free cancellation up to 10 days before arrival.",
     "yes": "Yes",
     "no": "No",
-    "or": "Or"
+    "or": "Or",
+    "included": "Included",
+    "notIncluded": "Not included"
   },
   "Nav": {
     "rooms": "Rooms",
@@ -394,7 +396,9 @@
     "ctaKicker": "Book",
     "ctaH2": "Direct booking.",
     "ctaButton": "Check availability",
-    "ctaNote": "Free cancellation up to 10 days before arrival."
+    "ctaNote": "Free cancellation up to 10 days before arrival.",
+    "compareAria": "Compare rooms",
+    "priceUnit": "Ariary · per night"
   },
   "ExperiencesPage": {
     "metaTitle": "Experiences",
