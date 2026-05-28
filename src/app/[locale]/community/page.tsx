@@ -18,10 +18,6 @@ import {
   PersonSimpleRun,
   Translate,
   BookOpen,
-  Calendar,
-  Users,
-  House as HouseIcon,
-  MapPinLine,
 } from '@phosphor-icons/react/dist/ssr';
 import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 import { localizedAlternates } from '@/lib/i18n/alternates';
@@ -52,7 +48,6 @@ export async function generateMetadata({ params }: LocaleParam): Promise<Metadat
   };
 }
 
-type Stat = { value: string; label: string; Icon: PhosphorIcon };
 type Program = { title: string; body: string; Icon: PhosphorIcon };
 
 export default async function CommunityPage({ params }: LocaleParam) {
@@ -62,11 +57,15 @@ export default async function CommunityPage({ params }: LocaleParam) {
 
   const heroTitle = t.raw('heroTitle') as string[];
 
-  const numbers: Stat[] = [
-    { value: '130', label: t('numberChildrenLabel'), Icon: Users },
-    { value: '4 000', label: t('numberInhabitantsLabel'), Icon: HouseIcon },
-    { value: '1', label: t('numberNeighbourhoodLabel'), Icon: MapPinLine },
-    { value: '152 m²', label: t('numberBuildingLabel'), Icon: Calendar },
+  // §39 — refonte stats au pattern Kickstarter asymétrique (Mobbin
+  // research 2026-05-28). Avant : 4 cards equal-weight avec icons et
+  // une stat morte ("1 quartier Tanambao" = filler). Maintenant : 1
+  // hero (130 enfants) qui domine + 2 supporting stats (9 programmes,
+  // 152 m² Akanimamy) qui complètent. Drop icons, drop card chrome.
+  // Le total reste 3 stats meaningful au lieu de 4 dont une bidon.
+  const supportingStats = [
+    { value: '9', label: t('numberProgramsLabel') },
+    { value: '152 m²', label: t('numberBuildingLabel') },
   ];
 
   const programs: Program[] = [
@@ -120,38 +119,45 @@ export default async function CommunityPage({ params }: LocaleParam) {
           </div>
         </section>
 
-        {/* NUMBERS */}
-        <section className="py-24 md:py-32 hair-rule bg-[var(--color-bg-subtle)]">
-          <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
+        {/* NUMBERS — §39 Kickstarter asymmetric pattern (Mobbin pass) */}
+        <section className="py-32 md:py-40 lg:py-48 hair-rule bg-[var(--color-bg-subtle)]">
+          <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption text-center mb-16 md:mb-20">{t('numbersKicker')}</div>
+              <div className="caption mb-16 md:mb-20">{t('numbersKicker')}</div>
             </ScrollReveal>
-            <ScrollReveal>
-              <ul className="grid grid-cols-2 md:grid-cols-4 border-y border-[var(--color-border-subtle)] divide-x divide-[var(--color-border-subtle)]">
-                {numbers.map((n) => {
-                  const Icon = n.Icon;
-                  return (
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+              {/* HERO — 130 enfants */}
+              <ScrollReveal className="lg:col-span-7">
+                <div className="font-display font-light text-[var(--color-text)] text-[120px] md:text-[180px] lg:text-[220px] leading-[0.9] tracking-[-0.04em] tabular-nums whitespace-nowrap">
+                  {t('numberHeroValue')}
+                </div>
+                <p className="mt-8 md:mt-10 max-w-[420px] prose-editorial text-[18px] md:text-[20px] leading-[1.45] tracking-[-0.005em]">
+                  {t('numberHeroLabel')}
+                </p>
+              </ScrollReveal>
+
+              {/* SUPPORTING — 9 programmes + 152 m² Akanimamy */}
+              <ScrollReveal delay={0.08} className="lg:col-span-5 lg:pt-10">
+                <ul className="border-t border-[var(--color-border-subtle)]">
+                  {supportingStats.map((s) => (
                     <li
-                      key={n.label}
-                      className="py-12 md:py-16 px-4 text-center flex flex-col items-center justify-center"
+                      key={s.label}
+                      className="py-8 md:py-10 border-b border-[var(--color-border-subtle)]"
                     >
-                      <Icon
-                        size={22}
-                        weight="light"
-                        className="text-[var(--color-text-muted)] mb-6"
-                        aria-hidden
-                      />
-                      <div className="font-display font-light text-[var(--color-text)] text-[56px] md:text-[72px] lg:text-[88px] leading-[1] tracking-[-0.03em] tabular-nums whitespace-nowrap">
-                        {n.value}
-                      </div>
-                      <div className="mt-5 caption text-[var(--color-text-muted)]">
-                        {n.label}
+                      <div className="flex items-baseline gap-6">
+                        <div className="font-display font-light text-[var(--color-text)] text-[48px] md:text-[64px] leading-[1] tracking-[-0.03em] tabular-nums whitespace-nowrap shrink-0">
+                          {s.value}
+                        </div>
+                        <div className="caption text-[var(--color-text-muted)]">
+                          {s.label}
+                        </div>
                       </div>
                     </li>
-                  );
-                })}
-              </ul>
-            </ScrollReveal>
+                  ))}
+                </ul>
+              </ScrollReveal>
+            </div>
           </div>
         </section>
 
