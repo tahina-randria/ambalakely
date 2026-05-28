@@ -100,12 +100,12 @@ export async function Footer() {
               </div>
               <ul className="space-y-3">
                 {contactLinks.map(({ label, href }) => (
-                  <li key={href}>
+                  <li key={href} className="min-w-0">
                     <Link
                       href={href}
                       target={href.startsWith('http') ? '_blank' : undefined}
                       rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="inline-flex text-[15px] text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]"
+                      className="text-[15px] text-[var(--color-sand-1)] hover:text-[var(--color-sand-5)] transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] [overflow-wrap:anywhere]"
                     >
                       {label}
                     </Link>

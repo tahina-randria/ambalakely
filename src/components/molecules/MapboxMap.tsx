@@ -4,11 +4,11 @@ import { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-// Coordonnées vérifiées du document Kirsten (HANDOFF §5) :
-// 21°25' S, 47°10' E → décimal -21.4167, 47.1667.
-// La valeur précédente [47.0862, -21.4541] pointait ~9 km au sud-ouest
-// du vrai emplacement, dans les rizières en contrebas. §35 fix
-// (2026-05-27) sur retour user "update mapbox pour mettre vraie adresse".
+// ⚠️ Coords en attente du pin Google Maps user (§37, 2026-05-28).
+// Précédentes valeurs essayées :
+//   - [47.0862, -21.4541] (footer arc-seconde 21°27'15"S 47°05'10"E)
+//   - [47.1667, -21.4167] (doc Kirsten arc-minute, trop imprécis ±900m)
+// User confirme : le pin actuel est faux. À remplacer dès URL maps reçue.
 const HOTEL_LNG_LAT: [number, number] = [47.1667, -21.4167];
 
 // Set NEXT_PUBLIC_MAPBOX_TOKEN in .env (free tier at mapbox.com)
@@ -35,7 +35,7 @@ export function MapboxMap() {
       container: containerRef.current,
       style: 'mapbox://styles/mapbox/light-v11',
       center: HOTEL_LNG_LAT,
-      zoom: 9,
+      zoom: 13,
       pitch: 0,
       bearing: 0,
       attributionControl: false,
