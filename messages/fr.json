@@ -43,12 +43,12 @@
     "menuClose": "Fermer le menu"
   },
   "Footer": {
-    "newsletterKicker": "Lettre trimestrielle",
-    "newsletterBody": "Une note chaque saison. Le jardin, le menu, les gens qui sont passés. Pas de publicité, pas de promotions.",
+    "newsletterKicker": "Lettre saisonnière + avant-premières",
+    "newsletterBody": "Une lettre chaque saison. Le jardin, le menu, les voyageurs qui sont passés. Parfois une nuit en avant-première, parfois un tarif réservé aux lecteurs.",
     "newsletterPlaceholder": "votre@email.com",
     "newsletterAriaInput": "E-mail pour la newsletter",
     "newsletterAriaSubmit": "S'abonner",
-    "newsletterDone": "C'est noté. À la prochaine saison.",
+    "newsletterDone": "C'est noté. Vous serez parmi les premiers prévenus.",
     "newsletterError": "Inscription impossible.",
     "columnStay": "Séjourner",
     "columnDiscover": "Découvrir",

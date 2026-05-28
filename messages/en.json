@@ -43,12 +43,12 @@
     "menuClose": "Close menu"
   },
   "Footer": {
-    "newsletterKicker": "Quarterly letter",
-    "newsletterBody": "A note each season. The garden, the menu, the people who passed through. No advertising, no promotions.",
+    "newsletterKicker": "Seasonal letter + first looks",
+    "newsletterBody": "A letter each season. The garden, the kitchen, the travellers who came through. Sometimes a room before everyone else, sometimes a rate kept for readers.",
     "newsletterPlaceholder": "your@email.com",
     "newsletterAriaInput": "Newsletter email",
     "newsletterAriaSubmit": "Subscribe",
-    "newsletterDone": "Noted. Until next season.",
+    "newsletterDone": "Noted. You'll be among the first to hear.",
     "newsletterError": "Subscription failed.",
     "columnStay": "Stay",
     "columnDiscover": "Discover",

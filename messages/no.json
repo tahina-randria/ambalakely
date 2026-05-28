@@ -43,12 +43,12 @@
     "menuClose": "Lukk meny"
   },
   "Footer": {
-    "newsletterKicker": "Brev hver sesong",
-    "newsletterBody": "Et brev hver sesong. Hagen, menyen, menneskene som var innom. Ingen reklame, ingen kampanjer.",
+    "newsletterKicker": "Sesongbrev + førstevarsler",
+    "newsletterBody": "Et brev hver sesong. Hagen, kjøkkenet, de reisende som var innom. Av og til et rom før alle andre, av og til en pris forbeholdt leserne.",
     "newsletterPlaceholder": "din@epost.no",
     "newsletterAriaInput": "E-post for nyhetsbrevet",
     "newsletterAriaSubmit": "Meld deg på",
-    "newsletterDone": "Notert. Vi sees neste sesong.",
+    "newsletterDone": "Notert. Du blir blant de første som får vite det.",
     "newsletterError": "Påmelding mislyktes.",
     "columnStay": "Bo",
     "columnDiscover": "Oppdag",

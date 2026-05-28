@@ -9,28 +9,33 @@ const signature = {
   fontStyle: 'italic' as const,
 };
 
+// §36 pivot (2026-05-27 evening) — soft editorial + privileged-access
+// angle, 5-8 letters a year. Kept the editorial soul but added the
+// conversion lever the user asked for : "parfois une nuit en avant-
+// première, parfois un tarif réservé aux lecteurs". The previous "no
+// commercial offers, no promotions" stance was actively anti-conversion.
 const COPY = {
   fr: {
-    preview: "Bienvenue dans la lettre saisonnière d'Ambalakely.",
+    preview: "Bienvenue dans la lettre d'Ambalakely.",
     heading: 'Bienvenue.',
     p1: "Vous recevrez une lettre courte d'Hasina à chaque saison. Le jardin, les nouvelles du restaurant, les voyageurs qui sont passés, parfois une note depuis la RN7.",
-    p2: "Pas d'offres commerciales, pas de promotions. Une lettre, quatre fois par an.",
+    p2: "Et de temps en temps — une chambre disponible avant la mise en ligne, ou un tarif réservé à nos lecteurs. Cinq à huit envois par an, jamais plus.",
     closing: 'À très vite,',
     signedBy: 'Hasina',
   },
   en: {
-    preview: "Welcome to Ambalakely's seasonal letter.",
+    preview: "Welcome to Ambalakely's letter.",
     heading: 'Welcome.',
     p1: "You'll receive a short letter from Hasina each season. The garden, the kitchen, the travellers who came through, sometimes a note from the RN7.",
-    p2: 'No commercial offers, no promotions. One letter, four times a year.',
+    p2: "And from time to time — a room before it goes online, or a rate kept for our readers. Five to eight letters a year, never more.",
     closing: 'See you soon,',
     signedBy: 'Hasina',
   },
   no: {
-    preview: "Velkommen til Ambalakelys sesongbrev.",
+    preview: "Velkommen til Ambalakelys brev.",
     heading: 'Velkommen.',
     p1: 'Du vil motta et kort brev fra Hasina hver sesong. Hagen, kjøkkenet, de reisende som var innom, av og til en note fra RN7.',
-    p2: 'Ingen kommersielle tilbud, ingen kampanjer. Ett brev, fire ganger i året.',
+    p2: 'Og av og til — et rom før det legges ut, eller en pris forbeholdt leserne. Fem til åtte brev i året, aldri mer.',
     closing: 'Vi ses,',
     signedBy: 'Hasina',
   },
@@ -54,9 +59,11 @@ export function NewsletterWelcome({ locale = 'fr' }: { locale?: EmailLocale } = 
   );
 }
 
-/** Email subject per locale, used by the API route. */
+/** Email subject per locale, used by the API route. §36 pivoted away
+ * from "seasonal letter" framing to plain "letter" — the body sets
+ * the cadence (5-8x/year) so the subject doesn't need to. */
 export const NEWSLETTER_SUBJECT: Record<EmailLocale, string> = {
-  fr: "Bienvenue dans la lettre saisonnière d'Ambalakely",
-  en: "Welcome to Ambalakely's seasonal letter",
-  no: 'Velkommen til Ambalakelys sesongbrev',
+  fr: "Bienvenue dans la lettre d'Ambalakely",
+  en: "Welcome to Ambalakely's letter",
+  no: 'Velkommen til Ambalakelys brev',
 };
