@@ -115,11 +115,18 @@ html {
 /*  Base reset — minimal                                              */
 /* ------------------------------------------------------------------ */
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  border: 0 solid var(--color-border-subtle);
+/* Wrapped in @layer base so Tailwind `border-*` utilities (@layer utilities)
+   win over the default 0-width border. Unlayered, this reset beat the
+   utilities layer and silently zeroed every `border` / `border-b` / `border-2`
+   across the site (RoomComparison dividers, form/calendar/booking borders,
+   etc.). §50 — completes the #110 cascade fix, which only covered img/video. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    border: 0 solid var(--color-border-subtle);
+  }
 }
 
 html {
