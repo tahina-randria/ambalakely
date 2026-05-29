@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils/cn';
@@ -21,24 +21,37 @@ const linkKeys = [
 export function Nav() {
   const t = useTranslations('Nav');
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const lastY = useRef(0);
 
-  // §42 (2026-05-28) — drop auto-hide entirely. Le pattern Substack/Apple
-  // qui cachait la nav sur scroll-down et la faisait réapparaître sur
-  // scroll-up rendait le booking button inaccessible quand le visiteur
-  // était au milieu de la page. Les sites luxe hôtels (Aman, Como,
-  // Singita, Belmond) gardent leur nav toujours visible — c'est le
-  // levier de conversion principal. On garde juste la transition
-  // transparent → solid sand-1+blur quand on dépasse 40 px de scroll.
+  // §51 — smart hide : la nav glisse vers le haut quand on scrolle vers le
+  // bas, et réapparaît dès qu'on remonte (pattern Substack/Apple). §42 avait
+  // tout retiré parce que la nav « disparaissait » — mais la vraie cause
+  // était un bug de positionnement (transform sur .page-transition cassait
+  // le position:fixed, §49). Corrigé, le reveal-on-scroll-up marche : le
+  // bouton de réservation est toujours à un petit scroll-up près.
   useEffect(() => {
     const handler = () => {
-      setScrolled(window.scrollY > 40);
+      const y = window.scrollY;
+      setScrolled(y > 40);
+      // ignore les micro-mouvements (anti-jitter)
+      if (Math.abs(y - lastY.current) > 6) {
+        // near top OR scrolling up → show ; scrolling down past the nav → hide
+        setHidden(y > 88 && y > lastY.current);
+        lastY.current = y;
+      }
     };
     handler();
     window.addEventListener('scroll', handler, { passive: true });
     return () => window.removeEventListener('scroll', handler);
   }, []);
+
+  // Never keep the nav hidden while the mobile menu is open.
+  useEffect(() => {
+    if (menuOpen) setHidden(false);
+  }, [menuOpen]);
 
   // Listen for global booking events (Hero CTA, etc.)
   useEffect(() => {
@@ -72,14 +85,14 @@ export function Nav() {
     <>
       <nav
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 motion-safe:transition-[background-color,backdrop-filter] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
+          'fixed top-0 left-0 right-0 z-50 motion-safe:transition-[transform,background-color,backdrop-filter] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
           // 95 % opaque sand-1 + backdrop blur once scrolled, so the nav
-          // stays legible over every section. §42 : plus d'auto-hide,
-          // donc plus de risque que le visiteur "perde" la nav en
-          // descendant. Always visible.
+          // stays legible over every section.
           scrolled
             ? 'bg-[color-mix(in_srgb,var(--color-bg)_95%,transparent)] backdrop-blur-[12px] border-b border-[var(--color-border-subtle)]'
             : 'bg-transparent',
+          // §51 smart hide — slide up out of view on scroll-down, back on scroll-up
+          hidden ? '-translate-y-full' : 'translate-y-0',
         )}
       >
         <div
