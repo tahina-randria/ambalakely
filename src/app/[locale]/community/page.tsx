@@ -43,7 +43,22 @@ export async function generateMetadata({ params }: LocaleParam): Promise<Metadat
   };
 }
 
-type Program = { title: string; body: string };
+type Program = { title: string; body: string; image: string };
+
+// §52 — interim, non-contractual Unsplash visuals (free Unsplash Licence),
+// themed per activity, for the program carousel. Deliberately scene/object
+// shots (no posing as the real school). Placeholder until the owner supplies
+// real Hope for the Future photos (#99) — swap is just these URLs.
+const PROGRAM_IMAGES = [
+  'https://images.unsplash.com/photo-1502051400-dad986bddd4f?w=1920&q=80&auto=format&fit=crop', // éducation — livres
+  'https://images.unsplash.com/photo-1624638760852-8ede1666ab07?w=1920&q=80&auto=format&fit=crop', // santé — trousse de secours
+  'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=1920&q=80&auto=format&fit=crop', // arts — pinceaux
+  'https://images.unsplash.com/photo-1605020420620-20c943cc4669?w=1920&q=80&auto=format&fit=crop', // musique — guitare
+  'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1920&q=80&auto=format&fit=crop', // danse & sport — football
+  'https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=1920&q=80&auto=format&fit=crop', // langues — cahier
+  'https://images.unsplash.com/photo-1646928234724-ddfac30993e6?w=1920&q=80&auto=format&fit=crop', // environnement — forêt
+  'https://images.unsplash.com/photo-1473163928189-364b2c4e1135?w=1920&q=80&auto=format&fit=crop', // histoire — cartes anciennes
+];
 
 export default async function CommunityPage({ params }: LocaleParam) {
   const { locale } = await params;
@@ -53,14 +68,14 @@ export default async function CommunityPage({ params }: LocaleParam) {
   const heroTitle = t.raw('heroTitle') as string[];
 
   const programs: Program[] = [
-    { title: t('programs.educationTitle'), body: t('programs.educationBody') },
-    { title: t('programs.healthTitle'), body: t('programs.healthBody') },
-    { title: t('programs.artsTitle'), body: t('programs.artsBody') },
-    { title: t('programs.musicTitle'), body: t('programs.musicBody') },
-    { title: t('programs.danceTitle'), body: t('programs.danceBody') },
-    { title: t('programs.langTitle'), body: t('programs.langBody') },
-    { title: t('programs.envTitle'), body: t('programs.envBody') },
-    { title: t('programs.historyTitle'), body: t('programs.historyBody') },
+    { title: t('programs.educationTitle'), body: t('programs.educationBody'), image: PROGRAM_IMAGES[0] },
+    { title: t('programs.healthTitle'), body: t('programs.healthBody'), image: PROGRAM_IMAGES[1] },
+    { title: t('programs.artsTitle'), body: t('programs.artsBody'), image: PROGRAM_IMAGES[2] },
+    { title: t('programs.musicTitle'), body: t('programs.musicBody'), image: PROGRAM_IMAGES[3] },
+    { title: t('programs.danceTitle'), body: t('programs.danceBody'), image: PROGRAM_IMAGES[4] },
+    { title: t('programs.langTitle'), body: t('programs.langBody'), image: PROGRAM_IMAGES[5] },
+    { title: t('programs.envTitle'), body: t('programs.envBody'), image: PROGRAM_IMAGES[6] },
+    { title: t('programs.historyTitle'), body: t('programs.historyBody'), image: PROGRAM_IMAGES[7] },
   ];
 
   const timeline = [

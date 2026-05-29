@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -10,7 +11,7 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-type Item = { title: string; body: string };
+type Item = { title: string; body: string; image?: string };
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
@@ -28,12 +29,14 @@ function Slide({
   total,
   title,
   body,
+  image,
   className,
 }: {
   index: number;
   total: number;
   title: string;
   body: string;
+  image?: string;
   className?: string;
 }) {
   return (
@@ -43,19 +46,31 @@ function Slide({
         className,
       )}
     >
-      {/* Image slot — placeholder for now (#99). A real <Image fill> will sit
-          here, behind the scrim, once the owner supplies activity photos. */}
-      <ImagePlaceholder tone="dark" bare />
-      {/* Bottom scrim — keeps overlaid text readable over a future photo. */}
+      {/* Image — interim non-contractual Unsplash visual (#99). Falls back to
+          the brand placeholder if no URL. */}
+      {image ? (
+        <Image
+          src={image}
+          alt=""
+          fill
+          sizes="(min-width: 1024px) 100vw, 84vw"
+          className="object-cover"
+        />
+      ) : (
+        <ImagePlaceholder tone="dark" bare />
+      )}
+      {/* Scrims — flat darken + bottom gradient keep white text readable over
+          any photo. */}
+      <div aria-hidden className="absolute inset-0 bg-black/25" />
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"
+        className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"
       />
       {/* Content — bottom-left editorial block. */}
       <div className="relative flex h-full flex-col justify-end p-8 md:p-14 lg:p-20">
-        <div className="caption tabular-nums text-[var(--color-sand-5)]">
+        <div className="caption tabular-nums text-[var(--color-sand-4)]">
           {pad(index + 1)}
-          <span className="text-[var(--color-sand-7)]"> / {pad(total)}</span>
+          <span className="text-[var(--color-sand-6)]"> / {pad(total)}</span>
         </div>
         <h3 className="mt-4 max-w-[18ch] font-display font-light text-[clamp(34px,5vw,64px)] leading-[1.02] tracking-[-0.03em]">
           {title}
@@ -81,7 +96,6 @@ export function CommunityPrograms({
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
   const [reduced, setReduced] = useState(false);
 
   // Detect reduced-motion once on mount — used to swap the pinned desktop
@@ -113,8 +127,6 @@ export function CommunityPrograms({
           invalidateOnRefresh: true,
           fastScrollEnd: true,
           onUpdate: (self) => {
-            const idx = Math.min(total - 1, Math.round(self.progress * (total - 1)));
-            setActive(idx);
             if (progressRef.current) {
               progressRef.current.style.transform = `scaleX(${self.progress})`;
             }
@@ -154,18 +166,16 @@ export function CommunityPrograms({
                 total={total}
                 title={it.title}
                 body={it.body}
+                image={it.image}
                 className="h-full w-screen"
               />
             ))}
           </div>
 
-          {/* Progress UI — counter + thin bar, pinned bottom. Decorative. */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center gap-5 px-8 md:px-14 lg:px-20 pb-7">
-            <div className="caption tabular-nums text-[var(--color-sand-1)]">
-              {pad(active + 1)}
-              <span className="text-[var(--color-sand-7)]"> / {pad(total)}</span>
-            </div>
-            <div className="relative h-px flex-1 bg-[var(--color-sand-10)]">
+          {/* Progress bar — pinned bottom, fills as the track scrubs. The
+              per-slide number lives in each slide, so no counter here. */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 px-8 md:px-14 lg:px-20 pb-7">
+            <div className="relative h-px w-full bg-[var(--color-sand-10)]">
               <div
                 ref={progressRef}
                 className="absolute inset-0 origin-left bg-[var(--color-sand-1)]"
@@ -186,6 +196,7 @@ export function CommunityPrograms({
               total={total}
               title={it.title}
               body={it.body}
+              image={it.image}
               className="h-[70vh] w-[84vw] snap-center sm:w-[68vw] md:w-[56vw]"
             />
           ))}
