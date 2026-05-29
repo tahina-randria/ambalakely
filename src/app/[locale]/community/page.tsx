@@ -108,14 +108,6 @@ export default async function CommunityPage({ params }: LocaleParam) {
     { title: t('programs.growTitle'), body: t('programs.growBody'), image: PROGRAM_IMAGES[6] },
   ];
 
-  const timeline = [
-    { year: t('timeline.year1'), title: t('timeline.title1'), body: t('timeline.body1') },
-    { year: t('timeline.year2'), title: t('timeline.title2'), body: t('timeline.body2') },
-    { year: t('timeline.year3'), title: t('timeline.title3'), body: t('timeline.body3') },
-    { year: t('timeline.year4'), title: t('timeline.title4'), body: t('timeline.body4') },
-    { year: t('timeline.year5'), title: t('timeline.title5'), body: t('timeline.body5') },
-  ];
-
   return (
     <>
       <BreadcrumbJsonLd
@@ -166,8 +158,6 @@ export default async function CommunityPage({ params }: LocaleParam) {
           </div>
         </section>
 
-        {/* §56 — timeline relocated to the bottom (just before the CTA). */}
-
         {/* AKANIMAMY DEEP DIVE */}
         <section id="akanimamy" className="py-32 md:py-48 hair-rule">
           <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
@@ -205,23 +195,6 @@ export default async function CommunityPage({ params }: LocaleParam) {
           </div>
         </section>
 
-        {/* PULL QUOTE */}
-        <section className="py-32 md:py-48 hair-rule">
-          <div className="mx-auto max-w-[1000px] px-5 md:px-8 lg:px-12 text-center">
-            <ScrollReveal>
-              <p className="pull-quote mx-auto max-w-[30ch]">
-                &ldquo;{t('pullQuote')}&rdquo;
-              </p>
-              <div className="mt-12 inline-flex items-center gap-4">
-                <div className="w-12 border-t border-[var(--color-sand-12)]" />
-                <div className="font-display text-[18px] tracking-[-0.005em] text-[var(--color-text)]">
-                  {t('pullQuoteSigned')}
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-
         {/* VISIT */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-bg-subtle)]">
           <div className="mx-auto max-w-[760px] px-5 md:px-8 text-center">
@@ -237,38 +210,6 @@ export default async function CommunityPage({ params }: LocaleParam) {
                 <p>{t('visitP2')}</p>
               </div>
             </ScrollReveal>
-          </div>
-        </section>
-
-        {/* TIMELINE — §56 relocated to the bottom. */}
-        <section className="py-32 md:py-48 lg:py-56 hair-rule">
-          <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
-            <ScrollReveal>
-              <div className="caption text-center mb-4">{t('timelineKicker')}</div>
-              <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
-                {t('timelineH2')}
-              </h2>
-            </ScrollReveal>
-
-            <ul className="mt-20 md:mt-28 mx-auto max-w-[860px] border-t border-[var(--color-border-subtle)]">
-              {timeline.map((m, i) => (
-                <ScrollReveal key={m.year} delay={i * 0.04}>
-                  <li className="grid grid-cols-12 gap-6 py-10 md:py-14 border-b border-[var(--color-border-subtle)]">
-                    <div className="col-span-3 md:col-span-2">
-                      <div className="text-[14px] tabular-nums text-[var(--color-text-muted)]">
-                        {m.year}
-                      </div>
-                    </div>
-                    <div className="col-span-9 md:col-span-10 max-w-[640px]">
-                      <h3 className="font-display font-light text-[var(--color-text)] text-[24px] md:text-[32px] leading-[1.05] tracking-[-0.025em]">
-                        {m.title}
-                      </h3>
-                      <p className="mt-4 prose-editorial">{m.body}</p>
-                    </div>
-                  </li>
-                </ScrollReveal>
-              ))}
-            </ul>
           </div>
         </section>
 
