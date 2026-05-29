@@ -72,7 +72,9 @@ export function CommunityPrograms({
         const tl = gsap.timeline({
           scrollTrigger: { trigger: section, start: 'top top', end: 'bottom bottom', scrub: 1 },
         });
-        tl.fromTo(mediaRef.current, { scale: 1.22 }, { scale: 1, ease: 'power2.out', duration: INTRO }, 0);
+        // §66 — l'image GRANDIT (≈ taille tuile → plein bloc) à l'épinglage,
+        // comme la tuile waabi qui grossit. (avant : elle « dégrossissait ».)
+        tl.fromTo(mediaRef.current, { scale: 0.4 }, { scale: 1, ease: 'power2.out', duration: INTRO }, 0);
         tl.fromTo(
           listRef.current,
           { opacity: 0, xPercent: 6 },

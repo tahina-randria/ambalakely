@@ -11,7 +11,8 @@ import { PHOTOS } from '@/lib/data/photos';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { localizedAlternates } from '@/lib/i18n/alternates';
 import { CommunityScrollHero } from '@/components/molecules/CommunityScrollHero';
-import { CommunityShowcase } from '@/components/molecules/CommunityShowcase';
+import { CommunityGallery } from '@/components/molecules/CommunityGallery';
+import { CommunityPrograms } from '@/components/molecules/CommunityPrograms';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
 
@@ -136,17 +137,18 @@ export default async function CommunityPage({ params }: LocaleParam) {
             title={heroTitle}
             subtitle={t('heroSubtitle')}
           />
-          {/* §65 — constellation + programmes FUSIONNÉS en une section épinglée :
-              la tuile « média » (crayons) voyage depuis la mosaïque éparpillée
-              jusqu'au slot image du bloc (waabi « Unlocking scale »), puis les
-              piliers défilent. */}
-          <CommunityShowcase
-            items={programs}
-            introLead={t('galleryTitle')}
-            introRest={t('galleryBody')}
-            scatterImages={GALLERY_IMAGES}
+          {/* §66 — waabi a DEUX temps (vérifié au DOM) : la mosaïque DÉFILE
+              (tuiles 133px en colonnes, parallaxe, aucun fade), puis le bloc
+              s'épingle et son image GRANDIT. On revient donc à la constellation
+              qui scrolle + le bloc épinglé. */}
+          <CommunityGallery
+            kicker={t('galleryKicker')}
+            title={t('galleryTitle')}
+            body={t('galleryBody')}
+            images={GALLERY_IMAGES}
           />
         </div>
+        <CommunityPrograms items={programs} />
 
         {/* INTRO */}
         <section className="py-32 md:py-48 lg:py-56">
