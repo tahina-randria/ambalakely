@@ -6,12 +6,11 @@ import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
-import { PageHero } from '@/components/molecules/PageHero';
 import { ImagePlaceholder } from '@/components/atoms/ImagePlaceholder';
 import { PHOTOS } from '@/lib/data/photos';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { localizedAlternates } from '@/lib/i18n/alternates';
-import { CommunityGallery } from '@/components/molecules/CommunityGallery';
+import { CommunityHero } from '@/components/molecules/CommunityHero';
 import { CommunityPrograms } from '@/components/molecules/CommunityPrograms';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
@@ -126,15 +125,12 @@ export default async function CommunityPage({ params }: LocaleParam) {
       />
       <Nav />
       <main id="main">
-        {/* §56 — standard PageHero (real region landscape) flowing straight
-            into the constellation gallery + scrollytelling, per waabi
-            structure. Title keeps the site's standard h1 size. */}
-        <PageHero src={HERO_IMAGE} alt={t('heroAlt')} title={heroTitle} />
-
-        {/* ACTIVITIES — constellation gallery (image-framed title) + pinned
-            scrollytelling, immediately after the hero. */}
-        <CommunityGallery
-          kicker={t('galleryKicker')}
+        {/* §59 — hero plein écran qui rétrécit en tuile et se fond dans la
+            constellation HFF (waabi), puis le scrollytelling des programmes. */}
+        <CommunityHero
+          heroSrc={HERO_IMAGE}
+          heroAlt={t('heroAlt')}
+          heroTitle={heroTitle}
           title={t('galleryTitle')}
           body={t('galleryBody')}
           images={GALLERY_IMAGES}
