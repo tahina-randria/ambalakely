@@ -524,6 +524,27 @@ body {
   opacity: 1;
 }
 
+/* Newsletter email field — explicit 2px border so the field reads as a
+   clear rectangle BEFORE focus. Must be a real (unlayered) class, not
+   Tailwind `border-*` utilities : the unlayered `*{border:0 solid}` reset
+   above beats @layer utilities, so `border-2`/`border-[color]` were being
+   silently zeroed here. A class (specificity 0,0,1,0) beats `*` (0,0,0,0)
+   at the same unlayered level, so the border actually renders. §46 */
+.newsletter-field {
+  border: 2px solid var(--color-sand-12);
+  transition: border-color var(--duration-base) var(--ease-standard);
+}
+.newsletter-field:focus {
+  border-color: var(--color-sand-12);
+}
+/* dark variant (footer, on sand-12 ground) — white-ish border */
+.newsletter-field--dark {
+  border-color: var(--color-sand-1);
+}
+.newsletter-field--dark:focus {
+  border-color: var(--color-sand-3);
+}
+
 /* select — custom chevron */
 select.input-base {
   padding-right: 44px;
