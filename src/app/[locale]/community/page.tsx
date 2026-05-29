@@ -6,7 +6,7 @@ import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
-import { PageHero } from '@/components/molecules/PageHero';
+import { CommunityHero } from '@/components/molecules/CommunityHero';
 import { ImagePlaceholder } from '@/components/atoms/ImagePlaceholder';
 import { PHOTOS } from '@/lib/data/photos';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
@@ -83,6 +83,13 @@ const GALLERY_IMAGES = [
   'https://images.unsplash.com/photo-1617721928610-4d953b81bba8?w=600&q=80&auto=format&fit=crop',
 ];
 
+// §55 — interim cinematic hero image : a wide Madagascar-highlands / rice-
+// terraces landscape (the actual Fianarantsoa region around Ambalakely), so
+// it evokes the place without posing as the school. Swap for a real Hope for
+// the Future photo when available (#99).
+const HERO_IMAGE =
+  'https://images.unsplash.com/photo-1558437753-21dc69d8ebed?w=2400&q=80&auto=format&fit=crop';
+
 export default async function CommunityPage({ params }: LocaleParam) {
   const { locale } = await params;
   setRequestLocale(locale);
@@ -119,13 +126,9 @@ export default async function CommunityPage({ params }: LocaleParam) {
       />
       <Nav />
       <main id="main">
-        {/* §45 — placeholder hero until real Tanambao school photos are
-            hosted locally (was the external Squarespace HFF2.jpg). */}
-        <PageHero
-          placeholder
-          alt={t('heroAlt')}
-          title={heroTitle}
-        />
+        {/* §55 — waabi-style cinematic hero (full-bleed image, descending
+            title, scroll zoom-out). Interim landscape until a real HFF photo. */}
+        <CommunityHero src={HERO_IMAGE} alt={t('heroAlt')} title={heroTitle} />
 
         {/* INTRO */}
         <section className="py-32 md:py-48 lg:py-56">
