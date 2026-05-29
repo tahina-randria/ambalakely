@@ -9,19 +9,9 @@ import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
 import { ImagePlaceholder } from '@/components/atoms/ImagePlaceholder';
 import { PHOTOS } from '@/lib/data/photos';
-import {
-  ArrowRight,
-  GraduationCap,
-  HeartStraight,
-  Leaf,
-  PaintBrush,
-  MusicNotes,
-  PersonSimpleRun,
-  Translate,
-  BookOpen,
-} from '@phosphor-icons/react/dist/ssr';
-import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { localizedAlternates } from '@/lib/i18n/alternates';
+import { CommunityPrograms } from '@/components/molecules/CommunityPrograms';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
 
@@ -53,7 +43,7 @@ export async function generateMetadata({ params }: LocaleParam): Promise<Metadat
   };
 }
 
-type Program = { title: string; body: string; Icon: PhosphorIcon };
+type Program = { title: string; body: string };
 
 export default async function CommunityPage({ params }: LocaleParam) {
   const { locale } = await params;
@@ -68,20 +58,22 @@ export default async function CommunityPage({ params }: LocaleParam) {
   // hero (130 enfants) qui domine + 2 supporting stats (9 programmes,
   // 152 m² Akanimamy) qui complètent. Drop icons, drop card chrome.
   // Le total reste 3 stats meaningful au lieu de 4 dont une bidon.
+  // §48 — stat corrected 9 → 8 : there are exactly 8 programmes in the
+  // list below, the "9" was stale.
   const supportingStats = [
-    { value: '9', label: t('numberProgramsLabel') },
+    { value: '8', label: t('numberProgramsLabel') },
     { value: '152 m²', label: t('numberBuildingLabel') },
   ];
 
   const programs: Program[] = [
-    { title: t('programs.educationTitle'), body: t('programs.educationBody'), Icon: GraduationCap },
-    { title: t('programs.healthTitle'), body: t('programs.healthBody'), Icon: HeartStraight },
-    { title: t('programs.artsTitle'), body: t('programs.artsBody'), Icon: PaintBrush },
-    { title: t('programs.musicTitle'), body: t('programs.musicBody'), Icon: MusicNotes },
-    { title: t('programs.danceTitle'), body: t('programs.danceBody'), Icon: PersonSimpleRun },
-    { title: t('programs.langTitle'), body: t('programs.langBody'), Icon: Translate },
-    { title: t('programs.envTitle'), body: t('programs.envBody'), Icon: Leaf },
-    { title: t('programs.historyTitle'), body: t('programs.historyBody'), Icon: BookOpen },
+    { title: t('programs.educationTitle'), body: t('programs.educationBody') },
+    { title: t('programs.healthTitle'), body: t('programs.healthBody') },
+    { title: t('programs.artsTitle'), body: t('programs.artsBody') },
+    { title: t('programs.musicTitle'), body: t('programs.musicBody') },
+    { title: t('programs.danceTitle'), body: t('programs.danceBody') },
+    { title: t('programs.langTitle'), body: t('programs.langBody') },
+    { title: t('programs.envTitle'), body: t('programs.envBody') },
+    { title: t('programs.historyTitle'), body: t('programs.historyBody') },
   ];
 
   const timeline = [
@@ -126,43 +118,41 @@ export default async function CommunityPage({ params }: LocaleParam) {
           </div>
         </section>
 
-        {/* NUMBERS — §39 Kickstarter asymmetric pattern (Mobbin pass) */}
+        {/* NUMBERS — §48 : the figures paired with a slot for the future
+            Akanimamy line-drawing (asset pending #99 — placeholder for now).
+            Borders use .hair-rule, not Tailwind border-* (still suppressed). */}
         <section className="py-32 md:py-40 lg:py-48 hair-rule bg-[var(--color-bg-subtle)]">
           <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
               <div className="caption mb-16 md:mb-20">{t('numbersKicker')}</div>
             </ScrollReveal>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-              {/* HERO — 130 enfants */}
-              <ScrollReveal className="lg:col-span-7">
-                <div className="font-display font-light text-[var(--color-text)] text-[120px] md:text-[180px] lg:text-[220px] leading-[0.9] tracking-[-0.04em] tabular-nums whitespace-nowrap">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+              {/* Figures — left */}
+              <ScrollReveal className="lg:col-span-6">
+                <div className="font-display font-light text-[var(--color-text)] text-[96px] md:text-[132px] lg:text-[160px] leading-[0.9] tracking-[-0.04em] tabular-nums">
                   {t('numberHeroValue')}
                 </div>
-                <p className="mt-8 md:mt-10 max-w-[420px] prose-editorial text-[18px] md:text-[20px] leading-[1.45] tracking-[-0.005em]">
+                <p className="mt-6 max-w-[420px] prose-editorial text-[18px] md:text-[20px] leading-[1.45] tracking-[-0.005em]">
                   {t('numberHeroLabel')}
                 </p>
-              </ScrollReveal>
-
-              {/* SUPPORTING — 9 programmes + 152 m² Akanimamy */}
-              <ScrollReveal delay={0.08} className="lg:col-span-5 lg:pt-10">
-                <ul className="border-t border-[var(--color-border-subtle)]">
+                <ul className="mt-12 hair-rule pt-8 space-y-6">
                   {supportingStats.map((s) => (
-                    <li
-                      key={s.label}
-                      className="py-8 md:py-10 border-b border-[var(--color-border-subtle)]"
-                    >
-                      <div className="flex items-baseline gap-6">
-                        <div className="font-display font-light text-[var(--color-text)] text-[48px] md:text-[64px] leading-[1] tracking-[-0.03em] tabular-nums whitespace-nowrap shrink-0">
-                          {s.value}
-                        </div>
-                        <div className="caption text-[var(--color-text-muted)]">
-                          {s.label}
-                        </div>
+                    <li key={s.label} className="flex items-baseline gap-6">
+                      <div className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[52px] leading-[1] tracking-[-0.03em] tabular-nums whitespace-nowrap shrink-0">
+                        {s.value}
                       </div>
+                      <div className="caption text-[var(--color-text-muted)]">{s.label}</div>
                     </li>
                   ))}
                 </ul>
+              </ScrollReveal>
+
+              {/* Akanimamy drawing slot — right */}
+              <ScrollReveal delay={0.08} className="lg:col-span-6">
+                <div className="relative aspect-[4/3] overflow-hidden bg-[var(--color-bg-muted)]">
+                  <ImagePlaceholder label="Akanimamy" />
+                </div>
               </ScrollReveal>
             </div>
           </div>
@@ -200,40 +190,13 @@ export default async function CommunityPage({ params }: LocaleParam) {
           </div>
         </section>
 
-        {/* PROGRAMS */}
-        <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-bg-subtle)]">
-          <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
-            <ScrollReveal>
-              <div className="caption text-center mb-4">{t('programsKicker')}</div>
-              <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
-                {t('programsH2')}
-              </h2>
-            </ScrollReveal>
-            <ul className="mt-20 md:mt-28 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12">
-              {programs.map((p, i) => {
-                const Icon = p.Icon;
-                return (
-                  <ScrollReveal key={p.title} delay={i * 0.04}>
-                    <li>
-                      <Icon
-                        size={28}
-                        weight="light"
-                        className="text-[var(--color-text-muted)] mb-6"
-                        aria-hidden
-                      />
-                      <h3 className="font-display font-light text-[var(--color-text)] text-[24px] md:text-[28px] leading-[1.1] tracking-[-0.025em]">
-                        {p.title}
-                      </h3>
-                      <p className="mt-4 prose-editorial text-[15px] md:text-[16px]">
-                        {p.body}
-                      </p>
-                    </li>
-                  </ScrollReveal>
-                );
-              })}
-            </ul>
-          </div>
-        </section>
+        {/* PROGRAMS — §48 sticky split (left index + scrolling detail with
+            per-activity image slots). Client component for the scroll-spy. */}
+        <CommunityPrograms
+          kicker={t('programsKicker')}
+          h2={t('programsH2')}
+          items={programs}
+        />
 
         {/* AKANIMAMY DEEP DIVE */}
         <section id="akanimamy" className="py-32 md:py-48 hair-rule">
