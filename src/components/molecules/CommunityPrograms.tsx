@@ -96,7 +96,7 @@ export function CommunityPrograms({
           <div className="mx-auto flex h-full max-w-[1200px] items-center px-8 lg:px-12">
             <div className="grid w-full grid-cols-2 items-center gap-14 xl:gap-20">
               {/* Media — crossfading rounded square */}
-              <div className="relative aspect-square w-full overflow-hidden rounded-[12px] bg-[var(--color-bg-muted)]">
+              <div className="relative aspect-square w-full overflow-hidden rounded-[16px] bg-[var(--color-bg-muted)]">
                 {items.map((it, i) => (
                   <div
                     key={it.title}
@@ -112,7 +112,7 @@ export function CommunityPrograms({
               </div>
 
               {/* Stepping list — active = dark + description, rest greyed. */}
-              <ul className="flex flex-col gap-1.5">
+              <ul className="flex flex-col gap-5">
                 {items.map((it, i) => {
                   const on = i === active;
                   return (
@@ -125,7 +125,7 @@ export function CommunityPrograms({
                       >
                         <span
                           className={cn(
-                            'font-display font-light text-[26px] xl:text-[32px] leading-[1.15] tracking-[-0.02em] transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]',
+                            'font-display font-light text-[32px] xl:text-[40px] leading-[1.1] tracking-[-0.03em] transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]',
                             on
                               ? 'text-[var(--color-text)]'
                               : 'text-[var(--color-text-muted)]',
@@ -159,7 +159,7 @@ export function CommunityPrograms({
         <div className="mx-auto max-w-[680px] px-5 md:px-8 space-y-16 md:space-y-20">
           {items.map((it) => (
             <article key={it.title}>
-              <div className="relative aspect-square w-full overflow-hidden rounded-[12px] bg-[var(--color-bg-muted)]">
+              <div className="relative aspect-square w-full overflow-hidden rounded-[16px] bg-[var(--color-bg-muted)]">
                 {it.image ? (
                   <Image src={it.image} alt="" fill sizes="100vw" className="object-cover" />
                 ) : null}
