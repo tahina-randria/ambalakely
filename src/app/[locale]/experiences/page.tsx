@@ -50,9 +50,33 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
 
   const heroTitle = t.raw('heroTitle') as string[];
 
-  const tocItems = experiences.map((exp) => ({
+  // §44 — group the 10 experiences into 3 editorial bands. Done page-side
+  // by slug (not via a data `category` field) because fetchExcursions merges
+  // Sanity over the local fallback and Sanity may reorder or omit such a
+  // field ; the slug is the stable identifier across both sources.
+  type Exp = (typeof experiences)[number];
+  const BANDS: { label: string; slugs: string[] }[] = [
+    { label: t('bandNature'), slugs: ['ranomafana', 'rice-fields', 'andringitra', 'tsaranoro-stargazing'] },
+    { label: t('bandCulture'), slugs: ['fianarantsoa-old-town', 'sahambavy', 'ambositra-woodcarving', 'antemoro-paper'] },
+    { label: t('bandHouse'), slugs: ['cooking', 'community'] },
+  ];
+  const bySlug = new Map(experiences.map((e) => [e.slug, e]));
+  const placed = new Set<string>();
+  const bands = BANDS.map((b) => {
+    const items = b.slugs.map((s) => bySlug.get(s)).filter((e): e is Exp => Boolean(e));
+    items.forEach((it) => placed.add(it.slug));
+    return { label: b.label, items };
+  }).filter((b) => b.items.length > 0);
+  // Defensive : any experience not matched by slug (e.g. a future Sanity
+  // entry) is appended headerless so nothing silently disappears.
+  const leftovers = experiences.filter((e) => !placed.has(e.slug));
+  if (leftovers.length) bands.push({ label: '', items: leftovers });
+
+  const orderedExps = bands.flatMap((b) => b.items);
+  const zebraBySlug = new Map(orderedExps.map((e, i) => [e.slug, i % 2 === 1]));
+  const tocItems = orderedExps.map((exp, i) => ({
     id: exp.slug,
-    number: exp.number,
+    number: String(i + 1).padStart(2, '0'),
     label: exp.name,
   }));
 
@@ -91,7 +115,7 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
             <ScrollReveal>
               <div className="caption mb-8 md:mb-10">{t('quickNavKicker')}</div>
               <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-                {experiences.map((exp) => (
+                {orderedExps.map((exp) => (
                   <li key={exp.slug}>
                     <Link
                       href={`#${exp.slug}`}
@@ -117,80 +141,99 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
           </div>
         </section>
 
-        {/* EXPERIENCE CHAPTERS */}
-        {experiences.map((exp, i) => (
-          <section
-            key={exp.slug}
-            id={exp.slug}
-            className={`hair-rule py-24 md:py-32 lg:py-40 ${
-              i % 2 === 1 ? 'bg-[var(--color-bg-subtle)]' : ''
-            }`}
-          >
-            <div className="mx-auto max-w-[1280px] px-5 md:px-8 lg:px-12">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mb-12 md:mb-16">
-                <div className="lg:col-span-3">
+        {/* EXPERIENCE CHAPTERS — grouped into 3 editorial bands (§44). Each
+            band opens with a hair-ruled label (h2) ; the experiences below
+            it are h3, keeping a correct document outline. Zebra striping
+            runs globally across all bands for an even rhythm. */}
+        {bands.map((band, bi) => (
+          <div key={band.label || `band-${bi}`}>
+            {band.label ? (
+              <div className="hair-rule">
+                <div className="mx-auto max-w-[1280px] px-5 md:px-8 lg:px-12 pt-24 md:pt-32 lg:pt-40 pb-2">
                   <ScrollReveal>
-                    <div className="caption text-[var(--color-text-muted)]">
-                      {exp.duration}
-                    </div>
-                  </ScrollReveal>
-                </div>
-                <div className="lg:col-span-9">
-                  <ScrollReveal delay={0.05}>
-                    <h2 className="font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
-                      {exp.name}
+                    <h2 className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] tracking-[-0.025em]">
+                      {band.label}
                     </h2>
                   </ScrollReveal>
                 </div>
               </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-                <ScrollReveal
-                  className={`lg:col-span-7 ${i % 2 === 1 ? 'lg:order-2' : ''}`}
+            ) : null}
+            {band.items.map((exp) => {
+              const zebra = zebraBySlug.get(exp.slug) ?? false;
+              return (
+                <section
+                  key={exp.slug}
+                  id={exp.slug}
+                  className={`py-20 md:py-28 lg:py-32 ${
+                    zebra ? 'bg-[var(--color-bg-subtle)]' : ''
+                  }`}
                 >
-                  <div className="relative aspect-[4/3] lg:aspect-[5/4] overflow-hidden bg-[var(--color-bg-muted)]">
-                    <Image
-                      src={exp.image}
-                      alt={`${exp.name}, Hôtel Ambalakely`}
-                      fill
-                      sizes="(min-width: 1024px) 58vw, 100vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="mt-3 caption text-[var(--color-text-muted)]">
-                    {exp.tagline}
-                  </div>
-                </ScrollReveal>
-
-                <div
-                  className={`lg:col-span-5 ${i % 2 === 1 ? 'lg:order-1' : ''}`}
-                >
-                  <ScrollReveal delay={0.05}>
-                    <p className="prose-editorial">{exp.body}</p>
-                  </ScrollReveal>
-
-                  <ScrollReveal delay={0.1}>
-                    <div className="mt-10 space-y-1">
-                      <div className="spec-row">
-                        <div className="spec-row__label">{t('specBest')}</div>
-                        <div className="spec-row__value">{exp.best}</div>
+                  <div className="mx-auto max-w-[1280px] px-5 md:px-8 lg:px-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mb-12 md:mb-16">
+                      <div className="lg:col-span-3">
+                        <ScrollReveal>
+                          <div className="caption text-[var(--color-text-muted)]">
+                            {exp.duration}
+                          </div>
+                        </ScrollReveal>
                       </div>
-                      {exp.cost ? (
-                        <div className="spec-row">
-                          <div className="spec-row__label">{t('specCost')}</div>
-                          <div className="spec-row__value">{exp.cost}</div>
-                        </div>
-                      ) : null}
+                      <div className="lg:col-span-9">
+                        <ScrollReveal delay={0.05}>
+                          <h3 className="font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
+                            {exp.name}
+                          </h3>
+                        </ScrollReveal>
+                      </div>
                     </div>
-                  </ScrollReveal>
 
-                  <ScrollReveal delay={0.15}>
-                    <BookingButton className="mt-10">{exp.ctaLabel}</BookingButton>
-                  </ScrollReveal>
-                </div>
-              </div>
-            </div>
-          </section>
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+                      <ScrollReveal
+                        className={`lg:col-span-7 ${zebra ? 'lg:order-2' : ''}`}
+                      >
+                        <div className="relative aspect-[4/3] lg:aspect-[5/4] overflow-hidden bg-[var(--color-bg-muted)]">
+                          <Image
+                            src={exp.image}
+                            alt={`${exp.name}, Hôtel Ambalakely`}
+                            fill
+                            sizes="(min-width: 1024px) 58vw, 100vw"
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="mt-3 caption text-[var(--color-text-muted)]">
+                          {exp.tagline}
+                        </div>
+                      </ScrollReveal>
+
+                      <div className={`lg:col-span-5 ${zebra ? 'lg:order-1' : ''}`}>
+                        <ScrollReveal delay={0.05}>
+                          <p className="prose-editorial">{exp.body}</p>
+                        </ScrollReveal>
+
+                        <ScrollReveal delay={0.1}>
+                          <div className="mt-10 space-y-1">
+                            <div className="spec-row">
+                              <div className="spec-row__label">{t('specBest')}</div>
+                              <div className="spec-row__value">{exp.best}</div>
+                            </div>
+                            {exp.cost ? (
+                              <div className="spec-row">
+                                <div className="spec-row__label">{t('specCost')}</div>
+                                <div className="spec-row__value">{exp.cost}</div>
+                              </div>
+                            ) : null}
+                          </div>
+                        </ScrollReveal>
+
+                        <ScrollReveal delay={0.15}>
+                          <BookingButton className="mt-10">{exp.ctaLabel}</BookingButton>
+                        </ScrollReveal>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              );
+            })}
+          </div>
         ))}
 
         {/* CTA */}
