@@ -11,8 +11,7 @@ import { PHOTOS } from '@/lib/data/photos';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { localizedAlternates } from '@/lib/i18n/alternates';
 import { CommunityScrollHero } from '@/components/molecules/CommunityScrollHero';
-import { CommunityGallery } from '@/components/molecules/CommunityGallery';
-import { CommunityPrograms } from '@/components/molecules/CommunityPrograms';
+import { CommunityShowcase } from '@/components/molecules/CommunityShowcase';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
 
@@ -137,17 +136,17 @@ export default async function CommunityPage({ params }: LocaleParam) {
             title={heroTitle}
             subtitle={t('heroSubtitle')}
           />
-          <CommunityGallery
-            kicker={t('galleryKicker')}
-            title={t('galleryTitle')}
-            body={t('galleryBody')}
-            images={GALLERY_IMAGES}
+          {/* §65 — constellation + programmes FUSIONNÉS en une section épinglée :
+              la tuile « média » (crayons) voyage depuis la mosaïque éparpillée
+              jusqu'au slot image du bloc (waabi « Unlocking scale »), puis les
+              piliers défilent. */}
+          <CommunityShowcase
+            items={programs}
+            introLead={t('galleryTitle')}
+            introRest={t('galleryBody')}
+            scatterImages={GALLERY_IMAGES}
           />
         </div>
-        {/* §64 — header « Ce qu'on fait / On grandit » retiré (demande user) :
-            la constellation au-dessus porte déjà l'intro ; le bloc démarre
-            directement sur l'image qui dégrossit + les piliers. */}
-        <CommunityPrograms items={programs} />
 
         {/* INTRO */}
         <section className="py-32 md:py-48 lg:py-56">
