@@ -97,15 +97,13 @@ export default async function CommunityPage({ params }: LocaleParam) {
 
   const heroTitle = t.raw('heroTitle') as string[];
 
+  // §63 — fusion 8 → 4 piliers dans la voix « on » des enfants (style waabi,
+  // demande user). Images : livres / guitare / football / forêt.
   const programs: Program[] = [
-    { title: t('programs.educationTitle'), body: t('programs.educationBody'), image: PROGRAM_IMAGES[0] },
-    { title: t('programs.healthTitle'), body: t('programs.healthBody'), image: PROGRAM_IMAGES[1] },
-    { title: t('programs.artsTitle'), body: t('programs.artsBody'), image: PROGRAM_IMAGES[2] },
-    { title: t('programs.musicTitle'), body: t('programs.musicBody'), image: PROGRAM_IMAGES[3] },
-    { title: t('programs.danceTitle'), body: t('programs.danceBody'), image: PROGRAM_IMAGES[4] },
-    { title: t('programs.langTitle'), body: t('programs.langBody'), image: PROGRAM_IMAGES[5] },
-    { title: t('programs.envTitle'), body: t('programs.envBody'), image: PROGRAM_IMAGES[6] },
-    { title: t('programs.historyTitle'), body: t('programs.historyBody'), image: PROGRAM_IMAGES[7] },
+    { title: t('programs.learnTitle'), body: t('programs.learnBody'), image: PROGRAM_IMAGES[0] },
+    { title: t('programs.createTitle'), body: t('programs.createBody'), image: PROGRAM_IMAGES[3] },
+    { title: t('programs.moveTitle'), body: t('programs.moveBody'), image: PROGRAM_IMAGES[4] },
+    { title: t('programs.growTitle'), body: t('programs.growBody'), image: PROGRAM_IMAGES[6] },
   ];
 
   const timeline = [
