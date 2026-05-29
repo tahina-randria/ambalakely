@@ -531,7 +531,7 @@ body {
    silently zeroed here. A class (specificity 0,0,1,0) beats `*` (0,0,0,0)
    at the same unlayered level, so the border actually renders. §46 */
 .newsletter-field {
-  border: 2px solid var(--color-sand-12);
+  border: 1px solid var(--color-sand-12);
   transition: border-color var(--duration-base) var(--ease-standard);
 }
 .newsletter-field:focus {
