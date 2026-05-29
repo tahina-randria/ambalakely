@@ -33,6 +33,9 @@ export function CommunityPrograms({
 }) {
   const total = items.length;
   const sectionRef = useRef<HTMLDivElement>(null);
+  const mediaRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
   const [active, setActive] = useState(0);
   const [reduced, setReduced] = useState(false);
 
@@ -42,20 +45,54 @@ export function CommunityPrograms({
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
-    if (!section) return;
     const mm = gsap.matchMedia();
-    mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
-      const st = ScrollTrigger.create({
-        trigger: section,
-        start: 'top top',
-        end: 'bottom bottom',
-        onUpdate: (self) => {
-          const idx = Math.min(total - 1, Math.floor(self.progress * total));
-          setActive((prev) => (prev === idx ? prev : idx));
-        },
+    const INTRO = 0.24; // first slice of the pin = image shrinks + list reveals
+
+    // Heading reveals word by word on enter (waabi-style), all viewports.
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const words = headingRef.current?.querySelectorAll('[data-word]');
+      if (!words || !words.length) return;
+      const tween = gsap.from(words, {
+        opacity: 0,
+        yPercent: 50,
+        duration: 0.55,
+        ease: 'power3.out',
+        stagger: 0.05,
+        scrollTrigger: { trigger: headingRef.current, start: 'top 88%', once: true },
       });
-      return () => st.kill();
+      return () => tween.scrollTrigger?.kill();
     });
+
+    // Desktop: the media "dégrossit" (1.22 → 1) while the list reveals, then the
+    // pillars step through the remaining scroll — mirrors waabi's "Unlocking
+    // scale" block (big image first, shrinks, then the steps play).
+    mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+      if (!section) return;
+      const ctx = gsap.context(() => {
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: section, start: 'top top', end: 'bottom bottom', scrub: 1 },
+        });
+        tl.fromTo(mediaRef.current, { scale: 1.22 }, { scale: 1, ease: 'power2.out', duration: INTRO }, 0);
+        tl.fromTo(
+          listRef.current,
+          { opacity: 0, xPercent: 6 },
+          { opacity: 1, xPercent: 0, ease: 'power2.out', duration: INTRO * 0.85 },
+          0.03,
+        );
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top top',
+          end: 'bottom bottom',
+          onUpdate: (self) => {
+            const p = Math.max(0, (self.progress - INTRO) / (1 - INTRO));
+            const idx = Math.min(total - 1, Math.floor(p * total));
+            setActive((prev) => (prev === idx ? prev : idx));
+          },
+        });
+      }, section);
+      return () => ctx.revert();
+    });
+
     return () => mm.revert();
   }, [total]);
 
@@ -65,7 +102,9 @@ export function CommunityPrograms({
     if (!section) return;
     const top = section.getBoundingClientRect().top + window.scrollY;
     const range = section.offsetHeight - window.innerHeight;
-    window.scrollTo(0, Math.round(top + ((i + 0.5) / total) * range));
+    const INTRO = 0.24;
+    const p = INTRO + ((i + 0.5) / total) * (1 - INTRO);
+    window.scrollTo(0, Math.round(top + p * range));
   };
 
   // First viewport reads the section; each step then costs ~50vh of scroll.
@@ -79,8 +118,16 @@ export function CommunityPrograms({
         <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12 pt-28 md:pt-36 lg:pt-44 text-center">
           {kicker && <div className="caption mb-4">{kicker}</div>}
           {title && (
-            <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance mx-auto max-w-[680px]">
-              {title}
+            <h2
+              ref={headingRef}
+              className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance mx-auto max-w-[680px]"
+            >
+              {title.split(' ').map((w, i, arr) => (
+                <span key={i} data-word className="inline-block will-change-[transform,opacity]">
+                  {w}
+                  {i < arr.length - 1 ? ' ' : ''}
+                </span>
+              ))}
             </h2>
           )}
         </div>
@@ -95,8 +142,11 @@ export function CommunityPrograms({
         <div className="sticky top-0 h-screen overflow-hidden">
           <div className="mx-auto flex h-full max-w-[1200px] items-center px-8 lg:px-12">
             <div className="grid w-full grid-cols-2 items-center gap-14 xl:gap-20">
-              {/* Media — crossfading rounded square */}
-              <div className="relative aspect-square w-full overflow-hidden rounded-[16px] bg-[var(--color-bg-muted)]">
+              {/* Media — crossfading rounded square; "dégrossit" (shrinks) on enter */}
+              <div
+                ref={mediaRef}
+                className="relative aspect-square w-full overflow-hidden rounded-[16px] bg-[var(--color-bg-muted)] [transform-origin:50%_50%] will-change-transform"
+              >
                 {items.map((it, i) => (
                   <div
                     key={it.title}
@@ -112,7 +162,7 @@ export function CommunityPrograms({
               </div>
 
               {/* Stepping list — active = dark + description, rest greyed. */}
-              <ul className="flex flex-col gap-5">
+              <ul ref={listRef} className="flex flex-col gap-5">
                 {items.map((it, i) => {
                   const on = i === active;
                   return (
