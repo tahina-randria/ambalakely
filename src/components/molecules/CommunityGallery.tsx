@@ -123,14 +123,13 @@ export function CommunityGallery({
           <Tile src={images[10 % images.length]} />
         </div>
 
-        {/* Centred title — centred across the full 150vh, scrolls with it. */}
+        {/* Centred statement — one single size (waabi): lead sentence greyed,
+            the explanation in full text colour. No kicker (the hero h1 already
+            names Hope for the Future). */}
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-8 text-center">
-          <div className="caption mb-4">{kicker}</div>
-          <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance max-w-[560px]">
-            {title}
-          </h2>
-          <p className="mt-6 mx-auto max-w-[440px] text-[var(--color-text-muted)] text-[16px] md:text-[17px] leading-[1.55] text-balance">
-            {body}
+          <p className="font-display font-light text-[21px] md:text-[25px] leading-[1.34] tracking-[-0.02em] max-w-[600px]">
+            <span className="text-[var(--color-text-muted)]">{title} </span>
+            <span className="text-[var(--color-text)]">{body}</span>
           </p>
         </div>
       </div>
@@ -138,12 +137,9 @@ export function CommunityGallery({
       {/* MOBILE / reduced-motion — centred title + compact mosaic */}
       <div className="px-5 py-28 md:px-8 md:py-36 lg:hidden">
         <div className="text-center">
-          <div className="caption mb-4">{kicker}</div>
-          <h2 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[52px] leading-[1.02] tracking-[-0.03em] balance mx-auto max-w-[520px]">
-            {title}
-          </h2>
-          <p className="mt-5 mx-auto max-w-[440px] text-[var(--color-text-muted)] text-[16px] leading-[1.55]">
-            {body}
+          <p className="font-display font-light text-[19px] md:text-[22px] leading-[1.4] tracking-[-0.015em] mx-auto max-w-[460px]">
+            <span className="text-[var(--color-text-muted)]">{title} </span>
+            <span className="text-[var(--color-text)]">{body}</span>
           </p>
         </div>
         <div className="mt-12 grid grid-cols-2 gap-3">
