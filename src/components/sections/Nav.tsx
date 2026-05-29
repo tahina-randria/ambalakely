@@ -85,7 +85,7 @@ export function Nav() {
     <>
       <nav
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 motion-safe:transition-[transform,background-color,backdrop-filter] duration-[var(--duration-base)] ease-[var(--ease-standard)]',
+          'fixed top-0 left-0 right-0 z-50 motion-safe:[transition:transform_460ms_var(--ease-standard),background-color_260ms_var(--ease-standard),backdrop-filter_260ms_var(--ease-standard)]',
           // 95 % opaque sand-1 + backdrop blur once scrolled, so the nav
           // stays legible over every section.
           scrolled
@@ -106,7 +106,7 @@ export function Nav() {
             href="/"
             aria-label={t('homeAriaLabel')}
             className={cn(
-              'flex flex-col items-center gap-1 leading-none',
+              'flex flex-col items-center gap-1 leading-none transition-colors duration-[var(--duration-slow)] ease-[var(--ease-standard)]',
               scrolled ? 'text-[var(--color-text)]' : 'text-white',
             )}
           >
@@ -137,7 +137,7 @@ export function Nav() {
                 <Link
                   href={l.href}
                   className={cn(
-                    'text-[15px] transition-opacity duration-[var(--duration-fast)] ease-[var(--ease-standard)] opacity-80 hover:opacity-100',
+                    'text-[15px] opacity-80 hover:opacity-100 [transition:opacity_120ms_var(--ease-standard),color_var(--duration-slow)_var(--ease-standard)]',
                     scrolled ? 'text-[var(--color-text)]' : 'text-white',
                   )}
                 >
