@@ -28,6 +28,12 @@ export const PHOTOS = {
   diningHero: photo('p41_hotel_ambalakely_dsc6381.webp'),
   rooms: photo('p45_hotel_ambalakely_dsc6388.webp'),
   about: photo('p23_hotel_ambalakely_dsc6429.webp'),
+  // §44 — founders section stand-in. The 47-photo set has no portraits,
+  // so the /about FOUNDERS block used to repeat the hero shot (p23). The
+  // fireside lounge reads as a warm, family-run house and is visually
+  // distinct from the exterior hero. ⚠️ NEEDS REAL CONTENT : swap to an
+  // actual Hasina + Mamy portrait once one is available.
+  founders: photo('p44_hotel_ambalakely_dsc6387.webp'),
   experiences: photo('p23_hotel_ambalakely_dsc6429.webp'),
   planTrip: photo('p05_hotel_ambalakely_dsc6402.webp'),
   faq: photo('p32_hotel_ambalakely_dsc6361.webp'),

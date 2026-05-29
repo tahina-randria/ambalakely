@@ -113,7 +113,7 @@ export default async function AboutPage({ params }: LocaleParam) {
           <div className="grid grid-cols-1 lg:grid-cols-12">
             <div className="lg:col-span-7 relative aspect-[4/5] lg:aspect-auto lg:min-h-[80vh] bg-[var(--color-bg-muted)] overflow-hidden">
               <Image
-                src={PHOTOS.about.path}
+                src={PHOTOS.founders.path}
                 alt={t('foundersImageAlt')}
                 fill
                 sizes="(min-width: 1024px) 58vw, 100vw"
@@ -260,6 +260,13 @@ export default async function AboutPage({ params }: LocaleParam) {
               </ScrollReveal>
             </div>
             <div className="lg:col-span-7 lg:order-2 relative aspect-[4/5] lg:aspect-auto lg:min-h-[70vh] bg-[var(--color-bg-muted)] overflow-hidden">
+              {/* ⚠️ EXTERNAL DEPENDENCY (§44) — this is the real Tanambao
+                  school photo (HFF2.jpg), the only image of the actual
+                  Hope for the Future project ; also used 3× in /community.
+                  It is NOT in the local 47-photo set. Kept hotlinked rather
+                  than swapped for a hotel shot (which would misrepresent the
+                  community section). Proper fix = self-host the owner's own
+                  asset, pending their go-ahead (it depicts children). */}
               <Image
                 src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
                 alt={t('hopeImageAlt')}
