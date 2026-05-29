@@ -245,7 +245,13 @@ body {
 }
 
 .page-transition {
-  animation: page-fade-in 0.65s cubic-bezier(0.2, 0, 0, 1) both;
+  /* fill-mode `backwards`, NOT `both` : `both`/`forwards` makes the element
+     hold the animation's end transform as an identity matrix
+     (matrix(1,0,0,1,0,0)) — still a transform, so .page-transition stays the
+     containing block for the fixed Nav and it scrolls away. `backwards`
+     applies the entry (from) state before the run, then reverts to base
+     (transform:none) once finished, so the Nav is viewport-fixed again. §49 */
+  animation: page-fade-in 0.65s cubic-bezier(0.2, 0, 0, 1) backwards;
   /* will-change must NOT list `transform` : it would re-create the fixed
      containing block even after the animation ends. opacity is safe. */
   will-change: opacity;
