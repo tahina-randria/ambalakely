@@ -35,6 +35,7 @@ export function CommunityScrollHero({
 }) {
   const desktopRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
+  const scrimRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const [reduced, setReduced] = useState(false);
 
@@ -56,6 +57,14 @@ export function CommunityScrollHero({
           titleRef.current,
           { yPercent: 0, opacity: 1 },
           { yPercent: -45, opacity: 0, ease: 'power1.in', duration: 0.3 },
+          0,
+        );
+        // scrim fades IN PLACE (opacity only, no yPercent) so no dark band
+        // travels up through the image as we scroll — fixes the "fond noir".
+        tl.fromTo(
+          scrimRef.current,
+          { opacity: 1 },
+          { opacity: 0, ease: 'power1.in', duration: 0.22 },
           0,
         );
         // image shrinks IN PLACE centred + rounds its corners (12px @ scale 0.15)
@@ -108,8 +117,13 @@ export function CommunityScrollHero({
           >
             <Image src={src} alt={alt} fill priority sizes="100vw" className="object-cover" />
           </div>
-          <div ref={titleRef} className="absolute inset-0 z-10 will-change-transform">
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/45 to-transparent" />
+          {/* scrim — its OWN layer; fades in place (no translate) so the dark
+              gradient never rises through the frame as the title leaves. */}
+          <div
+            ref={scrimRef}
+            className="absolute inset-x-0 bottom-0 z-10 h-[42%] bg-gradient-to-t from-black/35 to-transparent will-change-[opacity]"
+          />
+          <div ref={titleRef} className="absolute inset-0 z-20 will-change-transform">
             <div className="relative h-full">{titleBlock}</div>
           </div>
         </div>

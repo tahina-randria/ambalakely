@@ -33,19 +33,30 @@ export function Nav() {
   // le position:fixed, §49). Corrigé, le reveal-on-scroll-up marche : le
   // bouton de réservation est toujours à un petit scroll-up près.
   useEffect(() => {
-    const handler = () => {
+    // §62 — handler throttlé en requestAnimationFrame : un seul setState par
+    // frame (au lieu d'un par event scroll) → plus de re-renders en rafale qui
+    // faisaient « glitcher » la nav. Hystérésis (seuils écartés + delta 8px)
+    // pour ne pas re-basculer au moindre micro-mouvement.
+    let raf = 0;
+    const update = () => {
+      raf = 0;
       const y = window.scrollY;
-      setScrolled(y > 40);
-      // ignore les micro-mouvements (anti-jitter)
-      if (Math.abs(y - lastY.current) > 6) {
-        // near top OR scrolling up → show ; scrolling down past the nav → hide
-        setHidden(y > 88 && y > lastY.current);
+      setScrolled(y > 24);
+      if (Math.abs(y - lastY.current) > 8) {
+        // near top OR scrolling up → show ; scrolling down past 140 → hide
+        setHidden(y > 140 && y > lastY.current);
         lastY.current = y;
       }
     };
-    handler();
-    window.addEventListener('scroll', handler, { passive: true });
-    return () => window.removeEventListener('scroll', handler);
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
   // Never keep the nav hidden while the mobile menu is open.
@@ -85,20 +96,27 @@ export function Nav() {
     <>
       <nav
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 motion-safe:[transition:transform_460ms_var(--ease-standard),background-color_260ms_var(--ease-standard),backdrop-filter_260ms_var(--ease-standard)]',
-          // 95 % opaque sand-1 + backdrop blur once scrolled, so the nav
-          // stays legible over every section.
-          scrolled
-            ? 'bg-[color-mix(in_srgb,var(--color-bg)_95%,transparent)] backdrop-blur-[12px] border-b border-[var(--color-border-subtle)]'
-            : 'bg-transparent',
+          'fixed top-0 left-0 right-0 z-50 motion-safe:[transition:transform_460ms_var(--ease-standard)]',
           // §51 smart hide — slide up out of view on scroll-down, back on scroll-up
           hidden ? '-translate-y-full' : 'translate-y-0',
         )}
       >
+        {/* §62 — fond « verre dépoli » SANS contour : un dégradé masqué qui
+            s'estompe vers le bas (mask linéaire), au lieu d'une bordure nette.
+            Couche séparée, plus haute que la barre, en fondu d'opacité au
+            scroll. mix-blend retiré (il « snappait » la couleur du texte). */}
         <div
-          className="mx-auto w-full max-w-[1440px] px-5 md:px-8 lg:px-12 h-[88px] flex items-center justify-between"
-          style={{ mixBlendMode: scrolled ? 'normal' : 'difference' }}
-        >
+          aria-hidden
+          className={cn(
+            'pointer-events-none absolute inset-x-0 top-0 -z-10 h-[150%]',
+            'bg-[color-mix(in_srgb,var(--color-bg)_82%,transparent)] backdrop-blur-[10px]',
+            '[mask-image:linear-gradient(to_bottom,black_0%,black_60%,transparent_100%)]',
+            '[-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_60%,transparent_100%)]',
+            'motion-safe:transition-opacity motion-safe:duration-[var(--duration-slow)] motion-safe:ease-[var(--ease-standard)]',
+            scrolled ? 'opacity-100' : 'opacity-0',
+          )}
+        />
+        <div className="mx-auto w-full max-w-[1440px] px-5 md:px-8 lg:px-12 h-[88px] flex items-center justify-between">
           {/* §41ter — stacked logo, version display serif titlecase
               comme le Footer. Favicon plus gros (40 px) + wordmark
               display font-light (15 px) titlecase. Cohérent top + bottom. */}
