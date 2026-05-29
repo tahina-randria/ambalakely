@@ -83,7 +83,7 @@ export function Nav() {
         )}
       >
         <div
-          className="mx-auto w-full max-w-[1440px] px-5 md:px-8 lg:px-12 h-[72px] flex items-center justify-between"
+          className="mx-auto w-full max-w-[1440px] px-5 md:px-8 lg:px-12 h-[88px] flex items-center justify-between"
           style={{ mixBlendMode: scrolled ? 'normal' : 'difference' }}
         >
           {/* §41ter — stacked logo, version display serif titlecase

@@ -53,7 +53,7 @@ export function RoomComparison() {
       ════════════════════════════════════════════════════════════ */}
       <div className="md:hidden">
         {/* Tabs */}
-        <div className="sticky top-[72px] z-10 bg-[var(--color-bg)]/95 backdrop-blur-[8px] border-b border-[var(--color-border-subtle)]">
+        <div className="sticky top-[88px] z-10 bg-[var(--color-bg)]/95 backdrop-blur-[8px] border-b border-[var(--color-border-subtle)]">
           <div role="tablist" aria-label={compareAria} className="flex">
             {categories.map((cat) => {
               const isActive = cat.slug === activeSlug;
@@ -158,7 +158,7 @@ export function RoomComparison() {
       ════════════════════════════════════════════════════════════ */}
       <div className="hidden md:block">
         {/* Sticky category header */}
-        <div className="sticky top-[72px] z-10 bg-[var(--color-bg)]/95 backdrop-blur-[8px] border-b border-[var(--color-border-subtle)]">
+        <div className="sticky top-[88px] z-10 bg-[var(--color-bg)]/95 backdrop-blur-[8px] border-b border-[var(--color-border-subtle)]">
           <div className="grid grid-cols-12 gap-4 py-5">
             <div className="col-span-3">
               <div className="caption">{compareKicker}</div>
