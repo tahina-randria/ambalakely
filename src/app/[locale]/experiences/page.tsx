@@ -9,7 +9,6 @@ import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
 import { ImagePlaceholder } from '@/components/atoms/ImagePlaceholder';
-import { StickyTocRail } from '@/components/molecules/StickyTocRail';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchExcursions } from '@/sanity/lib/fetch';
 import { PHOTOS } from '@/lib/data/photos';
@@ -75,11 +74,6 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
 
   const orderedExps = bands.flatMap((b) => b.items);
   const zebraBySlug = new Map(orderedExps.map((e, i) => [e.slug, i % 2 === 1]));
-  const tocItems = orderedExps.map((exp, i) => ({
-    id: exp.slug,
-    number: String(i + 1).padStart(2, '0'),
-    label: exp.name,
-  }));
 
   return (
     <>
@@ -90,7 +84,6 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
         ]}
       />
       <Nav />
-      <StickyTocRail items={tocItems} />
       <main id="main">
         <PageHero
           src={PHOTOS.experiences.path}
