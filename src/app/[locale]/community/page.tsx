@@ -11,6 +11,7 @@ import { ImagePlaceholder } from '@/components/atoms/ImagePlaceholder';
 import { PHOTOS } from '@/lib/data/photos';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { localizedAlternates } from '@/lib/i18n/alternates';
+import { CommunityGallery } from '@/components/molecules/CommunityGallery';
 import { CommunityPrograms } from '@/components/molecules/CommunityPrograms';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
@@ -58,6 +59,28 @@ const PROGRAM_IMAGES = [
   'https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=1920&q=80&auto=format&fit=crop', // langues — cahier
   'https://images.unsplash.com/photo-1646928234724-ddfac30993e6?w=1920&q=80&auto=format&fit=crop', // environnement — forêt
   'https://images.unsplash.com/photo-1473163928189-364b2c4e1135?w=1920&q=80&auto=format&fit=crop', // histoire — cartes anciennes
+];
+
+// §54 — richer image set (free Unsplash Licence) feeding the constellation
+// gallery header. Same guardrail as PROGRAM_IMAGES: thematic scene/object
+// shots, no stock children's faces. Interim until real HFF photos (#99).
+const GALLERY_IMAGES = [
+  'https://images.unsplash.com/photo-1502051400-dad986bddd4f?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1605020420620-20c943cc4669?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1646928234724-ddfac30993e6?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1711062717319-393e424a3538?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1719310469053-8c5c0c6803d3?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1507010444286-828ea71bfac7?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1587329310686-91414b8e3cb7?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1558694440-03ade9215d7b?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1611843467160-25afb8df1074?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1550592704-6c76defa9985?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1600907055749-d6cc7e75efd4?w=600&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1617721928610-4d953b81bba8?w=600&q=80&auto=format&fit=crop',
 ];
 
 export default async function CommunityPage({ params }: LocaleParam) {
@@ -157,13 +180,15 @@ export default async function CommunityPage({ params }: LocaleParam) {
           </div>
         </section>
 
-        {/* PROGRAMS — §48 sticky split (left index + scrolling detail with
-            per-activity image slots). Client component for the scroll-spy. */}
-        <CommunityPrograms
+        {/* PROGRAMS — §54 waabi-style block : a parallax "constellation"
+            gallery header (image-framed title) immediately followed by the
+            pinned scrollytelling that steps through each program. */}
+        <CommunityGallery
           kicker={t('programsKicker')}
-          h2={t('programsH2')}
-          items={programs}
+          title={t('programsH2')}
+          images={GALLERY_IMAGES}
         />
+        <CommunityPrograms items={programs} />
 
         {/* AKANIMAMY DEEP DIVE */}
         <section id="akanimamy" className="py-32 md:py-48 hair-rule">

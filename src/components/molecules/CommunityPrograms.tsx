@@ -22,15 +22,7 @@ type Item = { title: string; body: string; image?: string };
  * Lenis). Mobile + reduced-motion : empilement simple image + titre + texte,
  * pas de pin (waabi lui-même n'épingle que sous `md:`).
  */
-export function CommunityPrograms({
-  kicker,
-  h2,
-  items,
-}: {
-  kicker: string;
-  h2: string;
-  items: Item[];
-}) {
+export function CommunityPrograms({ items }: { items: Item[] }) {
   const total = items.length;
   const sectionRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -72,19 +64,12 @@ export function CommunityPrograms({
   const heightVh = 100 + total * 50;
 
   return (
-    <section className="hair-rule bg-[var(--color-bg-subtle)]" aria-label={kicker}>
-      {/* Header */}
-      <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12 pt-32 md:pt-48 lg:pt-56">
-        <div className="caption text-center mb-4">{kicker}</div>
-        <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
-          {h2}
-        </h2>
-      </div>
-
-      {/* DESKTOP — waabi-style pinned scrollytelling */}
+    <section className="bg-[var(--color-bg-subtle)]">
+      {/* DESKTOP — waabi-style pinned scrollytelling (header lives in the
+          CommunityGallery section directly above). */}
       <div
         ref={sectionRef}
-        className={cn('relative mt-16', reduced ? 'hidden' : 'hidden lg:block')}
+        className={cn('relative', reduced ? 'hidden' : 'hidden lg:block')}
         style={{ height: `${heightVh}vh` }}
       >
         <div className="sticky top-0 h-screen overflow-hidden">
