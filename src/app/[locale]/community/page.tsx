@@ -98,9 +98,11 @@ export default async function CommunityPage({ params }: LocaleParam) {
   const heroTitle = t.raw('heroTitle') as string[];
 
   // §63 — fusion 8 → 4 piliers dans la voix « on » des enfants (style waabi,
-  // demande user). Images : livres / guitare / football / forêt.
+  // demande user). Images : arts/crayons / guitare / football / forêt. §64 — On
+  // apprend prend l'image « crayons » (celle de la constellation) car c'est
+  // elle qui « dégrossit » à l'entrée du bloc.
   const programs: Program[] = [
-    { title: t('programs.learnTitle'), body: t('programs.learnBody'), image: PROGRAM_IMAGES[0] },
+    { title: t('programs.learnTitle'), body: t('programs.learnBody'), image: PROGRAM_IMAGES[2] },
     { title: t('programs.createTitle'), body: t('programs.createBody'), image: PROGRAM_IMAGES[3] },
     { title: t('programs.moveTitle'), body: t('programs.moveBody'), image: PROGRAM_IMAGES[4] },
     { title: t('programs.growTitle'), body: t('programs.growBody'), image: PROGRAM_IMAGES[6] },
@@ -142,11 +144,10 @@ export default async function CommunityPage({ params }: LocaleParam) {
             images={GALLERY_IMAGES}
           />
         </div>
-        <CommunityPrograms
-          kicker={t('programsKicker')}
-          title={t('programsH2')}
-          items={programs}
-        />
+        {/* §64 — header « Ce qu'on fait / On grandit » retiré (demande user) :
+            la constellation au-dessus porte déjà l'intro ; le bloc démarre
+            directement sur l'image qui dégrossit + les piliers. */}
+        <CommunityPrograms items={programs} />
 
         {/* INTRO */}
         <section className="py-32 md:py-48 lg:py-56">
