@@ -79,17 +79,17 @@ const FAQ_SOURCES: LocalizedFaqItem[] = [
     fr: {
       question: 'Comment se passe le paiement ?',
       answer:
-        'Le paiement total est requis avant votre arrivée. Espèces en Ariary, virement bancaire, Visa ou Mastercard (5 % de frais sur les cartes), ou mobile money — Mvola, Airtel Money et Orange Money sont acceptés. Nous envoyons les coordonnées à la confirmation de réservation.',
+        'Le paiement total est requis avant votre arrivée. Espèces en Ariary, virement bancaire, Visa ou Mastercard (5 % de frais sur les cartes), ou mobile money, Mvola, Airtel Money et Orange Money sont acceptés. Nous envoyons les coordonnées à la confirmation de réservation.',
     },
     en: {
       question: 'How does payment work?',
       answer:
-        'Full payment is required before arrival. Cash in Ariary, bank transfer, Visa or Mastercard (5 % card fee), or mobile money — Mvola, Airtel Money and Orange Money are all accepted. We send the payment details once your booking is confirmed.',
+        'Full payment is required before arrival. Cash in Ariary, bank transfer, Visa or Mastercard (5 % card fee), or mobile money, Mvola, Airtel Money and Orange Money are all accepted. We send the payment details once your booking is confirmed.',
     },
     no: {
       question: 'Hvordan fungerer betalingen?',
       answer:
-        'Full betaling kreves før ankomst. Kontanter i Ariary, bankoverføring, Visa eller Mastercard (5 % kortgebyr), eller mobilbetaling — Mvola, Airtel Money og Orange Money aksepteres. Vi sender betalingsdetaljene når bestillingen er bekreftet.',
+        'Full betaling kreves før ankomst. Kontanter i Ariary, bankoverføring, Visa eller Mastercard (5 % kortgebyr), eller mobilbetaling, Mvola, Airtel Money og Orange Money aksepteres. Vi sender betalingsdetaljene når bestillingen er bekreftet.',
     },
   },
   {
@@ -291,17 +291,17 @@ const FAQ_SOURCES: LocalizedFaqItem[] = [
     fr: {
       question: 'Le WiFi est-il disponible dans les chambres ?',
       answer:
-        'WiFi gratuit haut-débit dans les espaces publics — restaurant, salon, terrasse. La couverture en chambre varie selon la position dans le bâtiment ; demandez à la réception en cas de besoin pour une chambre proche du routeur.',
+        'WiFi gratuit haut-débit dans les espaces publics, restaurant, salon, terrasse. La couverture en chambre varie selon la position dans le bâtiment ; demandez à la réception en cas de besoin pour une chambre proche du routeur.',
     },
     en: {
       question: 'Is WiFi available in the rooms?',
       answer:
-        'Free high-speed WiFi in the public spaces — restaurant, lounge, terrace. Coverage in the rooms varies depending on the position in the building; ask at reception if you need a room close to the router.',
+        'Free high-speed WiFi in the public spaces, restaurant, lounge, terrace. Coverage in the rooms varies depending on the position in the building; ask at reception if you need a room close to the router.',
     },
     no: {
       question: 'Er WiFi tilgjengelig på rommene?',
       answer:
-        'Gratis høyhastighets-WiFi i fellesarealene — restaurant, lounge, terrasse. Dekningen på rommene varierer med plasseringen i bygget; spør i resepsjonen om du trenger et rom nær ruteren.',
+        'Gratis høyhastighets-WiFi i fellesarealene, restaurant, lounge, terrasse. Dekningen på rommene varierer med plasseringen i bygget; spør i resepsjonen om du trenger et rom nær ruteren.',
     },
   },
   {
@@ -314,17 +314,17 @@ const FAQ_SOURCES: LocalizedFaqItem[] = [
     fr: {
       question: 'Eau chaude, chauffage, climatisation ?',
       answer:
-        'Eau chaude disponible dans chaque chambre toute la journée. Pas de climatisation — les hautes terres restent fraîches toute l’année. Bouillottes glissées dans les lits en saison fraîche (mai à août), couvertures supplémentaires dans chaque chambre, cheminée allumée à la salle à manger.',
+        'Eau chaude disponible dans chaque chambre toute la journée. Pas de climatisation, les hautes terres restent fraîches toute l’année. Bouillottes glissées dans les lits en saison fraîche (mai à août), couvertures supplémentaires dans chaque chambre, cheminée allumée à la salle à manger.',
     },
     en: {
       question: 'Hot water, heating, air conditioning?',
       answer:
-        'Hot water is available in every room throughout the day. No air conditioning — the highlands stay cool all year round. Hot-water bottles slipped into the beds in the cool season (May to August), extra blankets in every room, and a fire lit in the dining room.',
+        'Hot water is available in every room throughout the day. No air conditioning, the highlands stay cool all year round. Hot-water bottles slipped into the beds in the cool season (May to August), extra blankets in every room, and a fire lit in the dining room.',
     },
     no: {
       question: 'Varmtvann, oppvarming, klimaanlegg?',
       answer:
-        'Varmtvann er tilgjengelig på alle rom gjennom hele dagen. Ingen klimaanlegg — høylandet holder seg kjølig hele året. Varmeflasker i sengene i den kjølige sesongen (mai til august), ekstra tepper på hvert rom, og peisild i spisesalen.',
+        'Varmtvann er tilgjengelig på alle rom gjennom hele dagen. Ingen klimaanlegg, høylandet holder seg kjølig hele året. Varmeflasker i sengene i den kjølige sesongen (mai til august), ekstra tepper på hvert rom, og peisild i spisesalen.',
     },
   },
   {
@@ -400,17 +400,17 @@ const FAQ_SOURCES: LocalizedFaqItem[] = [
     fr: {
       question: 'Comment se rendre d’Antananarivo à l’hôtel ?',
       answer:
-        'Par la route sur la RN7, environ huit heures depuis l’aéroport d’Ivato. Nous organisons un transfert privé avec un chauffeur de confiance ; tarif sur devis selon la saison et la formule. Les vols domestiques Antananarivo-Fianarantsoa (Tsaradia, TNR-WFI) existent mais peuvent être annulés à court préavis — prévoyez une journée tampon.',
+        'Par la route sur la RN7, environ huit heures depuis l’aéroport d’Ivato. Nous organisons un transfert privé avec un chauffeur de confiance ; tarif sur devis selon la saison et la formule. Les vols domestiques Antananarivo-Fianarantsoa (Tsaradia, TNR-WFI) existent mais peuvent être annulés à court préavis, prévoyez une journée tampon.',
     },
     en: {
       question: 'How do we get from Antananarivo to the hotel?',
       answer:
-        'By road along the RN7, about eight hours from Ivato Airport. We arrange a private transfer with a trusted driver; the price is on a quote basis depending on season and option. Domestic flights from Antananarivo to Fianarantsoa (Tsaradia, TNR-WFI) do exist, but can be cancelled at short notice — keep a buffer day.',
+        'By road along the RN7, about eight hours from Ivato Airport. We arrange a private transfer with a trusted driver; the price is on a quote basis depending on season and option. Domestic flights from Antananarivo to Fianarantsoa (Tsaradia, TNR-WFI) do exist, but can be cancelled at short notice, keep a buffer day.',
     },
     no: {
       question: 'Hvordan kommer vi oss fra Antananarivo til hotellet?',
       answer:
-        'På vei langs RN7, omtrent åtte timer fra Ivato lufthavn. Vi ordner privat transfer med en pålitelig sjåfør; prisen gis etter sesong og opplegg. Innenriksfly Antananarivo-Fianarantsoa (Tsaradia, TNR-WFI) finnes, men kan bli kansellert på kort varsel — legg inn en bufferdag.',
+        'På vei langs RN7, omtrent åtte timer fra Ivato lufthavn. Vi ordner privat transfer med en pålitelig sjåfør; prisen gis etter sesong og opplegg. Innenriksfly Antananarivo-Fianarantsoa (Tsaradia, TNR-WFI) finnes, men kan bli kansellert på kort varsel, legg inn en bufferdag.',
     },
   },
   {

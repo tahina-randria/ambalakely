@@ -151,7 +151,7 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
                   <div className="relative aspect-[4/3] lg:aspect-[5/4] overflow-hidden bg-[var(--color-bg-muted)]">
                     <Image
                       src={exp.image}
-                      alt={`${exp.name} — Hôtel Ambalakely`}
+                      alt={`${exp.name}, Hôtel Ambalakely`}
                       fill
                       sizes="(min-width: 1024px) 58vw, 100vw"
                       className="object-cover"

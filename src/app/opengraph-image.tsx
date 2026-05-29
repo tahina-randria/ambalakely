@@ -3,7 +3,7 @@ import { ImageResponse } from 'next/og';
 export const runtime = 'edge';
 // Static — OG image generates at edge, cannot easily call Sanity from here.
 // If hotel branding changes, update this string + the rendered headline below.
-export const alt = 'Ambalakely — Dix chambres dans les hautes terres de Madagascar.';
+export const alt = 'Ambalakely. Dix chambres dans les hautes terres de Madagascar.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 

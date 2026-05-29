@@ -59,7 +59,7 @@ export function LanguageSwitcher({ scrolled }: { scrolled: boolean }) {
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="menu"
         aria-expanded={open}
-        aria-label={`${t('switchLanguage')} — ${fullLabels[current]}`}
+        aria-label={`${t('switchLanguage')}, ${fullLabels[current]}`}
         className={cn(
           'inline-flex items-center gap-1.5 px-2.5 py-1.5',
           'font-mono text-[13px] uppercase tracking-[0.06em]',

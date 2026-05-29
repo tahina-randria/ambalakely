@@ -57,7 +57,7 @@ export function BookingRequest({
   message,
 }: BookingRequestData) {
   return (
-    <Shell preview={`Demande de réservation — ${name}, ${guests} pers.`}>
+    <Shell preview={`Demande de réservation : ${name}, ${guests} pers.`}>
       <Section>
         <Text style={styles.heading}>Nouvelle demande de réservation</Text>
         <Text style={styles.paragraph}>
