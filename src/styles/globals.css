@@ -234,13 +234,21 @@ body {
   }
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    /* §49 — end at `none`, NOT translate3d(0,0,0). With `both` fill the
+       element holds this final value ; an identity matrix still counts as
+       a transform and makes `.page-transition` the containing block for
+       any `position: fixed` descendant — which silently broke the fixed
+       Nav (it scrolled away with the page). `none` leaves no containing
+       block once the entry animation has finished. */
+    transform: none;
   }
 }
 
 .page-transition {
   animation: page-fade-in 0.65s cubic-bezier(0.2, 0, 0, 1) both;
-  will-change: opacity, transform;
+  /* will-change must NOT list `transform` : it would re-create the fixed
+     containing block even after the animation ends. opacity is safe. */
+  will-change: opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {
