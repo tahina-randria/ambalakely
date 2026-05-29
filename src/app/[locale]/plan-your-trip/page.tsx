@@ -89,23 +89,6 @@ export default async function PlanYourTripPage({ params }: LocaleParam) {
           </div>
         </section>
 
-        {/* TRANSFERS — official PDF prices, so the "we organise chauffeurs"
-            promise lands with a number, not a vague claim. */}
-        <section className="hair-rule py-16 md:py-20">
-          <div className="mx-auto max-w-[920px] px-5 md:px-8">
-            <ScrollReveal>
-              <div className="caption mb-5">{tPractical('transfersLabel')}</div>
-              <ul className="space-y-2 text-[15px] leading-[1.5] text-[var(--color-text)]">
-                <li>{tPractical('transferAirport')}</li>
-                <li>{tPractical('transferCity')}</li>
-              </ul>
-              <p className="mt-3 text-[13px] leading-[1.5] text-[var(--color-text-muted)]">
-                {tPractical('transfersNote')}
-              </p>
-            </ScrollReveal>
-          </div>
-        </section>
-
         {/* QUICK NAV — card-style picks for the three itineraries */}
         <section className="hair-rule py-16 md:py-20">
           <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
@@ -219,6 +202,60 @@ export default async function PlanYourTripPage({ params }: LocaleParam) {
             </section>
           </div>
         ))}
+
+        {/* GOOD TO KNOW — practical logistics (getting here, climate,
+            transfers), all from verified facts. Clustered here near the
+            booking decision, where trip planners actually look for it,
+            rather than interrupting the inspirational flow up top
+            (§43 — relocated the old orphaned TRANSFERS block into this band). */}
+        <section className="hair-rule py-32 md:py-48">
+          <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
+            <ScrollReveal>
+              <div className="caption mb-12 md:mb-16">{t('goodToKnowKicker')}</div>
+            </ScrollReveal>
+            <dl className="border-t border-[var(--color-border-subtle)]">
+              {/* Getting here */}
+              <ScrollReveal>
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-12 py-10 md:py-14 border-b border-[var(--color-border-subtle)]">
+                  <dt className="md:col-span-3 font-display font-light text-[var(--color-text)] text-[22px] md:text-[26px] tracking-[-0.02em] leading-[1.1]">
+                    {t('gettingHereLabel')}
+                  </dt>
+                  <dd className="md:col-span-9 max-w-[660px] prose-editorial">
+                    {t('gettingHereBody')}
+                  </dd>
+                </div>
+              </ScrollReveal>
+              {/* When to come */}
+              <ScrollReveal delay={0.04}>
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-12 py-10 md:py-14 border-b border-[var(--color-border-subtle)]">
+                  <dt className="md:col-span-3 font-display font-light text-[var(--color-text)] text-[22px] md:text-[26px] tracking-[-0.02em] leading-[1.1]">
+                    {t('whenToComeLabel')}
+                  </dt>
+                  <dd className="md:col-span-9 max-w-[660px] prose-editorial">
+                    {t('whenToComeBody')}
+                  </dd>
+                </div>
+              </ScrollReveal>
+              {/* Transfers — relocated from the old mid-page block */}
+              <ScrollReveal delay={0.08}>
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-12 py-10 md:py-14 border-b border-[var(--color-border-subtle)]">
+                  <dt className="md:col-span-3 font-display font-light text-[var(--color-text)] text-[22px] md:text-[26px] tracking-[-0.02em] leading-[1.1]">
+                    {tPractical('transfersLabel')}
+                  </dt>
+                  <dd className="md:col-span-9 max-w-[660px]">
+                    <ul className="space-y-2 text-[15px] leading-[1.5] text-[var(--color-text)]">
+                      <li>{tPractical('transferAirport')}</li>
+                      <li>{tPractical('transferCity')}</li>
+                    </ul>
+                    <p className="mt-4 text-[13px] leading-[1.5] text-[var(--color-text-muted)]">
+                      {tPractical('transfersNote')}
+                    </p>
+                  </dd>
+                </div>
+              </ScrollReveal>
+            </dl>
+          </div>
+        </section>
 
         {/* BOOKING CTA */}
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
