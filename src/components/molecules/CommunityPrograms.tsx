@@ -1,18 +1,73 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ImagePlaceholder } from '@/components/atoms/ImagePlaceholder';
 import { cn } from '@/lib/utils/cn';
 
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 type Item = { title: string; body: string };
 
+const pad = (n: number) => String(n).padStart(2, '0');
+
 /**
- * §48 — "Ce qu'on fait" as a sticky split (per user direction). A left index
- * of the programs (desktop, sticky) tracks the block crossing the viewport
- * centre via IntersectionObserver — the "un thème à la fois" feel without
- * scroll-jacking. Each detail block carries an image slot (placeholder for
- * now; real per-activity photos are pending the #99 visual phase).
+ * §52 — "Ce qu'on fait" en carrousel plein écran piloté au scroll (demande
+ * user, remplace le sticky-split §48). Desktop : la section se fixe (CSS
+ * sticky, comme FullBleedToSide) et le scroll vertical fait défiler les diapos
+ * à l'horizontale (GSAP scrub, synchronisé Lenis). Mobile + reduced-motion :
+ * carrousel natif scroll-snap (swipe), pas de pin. Chaque diapo est un panneau
+ * sombre éditorial — l'ImagePlaceholder tient lieu de photo en attendant les
+ * vraies (#99) ; une vraie <Image fill> viendra derrière le dégradé.
  */
+function Slide({
+  index,
+  total,
+  title,
+  body,
+  className,
+}: {
+  index: number;
+  total: number;
+  title: string;
+  body: string;
+  className?: string;
+}) {
+  return (
+    <article
+      className={cn(
+        'relative shrink-0 overflow-hidden bg-[var(--color-sand-12)] text-[var(--color-sand-1)]',
+        className,
+      )}
+    >
+      {/* Image slot — placeholder for now (#99). A real <Image fill> will sit
+          here, behind the scrim, once the owner supplies activity photos. */}
+      <ImagePlaceholder tone="dark" bare />
+      {/* Bottom scrim — keeps overlaid text readable over a future photo. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"
+      />
+      {/* Content — bottom-left editorial block. */}
+      <div className="relative flex h-full flex-col justify-end p-8 md:p-14 lg:p-20">
+        <div className="caption tabular-nums text-[var(--color-sand-5)]">
+          {pad(index + 1)}
+          <span className="text-[var(--color-sand-7)]"> / {pad(total)}</span>
+        </div>
+        <h3 className="mt-4 max-w-[18ch] font-display font-light text-[clamp(34px,5vw,64px)] leading-[1.02] tracking-[-0.03em]">
+          {title}
+        </h3>
+        <p className="mt-5 max-w-[52ch] text-[16px] md:text-[18px] leading-[1.55] text-[var(--color-sand-3)]">
+          {body}
+        </p>
+      </div>
+    </article>
+  );
+}
+
 export function CommunityPrograms({
   kicker,
   h2,
@@ -22,89 +77,120 @@ export function CommunityPrograms({
   h2: string;
   items: Item[];
 }) {
+  const total = items.length;
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
-  const refs = useRef<(HTMLElement | null)[]>([]);
+  const [reduced, setReduced] = useState(false);
 
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            setActive(Number((e.target as HTMLElement).dataset.idx));
-          }
-        });
-      },
-      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
-    );
-    refs.current.forEach((el) => el && obs.observe(el));
-    return () => obs.disconnect();
+  // Detect reduced-motion once on mount — used to swap the pinned desktop
+  // variant for the native swipe carousel (which also serves mobile).
+  useLayoutEffect(() => {
+    setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   }, []);
 
-  const num = (i: number) => String(i + 1).padStart(2, '0');
+  // Desktop scrub — only on lg+ with motion allowed. gsap.matchMedia handles
+  // enable/disable on breakpoint + reduced-motion changes, plus cleanup.
+  useLayoutEffect(() => {
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) return;
+
+    const mm = gsap.matchMedia();
+    mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+      gsap.to(track, {
+        // Translate the full track left by (its width − one viewport), i.e.
+        // (N−1)×100vw, so the last slide lands flush. Function-based + invalidate
+        // recompute on resize.
+        x: () => -(track.scrollWidth - window.innerWidth),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1,
+          invalidateOnRefresh: true,
+          fastScrollEnd: true,
+          onUpdate: (self) => {
+            const idx = Math.min(total - 1, Math.round(self.progress * (total - 1)));
+            setActive(idx);
+            if (progressRef.current) {
+              progressRef.current.style.transform = `scaleX(${self.progress})`;
+            }
+          },
+        },
+      });
+    });
+
+    return () => mm.revert();
+  }, [total]);
+
+  // First viewport shows slide 1; each subsequent slide costs ~90vh of scroll.
+  const heightVh = 100 + (total - 1) * 90;
 
   return (
-    <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-bg-subtle)]">
-      <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
+    <section className="hair-rule bg-[var(--color-bg-subtle)]" aria-label={kicker}>
+      {/* Header */}
+      <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12 pt-32 md:pt-48 lg:pt-56">
         <div className="caption text-center mb-4">{kicker}</div>
         <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
           {h2}
         </h2>
+      </div>
 
-        <div className="mt-20 md:mt-28 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          {/* Sticky index — desktop only */}
-          <nav className="hidden lg:block lg:col-span-4" aria-label={kicker}>
-            <ol className="sticky top-[120px]">
-              {items.map((it, i) => (
-                <li key={it.title}>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      refs.current[i]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-                    }
-                    aria-current={active === i ? 'true' : undefined}
-                    className={cn(
-                      'group flex items-baseline gap-4 py-2.5 text-left w-full transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)]',
-                      active === i
-                        ? 'text-[var(--color-text)]'
-                        : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]',
-                    )}
-                  >
-                    <span className="caption tabular-nums pt-1.5 shrink-0">{num(i)}</span>
-                    <span className="font-display font-light text-[20px] md:text-[22px] leading-[1.15] tracking-[-0.02em]">
-                      {it.title}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ol>
-          </nav>
-
-          {/* Detail blocks */}
-          <div className="lg:col-span-8 space-y-20 md:space-y-28">
+      {/* Desktop — pinned, scroll-scrubbed horizontal carousel. */}
+      <div
+        ref={sectionRef}
+        className={cn('relative mt-20', reduced ? 'hidden' : 'hidden lg:block')}
+        style={{ height: `${heightVh}vh` }}
+      >
+        <div className="sticky top-0 h-screen w-full overflow-hidden">
+          <div ref={trackRef} className="flex h-full w-max will-change-transform">
             {items.map((it, i) => (
-              <article
+              <Slide
                 key={it.title}
-                data-idx={i}
-                ref={(el) => {
-                  refs.current[i] = el;
-                }}
-                className="scroll-mt-[120px]"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden bg-[var(--color-bg-muted)] mb-8">
-                  <ImagePlaceholder label={it.title} />
-                </div>
-                <div className="flex items-baseline gap-4">
-                  <span className="caption tabular-nums text-[var(--color-text-muted)] lg:hidden">
-                    {num(i)}
-                  </span>
-                  <h3 className="font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em]">
-                    {it.title}
-                  </h3>
-                </div>
-                <p className="mt-4 prose-editorial max-w-[560px]">{it.body}</p>
-              </article>
+                index={i}
+                total={total}
+                title={it.title}
+                body={it.body}
+                className="h-full w-screen"
+              />
             ))}
           </div>
+
+          {/* Progress UI — counter + thin bar, pinned bottom. Decorative. */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center gap-5 px-8 md:px-14 lg:px-20 pb-7">
+            <div className="caption tabular-nums text-[var(--color-sand-1)]">
+              {pad(active + 1)}
+              <span className="text-[var(--color-sand-7)]"> / {pad(total)}</span>
+            </div>
+            <div className="relative h-px flex-1 bg-[var(--color-sand-10)]">
+              <div
+                ref={progressRef}
+                className="absolute inset-0 origin-left bg-[var(--color-sand-1)]"
+                style={{ transform: 'scaleX(0)' }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile / reduced-motion — native swipe carousel. */}
+      <div className={cn('mt-12 pb-32 md:pb-40', reduced ? 'block' : 'lg:hidden')}>
+        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory px-5 md:px-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {items.map((it, i) => (
+            <Slide
+              key={it.title}
+              index={i}
+              total={total}
+              title={it.title}
+              body={it.body}
+              className="h-[70vh] w-[84vw] snap-center sm:w-[68vw] md:w-[56vw]"
+            />
+          ))}
+          {/* Trailing spacer so the last card can settle past the edge. */}
+          <div aria-hidden className="w-px shrink-0" />
         </div>
       </div>
     </section>
