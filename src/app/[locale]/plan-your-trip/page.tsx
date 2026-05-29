@@ -99,7 +99,7 @@ export default async function PlanYourTripPage({ params }: LocaleParam) {
                   <li key={it.slug}>
                     <Link
                       href={`#${it.slug}`}
-                      className="group block h-full p-6 md:p-7 border border-[var(--color-border-subtle)] hover:border-[var(--color-text)] hover:bg-[var(--color-bg-subtle)] transition-[border-color,background-color] duration-[var(--duration-base)] ease-[var(--ease-standard)]"
+                      className="group block h-full p-6 md:p-7 card-outline hover:bg-[var(--color-bg-subtle)]"
                     >
                       <div className="flex items-center justify-between gap-3 mb-4">
                         <span className="inline-flex items-center gap-2 caption text-[var(--color-text-muted)]">

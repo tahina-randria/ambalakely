@@ -115,19 +115,11 @@ html {
 /*  Base reset — minimal                                              */
 /* ------------------------------------------------------------------ */
 
-/* Wrapped in @layer base (like the img/video reset below) so Tailwind
-   `border-*` utilities (in @layer utilities) can override the default
-   0-width border. Unlayered, this reset beat the utilities layer and
-   silently zeroed every `border` / `border-2` / `border-b` across the
-   site — cards, inputs, dividers all lost their borders. §47, completes
-   the #110 cascade fix (which only covered the img/video reset). */
-@layer base {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-    border: 0 solid var(--color-border-subtle);
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border: 0 solid var(--color-border-subtle);
 }
 
 html {
@@ -551,6 +543,19 @@ body {
 }
 .newsletter-field--dark:focus {
   border-color: var(--color-sand-3);
+}
+
+/* Card outline — same reason as .newsletter-field : Tailwind `border`
+   utilities are zeroed by the unlayered global reset, so quick-nav / picker
+   cards rendered with no outline and looked like a flat list. A real class
+   (specificity beats `*`) draws the 1px hairline, darkening on hover. §47 */
+.card-outline {
+  border: 1px solid var(--color-border-subtle);
+  transition: border-color var(--duration-base) var(--ease-standard),
+              background-color var(--duration-base) var(--ease-standard);
+}
+.card-outline:hover {
+  border-color: var(--color-text);
 }
 
 /* select — custom chevron */

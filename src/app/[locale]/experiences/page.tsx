@@ -120,7 +120,7 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
                   <li key={exp.slug}>
                     <Link
                       href={`#${exp.slug}`}
-                      className="group block h-full p-5 md:p-6 border border-[var(--color-border-subtle)] hover:border-[var(--color-text)] hover:bg-[var(--color-bg-subtle)] transition-[border-color,background-color] duration-[var(--duration-base)] ease-[var(--ease-standard)]"
+                      className="group block h-full p-5 md:p-6 card-outline hover:bg-[var(--color-bg-subtle)]"
                     >
                       <div className="flex items-start justify-between gap-3 mb-3">
                         <span className="caption text-[var(--color-text-muted)]">
