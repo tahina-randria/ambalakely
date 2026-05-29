@@ -71,7 +71,9 @@ export async function Stay() {
                         "Voir les dix chambres" CTA carries the affordance, and
                         the h3 already group-hover:translates as a click hint. */}
                     <div className="col-span-12 md:col-span-4 text-left md:text-right font-display font-light text-[var(--color-text)] text-[18px] md:text-[22px] tracking-[-0.02em] tabular-nums">
-                      <span className="font-medium">{formatMga(cat.priceMga)}</span>{' '}
+                      {/* §47 — number and unit share the same (light) weight ;
+                          only the unit is de-emphasised (muted), not bolded. */}
+                      <span>{formatMga(cat.priceMga)}</span>{' '}
                       <span className="text-[var(--color-text-muted)]">{tCommon('ariary')}</span>
                     </div>
                   </Link>
