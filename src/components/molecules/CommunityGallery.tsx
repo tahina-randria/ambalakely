@@ -49,10 +49,12 @@ function Tile({ src }: { src: string }) {
 export function CommunityGallery({
   kicker,
   title,
+  body,
   images,
 }: {
   kicker: string;
   title: string;
+  body: string;
   images: string[];
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -127,6 +129,9 @@ export function CommunityGallery({
           <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance max-w-[560px]">
             {title}
           </h2>
+          <p className="mt-6 mx-auto max-w-[440px] text-[var(--color-text-muted)] text-[16px] md:text-[17px] leading-[1.55] text-balance">
+            {body}
+          </p>
         </div>
       </div>
 
@@ -137,6 +142,9 @@ export function CommunityGallery({
           <h2 className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[52px] leading-[1.02] tracking-[-0.03em] balance mx-auto max-w-[520px]">
             {title}
           </h2>
+          <p className="mt-5 mx-auto max-w-[440px] text-[var(--color-text-muted)] text-[16px] leading-[1.55]">
+            {body}
+          </p>
         </div>
         <div className="mt-12 grid grid-cols-2 gap-3">
           {images.slice(0, 6).map((src, i) => (

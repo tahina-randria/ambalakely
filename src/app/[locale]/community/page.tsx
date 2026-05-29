@@ -134,11 +134,16 @@ export default async function CommunityPage({ params }: LocaleParam) {
         {/* ACTIVITIES — constellation gallery (image-framed title) + pinned
             scrollytelling, immediately after the hero. */}
         <CommunityGallery
-          kicker={t('programsKicker')}
-          title={t('programsH2')}
+          kicker={t('galleryKicker')}
+          title={t('galleryTitle')}
+          body={t('galleryBody')}
           images={GALLERY_IMAGES}
         />
-        <CommunityPrograms items={programs} />
+        <CommunityPrograms
+          kicker={t('programsKicker')}
+          title={t('programsH2')}
+          items={programs}
+        />
 
         {/* INTRO */}
         <section className="py-32 md:py-48 lg:py-56">

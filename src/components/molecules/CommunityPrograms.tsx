@@ -22,7 +22,15 @@ type Item = { title: string; body: string; image?: string };
  * Lenis). Mobile + reduced-motion : empilement simple image + titre + texte,
  * pas de pin (waabi lui-même n'épingle que sous `md:`).
  */
-export function CommunityPrograms({ items }: { items: Item[] }) {
+export function CommunityPrograms({
+  items,
+  kicker,
+  title,
+}: {
+  items: Item[];
+  kicker?: string;
+  title?: string;
+}) {
   const total = items.length;
   const sectionRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -65,8 +73,20 @@ export function CommunityPrograms({ items }: { items: Item[] }) {
 
   return (
     <section className="bg-[var(--color-bg-subtle)]">
-      {/* DESKTOP — waabi-style pinned scrollytelling (header lives in the
-          CommunityGallery section directly above). */}
+      {/* Section header — introduces the eight programs. The gallery above now
+          carries the Hope for the Future intro, so the heading lives here. */}
+      {(kicker || title) && (
+        <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12 pt-28 md:pt-36 lg:pt-44 text-center">
+          {kicker && <div className="caption mb-4">{kicker}</div>}
+          {title && (
+            <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance mx-auto max-w-[680px]">
+              {title}
+            </h2>
+          )}
+        </div>
+      )}
+
+      {/* DESKTOP — waabi-style pinned scrollytelling. */}
       <div
         ref={sectionRef}
         className={cn('relative', reduced ? 'hidden' : 'hidden lg:block')}
