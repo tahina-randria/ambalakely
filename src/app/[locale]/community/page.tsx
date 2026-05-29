@@ -6,7 +6,7 @@ import { Footer } from '@/components/sections/Footer';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
-import { CommunityHero } from '@/components/molecules/CommunityHero';
+import { PageHero } from '@/components/molecules/PageHero';
 import { ImagePlaceholder } from '@/components/atoms/ImagePlaceholder';
 import { PHOTOS } from '@/lib/data/photos';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
@@ -126,9 +126,19 @@ export default async function CommunityPage({ params }: LocaleParam) {
       />
       <Nav />
       <main id="main">
-        {/* §55 — waabi-style cinematic hero (full-bleed image, descending
-            title, scroll zoom-out). Interim landscape until a real HFF photo. */}
-        <CommunityHero src={HERO_IMAGE} alt={t('heroAlt')} title={heroTitle} />
+        {/* §56 — standard PageHero (real region landscape) flowing straight
+            into the constellation gallery + scrollytelling, per waabi
+            structure. Title keeps the site's standard h1 size. */}
+        <PageHero src={HERO_IMAGE} alt={t('heroAlt')} title={heroTitle} />
+
+        {/* ACTIVITIES — constellation gallery (image-framed title) + pinned
+            scrollytelling, immediately after the hero. */}
+        <CommunityGallery
+          kicker={t('programsKicker')}
+          title={t('programsH2')}
+          images={GALLERY_IMAGES}
+        />
+        <CommunityPrograms items={programs} />
 
         {/* INTRO */}
         <section className="py-32 md:py-48 lg:py-56">
@@ -146,52 +156,7 @@ export default async function CommunityPage({ params }: LocaleParam) {
           </div>
         </section>
 
-        {/* §50 — "En chiffres" section removed : it duplicated the intro
-            (which already states 130 enfants / 8 programmes / Akanimamy) and
-            no layout landed well. The figures live in the intro ; an Akanimamy
-            visual can return here once a real drawing exists. */}
-
-        {/* TIMELINE */}
-        <section className="py-32 md:py-48 lg:py-56 hair-rule">
-          <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
-            <ScrollReveal>
-              <div className="caption text-center mb-4">{t('timelineKicker')}</div>
-              <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
-                {t('timelineH2')}
-              </h2>
-            </ScrollReveal>
-
-            <ul className="mt-20 md:mt-28 mx-auto max-w-[860px] border-t border-[var(--color-border-subtle)]">
-              {timeline.map((m, i) => (
-                <ScrollReveal key={m.year} delay={i * 0.04}>
-                  <li className="grid grid-cols-12 gap-6 py-10 md:py-14 border-b border-[var(--color-border-subtle)]">
-                    <div className="col-span-3 md:col-span-2">
-                      <div className="text-[14px] tabular-nums text-[var(--color-text-muted)]">
-                        {m.year}
-                      </div>
-                    </div>
-                    <div className="col-span-9 md:col-span-10 max-w-[640px]">
-                      <h3 className="font-display font-light text-[var(--color-text)] text-[24px] md:text-[32px] leading-[1.05] tracking-[-0.025em]">
-                        {m.title}
-                      </h3>
-                      <p className="mt-4 prose-editorial">{m.body}</p>
-                    </div>
-                  </li>
-                </ScrollReveal>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* PROGRAMS — §54 waabi-style block : a parallax "constellation"
-            gallery header (image-framed title) immediately followed by the
-            pinned scrollytelling that steps through each program. */}
-        <CommunityGallery
-          kicker={t('programsKicker')}
-          title={t('programsH2')}
-          images={GALLERY_IMAGES}
-        />
-        <CommunityPrograms items={programs} />
+        {/* §56 — timeline relocated to the bottom (just before the CTA). */}
 
         {/* AKANIMAMY DEEP DIVE */}
         <section id="akanimamy" className="py-32 md:py-48 hair-rule">
@@ -262,6 +227,38 @@ export default async function CommunityPage({ params }: LocaleParam) {
                 <p>{t('visitP2')}</p>
               </div>
             </ScrollReveal>
+          </div>
+        </section>
+
+        {/* TIMELINE — §56 relocated to the bottom. */}
+        <section className="py-32 md:py-48 lg:py-56 hair-rule">
+          <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
+            <ScrollReveal>
+              <div className="caption text-center mb-4">{t('timelineKicker')}</div>
+              <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance text-center mx-auto max-w-[680px]">
+                {t('timelineH2')}
+              </h2>
+            </ScrollReveal>
+
+            <ul className="mt-20 md:mt-28 mx-auto max-w-[860px] border-t border-[var(--color-border-subtle)]">
+              {timeline.map((m, i) => (
+                <ScrollReveal key={m.year} delay={i * 0.04}>
+                  <li className="grid grid-cols-12 gap-6 py-10 md:py-14 border-b border-[var(--color-border-subtle)]">
+                    <div className="col-span-3 md:col-span-2">
+                      <div className="text-[14px] tabular-nums text-[var(--color-text-muted)]">
+                        {m.year}
+                      </div>
+                    </div>
+                    <div className="col-span-9 md:col-span-10 max-w-[640px]">
+                      <h3 className="font-display font-light text-[var(--color-text)] text-[24px] md:text-[32px] leading-[1.05] tracking-[-0.025em]">
+                        {m.title}
+                      </h3>
+                      <p className="mt-4 prose-editorial">{m.body}</p>
+                    </div>
+                  </li>
+                </ScrollReveal>
+              ))}
+            </ul>
           </div>
         </section>
 
