@@ -11,17 +11,16 @@ if (typeof window !== 'undefined') {
 }
 
 /**
- * §60 — Hero "qui passe petit", mécanique exacte de waabi.ai (mesurée au DOM) :
- *  - Section 250vh, ÉPINGLÉE (sticky h-screen). Fond transparent.
- *  - L'image plein écran se réduit SUR PLACE, CENTRÉE (scale 1 → 0.15,
- *    transform-origin centre — waabi reste pile au centre 720,450). Départ
- *    retardé (~42 %) puis chute eased, comme waabi (image figée pleine page
- *    jusqu'à ~⅔ du scroll).
- *  - Le titre h1 (taille standard, centré) monte + s'efface tôt.
- *  - `mb-[-75vh]` : la constellation (section séparée, en dessous, z inférieur)
- *    remonte par TRANSPARENCE pendant que l'image rétrécit, puis le hero
- *    s'efface et la constellation défile avec sa parallaxe.
- * Mobile + reduced-motion : hero statique centré, pas de pin.
+ * §61 — Hero "qui passe petit", mécanique waabi (mesurée au DOM) :
+ *  - Section 250vh épinglée, FOND BEIGE (var --color-bg-subtle) — l'image se
+ *    réduit dessus sur fond beige cohérent avec la constellation (pas de blanc).
+ *  - L'image plein écran se réduit SUR PLACE, CENTRÉE (scale 1 → 0.15) et prend
+ *    des coins arrondis (borderRadius 0 → 80px → ~12px visuel à l'échelle), comme
+ *    les tuiles. mb-[-75vh] : la constellation (section séparée) remonte juste
+ *    après et défile avec sa parallaxe.
+ *  - Le titre h1 (taille standard) reste EN BAS À GAUCHE (comme PageHero) et
+ *    s'efface tôt ; voile uniquement en bas (dégradé), qui part avec le titre.
+ * Mobile + reduced-motion : hero statique bas-gauche, pas de pin.
  */
 export function CommunityScrollHero({
   src,
@@ -34,7 +33,7 @@ export function CommunityScrollHero({
   title: string[];
   subtitle: string;
 }) {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const desktopRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const [reduced, setReduced] = useState(false);
@@ -44,43 +43,61 @@ export function CommunityScrollHero({
   }, []);
 
   useLayoutEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
+    const trigger = desktopRef.current;
+    if (!trigger) return;
     const mm = gsap.matchMedia();
     mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
       const ctx = gsap.context(() => {
         const tl = gsap.timeline({
-          scrollTrigger: { trigger: section, start: 'top top', end: 'bottom bottom', scrub: 1 },
+          scrollTrigger: { trigger, start: 'top top', end: 'bottom bottom', scrub: 1 },
         });
-        // title rises + fades away early (waabi: title scrolls off in the first third)
+        // title (bottom-left) rises + fades away early
         tl.fromTo(
           titleRef.current,
           { yPercent: 0, opacity: 1 },
-          { yPercent: -55, opacity: 0, ease: 'power1.in', duration: 0.3 },
+          { yPercent: -45, opacity: 0, ease: 'power1.in', duration: 0.3 },
           0,
         );
-        // image shrinks IN PLACE, centred (waabi: scale 1→0.148, stays at centre),
-        // delayed then eased so it stays full-bleed through the first ~40%.
+        // image shrinks IN PLACE centred + rounds its corners (12px @ scale 0.15)
         tl.fromTo(
           imgRef.current,
-          { scale: 1 },
-          { scale: 0.15, ease: 'power2.inOut', duration: 0.5 },
+          { scale: 1, borderRadius: 0 },
+          { scale: 0.15, borderRadius: 80, ease: 'power2.inOut', duration: 0.5 },
           0.42,
         );
-      }, section);
+      }, trigger);
       return () => ctx.revert();
     });
     return () => mm.revert();
   }, []);
 
+  const titleBlock = (
+    <div className="mx-auto flex h-full max-w-[1440px] flex-col px-5 md:px-8 lg:px-12">
+      <div className="mt-auto max-w-[920px] pb-14 md:pb-20">
+        <h1 className="font-display font-light text-white text-[40px] md:text-[56px] leading-[1.02] tracking-[-0.03em] balance">
+          {title.map((line, i) => (
+            <span key={i} className="block">
+              {line}
+            </span>
+          ))}
+        </h1>
+        <p className="mt-4 max-w-[520px] font-body text-[15px] text-white/85 md:text-[17px]">
+          {subtitle}
+        </p>
+      </div>
+    </div>
+  );
+
   return (
     <section
-      ref={sectionRef}
-      className={cn('relative w-full', reduced ? '' : 'hidden lg:block lg:z-20 lg:mb-[-75vh] lg:h-[250vh]')}
+      className={cn(
+        'relative w-full bg-[var(--color-bg-subtle)]',
+        reduced ? '' : 'lg:z-20 lg:mb-[-75vh]',
+      )}
       aria-label={title.join(' ')}
     >
-      {/* DESKTOP — pinned, transparent stage; image shrinks centred */}
-      <div className="hidden h-full lg:block">
+      {/* DESKTOP — pinned, beige stage; image shrinks centred with rounded corners */}
+      <div ref={desktopRef} className={cn('h-[250vh]', reduced ? 'hidden' : 'hidden lg:block')}>
         <div className="sticky top-0 h-screen overflow-hidden">
           <div
             ref={imgRef}
@@ -88,26 +105,14 @@ export function CommunityScrollHero({
           >
             <Image src={src} alt={alt} fill priority sizes="100vw" className="object-cover" />
           </div>
-          <div
-            ref={titleRef}
-            className="absolute inset-0 z-10 flex flex-col items-center justify-center will-change-transform"
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/15 to-black/25" />
-            <h1 className="relative max-w-[900px] px-6 text-center font-display font-light text-white text-[44px] md:text-[56px] leading-[1.02] tracking-[-0.03em] balance">
-              {title.map((line, i) => (
-                <span key={i} className="block">
-                  {line}
-                </span>
-              ))}
-            </h1>
-            <p className="relative mt-5 max-w-[520px] px-6 text-center font-body text-[15px] text-white/85 md:text-[17px]">
-              {subtitle}
-            </p>
+          <div ref={titleRef} className="absolute inset-0 z-10 will-change-transform">
+            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+            <div className="relative h-full">{titleBlock}</div>
           </div>
         </div>
       </div>
 
-      {/* MOBILE / reduced-motion — static centred hero */}
+      {/* MOBILE / reduced-motion — static hero, bottom-left */}
       <div
         className={cn(
           reduced ? 'block' : 'lg:hidden',
@@ -115,19 +120,8 @@ export function CommunityScrollHero({
         )}
       >
         <Image src={src} alt={alt} fill priority sizes="100vw" className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-black/25" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="max-w-[820px] px-6 text-center font-display font-light text-white text-[40px] md:text-[52px] leading-[1.04] tracking-[-0.03em] balance">
-            {title.map((line, i) => (
-              <span key={i} className="block">
-                {line}
-              </span>
-            ))}
-          </h1>
-          <p className="mt-4 max-w-[460px] px-6 text-center font-body text-[15px] text-white/85">
-            {subtitle}
-          </p>
-        </div>
+        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+        <div className="absolute inset-0">{titleBlock}</div>
       </div>
     </section>
   );
