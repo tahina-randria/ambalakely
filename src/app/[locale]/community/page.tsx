@@ -52,19 +52,6 @@ export default async function CommunityPage({ params }: LocaleParam) {
 
   const heroTitle = t.raw('heroTitle') as string[];
 
-  // §39 — refonte stats au pattern Kickstarter asymétrique (Mobbin
-  // research 2026-05-28). Avant : 4 cards equal-weight avec icons et
-  // une stat morte ("1 quartier Tanambao" = filler). Maintenant : 1
-  // hero (130 enfants) qui domine + 2 supporting stats (9 programmes,
-  // 152 m² Akanimamy) qui complètent. Drop icons, drop card chrome.
-  // Le total reste 3 stats meaningful au lieu de 4 dont une bidon.
-  // §48 — stat corrected 9 → 8 : there are exactly 8 programmes in the
-  // list below, the "9" was stale.
-  const supportingStats = [
-    { value: '8', label: t('numberProgramsLabel') },
-    { value: '152 m²', label: t('numberBuildingLabel') },
-  ];
-
   const programs: Program[] = [
     { title: t('programs.educationTitle'), body: t('programs.educationBody') },
     { title: t('programs.healthTitle'), body: t('programs.healthBody') },
@@ -118,45 +105,10 @@ export default async function CommunityPage({ params }: LocaleParam) {
           </div>
         </section>
 
-        {/* NUMBERS — §48 : the figures paired with a slot for the future
-            Akanimamy line-drawing (asset pending #99 — placeholder for now).
-            Borders use .hair-rule, not Tailwind border-* (still suppressed). */}
-        <section className="py-32 md:py-40 lg:py-48 hair-rule bg-[var(--color-bg-subtle)]">
-          <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
-            <ScrollReveal>
-              <div className="caption mb-16 md:mb-20">{t('numbersKicker')}</div>
-            </ScrollReveal>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-              {/* Figures — left */}
-              <ScrollReveal className="lg:col-span-6">
-                <div className="font-display font-light text-[var(--color-text)] text-[96px] md:text-[132px] lg:text-[160px] leading-[0.9] tracking-[-0.04em] tabular-nums">
-                  {t('numberHeroValue')}
-                </div>
-                <p className="mt-6 max-w-[420px] prose-editorial text-[18px] md:text-[20px] leading-[1.45] tracking-[-0.005em]">
-                  {t('numberHeroLabel')}
-                </p>
-                <ul className="mt-12 hair-rule pt-8 space-y-6">
-                  {supportingStats.map((s) => (
-                    <li key={s.label} className="flex items-baseline gap-6">
-                      <div className="font-display font-light text-[var(--color-text)] text-[40px] md:text-[52px] leading-[1] tracking-[-0.03em] tabular-nums whitespace-nowrap shrink-0">
-                        {s.value}
-                      </div>
-                      <div className="caption text-[var(--color-text-muted)]">{s.label}</div>
-                    </li>
-                  ))}
-                </ul>
-              </ScrollReveal>
-
-              {/* Akanimamy drawing slot — right */}
-              <ScrollReveal delay={0.08} className="lg:col-span-6">
-                <div className="relative aspect-[4/3] overflow-hidden bg-[var(--color-bg-muted)]">
-                  <ImagePlaceholder label="Akanimamy" />
-                </div>
-              </ScrollReveal>
-            </div>
-          </div>
-        </section>
+        {/* §50 — "En chiffres" section removed : it duplicated the intro
+            (which already states 130 enfants / 8 programmes / Akanimamy) and
+            no layout landed well. The figures live in the intro ; an Akanimamy
+            visual can return here once a real drawing exists. */}
 
         {/* TIMELINE */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule">
