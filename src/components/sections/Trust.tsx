@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Section } from '@/components/atoms/Section';
 import { ScrollReveal } from '@/lib/motion/ScrollReveal';
+import { ImagePlaceholder } from '@/components/atoms/ImagePlaceholder';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 
 /**
@@ -15,13 +15,10 @@ export async function Trust() {
   return (
     <Section id="trust" divider bleed>
       <div className="relative h-[80vh] md:h-[100vh] w-full overflow-hidden bg-[var(--color-sand-12)]">
-        <Image
-          src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
-          alt={t('imageAlt')}
-          fill
-          sizes="100vw"
-          className="object-cover"
-        />
+        {/* §45 — placeholder until a real Hope for the Future photo is
+            hosted locally (was the external Squarespace HFF2.jpg hotlink).
+            Dark sand ground + gradient keep the white headline readable. */}
+        <ImagePlaceholder tone="dark" bare />
         <div
           aria-hidden
           className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/65"

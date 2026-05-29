@@ -7,15 +7,22 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowDown } from '@phosphor-icons/react/dist/ssr';
 import { cn } from '@/lib/utils/cn';
+import { ImagePlaceholder } from '@/components/atoms/ImagePlaceholder';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 type Props = {
-  /** Image source (full URL, expects landscape) */
-  src: string;
+  /** Image source (full URL, expects landscape). Omit when `placeholder`. */
+  src?: string;
   alt: string;
+  /**
+   * Render an on-brand placeholder instead of a photo (§45). Used by
+   * /community while the real Tanambao school photos are pending — keeps the
+   * white title readable over a dark sand ground.
+   */
+  placeholder?: boolean;
   /** Title — pass an array of lines for line-by-line mask reveal */
   title: string | string[];
   /**
@@ -42,6 +49,7 @@ export function PageHero({
   title,
   cta,
   hideCta = false,
+  placeholder = false,
   className,
 }: Props) {
   const tCommon = useTranslations('Common');
@@ -92,14 +100,18 @@ export function PageHero({
         className="absolute inset-0 h-[120%] -top-[10%] hero-bg-settle"
         style={{ willChange: 'transform' }}
       >
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes="100vw"
-          priority
-          className="object-cover"
-        />
+        {placeholder || !src ? (
+          <ImagePlaceholder tone="dark" bare />
+        ) : (
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover"
+          />
+        )}
       </div>
 
       {/* Cinematic gradient */}

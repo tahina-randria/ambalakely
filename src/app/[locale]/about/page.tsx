@@ -9,6 +9,7 @@ import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
+import { ImagePlaceholder } from '@/components/atoms/ImagePlaceholder';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchHotel } from '@/sanity/lib/fetch';
 import { PHOTOS } from '@/lib/data/photos';
@@ -260,20 +261,10 @@ export default async function AboutPage({ params }: LocaleParam) {
               </ScrollReveal>
             </div>
             <div className="lg:col-span-7 lg:order-2 relative aspect-[4/5] lg:aspect-auto lg:min-h-[70vh] bg-[var(--color-bg-muted)] overflow-hidden">
-              {/* ⚠️ EXTERNAL DEPENDENCY (§44) — this is the real Tanambao
-                  school photo (HFF2.jpg), the only image of the actual
-                  Hope for the Future project ; also used 3× in /community.
-                  It is NOT in the local 47-photo set. Kept hotlinked rather
-                  than swapped for a hotel shot (which would misrepresent the
-                  community section). Proper fix = self-host the owner's own
-                  asset, pending their go-ahead (it depicts children). */}
-              <Image
-                src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
-                alt={t('hopeImageAlt')}
-                fill
-                sizes="(min-width: 1024px) 58vw, 100vw"
-                className="object-cover"
-              />
+              {/* §45 — placeholder until a real, locally hosted Tanambao
+                  school photo is added (replaces the old external Squarespace
+                  HFF2.jpg hotlink). The label names the photo that belongs here. */}
+              <ImagePlaceholder label={t('hopeImageAlt')} />
             </div>
           </div>
         </section>

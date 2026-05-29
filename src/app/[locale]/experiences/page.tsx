@@ -8,6 +8,7 @@ import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
+import { ImagePlaceholder } from '@/components/atoms/ImagePlaceholder';
 import { StickyTocRail } from '@/components/molecules/StickyTocRail';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { fetchExcursions } from '@/sanity/lib/fetch';
@@ -191,13 +192,17 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
                         className={`lg:col-span-7 ${zebra ? 'lg:order-2' : ''}`}
                       >
                         <div className="relative aspect-[4/3] lg:aspect-[5/4] overflow-hidden bg-[var(--color-bg-muted)]">
-                          <Image
-                            src={exp.image}
-                            alt={`${exp.name}, Hôtel Ambalakely`}
-                            fill
-                            sizes="(min-width: 1024px) 58vw, 100vw"
-                            className="object-cover"
-                          />
+                          {exp.image ? (
+                            <Image
+                              src={exp.image}
+                              alt={`${exp.name}, Hôtel Ambalakely`}
+                              fill
+                              sizes="(min-width: 1024px) 58vw, 100vw"
+                              className="object-cover"
+                            />
+                          ) : (
+                            <ImagePlaceholder label={`${exp.name}, Hôtel Ambalakely`} />
+                          )}
                         </div>
                         <div className="mt-3 caption text-[var(--color-text-muted)]">
                           {exp.tagline}

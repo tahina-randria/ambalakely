@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Nav } from '@/components/sections/Nav';
@@ -8,6 +7,8 @@ import { ScrollReveal } from '@/lib/motion/ScrollReveal';
 import { BreadcrumbJsonLd } from '@/components/atoms/JsonLd';
 import { BookingButton } from '@/components/atoms/BookingButton';
 import { PageHero } from '@/components/molecules/PageHero';
+import { ImagePlaceholder } from '@/components/atoms/ImagePlaceholder';
+import { PHOTOS } from '@/lib/data/photos';
 import {
   ArrowRight,
   GraduationCap,
@@ -38,9 +39,13 @@ export async function generateMetadata({ params }: LocaleParam): Promise<Metadat
       url: alt.canonical,
       images: [
         {
-          url: 'https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=1500w',
-          width: 1500,
-          height: 1200,
+          // §45 — was the external Squarespace school photo. Until real
+          // local school photos exist, the social card uses the hotel's
+          // own brand image rather than a placeholder (placeholders make
+          // poor share previews).
+          url: PHOTOS.hero.url,
+          width: 2560,
+          height: 1707,
           alt: t('imageAlt'),
         },
       ],
@@ -97,8 +102,10 @@ export default async function CommunityPage({ params }: LocaleParam) {
       />
       <Nav />
       <main id="main">
+        {/* §45 — placeholder hero until real Tanambao school photos are
+            hosted locally (was the external Squarespace HFF2.jpg). */}
         <PageHero
-          src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
+          placeholder
           alt={t('heroAlt')}
           title={heroTitle}
         />
@@ -239,14 +246,10 @@ export default async function CommunityPage({ params }: LocaleParam) {
             </ScrollReveal>
             <div className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
               <ScrollReveal className="lg:col-span-7">
+                {/* §45 — placeholder until a real Akanimamy / school photo
+                    is hosted locally (was the Squarespace HFF2.jpg hotlink). */}
                 <div className="relative aspect-[4/3] bg-[var(--color-bg-muted)] overflow-hidden">
-                  <Image
-                    src="https://images.squarespace-cdn.com/content/v1/66084a14104f6977dd1e877d/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2500w"
-                    alt={t('akanimamyImageAlt')}
-                    fill
-                    sizes="(min-width: 1024px) 58vw, 100vw"
-                    className="object-cover"
-                  />
+                  <ImagePlaceholder label={t('akanimamyImageAlt')} />
                 </div>
               </ScrollReveal>
               <ScrollReveal delay={0.05} className="lg:col-span-5">

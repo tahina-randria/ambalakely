@@ -376,7 +376,10 @@ const SOURCES: LocalizedExperience[] = [
   {
     slug: 'community',
     number: '10',
-    image: `${SQ}/38aeed61-0d50-4cde-a210-1c6363f4139c/HFF2.jpg?format=2000w`,
+    // §45 — was the external Squarespace school photo (HFF2.jpg). Empty
+    // until a real, locally hosted school photo exists ; the experiences
+    // page renders an ImagePlaceholder for any empty image.
+    image: '',
     fr: {
       name: "Une matinée à l'école",
       duration: 'Deux heures',
