@@ -4,42 +4,42 @@ import Image from 'next/image';
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { cn } from '@/lib/utils/cn';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 /**
- * §57 — "constellation" gallery, stolen 1:1 from waabi.ai : un titre centré
- * encadré par des COLONNES pleine hauteur de tuiles carrées 133×133 (rounded
- * 12px). Les colonnes extérieures défilent plus vite que les intérieures
- * (parallaxe d'amplitudes différentes = profondeur / « delay »), plus deux
- * tuiles centrées au-dessus et en dessous du texte. Piloté au scroll (GSAP,
- * lissé Lenis). Colonnes intérieures masquées sous xl pour ne pas chevaucher
- * le titre. Mobile + reduced-motion : titre + mosaïque 2 colonnes, sans
- * parallaxe.
+ * §58 — "constellation" gallery, mesurée 1:1 sur waabi.ai au DOM (Playwright,
+ * viewport 1440×900). Le vrai modèle waabi :
+ *  - Section haute de 150vh, NON épinglée — elle défile, le titre la traverse.
+ *  - 4 colonnes `absolute h-[150vh] flex-col justify-between`, 4 tuiles carrées
+ *    chacune → pitch ~406px (gros vides). Tuiles fluides : 133/1440·100vw.
+ *  - Positions : extérieures à 1.667% des bords, intérieures à 16.667% →
+ *    deux paires serrées qui collent les bords G/D, grand centre vide.
+ *  - Parallaxe : SEULES les colonnes extérieures bougent (translateY +600→−600
+ *    @900vh, soit ±0.667·vh, même sens). Les intérieures + tuiles centrales
+ *    sont STATIQUES (ty=0 mesuré sur tout le scroll).
+ *  - Deux tuiles centrales encadrent le titre (haut/bas), statiques.
+ * Scrub GSAP lissé par Lenis (plus fluide que le rAF de waabi qui « bug »).
+ * Mobile + reduced-motion : titre + mosaïque 2 colonnes.
  */
-const TILE = 133;
+const TILE = 'min(9.236vw, 150px)'; // 133px @1440, fluide comme waabi
+const PER_COL = 4;
 
-type Col = { side: 'left' | 'right'; offset: string; amp: number; show: string; seed: number };
-
-// amp = parallax travel in px (sign = direction). Outer columns travel far
-// (fast), inner columns gently. show = breakpoint at which the column appears.
+type Col = { side: 'left' | 'right'; offset: string; parallax: boolean; seed: number };
 const COLUMNS: Col[] = [
-  { side: 'left', offset: '1.5%', amp: 200, show: 'lg:flex', seed: 0 }, // outer-left, fast
-  { side: 'left', offset: '16%', amp: -86, show: 'hidden xl:flex', seed: 5 }, // inner-left, slow
-  { side: 'right', offset: '16%', amp: 86, show: 'hidden xl:flex', seed: 9 }, // inner-right, slow
-  { side: 'right', offset: '1.5%', amp: -200, show: 'lg:flex', seed: 12 }, // outer-right, fast
+  { side: 'left', offset: '1.667%', parallax: true, seed: 0 }, // outer-left, drifts
+  { side: 'left', offset: '16.667%', parallax: false, seed: 4 }, // inner-left, static
+  { side: 'right', offset: '16.667%', parallax: false, seed: 8 }, // inner-right, static
+  { side: 'right', offset: '1.667%', parallax: true, seed: 12 }, // outer-right, drifts
 ];
-const PER_COL = 9;
 
-function Tile({ src, size = TILE }: { src: string; size?: number }) {
+function Tile({ src }: { src: string }) {
   return (
     <div
       aria-hidden
-      className="relative shrink-0 overflow-hidden rounded-[12px] bg-[var(--color-bg-muted)]"
-      style={{ width: size, height: size }}
+      className="relative aspect-square w-full shrink-0 overflow-hidden rounded-[12px] bg-[var(--color-bg-muted)]"
     >
       <Image src={src} alt="" fill sizes="160px" className="object-cover" />
     </div>
@@ -57,29 +57,22 @@ export function CommunityGallery({
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const colRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const accentRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
     const mm = gsap.matchMedia();
     mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+      // waabi : ty +600 → −600 sur une fenêtre 900px → ±0.667·vh, même sens
+      // pour les deux colonnes extérieures. Intérieures statiques.
+      const amp = window.innerHeight * (600 / 900);
       const ctx = gsap.context(() => {
-        const st = {
-          trigger: section,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
-        } as const;
+        const st = { trigger: section, start: 'top bottom', end: 'bottom top', scrub: 1 } as const;
         COLUMNS.forEach((c, i) => {
+          if (!c.parallax) return;
           const el = colRefs.current[i];
-          if (el) gsap.fromTo(el, { y: -c.amp }, { y: c.amp, ease: 'none', scrollTrigger: st });
+          if (el) gsap.fromTo(el, { y: amp }, { y: -amp, ease: 'none', scrollTrigger: st });
         });
-        // Centre accents drift gently, opposite each other.
-        if (accentRefs.current[0])
-          gsap.fromTo(accentRefs.current[0], { y: -44 }, { y: 44, ease: 'none', scrollTrigger: st });
-        if (accentRefs.current[1])
-          gsap.fromTo(accentRefs.current[1], { y: 44 }, { y: -44, ease: 'none', scrollTrigger: st });
       }, section);
       return () => ctx.revert();
     });
@@ -89,59 +82,51 @@ export function CommunityGallery({
   return (
     <section
       ref={sectionRef}
-      className="hair-rule relative overflow-clip bg-[var(--color-bg-subtle)]"
+      className="hair-rule relative w-full overflow-clip bg-[var(--color-bg-subtle)]"
       aria-label={kicker}
     >
-      {/* DESKTOP — column constellation around a centred title */}
-      <div className="relative hidden lg:block" style={{ height: '150vh' }}>
-        <div className="sticky top-0 h-screen overflow-hidden">
-          {/* Parallax columns (extend past top/bottom so no gaps appear). */}
-          {COLUMNS.map((c, ci) => (
-            <div
-              key={ci}
-              ref={(el) => {
-                colRefs.current[ci] = el;
-              }}
-              aria-hidden
-              className={cn(
-                'absolute top-[-260px] bottom-[-260px] hidden flex-col justify-center gap-4 will-change-transform',
-                c.show,
-              )}
-              style={{ [c.side]: c.offset, width: TILE } as React.CSSProperties}
-            >
-              {Array.from({ length: PER_COL }).map((_, t) => (
-                <Tile key={t} src={images[(c.seed + t) % images.length]} />
-              ))}
-            </div>
-          ))}
-
-          {/* Centre accents — one above, one below the title. */}
+      {/* DESKTOP — sparse edge-hugging constellation around a centred title.
+          150vh tall, NOT pinned : the section scrolls past, only the outer
+          columns drift (1:1 with waabi). */}
+      <div className="relative hidden h-[150vh] w-full lg:block">
+        {COLUMNS.map((c, ci) => (
           <div
+            key={ci}
             ref={(el) => {
-              accentRefs.current[0] = el;
+              colRefs.current[ci] = el;
             }}
             aria-hidden
-            className="absolute left-1/2 top-[8%] -translate-x-1/2 will-change-transform"
+            className="absolute top-0 flex h-[150vh] flex-col justify-between will-change-transform"
+            style={{ [c.side]: c.offset, width: TILE } as React.CSSProperties}
           >
-            <Tile src={images[3 % images.length]} size={116} />
+            {Array.from({ length: PER_COL }).map((_, t) => (
+              <Tile key={t} src={images[(c.seed + t) % images.length]} />
+            ))}
           </div>
-          <div
-            ref={(el) => {
-              accentRefs.current[1] = el;
-            }}
-            aria-hidden
-            className="absolute bottom-[8%] left-1/2 -translate-x-1/2 will-change-transform"
-          >
-            <Tile src={images[7 % images.length]} size={116} />
-          </div>
+        ))}
 
-          {/* Centred title */}
-          <div className="relative z-10 flex h-full flex-col items-center justify-center px-8 text-center">
-            <div className="caption mb-4">{kicker}</div>
-            <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] xl:text-[64px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance max-w-[560px]">
-              {title}
-            </h2>
-          </div>
+        {/* Centre accents — one above, one below the title (static, per user). */}
+        <div
+          aria-hidden
+          className="absolute left-1/2 top-[16%] -translate-x-1/2"
+          style={{ width: TILE }}
+        >
+          <Tile src={images[2 % images.length]} />
+        </div>
+        <div
+          aria-hidden
+          className="absolute bottom-[16%] left-1/2 -translate-x-1/2"
+          style={{ width: TILE }}
+        >
+          <Tile src={images[10 % images.length]} />
+        </div>
+
+        {/* Centred title — centred across the full 150vh, scrolls with it. */}
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-8 text-center">
+          <div className="caption mb-4">{kicker}</div>
+          <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance max-w-[560px]">
+            {title}
+          </h2>
         </div>
       </div>
 
