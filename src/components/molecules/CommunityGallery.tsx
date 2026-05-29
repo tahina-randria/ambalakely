@@ -84,7 +84,7 @@ export function CommunityGallery({
   return (
     <section
       ref={sectionRef}
-      className="hair-rule relative w-full overflow-clip bg-[var(--color-bg-subtle)]"
+      className="relative w-full overflow-clip bg-[var(--color-bg-subtle)] lg:z-10"
       aria-label={kicker}
     >
       {/* DESKTOP — sparse edge-hugging constellation around a centred title.
@@ -107,14 +107,8 @@ export function CommunityGallery({
           </div>
         ))}
 
-        {/* Centre accents — one above, one below the title (static, per user). */}
-        <div
-          aria-hidden
-          className="absolute left-1/2 top-[16%] -translate-x-1/2"
-          style={{ width: TILE }}
-        >
-          <Tile src={images[2 % images.length]} />
-        </div>
+        {/* Centre accent — single lower tile (waabi). The hero image transits
+            through the top-centre as it shrinks, so we keep only the bottom one. */}
         <div
           aria-hidden
           className="absolute bottom-[16%] left-1/2 -translate-x-1/2"

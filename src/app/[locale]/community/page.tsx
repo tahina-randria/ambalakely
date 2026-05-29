@@ -10,7 +10,8 @@ import { ImagePlaceholder } from '@/components/atoms/ImagePlaceholder';
 import { PHOTOS } from '@/lib/data/photos';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { localizedAlternates } from '@/lib/i18n/alternates';
-import { CommunityHero } from '@/components/molecules/CommunityHero';
+import { CommunityScrollHero } from '@/components/molecules/CommunityScrollHero';
+import { CommunityGallery } from '@/components/molecules/CommunityGallery';
 import { CommunityPrograms } from '@/components/molecules/CommunityPrograms';
 
 type LocaleParam = { params: Promise<{ locale: string }> };
@@ -125,12 +126,12 @@ export default async function CommunityPage({ params }: LocaleParam) {
       />
       <Nav />
       <main id="main">
-        {/* §59 — hero plein écran qui rétrécit en tuile et se fond dans la
-            constellation HFF (waabi), puis le scrollytelling des programmes. */}
-        <CommunityHero
-          heroSrc={HERO_IMAGE}
-          heroAlt={t('heroAlt')}
-          heroTitle={heroTitle}
+        {/* §60 — hero plein écran qui rétrécit centré (waabi), puis la
+            constellation séparée remonte par transparence et défile en
+            parallaxe, puis le scrollytelling des programmes. */}
+        <CommunityScrollHero src={HERO_IMAGE} alt={t('heroAlt')} title={heroTitle} />
+        <CommunityGallery
+          kicker={t('galleryKicker')}
           title={t('galleryTitle')}
           body={t('galleryBody')}
           images={GALLERY_IMAGES}
