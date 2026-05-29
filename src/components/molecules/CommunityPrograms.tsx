@@ -63,31 +63,40 @@ export function CommunityPrograms({
       return () => tween.scrollTrigger?.kill();
     });
 
-    // Desktop: the media "dégrossit" (1.22 → 1) while the list reveals, then the
-    // pillars step through the remaining scroll — mirrors waabi's "Unlocking
-    // scale" block (big image first, shrinks, then the steps play).
+    // Desktop (§67) — courbe mesurée 1:1 sur waabi : l'image arrive en
+    // GRANDISSANT jusqu'à un PIC (grande, dominante), puis DÉGROSSIT et se fige
+    // plus petite pendant que la liste apparaît à droite, puis les piliers
+    // défilent. Pilotage déterministe depuis la progression (pas de mapping
+    // de timeline approximatif).
     mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
       if (!section) return;
       const ctx = gsap.context(() => {
-        const tl = gsap.timeline({
-          scrollTrigger: { trigger: section, start: 'top top', end: 'bottom bottom', scrub: 1 },
-        });
-        // §66 — l'image GRANDIT (≈ taille tuile → plein bloc) à l'épinglage,
-        // comme la tuile waabi qui grossit. (avant : elle « dégrossissait ».)
-        tl.fromTo(mediaRef.current, { scale: 0.4 }, { scale: 1, ease: 'power2.out', duration: INTRO }, 0);
-        tl.fromTo(
-          listRef.current,
-          { opacity: 0, xPercent: 6 },
-          { opacity: 1, xPercent: 0, ease: 'power2.out', duration: INTRO * 0.85 },
-          0.03,
-        );
+        const easeOut = gsap.parseEase('power2.out');
+        const easeIO = gsap.parseEase('power2.inOut');
+        const PEAK = INTRO * 0.5; // progression du pic
+        const START = 0.5; // scale ≈ taille tuile
+        const TOP = 1.62; // scale du pic (≈ waabi 527 vs 285 figé)
+        gsap.set(mediaRef.current, { scale: START, transformOrigin: 'left center' });
+        gsap.set(listRef.current, { opacity: 0, xPercent: 6 });
         ScrollTrigger.create({
           trigger: section,
           start: 'top top',
           end: 'bottom bottom',
+          scrub: 1,
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
-            const p = Math.max(0, (self.progress - INTRO) / (1 - INTRO));
-            const idx = Math.min(total - 1, Math.floor(p * total));
+            const p = self.progress;
+            let scale;
+            if (p <= PEAK) scale = START + (TOP - START) * easeOut(p / PEAK);
+            else if (p <= INTRO) scale = TOP + (1 - TOP) * easeIO((p - PEAK) / (INTRO - PEAK));
+            else scale = 1;
+            gsap.set(mediaRef.current, { scale });
+            // List reveals only once the image has shrunk back past the text
+            // area (≈ scale 1.3) so the big peak never overlaps the words.
+            const lp = Math.min(1, Math.max(0, (p - INTRO * 0.75) / (INTRO * 0.35)));
+            gsap.set(listRef.current, { opacity: lp, xPercent: 6 * (1 - lp) });
+            const sp = Math.max(0, (p - INTRO) / (1 - INTRO));
+            const idx = Math.min(total - 1, Math.floor(sp * total));
             setActive((prev) => (prev === idx ? prev : idx));
           },
         });
@@ -143,11 +152,12 @@ export function CommunityPrograms({
       >
         <div className="sticky top-0 h-screen overflow-hidden">
           <div className="mx-auto flex h-full max-w-[1200px] items-center px-8 lg:px-12">
-            <div className="grid w-full grid-cols-2 items-center gap-14 xl:gap-20">
-              {/* Media — crossfading rounded square; "dégrossit" (shrinks) on enter */}
+            <div className="flex w-full items-center gap-16 xl:gap-28">
+              {/* Media — crossfading rounded square; grows to a peak then settles
+                  smaller (waabi). Fixed size → generous whitespace around it. */}
               <div
                 ref={mediaRef}
-                className="relative aspect-square w-full overflow-hidden rounded-[16px] bg-[var(--color-bg-muted)] [transform-origin:50%_50%] will-change-transform"
+                className="relative aspect-square w-[360px] shrink-0 overflow-hidden rounded-[16px] bg-[var(--color-bg-muted)] will-change-transform"
               >
                 {items.map((it, i) => (
                   <div
@@ -164,7 +174,7 @@ export function CommunityPrograms({
               </div>
 
               {/* Stepping list — active = dark + description, rest greyed. */}
-              <ul ref={listRef} className="flex flex-col gap-5">
+              <ul ref={listRef} className="flex-1 flex flex-col gap-5">
                 {items.map((it, i) => {
                   const on = i === active;
                   return (
