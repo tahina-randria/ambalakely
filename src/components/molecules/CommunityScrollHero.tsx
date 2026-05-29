@@ -91,7 +91,10 @@ export function CommunityScrollHero({
   return (
     <section
       className={cn(
-        'relative w-full bg-[var(--color-bg-subtle)]',
+        // Transparent: the beige comes from the wrapper behind, so the
+        // constellation (z-10) shows THROUGH the hero as the image shrinks
+        // (no opaque hero clipping the rising text).
+        'relative w-full',
         reduced ? '' : 'lg:z-20 lg:mb-[-75vh]',
       )}
       aria-label={title.join(' ')}
@@ -106,7 +109,7 @@ export function CommunityScrollHero({
             <Image src={src} alt={alt} fill priority sizes="100vw" className="object-cover" />
           </div>
           <div ref={titleRef} className="absolute inset-0 z-10 will-change-transform">
-            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/45 to-transparent" />
             <div className="relative h-full">{titleBlock}</div>
           </div>
         </div>

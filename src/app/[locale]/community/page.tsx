@@ -126,21 +126,24 @@ export default async function CommunityPage({ params }: LocaleParam) {
       />
       <Nav />
       <main id="main">
-        {/* §60 — hero plein écran qui rétrécit centré (waabi), puis la
-            constellation séparée remonte par transparence et défile en
-            parallaxe, puis le scrollytelling des programmes. */}
-        <CommunityScrollHero
-          src={HERO_IMAGE}
-          alt={t('heroAlt')}
-          title={heroTitle}
-          subtitle={t('heroSubtitle')}
-        />
-        <CommunityGallery
-          kicker={t('galleryKicker')}
-          title={t('galleryTitle')}
-          body={t('galleryBody')}
-          images={GALLERY_IMAGES}
-        />
+        {/* §61 — hero + constellation sur un fond beige COMMUN : le hero est
+            transparent (z-20) et se réduit, la constellation (z-10) transparaît
+            derrière puis défile en parallaxe. Aucun fond opaque ne croppe le
+            texte qui remonte. */}
+        <div className="relative bg-[var(--color-bg-subtle)]">
+          <CommunityScrollHero
+            src={HERO_IMAGE}
+            alt={t('heroAlt')}
+            title={heroTitle}
+            subtitle={t('heroSubtitle')}
+          />
+          <CommunityGallery
+            kicker={t('galleryKicker')}
+            title={t('galleryTitle')}
+            body={t('galleryBody')}
+            images={GALLERY_IMAGES}
+          />
+        </div>
         <CommunityPrograms
           kicker={t('programsKicker')}
           title={t('programsH2')}
