@@ -129,7 +129,12 @@ export default async function CommunityPage({ params }: LocaleParam) {
         {/* §60 — hero plein écran qui rétrécit centré (waabi), puis la
             constellation séparée remonte par transparence et défile en
             parallaxe, puis le scrollytelling des programmes. */}
-        <CommunityScrollHero src={HERO_IMAGE} alt={t('heroAlt')} title={heroTitle} />
+        <CommunityScrollHero
+          src={HERO_IMAGE}
+          alt={t('heroAlt')}
+          title={heroTitle}
+          subtitle={t('heroSubtitle')}
+        />
         <CommunityGallery
           kicker={t('galleryKicker')}
           title={t('galleryTitle')}

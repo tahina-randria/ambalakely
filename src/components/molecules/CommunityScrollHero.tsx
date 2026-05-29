@@ -27,10 +27,12 @@ export function CommunityScrollHero({
   src,
   alt,
   title,
+  subtitle,
 }: {
   src: string;
   alt: string;
   title: string[];
+  subtitle: string;
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
@@ -88,7 +90,7 @@ export function CommunityScrollHero({
           </div>
           <div
             ref={titleRef}
-            className="absolute inset-0 z-10 flex items-center justify-center will-change-transform"
+            className="absolute inset-0 z-10 flex flex-col items-center justify-center will-change-transform"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/15 to-black/25" />
             <h1 className="relative max-w-[900px] px-6 text-center font-display font-light text-white text-[44px] md:text-[56px] leading-[1.02] tracking-[-0.03em] balance">
@@ -98,6 +100,9 @@ export function CommunityScrollHero({
                 </span>
               ))}
             </h1>
+            <p className="relative mt-5 max-w-[520px] px-6 text-center font-body text-[15px] text-white/85 md:text-[17px]">
+              {subtitle}
+            </p>
           </div>
         </div>
       </div>
@@ -111,7 +116,7 @@ export function CommunityScrollHero({
       >
         <Image src={src} alt={alt} fill priority sizes="100vw" className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-black/25" />
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
           <h1 className="max-w-[820px] px-6 text-center font-display font-light text-white text-[40px] md:text-[52px] leading-[1.04] tracking-[-0.03em] balance">
             {title.map((line, i) => (
               <span key={i} className="block">
@@ -119,6 +124,9 @@ export function CommunityScrollHero({
               </span>
             ))}
           </h1>
+          <p className="mt-4 max-w-[460px] px-6 text-center font-body text-[15px] text-white/85">
+            {subtitle}
+          </p>
         </div>
       </div>
     </section>
