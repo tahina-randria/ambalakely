@@ -115,11 +115,19 @@ html {
 /*  Base reset — minimal                                              */
 /* ------------------------------------------------------------------ */
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  border: 0 solid var(--color-border-subtle);
+/* Wrapped in @layer base (like the img/video reset below) so Tailwind
+   `border-*` utilities (in @layer utilities) can override the default
+   0-width border. Unlayered, this reset beat the utilities layer and
+   silently zeroed every `border` / `border-2` / `border-b` across the
+   site — cards, inputs, dividers all lost their borders. §47, completes
+   the #110 cascade fix (which only covered the img/video reset). */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    border: 0 solid var(--color-border-subtle);
+  }
 }
 
 html {
