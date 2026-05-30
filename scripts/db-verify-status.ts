@@ -1,10 +1,11 @@
 /**
- * Prouve les transitions de statut staff (Confirmer / Annuler) contre la vraie
- * base. Reproduit FIDÈLEMENT la transaction de `setReservationStatus`
+ * Prouve le cycle de vie des réservations côté staff contre la vraie base.
+ * Reproduit FIDÈLEMENT la transaction de `setReservationStatus`
  * (src/lib/db/admin-reservations.ts) — update gardé par `expectedFrom` + event
- * d'audit — puis vérifie : confirm depuis pending, garde anti-stale, et surtout
- * que l'annulation déclenche le trigger `reservation_sync_blocks` qui RELÂCHE la
- * chambre. Marqueur 'VerifyStatus' → nettoyable.
+ * d'audit — puis vérifie : confirm depuis pending, garde anti-stale, annulation
+ * qui RELÂCHE la chambre (trigger `reservation_sync_blocks`), et le cycle
+ * complet confirmed → checked_in → checked_out où arrivée/départ NE relâchent
+ * PAS la chambre. Marqueur 'VerifyStatus' → nettoyable.
  */
 import { config } from 'dotenv';
 config({ path: '.env.local' });
@@ -108,6 +109,33 @@ async function main() {
     check(`statut après annulation = ${await statusOf(r.id)}`, (await statusOf(r.id)) === 'cancelled');
     check(`event 'cancelled' écrit`, (await eventsOf(r.id, 'cancelled')) === 1);
     check(`annulation RELÂCHE la chambre → Supérieure ${await avail()} (attendu 2)`, (await avail()) === 2);
+
+    // 5) Cycle de vie complet : confirmed → checked_in → checked_out.
+    //    Arrivée/Départ NE relâchent PAS la chambre (≠ annulation).
+    const r2 = await createReservation(db, {
+      checkIn: IN,
+      checkOut: OUT,
+      guest: { firstName: 'V2', lastName: 'VerifyStatus', email: 'v2@example.com' },
+      rooms: [{ roomTypeSlug: 'superieure', adults: 2 }],
+    });
+    await setStatus(db, r2.id, 'confirmed', 'verify@test', 'pending');
+    await setStatus(db, r2.id, 'checked_in', 'verify@test', 'confirmed');
+    check(`check-in : statut = ${await statusOf(r2.id)}`, (await statusOf(r2.id)) === 'checked_in');
+    check(`event 'checked_in' écrit`, (await eventsOf(r2.id, 'checked_in')) === 1);
+    check(`arrivée NE relâche PAS → Supérieure ${await avail()} (attendu 1)`, (await avail()) === 1);
+
+    await setStatus(db, r2.id, 'checked_out', 'verify@test', 'checked_in');
+    check(`check-out : statut = ${await statusOf(r2.id)}`, (await statusOf(r2.id)) === 'checked_out');
+    check(`event 'checked_out' écrit`, (await eventsOf(r2.id, 'checked_out')) === 1);
+    check(`départ NE relâche PAS → Supérieure ${await avail()} (attendu 1)`, (await avail()) === 1);
+
+    let g2 = false;
+    try {
+      await setStatus(db, r2.id, 'checked_in', 'verify@test', 'confirmed');
+    } catch (e) {
+      g2 = (e as Error).message.includes('déjà dans un autre état');
+    }
+    check(`garde : check-in depuis checked_out rejeté`, g2);
 
     await cleanup();
     check(`après nettoyage → Supérieure ${await avail()} (attendu 2)`, (await avail()) === 2);

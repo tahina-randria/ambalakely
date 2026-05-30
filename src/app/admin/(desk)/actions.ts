@@ -70,3 +70,21 @@ export async function cancelReservation(formData: FormData) {
   revalidatePath('/admin');
   revalidatePath(`/admin/reservations/${id}`);
 }
+
+/** Arrivée : confirmed → checked_in (la chambre reste tenue, occupée). */
+export async function checkInReservation(formData: FormData) {
+  const actor = await requireStaff();
+  const id = String(formData.get('id'));
+  await setReservationStatus(id, 'checked_in', actor, 'confirmed');
+  revalidatePath('/admin');
+  revalidatePath(`/admin/reservations/${id}`);
+}
+
+/** Départ : checked_in → checked_out (clôt le séjour). */
+export async function checkOutReservation(formData: FormData) {
+  const actor = await requireStaff();
+  const id = String(formData.get('id'));
+  await setReservationStatus(id, 'checked_out', actor, 'checked_in');
+  revalidatePath('/admin');
+  revalidatePath(`/admin/reservations/${id}`);
+}
