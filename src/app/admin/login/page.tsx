@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { useActionState } from 'react';
 import { sendMagicLink, type LoginState } from './actions';
 
@@ -7,19 +8,23 @@ export default function AdminLoginPage() {
 
   return (
     <main className="flex min-h-screen items-center justify-center px-6">
-      <div className="w-full max-w-[380px]">
-        <div className="mb-1 font-medium text-[12px] uppercase tracking-[0.14em] text-[var(--color-sand-6)]">
-          Hôtel Ambalakely
+      <div className="w-full max-w-[330px]">
+        <div className="mb-10 flex flex-col items-center gap-2 text-center">
+          <Image
+            src="/brand/logo-white.png"
+            alt="Hôtel Ambalakely"
+            width={56}
+            height={56}
+            priority
+            className="h-14 w-14"
+          />
+          <span className="font-display font-light text-[16px] tracking-[-0.015em]">
+            Hôtel Ambalakely
+          </span>
         </div>
-        <h1 className="mb-2 font-display font-light text-[34px] leading-[1.05] tracking-[-0.02em]">
-          Régie
-        </h1>
-        <p className="mb-8 text-[14px] leading-[1.6] text-[var(--color-sand-5)]">
-          Accès réservé à l’équipe. Entrez votre e-mail, nous vous envoyons un lien de connexion.
-        </p>
 
         {state?.ok ? (
-          <p className="border border-[var(--color-sand-10)] px-4 py-3 text-[14px] leading-[1.6] text-[var(--color-sand-3)]">
+          <p className="text-center text-[14px] leading-[1.6] text-[var(--color-sand-4)]">
             {state.message}
           </p>
         ) : (

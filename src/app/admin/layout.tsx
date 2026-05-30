@@ -12,7 +12,7 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: 'Régie · Hôtel Ambalakely',
+  title: 'Hôtel Ambalakely',
   robots: { index: false, follow: false },
 };
 

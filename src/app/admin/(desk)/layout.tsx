@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { createSupabaseServer } from '@/lib/supabase/server';
 import { isStaffEmail } from '@/lib/auth/staff';
@@ -24,11 +25,11 @@ export default async function DeskLayout({ children }: { children: React.ReactNo
   return (
     <div className="flex min-h-screen">
       <aside className="flex w-60 shrink-0 flex-col border-r border-[var(--color-sand-10)]">
-        <div className="px-6 py-6">
-          <div className="font-medium text-[11px] uppercase tracking-[0.14em] text-[var(--color-sand-6)]">
+        <div className="flex items-center gap-2.5 px-6 py-6">
+          <Image src="/brand/logo-white.png" alt="" width={30} height={30} className="h-[30px] w-[30px]" />
+          <span className="font-display font-light text-[17px] tracking-[-0.01em]">
             Hôtel Ambalakely
-          </div>
-          <div className="font-display font-light text-[22px] tracking-[-0.01em]">Régie</div>
+          </span>
         </div>
         <nav className="flex flex-col px-3">
           {NAV.map((item) =>
