@@ -174,6 +174,8 @@ export function BookingDrawer({ open, onClose }: Props) {
   }, [form.range]);
 
   const canContinue = !!(form.range?.from && form.range?.to);
+  // Calendar shows until both dates are picked, or when the guest taps "Modifier".
+  const showCalendar = !canContinue || editingDates;
 
   // Reset form when drawer closes — Sheet animation handles its own timing
   useEffect(() => {
@@ -377,7 +379,14 @@ export function BookingDrawer({ open, onClose }: Props) {
                           {nightCount > 0 ? t('nights', { count: nightCount }) : ''}
                         </span>
                       </div>
-                      {!canContinue || editingDates ? (
+                      {/* Calendar — folds away smoothly once both dates are chosen */}
+                      <div
+                        className={cn(
+                          'grid transition-all duration-300 ease-[var(--ease-standard)]',
+                          showCalendar ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
+                        )}
+                      >
+                        <div className="overflow-hidden" inert={!showCalendar}>
                         <div className="border border-[var(--color-sand-10)] p-3 md:p-4">
                         <DayPicker
                           mode="range"
@@ -442,21 +451,31 @@ export function BookingDrawer({ open, onClose }: Props) {
                           }}
                         />
                         </div>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() => setEditingDates(true)}
-                          className="flex w-full items-center justify-between gap-3 border border-[var(--color-sand-10)] px-4 h-12 text-left hover:border-[var(--color-sand-7)] transition-colors duration-[var(--duration-fast)]"
-                        >
-                          <span className="font-display font-light text-[16px] tracking-[-0.005em] tabular-nums">
-                            {dateRangeSummary}
-                          </span>
-                          <span className="inline-flex shrink-0 items-center gap-1.5 text-[12px] font-medium text-[var(--color-sand-6)]">
-                            <PencilSimple size={13} weight="regular" />
-                            {t('editDates')}
-                          </span>
-                        </button>
-                      )}
+                        </div>
+                      </div>
+                      {/* Summary chip — grows in as the calendar folds (always mounted so both animate) */}
+                      <div
+                        className={cn(
+                          'grid transition-all duration-300 ease-[var(--ease-standard)]',
+                          showCalendar ? 'grid-rows-[0fr] opacity-0' : 'grid-rows-[1fr] opacity-100',
+                        )}
+                      >
+                        <div className="overflow-hidden" inert={showCalendar}>
+                          <button
+                            type="button"
+                            onClick={() => setEditingDates(true)}
+                            className="flex w-full items-center justify-between gap-3 border border-[var(--color-sand-10)] px-4 h-12 text-left hover:border-[var(--color-sand-7)] transition-colors duration-[var(--duration-fast)]"
+                          >
+                            <span className="font-display font-light text-[16px] tracking-[-0.005em] tabular-nums">
+                              {dateRangeSummary}
+                            </span>
+                            <span className="inline-flex shrink-0 items-center gap-1.5 text-[12px] font-medium text-[var(--color-sand-6)]">
+                              <PencilSimple size={13} weight="regular" />
+                              {t('editDates')}
+                            </span>
+                          </button>
+                        </div>
+                      </div>
                     </div>
 
                     {/* Guests — stepper */}
