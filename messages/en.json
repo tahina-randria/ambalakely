@@ -212,7 +212,7 @@
     "groupEmailSubject": "Group booking ({guests} guests)",
     "successH2": "Request received.",
     "successRefLabel": "Reference",
-    "successBody": "Thank you. We will reply personally with availability and a tailored quote. A confirmation has been sent to your inbox. For travel that's imminent, WhatsApp is the fastest way to reach us.",
+    "successBody": "Thank you. We're holding your room for 48 hours while the hotel confirms your booking. A summary with your reference has been sent to your inbox. For travel that's imminent, WhatsApp is the fastest way to reach us.",
     "successClose": "Close",
     "step": "Step",
     "of": "of",
