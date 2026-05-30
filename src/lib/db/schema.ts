@@ -157,6 +157,7 @@ export const reservation = pgTable('reservation', {
   currency: char('currency', { length: 3 }).notNull().default('MGA'),
   totalMinor: money('total_minor').notNull().default(0),
   notes: text('notes'),
+  locale: text('locale'), // langue du visiteur à la réservation (fr/en/no), nullable
   holdExpiresAt: ts('hold_expires_at'),
   createdAt: ts('created_at').notNull().defaultNow(),
   updatedAt: ts('updated_at').notNull().defaultNow(),

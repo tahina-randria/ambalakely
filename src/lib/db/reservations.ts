@@ -28,6 +28,8 @@ export type CreateReservationInput = {
   rooms: RoomRequest[];
   channel?: 'direct' | 'email' | 'phone' | 'walk_in' | 'ota';
   notes?: string;
+  /** Langue du visiteur — persistée pour communiquer (confirmation) dans sa langue. */
+  locale?: 'fr' | 'en' | 'no';
   holdHours?: number;
   propertySlug?: string;
 };
@@ -74,6 +76,7 @@ export async function createReservation(
     rooms,
     channel = 'direct',
     notes,
+    locale,
     holdHours = 48,
     propertySlug = 'ambalakely',
   } = input;
@@ -150,10 +153,10 @@ export async function createReservation(
           const [res] = (await tx.execute(
             sql`insert into reservation
                   (property_id, reference, guest_id, status, channel, check_in, check_out,
-                   adults, children, currency, total_minor, notes, hold_expires_at)
+                   adults, children, currency, total_minor, notes, locale, hold_expires_at)
                 values (${prop.id}, ${reference}, ${g.id}, 'pending', ${channel},
                         ${checkIn}::date, ${checkOut}::date, ${totalAdults}, ${totalChildren},
-                        ${prop.currency}, ${totalMinor}, ${notes ?? null},
+                        ${prop.currency}, ${totalMinor}, ${notes ?? null}, ${locale ?? null},
                         now() + make_interval(hours => ${holdHours}))
                 returning id, reference, status, total_minor`,
           )) as unknown as {

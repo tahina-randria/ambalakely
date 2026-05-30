@@ -141,6 +141,8 @@ export type AdminReservationDetail = {
   currency: string;
   /** Message laissé par le client à la réservation (reservation.notes). */
   notes: string | null;
+  /** Langue du client (fr/en/no) ; null pour les résas antérieures à la colonne. */
+  locale: string | null;
   holdExpiresAt: string | null;
   holdSecondsLeft: number | null;
   createdAtLabel: string;
@@ -164,7 +166,7 @@ export async function getReservation(id: string): Promise<AdminReservationDetail
            r.check_in::text  as check_in,
            r.check_out::text as check_out,
            (r.check_out - r.check_in) as nights,
-           r.adults, r.children, r.total_minor, r.currency, r.notes,
+           r.adults, r.children, r.total_minor, r.currency, r.notes, r.locale,
            r.hold_expires_at::text as hold_expires_at,
            extract(epoch from (r.hold_expires_at - now()))::int as hold_seconds_left,
            to_char(r.created_at at time zone 'Indian/Antananarivo', 'DD/MM/YYYY HH24:MI') as created_at_label,
@@ -197,6 +199,7 @@ export async function getReservation(id: string): Promise<AdminReservationDetail
     totalMinor: Number(r.total_minor),
     currency: String(r.currency),
     notes: r.notes ? String(r.notes) : null,
+    locale: r.locale ? String(r.locale) : null,
     holdExpiresAt: r.hold_expires_at ? String(r.hold_expires_at) : null,
     holdSecondsLeft: r.hold_seconds_left != null ? Number(r.hold_seconds_left) : null,
     createdAtLabel: String(r.created_at_label),

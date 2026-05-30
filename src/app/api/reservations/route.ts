@@ -133,6 +133,7 @@ export async function POST(req: NextRequest) {
       rooms: [{ roomTypeSlug: d.roomType, adults: d.guests }],
       channel: 'direct',
       notes: d.message || undefined,
+      locale: d.locale,
     });
   } catch (err) {
     const msg = err instanceof Error ? err.message : '';
