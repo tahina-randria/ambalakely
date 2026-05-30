@@ -27,13 +27,13 @@ import {
   Users,
   CircleNotch,
   CaretDown,
-  Check,
   Minus,
   Plus,
 } from '@phosphor-icons/react/dist/ssr';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils/cn';
 import { HOTEL } from '@/lib/data/hotel';
+import type { TypeAvailability } from '@/lib/db/availability';
 
 const WA_DIGITS = HOTEL.whatsapp.replace(/[^0-9]/g, '');
 
@@ -81,6 +81,38 @@ const ROOM_TYPES = [
   { slug: 'standard', label: { fr: 'Standard', en: 'Standard', no: 'Standard' } },
 ] as const;
 
+const AVAIL_T = {
+  fr: {
+    title: 'Disponibilités',
+    loading: 'Recherche des disponibilités…',
+    none: 'Complet sur ces dates.',
+    error: 'Impossible de charger les disponibilités.',
+    perNight: '/ nuit',
+    last: 'Dernière chambre',
+    left: (n: number) => `${n} chambres disponibles`,
+  },
+  en: {
+    title: 'Availability',
+    loading: 'Checking availability…',
+    none: 'No rooms available for these dates.',
+    error: 'Couldn’t load availability.',
+    perNight: '/ night',
+    last: 'Last room',
+    left: (n: number) => `${n} rooms available`,
+  },
+  no: {
+    title: 'Tilgjengelighet',
+    loading: 'Sjekker tilgjengelighet…',
+    none: 'Fullt på disse datoene.',
+    error: 'Kunne ikke laste tilgjengelighet.',
+    perNight: '/ natt',
+    last: 'Siste rom',
+    left: (n: number) => `${n} rom tilgjengelig`,
+  },
+} as const;
+
+const fmtMga = (n: number) => new Intl.NumberFormat('fr-FR').format(n);
+
 const INITIAL_FORM = {
   roomType: 'any',
   range: undefined as DateRange | undefined,
@@ -104,7 +136,8 @@ export function BookingDrawer({ open, onClose }: Props) {
   const [form, setForm] = useState(INITIAL_FORM);
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [roomDropdownOpen, setRoomDropdownOpen] = useState(false);
+  const [avail, setAvail] = useState<TypeAvailability[] | null>(null);
+  const [availStatus, setAvailStatus] = useState<'idle' | 'loading' | 'loaded' | 'error'>('idle');
   // Hover preview : when arrival is picked but no departure yet, paint a
   // softer band on the dates the cursor sweeps. Cleared on selection /
   // mouse leave. Set only via onDayMouseEnter (touch devices won't
@@ -148,7 +181,8 @@ export function BookingDrawer({ open, onClose }: Props) {
         setErrorMsg(null);
         setForm(INITIAL_FORM);
         setStep(1);
-        setRoomDropdownOpen(false);
+        setAvail(null);
+        setAvailStatus('idle');
         setHoverDate(undefined);
       }, 350);
       return () => clearTimeout(timer);
@@ -163,6 +197,35 @@ export function BookingDrawer({ open, onClose }: Props) {
     mq.addEventListener('change', update);
     return () => mq.removeEventListener('change', update);
   }, []);
+
+  // Fetch real availability whenever a complete date range (+ guests) is set;
+  // aborts the in-flight request when the inputs change or the drawer closes.
+  useEffect(() => {
+    const from = form.range?.from;
+    const to = form.range?.to;
+    if (!from || !to) {
+      setAvail(null);
+      setAvailStatus('idle');
+      return;
+    }
+    const checkIn = format(from, 'yyyy-MM-dd');
+    const checkOut = format(to, 'yyyy-MM-dd');
+    const guests = Math.min(Number(form.guests), 10);
+    const ctrl = new AbortController();
+    setAvailStatus('loading');
+    fetch(`/api/availability?checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}`, {
+      signal: ctrl.signal,
+    })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error('http'))))
+      .then((d: { availability: TypeAvailability[] }) => {
+        setAvail(d.availability);
+        setAvailStatus('loaded');
+      })
+      .catch((e: unknown) => {
+        if ((e as Error)?.name !== 'AbortError') setAvailStatus('error');
+      });
+    return () => ctrl.abort();
+  }, [form.range?.from, form.range?.to, form.guests]);
 
   // The react-international-phone country list dropdown lives inside
   // the Radix Dialog's overflow-y:auto container. Even with the
@@ -228,6 +291,7 @@ export function BookingDrawer({ open, onClose }: Props) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const roomTypeLabel = ROOM_TYPES.find((r) => r.slug === form.roomType)?.label[locale] ?? '';
+  const availT = AVAIL_T[locale] ?? AVAIL_T.fr;
 
   const dateRangeSummary = form.range?.from && form.range?.to
     ? `${format(form.range.from, 'd MMM', { locale: dateLocale })} – ${format(form.range.to, 'd MMM yyyy', { locale: dateLocale })}`
@@ -240,6 +304,7 @@ export function BookingDrawer({ open, onClose }: Props) {
       <SheetContent
         side="right"
         aria-label={t('ariaLabel')}
+        aria-describedby={undefined}
         showCloseButton={false}
         className={cn(
           // mobile up to md : caps at 480 px ; md+ : 640 px to host
@@ -252,6 +317,10 @@ export function BookingDrawer({ open, onClose }: Props) {
         )}
       >
         <div className="flex flex-col min-h-full">
+          {/* Accessible dialog name for screen readers (Radix DialogTitle
+              requirement). Visually hidden — the visible step indicator
+              below carries the on-screen context. */}
+          <SheetTitle className="sr-only">{t('ariaLabel')}</SheetTitle>
           {/* HEADER — step indicator + close */}
           <div className="flex items-center justify-between px-6 md:px-8 h-[72px] border-b border-[var(--color-sand-10)] sticky top-0 bg-[var(--color-sand-12)] z-10">
             <div className="flex items-center gap-3">
@@ -289,65 +358,6 @@ export function BookingDrawer({ open, onClose }: Props) {
               <form onSubmit={onSubmit} className="flex flex-col gap-5">
                 {step === 1 ? (
                   <>
-                    {/* Room type — custom dropdown (Combobox migration kept for a follow-up pass) */}
-                    <div className="relative">
-                      <label className="block font-medium text-[13px] tracking-[0] text-[var(--color-sand-6)] mb-3">
-                        {t('roomType')}
-                      </label>
-                      <button
-                        type="button"
-                        onClick={() => setRoomDropdownOpen((v) => !v)}
-                        aria-haspopup="listbox"
-                        aria-expanded={roomDropdownOpen}
-                        className="w-full flex items-center justify-between gap-3 h-14 px-4 border border-[var(--color-sand-10)] hover:border-[var(--color-sand-7)] text-left transition-colors duration-[var(--duration-fast)]"
-                      >
-                        <span className="font-display font-light text-[20px] tracking-[-0.01em]">
-                          {roomTypeLabel}
-                        </span>
-                        <CaretDown
-                          size={14}
-                          weight="regular"
-                          className={cn(
-                            'text-[var(--color-sand-6)] transition-transform duration-[var(--duration-fast)]',
-                            roomDropdownOpen && 'rotate-180',
-                          )}
-                        />
-                      </button>
-                      {roomDropdownOpen ? (
-                        <ul
-                          role="listbox"
-                          className="absolute left-0 right-0 top-full mt-1 z-20 bg-[var(--color-sand-12)] border border-[var(--color-sand-10)] py-1"
-                        >
-                          {ROOM_TYPES.map((rt) => (
-                            <li key={rt.slug}>
-                              <button
-                                type="button"
-                                role="option"
-                                aria-selected={form.roomType === rt.slug}
-                                onClick={() => {
-                                  setForm((f) => ({ ...f, roomType: rt.slug }));
-                                  setRoomDropdownOpen(false);
-                                }}
-                                className={cn(
-                                  'w-full flex items-center justify-between gap-3 px-4 py-3 text-left',
-                                  'font-display font-light text-[16px] tracking-[-0.005em]',
-                                  'hover:bg-[var(--color-sand-10)] transition-colors duration-[var(--duration-fast)]',
-                                  form.roomType === rt.slug
-                                    ? 'text-[var(--color-sand-1)]'
-                                    : 'text-[var(--color-sand-3)]',
-                                )}
-                              >
-                                <span>{rt.label[locale]}</span>
-                                {form.roomType === rt.slug ? (
-                                  <Check size={14} weight="regular" />
-                                ) : null}
-                              </button>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : null}
-                    </div>
-
                     {/* Calendar */}
                     <div>
                       <div className="flex items-baseline justify-between mb-3">
@@ -433,6 +443,74 @@ export function BookingDrawer({ open, onClose }: Props) {
                         labelMax={t('guestGroup', { n: 10, plus: 'true' })}
                       />
                     </Field>
+
+                    {/* Real availability — appears once a date range is set */}
+                    {canContinue ? (
+                      <div>
+                        <div className="font-medium text-[13px] tracking-[0] text-[var(--color-sand-6)] mb-3">
+                          {availT.title}
+                        </div>
+                        {availStatus === 'loading' ? (
+                          <div className="flex items-center gap-2 py-3 text-[14px] text-[var(--color-sand-6)]">
+                            <CircleNotch size={15} weight="regular" className="animate-spin" />
+                            {availT.loading}
+                          </div>
+                        ) : availStatus === 'error' ? (
+                          <p className="py-3 text-[14px] text-[var(--color-sand-7)]">{availT.error}</p>
+                        ) : avail && avail.length === 0 ? (
+                          <p className="py-3 text-[15px] text-[var(--color-sand-5)]">{availT.none}</p>
+                        ) : avail ? (
+                          <ul className="flex flex-col gap-2">
+                            {avail.map((a) => {
+                              const selected = form.roomType === a.slug;
+                              return (
+                                <li key={a.slug}>
+                                  <button
+                                    type="button"
+                                    onClick={() => setForm((f) => ({ ...f, roomType: a.slug }))}
+                                    aria-pressed={selected}
+                                    className={cn(
+                                      'w-full flex items-center justify-between gap-4 px-4 py-4 border text-left transition-colors duration-[var(--duration-fast)]',
+                                      selected
+                                        ? 'border-[var(--color-sand-1)] bg-[var(--color-sand-11)]'
+                                        : 'border-[var(--color-sand-10)] hover:border-[var(--color-sand-7)]',
+                                    )}
+                                  >
+                                    <span className="min-w-0">
+                                      <span className="block font-display font-light text-[19px] tracking-[-0.01em]">
+                                        {a.name}
+                                      </span>
+                                      <span
+                                        className={cn(
+                                          'block mt-0.5 text-[13px]',
+                                          a.available === 1
+                                            ? 'font-medium text-[var(--color-sand-3)]'
+                                            : 'text-[var(--color-sand-6)]',
+                                        )}
+                                      >
+                                        {a.available === 1 ? availT.last : availT.left(a.available)}
+                                      </span>
+                                    </span>
+                                    <span className="shrink-0 text-right">
+                                      <span className="block font-display font-light text-[19px] tabular-nums">
+                                        {fmtMga(a.pricePerNightMinor)} Ar
+                                        <span className="text-[13px] text-[var(--color-sand-6)]">
+                                          {' '}
+                                          {availT.perNight}
+                                        </span>
+                                      </span>
+                                      <span className="block text-[12px] text-[var(--color-sand-6)] tabular-nums">
+                                        {fmtMga(a.totalMinor)} Ar · {t('nights', { count: a.nights })}
+                                      </span>
+                                    </span>
+                                  </button>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        ) : null}
+                      </div>
+                    ) : null}
 
                     {isGroup ? (
                       <GroupCTA guests={form.guests} />
