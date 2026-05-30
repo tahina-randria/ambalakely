@@ -127,7 +127,9 @@ export type Acquisition = {
 
 /** Acquisition sur les réservations CRÉÉES dans la fenêtre glissante (jours). */
 export async function getAcquisition(windowDays = 30): Promise<Acquisition> {
-  const since = sql`((now() at time zone ${TZ})::date - ${windowDays})`;
+  // `${windowDays}::int` est OBLIGATOIRE : `date - $param` sans type est un
+  // opérateur ambigu côté Postgres (date − int / date / interval) → erreur.
+  const since = sql`((now() at time zone ${TZ})::date - ${windowDays}::int)`;
   const rows = (await db.execute(sql`
     select
       count(*)::int as created,

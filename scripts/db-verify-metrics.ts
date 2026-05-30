@@ -15,6 +15,10 @@ import { createReservation } from '../src/lib/db/reservations';
 
 const START = '2027-07-01';
 const END = '2027-07-31'; // fenêtre de 30 jours, future et improbable
+// Les smokes ci-dessous reproduisent la PARAMÉTRISATION réelle du code expédié
+// (tz en param, jours en ${}::int) — un littéral masquerait les bugs de typage
+// de paramètre (ex. `date - $param` ambigu) qui ne pètent qu'en prod.
+const TZ = 'Indian/Antananarivo';
 
 async function main() {
   const url = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
@@ -82,7 +86,7 @@ async function main() {
 
     // Smoke tests : getToday & getAcquisition doivent s'exécuter sans erreur SQL.
     const today = (await db.execute(sql`
-      with t as (select (now() at time zone 'Indian/Antananarivo')::date as today)
+      with t as (select (now() at time zone ${TZ})::date as today)
       select
         (select count(*)::int from reservation where check_in = (select today from t) and status in ('confirmed','checked_in')) as arrivals,
         (select count(*)::int from reservation where check_out = (select today from t) and status in ('checked_in','checked_out')) as departures,
@@ -97,7 +101,7 @@ async function main() {
       select count(*)::int as created,
              count(*) filter (where status in ('confirmed','checked_in','checked_out'))::int as confirmed
       from reservation
-      where created_at >= ((now() at time zone 'Indian/Antananarivo')::date - 30)
+      where created_at >= ((now() at time zone ${TZ})::date - ${30}::int)
     `)) as unknown as { created: number }[];
     check(`getAcquisition s'exécute (créées 30j = ${acq[0].created} ≥ 4)`, Number(acq[0].created) >= 4);
 
