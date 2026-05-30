@@ -51,6 +51,8 @@ export type AdminReservation = {
   channel: string;
   createdAt: string;
   holdExpiresAt: string | null;
+  /** Secondes restantes avant l'expiration du hold (négatif = expiré, null = pas de hold). */
+  holdSecondsLeft: number | null;
   firstName: string;
   lastName: string;
   email: string | null;
@@ -67,6 +69,7 @@ export async function listReservations(): Promise<AdminReservation[]> {
            r.adults, r.children, r.total_minor, r.currency, r.channel,
            r.created_at::text       as created_at,
            r.hold_expires_at::text  as hold_expires_at,
+           extract(epoch from (r.hold_expires_at - now()))::int as hold_seconds_left,
            g.first_name, g.last_name, g.email, g.phone,
            coalesce(
              (select string_agg(rt.name, ', ' order by rt.name)
@@ -95,6 +98,7 @@ export async function listReservations(): Promise<AdminReservation[]> {
     channel: String(r.channel),
     createdAt: String(r.created_at),
     holdExpiresAt: r.hold_expires_at ? String(r.hold_expires_at) : null,
+    holdSecondsLeft: r.hold_seconds_left != null ? Number(r.hold_seconds_left) : null,
     firstName: String(r.first_name),
     lastName: String(r.last_name),
     email: r.email ? String(r.email) : null,

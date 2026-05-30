@@ -29,12 +29,33 @@ function StatusBadge({ status }: { status: string }) {
   );
 }
 
+/** Compte à rebours du hold sur une résa pending — dit au staff quoi confirmer en priorité. */
+function HoldHint({ secondsLeft }: { secondsLeft: number }) {
+  if (secondsLeft <= 0) {
+    return <div className="mt-1 whitespace-nowrap text-[11px] text-[var(--color-sand-8)]">hold expiré</div>;
+  }
+  const h = Math.floor(secondsLeft / 3600);
+  const m = Math.floor((secondsLeft % 3600) / 60);
+  const label = h >= 1 ? `expire dans ${h} h` : m >= 1 ? `expire dans ${m} min` : 'expire dans <1 min';
+  const urgent = secondsLeft < 6 * 3600;
+  return (
+    <div
+      className={`mt-1 whitespace-nowrap text-[11px] ${urgent ? 'font-medium text-[#8a6a1e]' : 'text-[var(--color-sand-9)]'}`}
+    >
+      {label}
+    </div>
+  );
+}
+
 function Row({ r }: { r: AdminReservation }) {
   return (
     <tr className="border-b border-[var(--color-sand-3)] align-top">
       <td className="py-3 pr-4 font-display text-[14px] tabular-nums">{r.reference}</td>
       <td className="py-3 pr-4">
         <StatusBadge status={r.status} />
+        {r.status === 'pending' && r.holdSecondsLeft != null ? (
+          <HoldHint secondsLeft={r.holdSecondsLeft} />
+        ) : null}
       </td>
       <td className="py-3 pr-4">
         <div className="text-[14px] text-[var(--color-sand-12)]">
