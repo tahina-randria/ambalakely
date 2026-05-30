@@ -220,6 +220,7 @@
     "roomType": "Type de chambre",
     "roomTypeAny": "Indifférent",
     "datesLabel": "Vos dates",
+    "editDates": "Modifier",
     "datesHint": "Cliquez pour sélectionner l'arrivée et le départ",
     "nights": "{count, plural, one {# nuit} other {# nuits}}",
     "calendarPrev": "Mois précédent",

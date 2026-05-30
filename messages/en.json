@@ -220,6 +220,7 @@
     "roomType": "Room type",
     "roomTypeAny": "Any room",
     "datesLabel": "Your dates",
+    "editDates": "Edit",
     "datesHint": "Click to select arrival and departure",
     "nights": "{count, plural, one {# night} other {# nights}}",
     "calendarPrev": "Previous month",

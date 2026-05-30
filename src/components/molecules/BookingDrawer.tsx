@@ -29,6 +29,7 @@ import {
   CaretDown,
   Minus,
   Plus,
+  PencilSimple,
 } from '@phosphor-icons/react/dist/ssr';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils/cn';
@@ -143,6 +144,7 @@ export function BookingDrawer({ open, onClose }: Props) {
   // mouse leave. Set only via onDayMouseEnter (touch devices won't
   // trigger this — they just tap the dates directly, no harm).
   const [hoverDate, setHoverDate] = useState<Date | undefined>(undefined);
+  const [editingDates, setEditingDates] = useState(false);
   // Single month on mobile, two months side-by-side on md+ so the
   // calendar actually uses the 640 px desktop drawer width (was 36 % of
   // it before). Detected with matchMedia so SSR returns false and we
@@ -184,6 +186,7 @@ export function BookingDrawer({ open, onClose }: Props) {
         setAvail(null);
         setAvailStatus('idle');
         setHoverDate(undefined);
+        setEditingDates(false);
       }, 350);
       return () => clearTimeout(timer);
     }
@@ -353,17 +356,20 @@ export function BookingDrawer({ open, onClose }: Props) {
           {/* BODY — scrolls between the fixed header and the pinned action bar */}
           <div className="flex flex-1 flex-col min-h-0">
             {status === 'success' ? (
-              <div className="flex-1 overflow-y-auto px-6 md:px-8 py-6">
+              <div className="flex-1 overflow-y-auto px-6 md:px-8 py-6" data-lenis-prevent>
                 <SuccessPanel onClose={onClose} />
               </div>
             ) : (
               <form onSubmit={onSubmit} className="flex flex-1 flex-col min-h-0">
-                <div className="flex flex-1 flex-col gap-5 min-h-0 overflow-y-auto px-6 md:px-8 py-6">
+                <div
+                  className="flex flex-1 flex-col gap-4 min-h-0 overflow-y-auto px-6 md:px-8 py-4"
+                  data-lenis-prevent
+                >
                   {step === 1 ? (
                   <>
                     {/* Calendar */}
                     <div>
-                      <div className="flex items-baseline justify-between mb-3">
+                      <div className="flex items-baseline justify-between mb-2">
                         <label className="font-medium text-[13px] tracking-[0] text-[var(--color-sand-6)]">
                           {t('datesLabel')}
                         </label>
@@ -371,7 +377,8 @@ export function BookingDrawer({ open, onClose }: Props) {
                           {nightCount > 0 ? t('nights', { count: nightCount }) : ''}
                         </span>
                       </div>
-                      <div className="border border-[var(--color-sand-10)] p-3 md:p-4">
+                      {!canContinue || editingDates ? (
+                        <div className="border border-[var(--color-sand-10)] p-3 md:p-4">
                         <DayPicker
                           mode="range"
                           // min={1} forces "first click sets from only,
@@ -390,7 +397,10 @@ export function BookingDrawer({ open, onClose }: Props) {
                             // Clear preview the moment a range completes
                             // so we don't leave a stale highlight band
                             // behind the now-committed dates.
-                            if (range?.from && range?.to) setHoverDate(undefined);
+                            if (range?.from && range?.to) {
+                              setHoverDate(undefined);
+                              setEditingDates(false); // collapse to the summary chip
+                            }
                           }}
                           onDayMouseEnter={(day) => {
                             // Only show preview while exactly one anchor
@@ -431,7 +441,22 @@ export function BookingDrawer({ open, onClose }: Props) {
                             labelNext: () => t('calendarNext'),
                           }}
                         />
-                      </div>
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => setEditingDates(true)}
+                          className="flex w-full items-center justify-between gap-3 border border-[var(--color-sand-10)] px-4 h-12 text-left hover:border-[var(--color-sand-7)] transition-colors duration-[var(--duration-fast)]"
+                        >
+                          <span className="font-display font-light text-[16px] tracking-[-0.005em] tabular-nums">
+                            {dateRangeSummary}
+                          </span>
+                          <span className="inline-flex shrink-0 items-center gap-1.5 text-[12px] font-medium text-[var(--color-sand-6)]">
+                            <PencilSimple size={13} weight="regular" />
+                            {t('editDates')}
+                          </span>
+                        </button>
+                      )}
                     </div>
 
                     {/* Guests — stepper */}
@@ -450,7 +475,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                     {/* Real availability — appears once a date range is set */}
                     {canContinue ? (
                       <div>
-                        <div className="font-medium text-[13px] tracking-[0] text-[var(--color-sand-6)] mb-3">
+                        <div className="font-medium text-[13px] tracking-[0] text-[var(--color-sand-6)] mb-2">
                           {availT.title}
                         </div>
                         {availStatus === 'loading' ? (
@@ -473,7 +498,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                                     onClick={() => setForm((f) => ({ ...f, roomType: a.slug }))}
                                     aria-pressed={selected}
                                     className={cn(
-                                      'w-full flex items-center justify-between gap-4 px-4 py-4 border text-left transition-colors duration-[var(--duration-fast)]',
+                                      'w-full flex items-center justify-between gap-4 px-4 py-3 border text-left transition-colors duration-[var(--duration-fast)]',
                                       selected
                                         ? 'border-[var(--color-sand-1)] bg-[var(--color-sand-11)]'
                                         : 'border-[var(--color-sand-10)] hover:border-[var(--color-sand-7)]',
@@ -647,7 +672,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                 </div>
 
                 {/* ACTION BAR — pinned; the primary CTA never falls below the fold */}
-                <div className="flex-none border-t border-[var(--color-sand-10)] px-6 md:px-8 py-4">
+                <div className="flex-none border-t border-[var(--color-sand-10)] px-6 md:px-8 py-3.5">
                   {step === 1 ? (
                     isGroup ? (
                       <GroupCTA guests={form.guests} />
@@ -704,7 +729,7 @@ export function BookingDrawer({ open, onClose }: Props) {
           </div>
 
           {/* FOOTER — direct contact, single inline row to free vertical space */}
-          <div className="px-6 md:px-8 py-4 border-t border-[var(--color-sand-10)] flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-[var(--color-sand-5)]">
+          <div className="px-6 md:px-8 py-3 border-t border-[var(--color-sand-10)] flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-[var(--color-sand-5)]">
             <span className="font-medium text-[var(--color-sand-7)]">
               {t('writeUs')}
             </span>

@@ -220,6 +220,7 @@
     "roomType": "Romkategori",
     "roomTypeAny": "Hvilket som helst",
     "datesLabel": "Dine datoer",
+    "editDates": "Endre",
     "datesHint": "Klikk for å velge ankomst og avreise",
     "nights": "{count, plural, one {# natt} other {# netter}}",
     "calendarPrev": "Forrige måned",
