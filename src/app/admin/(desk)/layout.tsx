@@ -3,15 +3,7 @@ import { redirect } from 'next/navigation';
 import { createSupabaseServer } from '@/lib/supabase/server';
 import { isStaffEmail } from '@/lib/auth/staff';
 import { signOut } from '../actions';
-
-// The platform's information architecture (think Mews) — only "Réservations"
-// is live for now; the rest signal where this grows (ops → finance → …).
-const NAV: { label: string; href: string; soon?: boolean }[] = [
-  { label: 'Réservations', href: '/admin' },
-  { label: 'Calendrier', href: '#', soon: true },
-  { label: 'Tarifs', href: '#', soon: true },
-  { label: 'Finance', href: '#', soon: true },
-];
+import { DeskNav } from './DeskNav';
 
 export default async function DeskLayout({ children }: { children: React.ReactNode }) {
   // Defense in depth: the middleware already gates /admin, but never trust a
@@ -37,29 +29,7 @@ export default async function DeskLayout({ children }: { children: React.ReactNo
             Hôtel Ambalakely
           </span>
         </div>
-        <nav className="flex flex-col px-3">
-          {NAV.map((item) =>
-            item.soon ? (
-              <span
-                key={item.label}
-                className="flex items-center justify-between rounded px-3 py-2 text-[14px] text-[var(--color-sand-8)]"
-              >
-                {item.label}
-                <span className="text-[10px] uppercase tracking-[0.1em] text-[var(--color-sand-7)]">
-                  bientôt
-                </span>
-              </span>
-            ) : (
-              <a
-                key={item.label}
-                href={item.href}
-                className="rounded px-3 py-2 text-[14px] font-medium text-[var(--color-sand-12)] hover:bg-[var(--color-sand-3)]"
-              >
-                {item.label}
-              </a>
-            ),
-          )}
-        </nav>
+        <DeskNav />
         <div className="mt-auto border-t border-[var(--color-sand-4)] px-6 py-4">
           <div className="mb-2 truncate text-[12px] text-[var(--color-sand-9)]" title={user.email ?? ''}>
             {user.email}

@@ -10,6 +10,19 @@ export function money(totalMinor: number, currency: string): string {
   return `${fmtMga(totalMinor)} ${currency === 'MGA' ? 'Ar' : currency}`;
 }
 
+/** Fraction 0..1 → « 38 % ». */
+export function pct(fraction: number): string {
+  return `${Math.round(fraction * 100)} %`;
+}
+
+export const CHANNEL_LABELS: Record<string, string> = {
+  direct: 'Site web',
+  email: 'E-mail',
+  phone: 'Téléphone',
+  walk_in: 'Sur place',
+  ota: 'OTA',
+};
+
 /** Date ISO 'YYYY-MM-DD' → « 30 mai » (courte, pour les lignes). */
 export function fmtDate(iso: string): string {
   const d = new Date(`${iso}T00:00:00`);

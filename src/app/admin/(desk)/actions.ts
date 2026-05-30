@@ -60,6 +60,7 @@ export async function confirmReservation(formData: FormData) {
     console.error('[admin/confirm] e-mail best-effort', err);
   }
   revalidatePath('/admin');
+  revalidatePath('/admin/reservations');
   revalidatePath(`/admin/reservations/${id}`);
 }
 
@@ -68,6 +69,7 @@ export async function cancelReservation(formData: FormData) {
   const id = String(formData.get('id'));
   await setReservationStatus(id, 'cancelled', actor);
   revalidatePath('/admin');
+  revalidatePath('/admin/reservations');
   revalidatePath(`/admin/reservations/${id}`);
 }
 
@@ -77,6 +79,7 @@ export async function checkInReservation(formData: FormData) {
   const id = String(formData.get('id'));
   await setReservationStatus(id, 'checked_in', actor, 'confirmed');
   revalidatePath('/admin');
+  revalidatePath('/admin/reservations');
   revalidatePath(`/admin/reservations/${id}`);
 }
 
@@ -86,5 +89,6 @@ export async function checkOutReservation(formData: FormData) {
   const id = String(formData.get('id'));
   await setReservationStatus(id, 'checked_out', actor, 'checked_in');
   revalidatePath('/admin');
+  revalidatePath('/admin/reservations');
   revalidatePath(`/admin/reservations/${id}`);
 }

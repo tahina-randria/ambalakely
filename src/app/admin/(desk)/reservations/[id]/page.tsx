@@ -7,17 +7,9 @@ import {
   type ReservationEvent,
 } from '@/lib/db/admin-reservations';
 import { ReservationActions } from '../../ReservationActions';
-import { StatusBadge, HoldHint, money, fmtDateLong } from '../../ui';
+import { StatusBadge, HoldHint, money, fmtDateLong, CHANNEL_LABELS } from '../../ui';
 
 export const dynamic = 'force-dynamic';
-
-const CHANNEL_LABELS: Record<string, string> = {
-  direct: 'Site web',
-  email: 'E-mail',
-  phone: 'Téléphone',
-  walk_in: 'Sur place',
-  ota: 'OTA',
-};
 
 const EVENT_LABELS: Record<string, string> = {
   created: 'Créée',
@@ -72,7 +64,7 @@ export default async function ReservationDetailPage({ params }: { params: Promis
   return (
     <div className="max-w-[820px]">
       <Link
-        href="/admin"
+        href="/admin/reservations"
         className="text-[13px] text-[var(--color-sand-9)] underline-offset-2 hover:text-[var(--color-sand-12)] hover:underline"
       >
         ← Réservations

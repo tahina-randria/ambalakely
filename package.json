@@ -17,6 +17,7 @@
     "db:verify:avail": "tsx scripts/db-verify-availability.ts",
     "db:verify:booking": "tsx scripts/db-verify-booking.ts",
     "db:verify:status": "tsx scripts/db-verify-status.ts",
+    "db:verify:metrics": "tsx scripts/db-verify-metrics.ts",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
