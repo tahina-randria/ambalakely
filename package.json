@@ -10,7 +10,11 @@
     "typecheck": "tsc --noEmit",
     "migrate:sanity": "tsx scripts/migrate-to-sanity.ts",
     "photos:upload": "tsx scripts/upload-photos.ts",
-    "a11y": "node scripts/pa11y-audit.mjs"
+    "a11y": "node scripts/pa11y-audit.mjs",
+    "db:migrate": "tsx scripts/db-migrate.ts",
+    "db:seed": "tsx scripts/db-seed.ts",
+    "db:verify": "tsx scripts/db-verify-guard.ts",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
@@ -21,12 +25,15 @@
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^5.26.0",
     "@sentry/nextjs": "^10.53.1",
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.106.2",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.2.1",
+    "drizzle-orm": "^0.45.2",
     "embla-carousel-react": "^8.6.0",
     "gsap": "^3.13.0",
     "lenis": "^1.1.20",
@@ -36,6 +43,7 @@
     "next": "^15.1.6",
     "next-intl": "^3.26.3",
     "next-sanity": "^12.4.5",
+    "postgres": "^3.4.9",
     "posthog-js": "^1.374.3",
     "posthog-node": "^5.34.8",
     "radix-ui": "^1.4.3",
@@ -60,6 +68,7 @@
     "@types/react-dom": "^19.0.3",
     "autoprefixer": "^10.4.20",
     "dotenv": "^17.4.2",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9.18.0",
     "eslint-config-next": "^15.1.6",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -72,6 +81,8 @@
     "typescript": "^5.7.3"
   },
   "pnpm": {
-    "ignoredBuiltDependencies": ["puppeteer"]
+    "ignoredBuiltDependencies": [
+      "puppeteer"
+    ]
   }
 }
