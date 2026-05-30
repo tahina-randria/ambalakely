@@ -26,6 +26,7 @@ const COPY = {
     p1: "Nous avons bien reçu votre demande de séjour à l'Hôtel Ambalakely. Hasina ou Mamy vous répondra personnellement avec la disponibilité et un devis détaillé.",
     p2: "Si votre voyage est imminent, n'hésitez pas à nous joindre directement au +261 34 11 254 34 (WhatsApp ou téléphone).",
     summaryTitle: 'Récapitulatif',
+    referenceLabel: 'Référence',
     arrivalLabel: 'Arrivée',
     departureLabel: 'Départ',
     guestsLabel: 'Voyageurs',
@@ -39,6 +40,7 @@ const COPY = {
     p1: "We've received your stay request for Hôtel Ambalakely. Hasina or Mamy will reply personally with availability and a detailed quote.",
     p2: 'If your trip is imminent, reach us directly on +261 34 11 254 34 (WhatsApp or phone).',
     summaryTitle: 'Summary',
+    referenceLabel: 'Reference',
     arrivalLabel: 'Arrival',
     departureLabel: 'Departure',
     guestsLabel: 'Guests',
@@ -52,6 +54,7 @@ const COPY = {
     p1: 'Vi har mottatt din forespørsel om opphold på Hôtel Ambalakely. Hasina eller Mamy svarer deg personlig med tilgjengelighet og et detaljert tilbud.',
     p2: 'Hvis reisen din er nært forestående, kan du ta direkte kontakt på +261 34 11 254 34 (WhatsApp eller telefon).',
     summaryTitle: 'Oppsummering',
+    referenceLabel: 'Referanse',
     arrivalLabel: 'Ankomst',
     departureLabel: 'Avreise',
     guestsLabel: 'Reisende',
@@ -67,7 +70,8 @@ export function BookingAck({
   guests,
   name,
   locale = 'fr',
-}: BookingRequestData & { locale?: EmailLocale }) {
+  reference,
+}: BookingRequestData & { locale?: EmailLocale; reference?: string }) {
   const c = COPY[locale];
   const firstName = name.split(' ')[0];
   return (
@@ -82,6 +86,12 @@ export function BookingAck({
         <Text style={summary}>
           <strong>{c.summaryTitle}</strong>
           <br />
+          {reference ? (
+            <>
+              {c.referenceLabel} : {reference}
+              <br />
+            </>
+          ) : null}
           {c.arrivalLabel} : {formatDate(arrival, c.dateLocale)}
           <br />
           {c.departureLabel} : {formatDate(departure, c.dateLocale)}

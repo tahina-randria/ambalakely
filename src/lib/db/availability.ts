@@ -75,9 +75,13 @@ export async function getAvailability(
              greatest(lower(rr.occupancy), (select i_start from itv)) as s,
              least(upper(rr.occupancy),  (select i_end   from itv)) as e
       from reservation_room rr
+      join reservation res on res.id = rr.reservation_id
       where rr.blocks_inventory
         and rr.occupancy && tstzrange((select i_start from itv), (select i_end from itv), '[)')
         and rr.room_type_id in (select type_id from totals)
+        -- a pending hold past its expiry stops blocking inventory (self-releasing,
+        -- so an abandoned request frees the room without a background sweep)
+        and not (res.status = 'pending' and res.hold_expires_at is not null and res.hold_expires_at < now())
     ),
     events as (
       select room_type_id, s as t,  1 as delta from occ

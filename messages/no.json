@@ -211,6 +211,7 @@
     "groupWhatsappText": "Gruppeforespørsel for Ambalakely",
     "groupEmailSubject": "Gruppeforespørsel ({guests} gjester)",
     "successH2": "Forespørsel mottatt.",
+    "successRefLabel": "Referanse",
     "successBody": "Takk. Vi kommer personlig tilbake til deg med tilgjengelighet og et tilbud. En bekreftelse er sendt til innboksen din. For nær forestående reise er WhatsApp raskest.",
     "successClose": "Lukk",
     "step": "Trinn",

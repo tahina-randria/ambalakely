@@ -137,6 +137,7 @@ export function BookingDrawer({ open, onClose }: Props) {
   const [form, setForm] = useState(INITIAL_FORM);
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [successRef, setSuccessRef] = useState<string | null>(null);
   const [avail, setAvail] = useState<TypeAvailability[] | null>(null);
   const [availStatus, setAvailStatus] = useState<'idle' | 'loading' | 'loaded' | 'error'>('idle');
   // Hover preview : when arrival is picked but no departure yet, paint a
@@ -189,6 +190,7 @@ export function BookingDrawer({ open, onClose }: Props) {
         setAvailStatus('idle');
         setHoverDate(undefined);
         setEditingDates(false);
+        setSuccessRef(null);
       }, 350);
       return () => clearTimeout(timer);
     }
@@ -225,6 +227,12 @@ export function BookingDrawer({ open, onClose }: Props) {
       .then((d: { availability: TypeAvailability[] }) => {
         setAvail(d.availability);
         setAvailStatus('loaded');
+        // Drop a previously-picked category that's no longer offered for the new dates/guests.
+        setForm((f) =>
+          f.roomType !== 'any' && !d.availability.some((a) => a.slug === f.roomType)
+            ? { ...f, roomType: 'any' }
+            : f,
+        );
       })
       .catch((e: unknown) => {
         if ((e as Error)?.name !== 'AbortError') setAvailStatus('error');
@@ -268,15 +276,18 @@ export function BookingDrawer({ open, onClose }: Props) {
     setErrorMsg(null);
 
     try {
-      const res = await fetch('/api/booking-request', {
+      const res = await fetch('/api/reservations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          arrival: form.range?.from?.toISOString().slice(0, 10) ?? '',
-          departure: form.range?.to?.toISOString().slice(0, 10) ?? '',
+          // format() keeps the LOCAL calendar date; toISOString() would shift it
+          // a day west of UTC (Madagascar is UTC+3) and book the wrong night.
+          checkIn: form.range?.from ? format(form.range.from, 'yyyy-MM-dd') : '',
+          checkOut: form.range?.to ? format(form.range.to, 'yyyy-MM-dd') : '',
           guests: Number(form.guests),
           roomType: form.roomType,
-          name: `${form.firstName} ${form.lastName}`.trim(),
+          firstName: form.firstName,
+          lastName: form.lastName,
           email: form.email,
           phone: form.phone,
           message: form.message,
@@ -284,8 +295,9 @@ export function BookingDrawer({ open, onClose }: Props) {
           locale,
         }),
       });
-      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      const data = (await res.json().catch(() => ({}))) as { error?: string; reference?: string };
       if (!res.ok) throw new Error(data.error ?? t('successBody'));
+      setSuccessRef(data.reference ?? null);
       setStatus('success');
     } catch (err) {
       setStatus('error');
@@ -359,7 +371,7 @@ export function BookingDrawer({ open, onClose }: Props) {
           <div className="flex flex-1 flex-col min-h-0">
             {status === 'success' ? (
               <div className="flex-1 overflow-y-auto px-6 md:px-8 py-6" data-lenis-prevent>
-                <SuccessPanel onClose={onClose} />
+                <SuccessPanel onClose={onClose} reference={successRef} />
               </div>
             ) : (
               <form onSubmit={onSubmit} className="flex flex-1 flex-col min-h-0">
@@ -699,7 +711,7 @@ export function BookingDrawer({ open, onClose }: Props) {
                       <button
                         type="button"
                         onClick={() => setStep(2)}
-                        disabled={!canContinue}
+                        disabled={!canContinue || form.roomType === 'any'}
                         className="group flex w-full items-center justify-center gap-3 h-12 px-6 bg-[var(--color-sand-1)] text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)] disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {t('continue')}
@@ -865,7 +877,13 @@ function GroupCTA({ guests }: { guests: string }) {
   );
 }
 
-function SuccessPanel({ onClose }: { onClose: () => void }) {
+function SuccessPanel({
+  onClose,
+  reference,
+}: {
+  onClose: () => void;
+  reference?: string | null;
+}) {
   const t = useTranslations('BookingDrawer');
   return (
     <div className="flex flex-col gap-6">
@@ -875,6 +893,16 @@ function SuccessPanel({ onClose }: { onClose: () => void }) {
       <p className="text-[15px] leading-[1.6] text-[var(--color-sand-5)] max-w-[380px]">
         {t('successBody')}
       </p>
+      {reference ? (
+        <div className="flex items-baseline gap-3 self-start border border-[var(--color-sand-10)] px-4 py-3">
+          <span className="text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--color-sand-6)]">
+            {t('successRefLabel')}
+          </span>
+          <span className="font-display font-light text-[18px] tabular-nums tracking-[0.02em] text-[var(--color-sand-1)]">
+            {reference}
+          </span>
+        </div>
+      ) : null}
       <button
         type="button"
         onClick={onClose}

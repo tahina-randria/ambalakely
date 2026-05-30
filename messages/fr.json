@@ -211,6 +211,7 @@
     "groupWhatsappText": "Demande de réservation de groupe à Ambalakely",
     "groupEmailSubject": "Réservation groupe ({guests} voyageurs)",
     "successH2": "Demande reçue.",
+    "successRefLabel": "Référence",
     "successBody": "Merci. Nous revenons vers vous personnellement avec les disponibilités et un devis. Une confirmation a été envoyée dans votre boîte de réception. Pour un séjour proche, WhatsApp reste le plus rapide.",
     "successClose": "Fermer",
     "step": "Étape",
