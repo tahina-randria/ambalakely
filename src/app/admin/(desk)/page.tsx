@@ -6,7 +6,7 @@ import {
   getToday,
   type DashRange,
 } from '@/lib/db/admin-metrics';
-import { money, pct, CHANNEL_LABELS, HoldHint } from './ui';
+import { money, pct, CHANNEL_LABELS, HoldHint, Kpi } from './ui';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,22 +36,6 @@ function RangeTabs({ active }: { active: DashRange }) {
           </Link>
         );
       })}
-    </div>
-  );
-}
-
-function Kpi({ label, value, hint, muted }: { label: string; value: string; hint?: string; muted?: boolean }) {
-  return (
-    <div className="border border-[var(--color-sand-4)] bg-[var(--color-sand-1)] p-4">
-      <div className="text-[11px] uppercase tracking-[0.08em] text-[var(--color-sand-9)]">{label}</div>
-      <div
-        className={`mt-2 font-display text-[26px] tabular-nums ${
-          muted ? 'text-[var(--color-sand-7)]' : 'text-[var(--color-sand-12)]'
-        }`}
-      >
-        {value}
-      </div>
-      {hint ? <div className="mt-1 text-[12px] text-[var(--color-sand-9)]">{hint}</div> : null}
     </div>
   );
 }

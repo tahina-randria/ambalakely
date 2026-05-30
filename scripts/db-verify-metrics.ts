@@ -101,6 +101,22 @@ async function main() {
     `)) as unknown as { created: number }[];
     check(`getAcquisition s'exécute (créées 30j = ${acq[0].created} ≥ 4)`, Number(acq[0].created) >= 4);
 
+    // Funnel (réplique getFunnel, scopée au marqueur) : A,B confirmées · C pending · D annulée.
+    const fn = (await db.execute(sql`
+      select
+        count(*)::int as demandes,
+        count(*) filter (where r.status in ('confirmed','checked_in','checked_out'))::int as confirmees,
+        count(*) filter (where r.status = 'cancelled')::int as annulees,
+        count(*) filter (where r.status = 'pending' and (r.hold_expires_at is null or r.hold_expires_at >= now()))::int as en_attente
+      from reservation r join guest g on g.id = r.guest_id
+      where g.last_name = 'VerifyKpi'
+    `)) as unknown as { demandes: number; confirmees: number; annulees: number; en_attente: number }[];
+    const f = fn[0];
+    check(
+      `funnel : ${f.demandes} demandes · ${f.confirmees} confirmées · ${f.annulees} annulée · ${f.en_attente} en attente`,
+      Number(f.demandes) === 4 && Number(f.confirmees) === 2 && Number(f.annulees) === 1 && Number(f.en_attente) === 1,
+    );
+
     await cleanup();
   } finally {
     await cleanup();

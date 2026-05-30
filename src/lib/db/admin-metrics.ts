@@ -207,3 +207,122 @@ export async function getToday(): Promise<Today> {
     soonestHoldSeconds: r.soonest_hold_seconds != null ? Number(r.soonest_hold_seconds) : null,
   };
 }
+
+// ── Croissance ──────────────────────────────────────────────────────────────
+
+export type Funnel = {
+  demandes: number;
+  confirmees: number;
+  honorees: number;
+  annulees: number;
+  noShow: number;
+  holdsExpires: number; // pending dont le hold a expiré sans confirmation = perdus
+  enAttente: number; // pending encore vivants
+  conversion: number | null; // confirmées / demandes
+};
+
+/**
+ * Entonnoir d'acquisition, tout l'historique : Demande → Confirmée → Honorée,
+ * et les fuites (annulées, no-show, holds expirés). Le signal growth clé :
+ * combien de demandes se sont volatilisées faute de confirmation à temps.
+ */
+export async function getFunnel(): Promise<Funnel> {
+  const rows = (await db.execute(sql`
+    select
+      count(*)::int as demandes,
+      count(*) filter (where status in ('confirmed', 'checked_in', 'checked_out'))::int as confirmees,
+      count(*) filter (where status = 'checked_out')::int as honorees,
+      count(*) filter (where status = 'cancelled')::int as annulees,
+      count(*) filter (where status = 'no_show')::int as no_show,
+      count(*) filter (where status = 'pending' and hold_expires_at < now())::int as holds_expires,
+      count(*) filter (where status = 'pending' and (hold_expires_at is null or hold_expires_at >= now()))::int as en_attente
+    from reservation
+  `)) as unknown as Record<string, number>[];
+  const r = rows[0];
+  const demandes = Number(r.demandes);
+  return {
+    demandes,
+    confirmees: Number(r.confirmees),
+    honorees: Number(r.honorees),
+    annulees: Number(r.annulees),
+    noShow: Number(r.no_show),
+    holdsExpires: Number(r.holds_expires),
+    enAttente: Number(r.en_attente),
+    conversion: demandes > 0 ? Number(r.confirmees) / demandes : null,
+  };
+}
+
+export type BookingCohort = {
+  month: string; // 'YYYY-MM'
+  demandes: number;
+  confirmees: number;
+  conversion: number | null;
+  revenueMinor: number; // revenu engagé des confirmées de la cohorte
+  avgLeadDays: number | null;
+};
+
+/** Cohortes par mois de RÉSERVATION (création), 12 derniers mois. */
+export async function getBookingCohorts(): Promise<BookingCohort[]> {
+  const rows = (await db.execute(sql`
+    select
+      to_char(date_trunc('month', created_at at time zone ${TZ}), 'YYYY-MM') as month,
+      count(*)::int as demandes,
+      count(*) filter (where status in ('confirmed', 'checked_in', 'checked_out'))::int as confirmees,
+      coalesce(sum(total_minor) filter (where status in ('confirmed', 'checked_in', 'checked_out')), 0)::bigint as revenue,
+      round(avg(check_in - created_at::date) filter (where status in ('confirmed', 'checked_in', 'checked_out')))::int as avg_lead
+    from reservation
+    group by 1
+    order by 1 desc
+    limit 12
+  `)) as unknown as {
+    month: string;
+    demandes: number;
+    confirmees: number;
+    revenue: string;
+    avg_lead: number | null;
+  }[];
+  return rows.map((r) => {
+    const demandes = Number(r.demandes);
+    return {
+      month: String(r.month),
+      demandes,
+      confirmees: Number(r.confirmees),
+      conversion: demandes > 0 ? Number(r.confirmees) / demandes : null,
+      revenueMinor: Number(r.revenue),
+      avgLeadDays: r.avg_lead != null ? Number(r.avg_lead) : null,
+    };
+  });
+}
+
+export type Retention = {
+  guests: number; // clients avec ≥1 résa confirmée
+  returning: number; // clients avec ≥2 résas confirmées
+  repeatRate: number | null;
+  avgRevenueMinor: number; // revenu engagé moyen par client
+};
+
+/** Rétention client : nouveaux vs récurrents, valeur moyenne par client. */
+export async function getRetention(): Promise<Retention> {
+  const rows = (await db.execute(sql`
+    with per_guest as (
+      select guest_id,
+             count(*) filter (where status in ('confirmed', 'checked_in', 'checked_out')) as confirmed_resas,
+             coalesce(sum(total_minor) filter (where status in ('confirmed', 'checked_in', 'checked_out')), 0) as revenue
+      from reservation
+      group by guest_id
+    )
+    select
+      count(*) filter (where confirmed_resas >= 1)::int as guests,
+      count(*) filter (where confirmed_resas >= 2)::int as returning,
+      coalesce(round(avg(revenue) filter (where confirmed_resas >= 1)), 0)::bigint as avg_revenue
+    from per_guest
+  `)) as unknown as { guests: number; returning: number; avg_revenue: string }[];
+  const r = rows[0];
+  const guests = Number(r.guests);
+  return {
+    guests,
+    returning: Number(r.returning),
+    repeatRate: guests > 0 ? Number(r.returning) / guests : null,
+    avgRevenueMinor: Number(r.avg_revenue),
+  };
+}

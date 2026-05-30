@@ -7,8 +7,8 @@ import { usePathname } from 'next/navigation';
 const NAV: { label: string; href: string; soon?: boolean }[] = [
   { label: 'Tableau de bord', href: '/admin' },
   { label: 'Réservations', href: '/admin/reservations' },
+  { label: 'Croissance', href: '/admin/growth' },
   { label: "Aujourd'hui", href: '#', soon: true },
-  { label: 'Cohortes', href: '#', soon: true },
   { label: 'Tarifs', href: '#', soon: true },
   { label: 'Finance', href: '#', soon: true },
 ];
