@@ -15,6 +15,7 @@
     "db:seed": "tsx scripts/db-seed.ts",
     "db:verify": "tsx scripts/db-verify-guard.ts",
     "db:verify:avail": "tsx scripts/db-verify-availability.ts",
+    "db:verify:booking": "tsx scripts/db-verify-booking.ts",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {

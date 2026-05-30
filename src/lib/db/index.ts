@@ -16,7 +16,10 @@ import * as schema from './schema';
 const url = process.env.DATABASE_URL;
 if (!url) throw new Error('DATABASE_URL absent');
 
-const globalForDb = globalThis as unknown as { _pgClient?: ReturnType<typeof postgres> };
+const globalForDb = globalThis as unknown as {
+  _pgClient?: ReturnType<typeof postgres>;
+  _pgWriteClient?: ReturnType<typeof postgres>;
+};
 
 const client =
   globalForDb._pgClient ?? postgres(url, { prepare: false, ssl: 'require', max: 1 });
@@ -24,4 +27,18 @@ const client =
 if (process.env.NODE_ENV !== 'production') globalForDb._pgClient = client;
 
 export const db = drizzle(client, { schema });
+
+/**
+ * Client d'écriture sur le session pooler (DIRECT_URL, port 5432). Les
+ * transactions interactives (BEGIN..COMMIT, isolation serializable) ne sont
+ * PAS fiables sur le pooler transaction (6543) qui change de connexion entre
+ * requêtes. Les écritures (réservations) passent donc par celui-ci.
+ */
+const writeUrl = process.env.DIRECT_URL ?? url;
+const writeClient =
+  globalForDb._pgWriteClient ?? postgres(writeUrl, { prepare: false, ssl: 'require', max: 1 });
+
+if (process.env.NODE_ENV !== 'production') globalForDb._pgWriteClient = writeClient;
+
+export const dbWrite = drizzle(writeClient, { schema });
 export { schema };
