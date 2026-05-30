@@ -14,7 +14,7 @@ export async function Story() {
       <div className="relative">
         {/* Image side, takes left/full width */}
         <div className="grid grid-cols-1 lg:grid-cols-12 lg:min-h-[100vh]">
-          <ScrollReveal className="lg:col-span-7 relative aspect-[4/5] lg:aspect-auto bg-[var(--color-bg-muted)] overflow-hidden">
+          <ScrollReveal className="lg:col-span-7 relative aspect-[4/5] lg:aspect-auto bg-[var(--color-bg-muted)] overflow-hidden rounded-[var(--radius-image)]">
             <Image
               src={PHOTOS.story.path}
               alt={t('imageAlt')}

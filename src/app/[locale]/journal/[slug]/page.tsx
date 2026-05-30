@@ -111,7 +111,6 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
         <section className="pt-20 md:pt-28 lg:pt-32 pb-20 md:pb-32">
           <div className="mx-auto max-w-[680px] px-5 md:px-8">
             <ScrollReveal>
-              <div className="caption text-[var(--color-text-muted)]">{t('fromJournal')}</div>
               <p className="mt-6 font-display font-light text-[var(--color-text)] text-[22px] md:text-[26px] leading-[1.35] tracking-[-0.015em] balance">
                 {article.excerpt}
               </p>
@@ -188,9 +187,6 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
         {/* BOOKING CTA */}
         <section className="py-32 md:py-48 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
-            <ScrollReveal>
-              <div className="caption">{t('ctaKicker')}</div>
-            </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                 {t('ctaH2')}
@@ -218,9 +214,6 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
         {others.length > 0 ? (
           <section className="py-32 md:py-48 hair-rule">
             <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
-              <ScrollReveal>
-                <div className="caption">{t('moreWriting')}</div>
-              </ScrollReveal>
               <ul className="mt-12">
                 {others.map((o) => (
                   <li key={o.slug} className="border-b border-[var(--color-border-subtle)]">

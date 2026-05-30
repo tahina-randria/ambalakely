@@ -85,7 +85,6 @@ export default async function PlanYourTripPage({ params }: LocaleParam) {
         <section className="hair-rule py-16 md:py-20">
           <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption mb-8 md:mb-10">{t('quickNavKicker')}</div>
               <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
                 {itineraries.map((it) => (
                   <li key={it.slug}>
@@ -202,9 +201,6 @@ export default async function PlanYourTripPage({ params }: LocaleParam) {
             (§43 — relocated the old orphaned TRANSFERS block into this band). */}
         <section className="hair-rule py-32 md:py-48">
           <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
-            <ScrollReveal>
-              <div className="caption mb-12 md:mb-16">{t('goodToKnowKicker')}</div>
-            </ScrollReveal>
             <dl className="border-t border-[var(--color-border-subtle)]">
               {/* Getting here */}
               <ScrollReveal>
@@ -252,9 +248,6 @@ export default async function PlanYourTripPage({ params }: LocaleParam) {
         {/* BOOKING CTA */}
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
-            <ScrollReveal>
-              <div className="caption">{t('ctaKicker')}</div>
-            </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                 {t('ctaH2')}

@@ -28,7 +28,7 @@ export async function Dining() {
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           {/* Image — left on desktop, top on mobile */}
-          <ScrollReveal className="lg:col-span-7 relative aspect-[4/5] lg:aspect-[5/4] bg-[var(--color-bg-muted)] overflow-hidden">
+          <ScrollReveal className="lg:col-span-7 relative aspect-[4/5] lg:aspect-[5/4] bg-[var(--color-bg-muted)] overflow-hidden rounded-[var(--radius-image)]">
             <Image
               src={PHOTOS.diningSection.path}
               alt={t('imageAlt')}

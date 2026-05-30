@@ -40,7 +40,7 @@ export async function Location() {
         <ScrollReveal delay={0.05}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
             {/* Mapbox interactive map */}
-            <div className="lg:col-span-8 relative aspect-[4/3] md:aspect-[16/10] lg:aspect-[5/4] bg-[var(--color-bg-subtle)] border border-[var(--color-border-subtle)] overflow-hidden">
+            <div className="lg:col-span-8 relative aspect-[4/3] md:aspect-[16/10] lg:aspect-[5/4] bg-[var(--color-bg-subtle)] border border-[var(--color-border-subtle)] overflow-hidden rounded-[var(--radius-image)]">
               <MapboxMap />
               {/* Coordinate label overlay removed — pure decoration that
                   duplicated what the pin on the map already shows. */}

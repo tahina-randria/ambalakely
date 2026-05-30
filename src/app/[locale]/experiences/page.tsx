@@ -107,7 +107,6 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
         <section className="hair-rule py-16 md:py-20">
           <div className="mx-auto max-w-[1200px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption mb-8 md:mb-10">{t('quickNavKicker')}</div>
               <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                 {orderedExps.map((exp) => (
                   <li key={exp.slug}>
@@ -184,7 +183,7 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
                       <ScrollReveal
                         className={`lg:col-span-7 ${zebra ? 'lg:order-2' : ''}`}
                       >
-                        <div className="relative aspect-[4/3] lg:aspect-[5/4] overflow-hidden bg-[var(--color-bg-muted)]">
+                        <div className="relative aspect-[4/3] lg:aspect-[5/4] overflow-hidden rounded-[var(--radius-image)] bg-[var(--color-bg-muted)]">
                           {exp.image ? (
                             <Image
                               src={exp.image}
@@ -237,9 +236,6 @@ export default async function ExperiencesPage({ params }: LocaleParam) {
         {/* CTA */}
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
-            <ScrollReveal>
-              <div className="caption">{t('ctaKicker')}</div>
-            </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                 {t('ctaH2')}

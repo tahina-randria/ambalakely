@@ -78,13 +78,8 @@ export default async function AboutPage({ params }: LocaleParam) {
         {/* INTRO */}
         <section className="py-32 md:py-48 lg:py-56">
           <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
-                <ScrollReveal>
-                  <div className="caption">{t('introKicker')}</div>
-                </ScrollReveal>
-              </div>
-              <div className="lg:col-span-9 max-w-[760px]">
+            <div>
+              <div className="max-w-[760px]">
                 <ScrollReveal>
                   <p className="lede max-w-[34ch]">{t('introLede')}</p>
                 </ScrollReveal>
@@ -112,7 +107,7 @@ export default async function AboutPage({ params }: LocaleParam) {
         {/* FOUNDERS — image + prose, asymmetric */}
         <section id="founders" className="hair-rule">
           <div className="grid grid-cols-1 lg:grid-cols-12">
-            <div className="lg:col-span-7 relative aspect-[4/5] lg:aspect-auto lg:min-h-[80vh] bg-[var(--color-bg-muted)] overflow-hidden">
+            <div className="lg:col-span-7 relative aspect-[4/5] lg:aspect-auto lg:min-h-[80vh] bg-[var(--color-bg-muted)] overflow-hidden rounded-[var(--radius-image)]">
               <Image
                 src={PHOTOS.founders.path}
                 alt={t('foundersImageAlt')}
@@ -123,7 +118,6 @@ export default async function AboutPage({ params }: LocaleParam) {
             </div>
             <div className="lg:col-span-5 px-5 md:px-12 lg:px-16 py-20 md:py-32 flex flex-col justify-center">
               <ScrollReveal>
-                <div className="caption">{t('foundersKicker')}</div>
                 <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[36px] md:text-[52px] leading-[1.02] tracking-[-0.03em] max-w-[420px]">
                   {t('foundersH2')}
                 </h2>
@@ -155,7 +149,6 @@ export default async function AboutPage({ params }: LocaleParam) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
               <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
                 <ScrollReveal>
-                  <div className="caption">{t('timelineKicker')}</div>
                   <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em] max-w-[260px]">
                     {t('timelineH2')}
                   </h2>
@@ -189,13 +182,8 @@ export default async function AboutPage({ params }: LocaleParam) {
         {/* TRANS GROUPE HASINA — sister business */}
         <section id="tgh" className="hair-rule bg-[var(--color-bg-subtle)] py-32 md:py-48">
           <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
-                <ScrollReveal>
-                  <div className="caption">{t('tghKicker')}</div>
-                </ScrollReveal>
-              </div>
-              <div className="lg:col-span-9 max-w-[760px]">
+            <div>
+              <div className="max-w-[760px]">
                 <ScrollReveal>
                   <h2 className="font-display font-light text-[var(--color-text)] text-[36px] md:text-[52px] leading-[1.02] tracking-[-0.03em] max-w-[640px]">
                     {t('tghH2')}
@@ -236,7 +224,6 @@ export default async function AboutPage({ params }: LocaleParam) {
           <div className="grid grid-cols-1 lg:grid-cols-12">
             <div className="lg:col-span-5 px-5 md:px-12 lg:px-16 py-20 md:py-32 lg:order-1 flex flex-col justify-center">
               <ScrollReveal>
-                <div className="caption">{t('hopeKicker')}</div>
                 <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[36px] md:text-[52px] leading-[1.02] tracking-[-0.03em] max-w-[420px]">
                   {t('hopeH2')}
                 </h2>
@@ -260,7 +247,7 @@ export default async function AboutPage({ params }: LocaleParam) {
                 </Link>
               </ScrollReveal>
             </div>
-            <div className="lg:col-span-7 lg:order-2 relative aspect-[4/5] lg:aspect-auto lg:min-h-[70vh] bg-[var(--color-bg-muted)] overflow-hidden">
+            <div className="lg:col-span-7 lg:order-2 relative aspect-[4/5] lg:aspect-auto lg:min-h-[70vh] bg-[var(--color-bg-muted)] overflow-hidden rounded-[var(--radius-image)]">
               {/* §45 — placeholder until a real, locally hosted Tanambao
                   school photo is added (replaces the old external Squarespace
                   HFF2.jpg hotlink). The label names the photo that belongs here. */}
@@ -272,9 +259,6 @@ export default async function AboutPage({ params }: LocaleParam) {
         {/* BOOKING CTA */}
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
-            <ScrollReveal>
-              <div className="caption">{t('bookKicker')}</div>
-            </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                 {t('bookH2')}

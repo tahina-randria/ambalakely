@@ -161,7 +161,6 @@ export function RoomComparison() {
         <div className="sticky top-[88px] z-10 bg-[var(--color-bg)]/95 backdrop-blur-[8px] border-b border-[var(--color-border-subtle)]">
           <div className="grid grid-cols-12 gap-4 py-5">
             <div className="col-span-3">
-              <div className="caption">{compareKicker}</div>
             </div>
             {categories.map((cat) => (
               <div key={cat.slug} className="col-span-3 px-4">

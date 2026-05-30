@@ -162,7 +162,6 @@ export default async function CommunityPage({ params }: LocaleParam) {
         <section id="akanimamy" className="py-32 md:py-48 hair-rule">
           <div className="mx-auto max-w-[1100px] px-5 md:px-8 lg:px-12">
             <ScrollReveal>
-              <div className="caption">{t('akanimamyKicker')}</div>
               <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance max-w-[760px]">
                 {t('akanimamyH2')}
               </h2>
@@ -171,7 +170,7 @@ export default async function CommunityPage({ params }: LocaleParam) {
               <ScrollReveal className="lg:col-span-7">
                 {/* §45 — placeholder until a real Akanimamy / school photo
                     is hosted locally (was the Squarespace HFF2.jpg hotlink). */}
-                <div className="relative aspect-[4/3] bg-[var(--color-bg-muted)] overflow-hidden">
+                <div className="relative aspect-[4/3] bg-[var(--color-bg-muted)] overflow-hidden rounded-[var(--radius-image)]">
                   <ImagePlaceholder label={t('akanimamyImageAlt')} />
                 </div>
               </ScrollReveal>
@@ -199,7 +198,6 @@ export default async function CommunityPage({ params }: LocaleParam) {
         <section className="py-32 md:py-48 lg:py-56 hair-rule bg-[var(--color-bg-subtle)]">
           <div className="mx-auto max-w-[760px] px-5 md:px-8 text-center">
             <ScrollReveal>
-              <div className="caption mb-4">{t('visitKicker')}</div>
               <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance">
                 {t('visitH2')}
               </h2>
@@ -217,7 +215,6 @@ export default async function CommunityPage({ params }: LocaleParam) {
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8 text-center">
             <ScrollReveal>
-              <div className="caption mb-4">{t('ctaKicker')}</div>
               <h2 className="font-display font-light text-[var(--color-text)] text-[44px] md:text-[56px] leading-[1] md:leading-[0.98] tracking-[-0.03em] balance">
                 {t('ctaH2')}
               </h2>

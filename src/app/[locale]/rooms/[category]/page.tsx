@@ -179,9 +179,6 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         {/* FEATURES */}
         <section className="py-32 md:py-48 lg:py-64">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
-            <ScrollReveal>
-              <div className="caption mb-12 md:mb-16">{t('inRoomKicker')}</div>
-            </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-20 border-t border-[var(--color-border-subtle)]">
                 {cat.features.map((f) => (
@@ -218,9 +215,6 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         {/* CONCIERGE NOTE */}
         <section className="py-32 md:py-48 lg:py-64">
           <div className="mx-auto max-w-[760px] px-5 md:px-8">
-            <ScrollReveal>
-              <div className="caption">{t('conciergeKicker', { signed: cat.concierge.signed })}</div>
-            </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <p className="mt-10 font-display font-light italic text-[var(--color-text)] text-[26px] md:text-[36px] leading-[1.3] tracking-[-0.02em]">
                 &ldquo;{cat.concierge.body}&rdquo;
@@ -240,9 +234,6 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         {/* RESERVE */}
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
-            <ScrollReveal>
-              <div className="caption">{t('reserveKicker')}</div>
-            </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                 {t('reserveH2', { name: cat.name })}{' '}
@@ -276,7 +267,6 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
 
             <div className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
               <ScrollReveal delay={0.05}>
-                <div className="caption mb-5">{tPractical('cancellationLabel')}</div>
                 <ul className="space-y-2 text-[15px] leading-[1.5] text-[var(--color-text)]">
                   <li>{tPractical('cancelOver10')}</li>
                   <li>{tPractical('cancelBetween10and7')}</li>
@@ -287,7 +277,6 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
               </ScrollReveal>
 
               <ScrollReveal delay={0.1}>
-                <div className="caption mb-5">{tPractical('checkinLabel')}</div>
                 <p className="text-[15px] leading-[1.5] text-[var(--color-text)]">
                   {tPractical('checkinValue', {
                     checkIn: HOTEL.hours.checkIn,
@@ -295,7 +284,6 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                   })}
                 </p>
 
-                <div className="caption mt-10 mb-5">{tPractical('paymentLabel')}</div>
                 <p className="text-[15px] leading-[1.5] text-[var(--color-text)]">
                   {tPractical('paymentMethods')}
                 </p>
@@ -310,9 +298,6 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
         {/* CONTINUE */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
-            <ScrollReveal>
-              <div className="caption">{t('othersKicker')}</div>
-            </ScrollReveal>
             <ul className="mt-12">
               {others.map((o, i) => (
                 <ScrollReveal key={o.slug} delay={0.05 * i}>
@@ -322,7 +307,7 @@ export default async function RoomCategoryPage({ params }: { params: Promise<Par
                       className="group block py-8 md:py-10 grid grid-cols-12 gap-6 items-center"
                     >
                       <div className="col-span-4 md:col-span-3">
-                        <div className="relative aspect-[4/3] overflow-hidden bg-[var(--color-bg-muted)]">
+                        <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-image)] bg-[var(--color-bg-muted)]">
                           <Image
                             src={o.heroImage}
                             alt={t('othersAlt', { name: o.name })}

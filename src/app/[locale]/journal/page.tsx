@@ -97,7 +97,7 @@ export default async function JournalPage({ params }: LocaleParam) {
                         className="group block py-12 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16"
                       >
                         <div className="lg:col-span-5">
-                          <div className="relative aspect-[4/5] overflow-hidden bg-[var(--color-bg-muted)]">
+                          <div className="relative aspect-[4/5] overflow-hidden rounded-[var(--radius-image)] bg-[var(--color-bg-muted)]">
                             <Image
                               src={article.cover}
                               alt={article.title}

@@ -39,7 +39,7 @@ function Tile({ src }: { src: string }) {
   return (
     <div
       aria-hidden
-      className="relative aspect-square w-full shrink-0 overflow-hidden rounded-[12px] bg-[var(--color-bg-muted)]"
+      className="relative aspect-square w-full shrink-0 overflow-hidden rounded-[var(--radius-image)] bg-[var(--color-bg-muted)]"
     >
       <Image src={src} alt="" fill sizes="160px" className="object-cover" />
     </div>
@@ -141,7 +141,7 @@ export function CommunityGallery({
             <div
               key={i}
               aria-hidden
-              className="relative aspect-square overflow-hidden rounded-[12px] bg-[var(--color-bg-muted)]"
+              className="relative aspect-square overflow-hidden rounded-[var(--radius-image)] bg-[var(--color-bg-muted)]"
             >
               <Image src={src} alt="" fill sizes="50vw" className="object-cover" />
             </div>

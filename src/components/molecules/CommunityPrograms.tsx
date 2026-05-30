@@ -14,7 +14,7 @@ export function CommunityPrograms({ items }: { items: Item[] }) {
         <div className="grid grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-2 lg:gap-x-20 lg:gap-y-24">
           {items.map((it) => (
             <article key={it.title}>
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[16px] bg-[var(--color-bg-muted)]">
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[var(--radius-image)] bg-[var(--color-bg-muted)]">
                 {it.image ? (
                   <Image
                     src={it.image}

@@ -45,7 +45,7 @@ export async function Stay() {
                   >
                     {/* Thumbnail */}
                     <div className="col-span-12 md:col-span-3">
-                      <div className="relative aspect-[4/3] overflow-hidden bg-[var(--color-bg-muted)]">
+                      <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-image)] bg-[var(--color-bg-muted)]">
                         <Image
                           src={cat.heroImage}
                           alt={`Chambre ${cat.name}`}

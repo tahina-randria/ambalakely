@@ -109,13 +109,8 @@ export default async function DiningPage({ params }: LocaleParam) {
         {/* INTRO + KEY FACTS */}
         <section className="py-32 md:py-48 lg:py-56">
           <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-              <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
-                <ScrollReveal>
-                  <div className="caption">{t('introKicker')}</div>
-                </ScrollReveal>
-              </div>
-              <div className="lg:col-span-9">
+            <div>
+              <div className="max-w-[760px]">
                 <ScrollReveal>
                   <p className="lede max-w-[34ch]">{t('introLede')}</p>
                 </ScrollReveal>
@@ -167,7 +162,6 @@ export default async function DiningPage({ params }: LocaleParam) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
               <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
                 <ScrollReveal>
-                  <div className="caption">{t('lieuKicker')}</div>
                   <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em] max-w-[260px]">
                     {t('lieuH2')}
                   </h2>
@@ -198,7 +192,6 @@ export default async function DiningPage({ params }: LocaleParam) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
               <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
                 <ScrollReveal>
-                  <div className="caption">{t('menuKicker')}</div>
                   <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em] max-w-[260px]">
                     {t('menuH2')}
                   </h2>
@@ -253,13 +246,10 @@ export default async function DiningPage({ params }: LocaleParam) {
         ════════════════════════════════════════════════════════════ */}
         <section className="py-24 md:py-32 lg:py-40 hair-rule bg-[var(--color-bg-subtle)]">
           <Container>
-            <ScrollReveal>
-              <div className="caption mb-12 md:mb-16">{t('galleryKicker')}</div>
-            </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <div className="grid grid-cols-12 gap-4 md:gap-6">
                 {/* Row 1 : landscape large + portrait */}
-                <div className="col-span-12 md:col-span-7 relative aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-[var(--color-bg-muted)]">
+                <div className="col-span-12 md:col-span-7 relative aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-[var(--radius-image)] bg-[var(--color-bg-muted)]">
                   <Image
                     src={PHOTOS.diningGallery1.path}
                     alt={t('galleryAlt1')}
@@ -268,7 +258,7 @@ export default async function DiningPage({ params }: LocaleParam) {
                     className="object-cover"
                   />
                 </div>
-                <div className="col-span-12 md:col-span-5 relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-[var(--color-bg-muted)]">
+                <div className="col-span-12 md:col-span-5 relative aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-[var(--radius-image)] bg-[var(--color-bg-muted)]">
                   <Image
                     src={PHOTOS.diningGallery2.path}
                     alt={t('galleryAlt2')}
@@ -278,7 +268,7 @@ export default async function DiningPage({ params }: LocaleParam) {
                   />
                 </div>
                 {/* Row 2 : portrait + landscape large */}
-                <div className="col-span-12 md:col-span-5 relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-[var(--color-bg-muted)]">
+                <div className="col-span-12 md:col-span-5 relative aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-[var(--radius-image)] bg-[var(--color-bg-muted)]">
                   <Image
                     src={PHOTOS.diningGallery3.path}
                     alt={t('galleryAlt3')}
@@ -287,7 +277,7 @@ export default async function DiningPage({ params }: LocaleParam) {
                     className="object-cover"
                   />
                 </div>
-                <div className="col-span-12 md:col-span-7 relative aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-[var(--color-bg-muted)]">
+                <div className="col-span-12 md:col-span-7 relative aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-[var(--radius-image)] bg-[var(--color-bg-muted)]">
                   <Image
                     src={PHOTOS.diningGallery4.path}
                     alt={t('galleryAlt4')}
@@ -310,9 +300,6 @@ export default async function DiningPage({ params }: LocaleParam) {
         ════════════════════════════════════════════════════════════ */}
         <section className="py-32 md:py-48 lg:py-56 hair-rule">
           <Container>
-            <ScrollReveal>
-              <div className="caption text-center mb-16 md:mb-20">{t('pressKicker')}</div>
-            </ScrollReveal>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 max-w-[1100px] mx-auto">
               {pressQuotes.map((q, i) => (
                 <ScrollReveal key={q.attribution} delay={i * 0.08}>
@@ -348,7 +335,6 @@ export default async function DiningPage({ params }: LocaleParam) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
               <div className="lg:col-span-3 lg:sticky lg:top-32 self-start">
                 <ScrollReveal>
-                  <div className="caption">{t('hoursKicker')}</div>
                   <h2 className="mt-6 font-display font-light text-[var(--color-text)] text-[28px] md:text-[36px] leading-[1.05] tracking-[-0.025em] max-w-[260px]">
                     {t('hoursH2')}
                   </h2>
@@ -358,7 +344,6 @@ export default async function DiningPage({ params }: LocaleParam) {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
                   {/* WHEN — hours, 5/12 */}
                   <ScrollReveal className="md:col-span-5">
-                    <div className="caption mb-8">{t('hoursLabel')}</div>
                     <ul className="border-t border-[var(--color-border-subtle)]">
                       {hours.map((h) => (
                         <li
@@ -378,7 +363,6 @@ export default async function DiningPage({ params }: LocaleParam) {
 
                   {/* HOW MUCH — pricing grouped, 7/12 */}
                   <ScrollReveal className="md:col-span-7" delay={0.05}>
-                    <div className="caption mb-8">{t('pricingLabel')}</div>
                     <div className="space-y-10 md:space-y-12 border-t border-[var(--color-border-subtle)] pt-2">
                       {pricingGroups.map((group) => (
                         <div key={group.label}>
@@ -418,9 +402,6 @@ export default async function DiningPage({ params }: LocaleParam) {
         {/* RESERVATION CTA */}
         <section className="py-32 md:py-48 lg:py-64 hair-rule">
           <div className="mx-auto max-w-[920px] px-5 md:px-8">
-            <ScrollReveal>
-              <div className="caption">{t('ctaKicker')}</div>
-            </ScrollReveal>
             <ScrollReveal delay={0.05}>
               <h2 className="mt-8 font-display font-light text-[var(--color-text)] text-[44px] leading-[1] md:text-[56px] md:leading-[0.98] tracking-[-0.03em] balance">
                 {t('ctaH2')}
