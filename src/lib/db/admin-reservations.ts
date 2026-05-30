@@ -1,6 +1,36 @@
 import 'server-only';
 import { sql } from 'drizzle-orm';
-import { db } from '@/lib/db';
+import { db, dbWrite } from '@/lib/db';
+
+/**
+ * Staff status transition (confirm / cancel / …). Atomic: flips the status and
+ * writes an audit event in one transaction. Cancelling fires the DB trigger
+ * `reservation_sync_blocks` (after update of status) which releases the held
+ * room. `expectedFrom` guards against acting on a stale row (e.g. confirming
+ * something already cancelled).
+ */
+export async function setReservationStatus(
+  id: string,
+  status: 'confirmed' | 'cancelled' | 'checked_in' | 'checked_out' | 'no_show',
+  actor: string,
+  expectedFrom?: string,
+): Promise<void> {
+  await dbWrite.transaction(async (tx) => {
+    const updated = (await tx.execute(sql`
+      update reservation set status = ${status}
+      where id = ${id}::uuid
+        ${expectedFrom ? sql`and status = ${expectedFrom}` : sql``}
+      returning id
+    `)) as unknown as { id: string }[];
+    if (updated.length === 0) {
+      throw new Error('réservation introuvable ou déjà dans un autre état');
+    }
+    await tx.execute(sql`
+      insert into reservation_event (reservation_id, type, actor, data)
+      values (${id}::uuid, ${status}, ${actor}, ${JSON.stringify({ via: 'admin' })}::jsonb)
+    `);
+  });
+}
 
 /**
  * Staff-facing reservation read model. Runs on the privileged Postgres

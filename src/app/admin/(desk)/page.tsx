@@ -1,4 +1,5 @@
 import { listReservations, type AdminReservation } from '@/lib/db/admin-reservations';
+import { ReservationActions } from './ReservationActions';
 
 export const dynamic = 'force-dynamic';
 
@@ -51,6 +52,9 @@ function Row({ r }: { r: AdminReservation }) {
       <td className="py-3 pr-4 whitespace-nowrap text-right font-display text-[14px] tabular-nums">
         {fmtMga(r.totalMinor)} {r.currency === 'MGA' ? 'Ar' : r.currency}
       </td>
+      <td className="py-3 pl-2">
+        <ReservationActions id={r.id} status={r.status} />
+      </td>
     </tr>
   );
 }
@@ -80,6 +84,7 @@ export default async function ReservationsPage() {
               <th className="py-2 pr-4 font-medium">Chambre</th>
               <th className="py-2 pr-4 font-medium">Séjour</th>
               <th className="py-2 pr-4 text-right font-medium">Total</th>
+              <th className="py-2 pl-2 text-right font-medium">Actions</th>
             </tr>
           </thead>
           <tbody>
