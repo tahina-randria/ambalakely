@@ -50,6 +50,11 @@ async function main() {
       const other = await getAvailability(tx, { checkIn: '2026-10-01', checkOut: '2026-10-03' });
       out.push(`dates non chevauchantes → Supérieure ${sup(other)} (attendu 2)`);
 
+      // le trigger sync_blocks_inventory doit libérer l'inventaire à l'annulation
+      await tx.execute(sql`update reservation set status = 'cancelled' where id = ${r.id}`);
+      const cancelled = await getAvailability(tx, { checkIn: '2026-09-01', checkOut: '2026-09-03' });
+      out.push(`après annulation (trigger) → Supérieure ${sup(cancelled)} (attendu 2)`);
+
       throw new Error('__rollback__');
     });
   } catch (e: unknown) {
