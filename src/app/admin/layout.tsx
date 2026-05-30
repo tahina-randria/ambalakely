@@ -26,7 +26,7 @@ export default function AdminRootLayout({ children }: { children: React.ReactNod
           href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap"
         />
       </head>
-      <body className="min-h-screen bg-[var(--color-sand-12)]! text-[var(--color-sand-1)]! antialiased">
+      <body className="min-h-screen bg-[var(--color-sand-1)] text-[var(--color-sand-12)] antialiased">
         {children}
       </body>
     </html>

@@ -16,15 +16,15 @@ export default function AdminLoginPage() {
             width={56}
             height={56}
             priority
-            className="h-14 w-14"
+            className="h-14 w-14 invert"
           />
-          <span className="font-display font-light text-[16px] tracking-[-0.015em]">
+          <span className="font-display font-light text-[16px] tracking-[-0.015em] text-[var(--color-sand-12)]">
             Hôtel Ambalakely
           </span>
         </div>
 
         {state?.ok ? (
-          <p className="text-center text-[14px] leading-[1.6] text-[var(--color-sand-4)]">
+          <p className="text-center text-[14px] leading-[1.6] text-[var(--color-sand-10)]">
             {state.message}
           </p>
         ) : (
@@ -36,17 +36,17 @@ export default function AdminLoginPage() {
               autoComplete="email"
               autoFocus
               placeholder="vous@exemple.com"
-              className="h-12 w-full border border-[var(--color-sand-10)] bg-transparent px-4 text-[15px] text-[var(--color-sand-1)] placeholder:text-[var(--color-sand-7)] outline-none focus:border-[var(--color-sand-5)]"
+              className="h-12 w-full border border-[var(--color-sand-6)] bg-transparent px-4 text-[15px] text-[var(--color-sand-12)] placeholder:text-[var(--color-sand-8)] outline-none focus:border-[var(--color-sand-10)]"
             />
             {state && !state.ok ? (
-              <p role="alert" className="text-[13px] text-[#ef4444]">
+              <p role="alert" className="text-[13px] text-[#c0392b]">
                 {state.message}
               </p>
             ) : null}
             <button
               type="submit"
               disabled={pending}
-              className="h-12 w-full bg-[var(--color-sand-1)] text-[15px] font-medium text-[var(--color-sand-12)] transition-colors hover:bg-[var(--color-sand-3)] disabled:opacity-60"
+              className="h-12 w-full bg-[var(--color-sand-12)] text-[15px] font-medium text-[var(--color-sand-1)] transition-colors hover:bg-[var(--color-sand-11)] disabled:opacity-60"
             >
               {pending ? 'Envoi…' : 'Recevoir le lien'}
             </button>

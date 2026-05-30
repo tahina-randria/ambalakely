@@ -24,10 +24,16 @@ export default async function DeskLayout({ children }: { children: React.ReactNo
 
   return (
     <div className="flex min-h-screen">
-      <aside className="flex w-60 shrink-0 flex-col border-r border-[var(--color-sand-10)]">
+      <aside className="flex w-60 shrink-0 flex-col border-r border-[var(--color-sand-4)]">
         <div className="flex items-center gap-2.5 px-6 py-6">
-          <Image src="/brand/logo-white.png" alt="" width={30} height={30} className="h-[30px] w-[30px]" />
-          <span className="font-display font-light text-[17px] tracking-[-0.01em]">
+          <Image
+            src="/brand/logo-white.png"
+            alt=""
+            width={30}
+            height={30}
+            className="h-[30px] w-[30px] invert"
+          />
+          <span className="font-display font-light text-[17px] tracking-[-0.01em] text-[var(--color-sand-12)]">
             Hôtel Ambalakely
           </span>
         </div>
@@ -36,10 +42,10 @@ export default async function DeskLayout({ children }: { children: React.ReactNo
             item.soon ? (
               <span
                 key={item.label}
-                className="flex items-center justify-between rounded px-3 py-2 text-[14px] text-[var(--color-sand-7)]"
+                className="flex items-center justify-between rounded px-3 py-2 text-[14px] text-[var(--color-sand-8)]"
               >
                 {item.label}
-                <span className="text-[10px] uppercase tracking-[0.1em] text-[var(--color-sand-8)]">
+                <span className="text-[10px] uppercase tracking-[0.1em] text-[var(--color-sand-7)]">
                   bientôt
                 </span>
               </span>
@@ -47,21 +53,21 @@ export default async function DeskLayout({ children }: { children: React.ReactNo
               <a
                 key={item.label}
                 href={item.href}
-                className="rounded px-3 py-2 text-[14px] text-[var(--color-sand-1)] hover:bg-[var(--color-sand-11)]"
+                className="rounded px-3 py-2 text-[14px] font-medium text-[var(--color-sand-12)] hover:bg-[var(--color-sand-3)]"
               >
                 {item.label}
               </a>
             ),
           )}
         </nav>
-        <div className="mt-auto border-t border-[var(--color-sand-10)] px-6 py-4">
-          <div className="mb-2 truncate text-[12px] text-[var(--color-sand-6)]" title={user.email ?? ''}>
+        <div className="mt-auto border-t border-[var(--color-sand-4)] px-6 py-4">
+          <div className="mb-2 truncate text-[12px] text-[var(--color-sand-9)]" title={user.email ?? ''}>
             {user.email}
           </div>
           <form action={signOut}>
             <button
               type="submit"
-              className="text-[13px] text-[var(--color-sand-5)] underline-offset-2 hover:text-[var(--color-sand-1)] hover:underline"
+              className="text-[13px] text-[var(--color-sand-9)] underline-offset-2 hover:text-[var(--color-sand-12)] hover:underline"
             >
               Déconnexion
             </button>
