@@ -1,66 +1,31 @@
+import Link from 'next/link';
 import { listReservations, type AdminReservation } from '@/lib/db/admin-reservations';
 import { ReservationActions } from './ReservationActions';
+import { StatusBadge, HoldHint, money, fmtDate } from './ui';
 
 export const dynamic = 'force-dynamic';
 
-const fmtMga = (n: number) => new Intl.NumberFormat('fr-FR').format(n);
-
-function fmtDate(iso: string): string {
-  const d = new Date(`${iso}T00:00:00`);
-  if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-}
-
-const STATUS: Record<string, { label: string; cls: string }> = {
-  pending: { label: 'À confirmer', cls: 'border-[#caa64e] text-[#8a6a1e]' },
-  confirmed: { label: 'Confirmée', cls: 'border-[#7aa384] text-[#2f6b3e]' },
-  checked_in: { label: 'Arrivée', cls: 'border-[#7aa384] text-[#2f6b3e]' },
-  checked_out: { label: 'Partie', cls: 'border-[var(--color-sand-5)] text-[var(--color-sand-9)]' },
-  cancelled: { label: 'Annulée', cls: 'border-[var(--color-sand-4)] text-[var(--color-sand-8)]' },
-  no_show: { label: 'No-show', cls: 'border-[var(--color-sand-4)] text-[var(--color-sand-8)]' },
-};
-
-function StatusBadge({ status }: { status: string }) {
-  const s = STATUS[status] ?? { label: status, cls: 'border-[var(--color-sand-5)] text-[var(--color-sand-9)]' };
-  return (
-    <span className={`inline-block whitespace-nowrap border px-2 py-0.5 text-[11px] font-medium ${s.cls}`}>
-      {s.label}
-    </span>
-  );
-}
-
-/** Compte à rebours du hold sur une résa pending — dit au staff quoi confirmer en priorité. */
-function HoldHint({ secondsLeft }: { secondsLeft: number }) {
-  if (secondsLeft <= 0) {
-    return <div className="mt-1 whitespace-nowrap text-[11px] text-[var(--color-sand-8)]">hold expiré</div>;
-  }
-  const h = Math.floor(secondsLeft / 3600);
-  const m = Math.floor((secondsLeft % 3600) / 60);
-  const label = h >= 1 ? `expire dans ${h} h` : m >= 1 ? `expire dans ${m} min` : 'expire dans <1 min';
-  const urgent = secondsLeft < 6 * 3600;
-  return (
-    <div
-      className={`mt-1 whitespace-nowrap text-[11px] ${urgent ? 'font-medium text-[#8a6a1e]' : 'text-[var(--color-sand-9)]'}`}
-    >
-      {label}
-    </div>
-  );
-}
-
 function Row({ r }: { r: AdminReservation }) {
+  const href = `/admin/reservations/${r.id}`;
   return (
-    <tr className="border-b border-[var(--color-sand-3)] align-top">
-      <td className="py-3 pr-4 font-display text-[14px] tabular-nums">{r.reference}</td>
+    <tr className="border-b border-[var(--color-sand-3)] align-top transition-colors hover:bg-[var(--color-sand-2)]">
+      <td className="py-3 pr-4 font-display text-[14px] tabular-nums">
+        <Link href={href} className="underline-offset-2 hover:underline">
+          {r.reference}
+        </Link>
+      </td>
       <td className="py-3 pr-4">
         <StatusBadge status={r.status} />
         {r.status === 'pending' && r.holdSecondsLeft != null ? (
-          <HoldHint secondsLeft={r.holdSecondsLeft} />
+          <div className="mt-1">
+            <HoldHint secondsLeft={r.holdSecondsLeft} />
+          </div>
         ) : null}
       </td>
       <td className="py-3 pr-4">
-        <div className="text-[14px] text-[var(--color-sand-12)]">
+        <Link href={href} className="text-[14px] text-[var(--color-sand-12)] underline-offset-2 hover:underline">
           {r.firstName} {r.lastName}
-        </div>
+        </Link>
         <div className="text-[12px] text-[var(--color-sand-9)]">{r.email ?? r.phone ?? '—'}</div>
       </td>
       <td className="py-3 pr-4 text-[14px] text-[var(--color-sand-11)]">{r.rooms}</td>
@@ -71,7 +36,7 @@ function Row({ r }: { r: AdminReservation }) {
         </span>
       </td>
       <td className="py-3 pr-4 whitespace-nowrap text-right font-display text-[14px] tabular-nums">
-        {fmtMga(r.totalMinor)} {r.currency === 'MGA' ? 'Ar' : r.currency}
+        {money(r.totalMinor, r.currency)}
       </td>
       <td className="py-3 pl-2">
         <ReservationActions id={r.id} status={r.status} />

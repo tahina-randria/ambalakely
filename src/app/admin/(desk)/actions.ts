@@ -16,12 +16,16 @@ async function requireStaff(): Promise<string> {
 
 export async function confirmReservation(formData: FormData) {
   const actor = await requireStaff();
-  await setReservationStatus(String(formData.get('id')), 'confirmed', actor, 'pending');
+  const id = String(formData.get('id'));
+  await setReservationStatus(id, 'confirmed', actor, 'pending');
   revalidatePath('/admin');
+  revalidatePath(`/admin/reservations/${id}`);
 }
 
 export async function cancelReservation(formData: FormData) {
   const actor = await requireStaff();
-  await setReservationStatus(String(formData.get('id')), 'cancelled', actor);
+  const id = String(formData.get('id'));
+  await setReservationStatus(id, 'cancelled', actor);
   revalidatePath('/admin');
+  revalidatePath(`/admin/reservations/${id}`);
 }
