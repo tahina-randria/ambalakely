@@ -313,10 +313,10 @@ export function BookingDrawer({ open, onClose }: Props) {
           // 640–767 px (broken UX).
           'w-full max-w-[480px] md:max-w-[640px]',
           'bg-[var(--color-sand-12)]! text-[var(--color-sand-1)] border-l border-[var(--color-sand-10)]',
-          'p-0 gap-0 overflow-y-auto',
+          'p-0 gap-0 overflow-hidden',
         )}
       >
-        <div className="flex flex-col min-h-full">
+        <div className="flex h-full flex-col">
           {/* Accessible dialog name for screen readers (Radix DialogTitle
               requirement). Visually hidden — the visible step indicator
               below carries the on-screen context. */}
@@ -350,13 +350,16 @@ export function BookingDrawer({ open, onClose }: Props) {
             </button>
           </div>
 
-          {/* BODY */}
-          <div className="flex-1 px-6 md:px-8 py-6">
+          {/* BODY — scrolls between the fixed header and the pinned action bar */}
+          <div className="flex flex-1 flex-col min-h-0">
             {status === 'success' ? (
-              <SuccessPanel onClose={onClose} />
+              <div className="flex-1 overflow-y-auto px-6 md:px-8 py-6">
+                <SuccessPanel onClose={onClose} />
+              </div>
             ) : (
-              <form onSubmit={onSubmit} className="flex flex-col gap-5">
-                {step === 1 ? (
+              <form onSubmit={onSubmit} className="flex flex-1 flex-col min-h-0">
+                <div className="flex flex-1 flex-col gap-5 min-h-0 overflow-y-auto px-6 md:px-8 py-6">
+                  {step === 1 ? (
                   <>
                     {/* Calendar */}
                     <div>
@@ -511,23 +514,6 @@ export function BookingDrawer({ open, onClose }: Props) {
                         ) : null}
                       </div>
                     ) : null}
-
-                    {isGroup ? (
-                      <GroupCTA guests={form.guests} />
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => setStep(2)}
-                        disabled={!canContinue}
-                        className="group mt-2 inline-flex items-center justify-center gap-3 h-12 px-6 bg-[var(--color-sand-1)] text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)] disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {t('continue')}
-                        <ArrowRight
-                          size={16}
-                          className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
-                        />
-                      </button>
-                    )}
                   </>
                 ) : (
                   <>
@@ -656,39 +642,63 @@ export function BookingDrawer({ open, onClose }: Props) {
                       className="absolute -left-[9999px] w-0 h-0"
                       aria-hidden="true"
                     />
-
-                    <button
-                      type="submit"
-                      disabled={status === 'submitting'}
-                      className="group mt-2 inline-flex items-center justify-center gap-3 h-12 px-7 bg-[var(--color-sand-1)] text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)] disabled:opacity-60 disabled:cursor-not-allowed"
-                    >
-                      {status === 'submitting' ? (
-                        <>
-                          <CircleNotch size={16} weight="regular" className="animate-spin" />
-                          {t('sending')}
-                        </>
-                      ) : (
-                        <>
-                          {t('send')}
-                          <ArrowRight
-                            size={16}
-                            className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
-                          />
-                        </>
-                      )}
-                    </button>
-
-                    {status === 'error' && errorMsg ? (
-                      <p role="alert" className="text-[13px] leading-[1.5] text-[#ef4444]">
-                        {errorMsg}
-                      </p>
-                    ) : (
-                      <p className="text-[13px] leading-[1.5] text-[var(--color-sand-7)]">
-                        {t('footer')}
-                      </p>
-                    )}
                   </>
                 )}
+                </div>
+
+                {/* ACTION BAR — pinned; the primary CTA never falls below the fold */}
+                <div className="flex-none border-t border-[var(--color-sand-10)] px-6 md:px-8 py-4">
+                  {step === 1 ? (
+                    isGroup ? (
+                      <GroupCTA guests={form.guests} />
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setStep(2)}
+                        disabled={!canContinue}
+                        className="group flex w-full items-center justify-center gap-3 h-12 px-6 bg-[var(--color-sand-1)] text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)] disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {t('continue')}
+                        <ArrowRight
+                          size={16}
+                          className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
+                        />
+                      </button>
+                    )
+                  ) : (
+                    <div className="flex flex-col gap-3">
+                      {status === 'error' && errorMsg ? (
+                        <p role="alert" className="text-[13px] leading-[1.5] text-[#ef4444]">
+                          {errorMsg}
+                        </p>
+                      ) : (
+                        <p className="text-[13px] leading-[1.5] text-[var(--color-sand-7)]">
+                          {t('footer')}
+                        </p>
+                      )}
+                      <button
+                        type="submit"
+                        disabled={status === 'submitting'}
+                        className="group flex w-full items-center justify-center gap-3 h-12 px-7 bg-[var(--color-sand-1)] text-[var(--color-sand-12)] font-body text-[15px] font-medium transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-[var(--color-sand-3)] disabled:opacity-60 disabled:cursor-not-allowed"
+                      >
+                        {status === 'submitting' ? (
+                          <>
+                            <CircleNotch size={16} weight="regular" className="animate-spin" />
+                            {t('sending')}
+                          </>
+                        ) : (
+                          <>
+                            {t('send')}
+                            <ArrowRight
+                              size={16}
+                              className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-1"
+                            />
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
+                </div>
               </form>
             )}
           </div>
